@@ -1,3 +1,33 @@
+2003-03-06 Thursday 12:41  sfpavel
+
+	* make/makefile.mvc (1.7), make/makefile.mvcdll (1.6),
+	src/gnmsgid.c (1.2): Rewrite building binary (gnmsgid.exe) under MS
+	VC
+
+2003-03-06 Thursday 12:11  sfpavel
+
+	* Makefile (1.13): Allow 'clean' static build
+
+2003-03-06 Thursday 12:07  sfpavel
+
+	* Makefile (1.12), make/makefile.inc (1.11): Rewrite rules for
+	building binary with Makefile
+
+2003-03-06 Thursday 11:24  sfpavel
+
+	* Makefile (1.11): Fix install/uninstall rules at Makefile
+
+2003-03-06 Thursday 10:23  sfpavel
+
+	* Makefile (1.10), make/makefile.mvc (1.6), make/makefile.mvcdll
+	(1.5): Correct makefiles
+
+2003-03-06 Thursday 09:25  sfpavel
+
+	* Makefile (1.9), huskylib/huskylib.h (1.2), make/makefile.inc
+	(1.10), make/makefile.mvc (1.5), make/makefile.mvcdll (1.4),
+	src/gnmsgid.c (1.1): Add gnmsgid program
+
 2003-03-05 Wednesday 16:28  sfpavel
 
 	* Makefile (1.8), debian/changelog (1.2), make/makefile.inc (1.9):
