@@ -17,16 +17,18 @@ include make/makefile.inc
 
 ifeq ($(DEBUG), 1)
   CFLAGS=$(WARNFLAGS) $(DEBCFLAGS)
+  LFLAGS=$(DEBLFLAGS)
 else
   CFLAGS=$(WARNFLAGS) $(OPTCFLAGS)
+  LFLAGS=$(OPTLFLAGS)
 endif
 
-CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ihuskylib
+CDEFS=-D$(OSTYPE) $(ADDCDEFS) -I. -Ihuskylib
 
 ifeq ($(DYNLIBS), 1)
-all: $(TARGETLIB) $(TARGETDLL).$(VER)
+all: $(TARGETLIB) $(TARGETDLL).$(VER) $(PROGRAMS)
 else
-all: $(TARGETLIB)
+all: $(TARGETLIB) $(PROGRAMS)
 endif
 
 SRC_DIR = src/
@@ -44,12 +46,14 @@ endif
 ifeq ($(DYNLIBS), 1)
   ifeq (~$(MKSHARED)~,~ld~)
 $(TARGETDLL).$(VER): $(OBJS)
-	$(LD) $(OPTLFLAGS) -o $(TARGETDLL).$(VER) $(OBJS)
+	$(LD) $(LFLAGS) -o $(TARGETDLL).$(VER) $(OBJS)
   else
 $(TARGETDLL).$(VER): $(OBJS)
 	$(CC) -shared -Wl,-soname,$(TARGETDLL).$(VERH) \
           -o $(TARGETDLL).$(VER) $(OBJS)
   endif
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 
 instdyn: $(TARGETLIB) $(TARGETDLL).$(VER)
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
@@ -70,6 +74,14 @@ instdyn: $(TARGETLIB)
 
 endif
 
+$(PROGRAMS): $(OBJS)
+ifeq ($(DYNLIBS), 1)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(LIBS)
+else
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
+endif
+
+
 FORCE:
 
 install-h-dir: FORCE
@@ -82,19 +94,23 @@ install-h: install-h-dir $(HEADERS)
 
 install: install-h instdyn
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
+	-$(MKDIR) $(MKDIROPT) $(BINDIR)
 	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
+	$(INSTALL) $(IBOPT) $(PROGRAMS) $(BINDIR)
 
 uninstall:
 	-cd $(INCDIR)$(DIRSEP)$(H_DIR) ;\
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VER)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)$(PROGRAMS)
 
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
+	-$(RM) $(RMOPT) $(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(TARGETDLL)
 
 distclean: clean
 	-$(RM) $(RMOPT) $(TARGETLIB)
 	-$(RM) $(RMOPT) $(TARGETDLL).$(VER)
+	-$(RM) $(RMOPT) $(PROGRAMS)

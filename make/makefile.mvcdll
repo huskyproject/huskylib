@@ -3,10 +3,11 @@
 
 CC=     cl
 CFLAGS= -nologo -MD -Zp1
-CDEFS=  -I..\h -D__NT__ -D_CONSOLE -D_MAKE_DLL -D_HUSKYEXT
+CDEFS=  -I.. -I..\huskylib -D__NT__ -D_CONSOLE -D_MAKE_DLL -D_HUSKYEXT
 COPT=   -Ob2
 LINK=   link
 LINKOPTS= msvcrt.lib Kernel32.lib /nologo /opt:nowin98 /dll /nodefaultlib
+_EXE=	.exe
 _OBJ=	.obj
 _LIB=	.lib
 _DLL=	.dll
@@ -15,21 +16,32 @@ LIBSUFFIX=mvc
 
 include makefile.inc
 
+GMOBJS=	genmsgid$(_OBJ) fexist$(_OBJ) ffind$(_OBJ)
+
 
 {$(SRC_DIR)}.c$(_OBJ):
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
 
-all: $(TARGETDLL)
+all: $(TARGETDLL) gnmsgid$(_EXE)
         
 $(TARGETDLL): $(OBJS)
 	$(LINK) $(LINKOPTS) /out:$@ /implib:$(TARGETLIB) $(OBJS)
 
+gnmsgid$(_EXE): $(GMOBJS)
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ $(SRC_DIR)gnmsgid.c $(GMOBJS) \
+	    /link /opt:nowin98
+	-del gnmsgid.exp
+	-del gnmsgid.lib
+
 
 clean:
 	-del *$(_OBJ)
+	-del gnmsgid.exp
+	-del gnmsgid.lib
 
 distclean: clean
 	-del $(TARGETDLL)
 	-del $(TARGETLIB)
 	-del $(LIBNAME)mvc.exp
+	-del gnmsgid$(_EXE)

@@ -93,4 +93,8 @@ HUSKYEXT int  _createDirectoryTree(const char *pathName);
   was taken from hpt\fcommon
 */
 
+HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);  /* genmsgid.c */
+HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, /* genmsgid.c */
+			    dword (*altGenMsgId)(void), char **errstr);
+
 #endif
