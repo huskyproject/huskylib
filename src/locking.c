@@ -112,6 +112,23 @@ sword far pascal shareloaded(void)
     __dpmi_int(0x2f, &r);
     return (r.h.al == 0xff);
 }
+#elif defined(__DOS__)
+sword pascal far shareloaded(void)
+{
+ union REGS in, out;
+ 
+#if defined(__DPMI__) && !defined(__DJGPP__)
+ in.x.eax=0x1000;
+
+ int386(0x21, &in, &out);
+#else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
+ in.x.ax=0x1000;
+ int86(0x21,&in,&out);
+#endif
+
+ return (out.h.al == 0xff);
+}
+
 #endif
 
 /*#if defined (__WATCOMC__OS2__) || defined(__EMX__) || defined(__IBMC__OS2__)*/

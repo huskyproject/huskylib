@@ -143,8 +143,30 @@ void pascal far flush_handle2(int fh)
 
 #elif defined (__DOS__)
 
-/* refer to MS-DOS flush_handle2 code in FLUSHASM.ASM */
-HUSKYEXT void pascal far flush_handle2(int fd);
+HUSKYEXT void pascal far flush_handle2(int fd)
+{
+ union REGS in, out;
+ 
+ in.h.ah=0x45;
+#if defined(__DPMI__) && !defined(__DJGPP__)
+ in.x.ebx=fd;
+ int386(0x21, &in, &out);
+#else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
+ in.x.bx=fd;
+ int86(0x21,&in,&out);
+#endif
+
+ if(out.h.cflag) return;
+
+ in.h.ah=0x3e;
+#if defined(__DPMI__) && !defined(__DJGPP__)
+ in.x.ebx=out.x.eax;
+ int386(0x21, &in, &out);
+#else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
+ in.x.bx=out.x.ax;
+ int86(0x21,&in,&out);
+#endif
+}
 
 #else
 
