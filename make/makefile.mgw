@@ -45,6 +45,8 @@ _DLL	= .dll
 CDEFS	=
 # common compiler options
 CFLAGS	= -Wno-long-long -Wall -O3
+# additional compiler options to build DLL
+DLCFLAGS= -D_MAKE_DLL
 # linker options
 LFLAGS	=
 # options for compile only (link is off)
@@ -52,7 +54,7 @@ OBJOPT	= -c
 # options for build static library
 LIBOPT	= -static
 # options for build dll
-DLLOPT  =
+DLLOPT  = -shared -Wl,--out-implib,$(TARGETLIB)
 # option for specify output file name
 NAMEOPT	= -o
 # options for $(AR) program
@@ -124,15 +126,16 @@ $(TARGETLIB):	$(OBJS)
 	$(AR) $(ARFLAGS) $@ $?
 	$(RANLIB) $@
 	
-$(TARGETDLL):	$(OBJS)
-	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $^
+$(TARGETDLL):
+	$(MAKE) -f makefile.mgw CFLAGS="$(CFLAGS) $(DLCFLAGS)" $(OBJS)
+	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $(OBJS)
 
 
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean: clean
-#	-$(RM) $(RMOPT) $(TARGETDLL)
+	-$(RM) $(RMOPT) $(TARGETDLL)
 	-$(RM) $(RMOPT) $(TARGETLIB)
 	-$(RM) $(RMOPT) $(PROGRAMS)
 

@@ -118,7 +118,11 @@
      platform = "/w32-mvc";
 #    endif
 #elif defined(__MINGW32__)
-   platform = "/w32-mgw";
+#    if defined(_MAKE_DLL)
+     platform = "/w32-mgwdll";
+#    else
+     platform = "/w32-mgw";
+#    endif
 #elif defined(__WIN32__)
 
 #  if defined(__TURBOC__) /* Borland C/C++ for Win32 */

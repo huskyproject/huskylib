@@ -20,7 +20,7 @@
 
 #undef HUSKYEXT
 #ifdef _MAKE_DLL
-#  if defined(__MSVC__)
+#  if defined(__MSVC__) || defined(__MINGW32__)
 #    if defined(DLLEXPORT) && !defined(DLLIMPORT)
 #        define HUSKYEXT __declspec(dllexport)
 #    else
