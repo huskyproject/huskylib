@@ -61,9 +61,7 @@
 
 /* huskylib headers */
 #define DLLEXPORT
-#include <huskyext.h>
-#include <memory.h>
-#include <unused.h>
+#include <huskylib.h>
 
 
 /***  Declarations & defines  ***********************************************/
