@@ -1,3 +1,14 @@
+2003-09-18 Thursday 20:04  d_sergienko
+
+	* src/tests/timer.c (1.1): add test for tdelay()+husky_*Timer()
+	functions
+
+2003-09-18 Thursday 20:01  d_sergienko
+
+	* huskylib/huskylib.h (1.19), src/tdelay.c (1.12): changed
+	husky_*Timer() to conform real life and make them available under
+	UNIX.
+
 2003-09-17 Wednesday 15:41  mche
 
 	* huskylib/huskylib.h (1.18), src/tdelay.c (1.11): timing functions
