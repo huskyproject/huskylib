@@ -1,3 +1,8 @@
+2003-12-01 Monday 20:31  mche
+
+	* src/strext.c (1.14): function stripLeadingChars fix garbage
+	return when whole string is striped
+
 2003-10-24 Friday 11:39  stas_degteff
 
 	* huskylib/compiler.h (1.20): Fix a re-definition of R_OK, X_OK,
