@@ -24,6 +24,7 @@ else
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ihuskylib -I.
+LIBS=-L. -l$(LIBNAME)
 
 ifeq ($(DYNLIBS), 1)
 all: $(TARGETLIB) $(TARGETDLL).$(VER) $(PROGRAMS)
