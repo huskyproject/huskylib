@@ -1,30 +1,140 @@
 # $Id$
-# Makefile for building a Windows 95 / NT SMAPI library
-# with RSXNT and EMX GCC running on Win32 or OS/2.
+# Makefile for EMX with RSXNT on Win32 platforms (Windows 9x, Windows NT)
 # No support for the Husky build environment
 
-CC=     gcc
-CFLAGS= -w -Zwin32
-CDEFS=  -D__NT__ -DWINNT -D__RSXNT__
-COPT=
-LIB=    ar
-OBJ=	.o
+# Uncomment this for compile info for gebugger and display more compiler warnings
+DEBUG	= -g -pedantic
 
-TARGET= smapirxw.a
+# Uncomment this for strip all simbols from binaries to reduce file sizes
+#STRIP	= -s
+
+
+## programs ##
+
+# compiler
+CC	= gcc
+# library tool
+AR	= ar
+# library indexer
+RANLIB	= ranlib
+# linker program
+LINK	= ld
+# archiver program
+# info-zip
+ARCHIVER= zip
+# file removing command
+RM	= cmd /c del
+# create directory command
+MKDIR	= mkdir
+# remove directory command
+RMDIR	= rm
+# copy/move command
+INSTALL	= copy
+
+
+## file suffixes ##
+
+_C	= .c
+_OBJ	= .o
+_LIB	= .a
+_EXE	= .exe
+_DLL	= .dll
+_DEF	= .def
+
+## program options ##
+
+# compiler defines
+CDEFS	= -D__RSXNT__
+# common compiler options
+CFLAGS	= -Wall -w -Zwin32
+# linker options
+LFLAGS	=
+# options for compile only (link is off)
+OBJOPT	= -c
+# options for build static library
+LIBOPT	= -static
+# options for build dll
+DLLOPT  = -shared
+# option for specify output file name
+NAMEOPT	= -o
+# options for $(AR) program
+ARFLAGS	= rs
+# options for $(RM) program
+RMFLAGS	=
+# options for archiver
+ARCFLAGS= -9 -j
+# create directory command options
+MKDIROPT=
+# remove directory command options
+RMDIROPT=
+# copy/move command options
+INSTOPT	= /b
+
+
+## Library filename elements ##
+
+# Prefix to construct static library name
+LIBPREFIX=
+# Prefix to construct dll name
+DLLPREFIX=
+# Suffix to construct library name
+LIBSUFFIX=rxw
+# Suffix to construct dll name
+DLLSUFFIX=
+
+## Binary package name ##
+PACKAGENAME=$(LIBNAME)$(LIBSUFFIX)
+
+## make directives ##
+
+.PHONY:	distclean clean all static dll programs default doc package
+
+## Default make rule ##
+
+default: all
+
+
+
+## include common makefiles part ##
 
 include makefile.inc
 
+# libraries need to build binary file
+LIBS	+=
 
-# Thunderbirds are go!
+## Additions (add into end of strings) ##
+CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
-.c.o:
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
-	$(LIB) r $(TARGET) $@
+## make rules ##
 
-$(TARGET): $(OBJS)
+all:	static programs
+
+static:	$(TARGETLIB)
+programs:  $(PROGRAMS)
+
+%$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
+	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $< $(TARGETLIB)
+
+%$(_OBJ): $(SRC_DIR)%$(_C)
+	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
+
+$(TARGETLIB):	$(OBJS)
+	$(AR) $(ARFLAGS) $@ $?
 
 clean:
-	-DEL *.o
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean:
-	-DEL $(TARGET)
+	-$(RM) $(RMOPT) $(TARGETLIB)
+	-$(RM) $(RMOPT) $(PROGRAMS)
+
+package: static programs doc
+        @echo XXXXX library v.$(VER) for YYYYY platform > file_id.diz
+	@echo (Part of HUSKY Fidonet Software Project) >> file_id.diz
+	$(MKDIR) $(MKDIROPT) $(LIBNAME)
+	$(INSTALL) $(INSTOPT) $(TARGETLIB) $(PROGRAMS) ../VERSION ../README $(LIBNAME)
+	$(INSTALL) $(INSTOPT) ../COPYING ../cvsdate.h ../INSTALL ../LICENSE $(LIBNAME)
+	$(INSTALL) $(INSTOPT) ../HISTORY file_id.diz ../ChangeLog  $(LIBNAME)
+	$(MKDIR) $(MKDIROPT) $(LIBNAME)/$(LIBNAME)
+	$(INSTALL) $(INSTOPT) ../$(H_DIR)/*.h $(LIBNAME)/$(LIBNAME)
+	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) $(LIBNAME)/*
