@@ -52,25 +52,14 @@
 
 
 /* compiler-dependent headers */
-#ifdef HAS_IO_H
-#include <io.h>
-#endif
-
-#ifdef HAS_DIR_H
-#include <dir.h>
-#endif
-
 #ifdef HAS_DIRENT_H
 #include <dirent.h>
-#endif
-
-#ifdef HAS_DIRECT_H
-#include <direct.h>
 #endif
 
 
 /* huskylib headers */
 #include "huskyext.h"
+#include "ffind.h"
 
 
 /***  Declarations & defines  ***********************************************/
@@ -78,27 +67,6 @@
 
 #ifdef __MSVC__
 #define NAME_MAX        _MAX_PATH
-
-
-typedef struct dirent {
-   /*  char        d_dta[ 21 ]; */           /* disk transfer area */
-    char        d_attr;                 /* file's attribute */
-   /*  unsigned short int d_time;     */     /* file's time */
-   /*  unsigned short int d_date;     */     /* file's date */
-    long        d_size;                 /* file's size */
-    char        d_name[_MAX_PATH+1];  /* file's name */
-   /*  unsigned short d_ino;          */     /* serial number (not used) */
-   /*  char        d_first;           */     /* flag for 1st time */
-
-   struct _finddata_t _dt;
-   char               _mask[_MAX_PATH+1];
-   long               _handle;
-   char               _first_time;
-} DIR;
-
-HUSKYEXT DIR* opendir(const char*);
-HUSKYEXT DIR* readdir(DIR*);
-HUSKYEXT int  closedir(DIR*);
 
 #endif
 
@@ -110,17 +78,6 @@ HUSKYEXT int  closedir(DIR*);
 
 #define NAME_MAX        255             /* maximum filename */
 
-typedef struct dirent {
-    char        d_attr;                 /* file's attribute */
-/*   NOT IMPLEMENTED!!!! */
-/*     unsigned short int d_time; */         /* file's time */
-/*     unsigned short int d_date; */         /* file's date */
-    long        d_size;                 /* file's size */
-    char        d_name[ NAME_MAX + 1 ]; /* file's name */
-    HDIR        d_hdir;                 /* save OS/2 hdir */
-    char        d_first;                /* flag for 1st time */
-} DIR;
-
 /* File attribute constants for d_attr field */
 
 #define _A_NORMAL       0x00    /* Normal file - read/write permitted */
@@ -131,10 +88,53 @@ typedef struct dirent {
 #define _A_SUBDIR       0x10    /* Subdirectory */
 #define _A_ARCH         0x20    /* Archive file */
 
-extern int      closedir( DIR * );
-extern DIR      *opendir( const char * );
-extern struct dirent *readdir( DIR * );
-
 #endif
+
+#ifndef NAME_MAX
+#define NAME_MAX        128     /* maximum filename */
+#endif
+
+typedef struct husky_dirent {
+   char   d_attr;          /* file's attribute (DOS-based OS) */
+   /*  unsigned short int d_time;     */     /* file's time */
+   /*  unsigned short int d_date;     */     /* file's date */
+   long   d_size;              /* file's size */
+   char   d_name[NAME_MAX+1];  /* file's name */
+   char   d_mask[NAME_MAX+1];  /* file's search mask */
+#ifdef HAS_DIRENT_H
+   DIR   *internal_DIR;       /* system/compiler DIR structure */
+#else
+   FFIND *ff;       /* for FFindOpen()/FFindInfo()/FFindNext()/FFindClose() */
+   int    d_first;  /* flag for 1st time (set by husky_opendir(), reset by husky_readdir() */
+#endif
+} husky_DIR;
+
+/* The husky_opendir() function opens the directory named by filename,
+ * associates a directory stream with it and returns a pointer to be used
+ * to identify the directory stream in subsequent operations.  The pointer
+ * NULL is returned if filename cannot be accessed, or if it cannot malloc(3)
+ * enough memory to hold the whole thing.
+ */
+HUSKYEXT husky_DIR* husky_opendir(const char*);
+
+/* The husky_readdir() function returns a pointer to the next file name in
+ * directory. husky_readdir() skips current and parent directory entries
+ * ("." & "..") for miltiplatform compatibility.
+ * It returns NULL upon reaching the end of the directory or detecting an
+ * invalid seekdir() operation.
+ */
+HUSKYEXT char* husky_readdir(husky_DIR*);
+
+/* The husky_closedir() function closes the named directory stream and frees
+ * the structure associated with the dirp pointer, returning 0 on success.  On
+ * failure, -1 is returned and the global variable errno is set to indicate
+ * the error.
+ */
+HUSKYEXT int  husky_closedir(husky_DIR*);
+
+/* The husky_rewinddir() function resets the position of the named directory
+ * stream to the beginning of the directory.
+ */
+HUSKYEXT void  husky_rewinddir(husky_DIR* dir);
 
 #endif
