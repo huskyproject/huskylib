@@ -1,3 +1,12 @@
+2003-04-27 Sunday 16:34  d_sergienko
+
+	* src/adcase.c (1.6): CRLF->LF conversion
+
+2003-04-27 Sunday 16:02  mche
+
+	* src/adcase.c (1.5): do not change filecase under win32 fix htick
+	filename case conversion
+
 2003-04-25 Friday 04:36  andr_lukyanov
 
 	* make/: makefile.cyg (1.11), makefile.djg (1.9): Fixed
