@@ -1,3 +1,7 @@
+2003-08-16 Saturday 13:38  d_sergienko
+
+	* huskylib/UNIX.h (1.14): added FreeBSD 5.x support for getfree.c
+
 2003-07-23 Wednesday 05:32  mche
 
 	* src/ffind.c (1.15):	    Fix check hidden file attributes in
