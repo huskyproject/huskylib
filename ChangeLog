@@ -1,3 +1,8 @@
+2003-03-28 Friday 11:08  stas_degteff
+
+	* src/ioutil.c (1.5): Fix return code value for cmdcall(): divide
+	spawnvp() code to signal and program return code
+
 2003-03-27 Thursday 08:55  stas_degteff
 
 	* src/strext.c (1.10), huskylib/strext.h (1.10): Move copyString()
