@@ -74,7 +74,7 @@ HUSKYEXT   dword filecrc32(const char *filename);
    size: array size
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT   word memcrc16(const char *str, int size, word initcrc);
+HUSKYEXT   hUINT16 memcrc16(const char *str, int size, hUINT16 initcrc);
 
 /* Alias for memcrc16() */
 #define crc16(x,y,z) memcrc32(x,y,z)
@@ -83,7 +83,7 @@ HUSKYEXT   word memcrc16(const char *str, int size, word initcrc);
    str: string
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT   word strcrc16(const char *str, word initcrc);
+HUSKYEXT   hUINT16 strcrc16(const char *str, hUINT16 initcrc);
 
 /* Calculate CRC16 for file
    filename: file name for calculate CRC16
