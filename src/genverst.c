@@ -169,7 +169,6 @@ HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
 
 #else
    platform = "";
-# warning Unknown platform and compiler!
 #endif
 
 
