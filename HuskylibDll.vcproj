@@ -40,15 +40,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="msvcrtd.lib Kernel32.lib smapimvc.lib"
+				AdditionalDependencies="msvcrtd.lib Kernel32.lib"
 				OutputFile="..\nd_d\bin/huskylib.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\nd_d\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\nd_d\bin/fconfmvc.pdb"
-				ImportLibrary="..\nd_d\lib/fconfmvc.lib"/>
+				ProgramDatabaseFile=".\..\nd_d\bin/huskylib.pdb"
+				ImportLibrary="..\nd_d\lib/huskylib.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -99,7 +99,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="msvcrt.lib Kernel32.lib smapimvc.lib"
+				AdditionalDependencies="msvcrt.lib Kernel32.lib"
 				OutputFile="..\nd_r\bin/huskylib.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
