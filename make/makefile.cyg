@@ -49,3 +49,6 @@ $(TARGETLIB):	$(OBJS)
 $(TARGETDLL):	$(OBJS)
 	@echo Create $(TARGETDLL)
 	@$(CC) $(DLLOPT) $(CFLAGS) $(EXENAMEFLAG)$@ $^
+
+clean:
+	rm *.o
