@@ -1,3 +1,8 @@
+2003-07-16 Wednesday 16:08  mche
+
+	* huskylib/log.h (1.4), src/log.c (1.4): alternative exception
+	handling for win32
+
 2003-06-26 Thursday 04:58  andr_lukyanov
 
 	* huskylib/ffind.h (1.9): Fixed MSVC static compilation
