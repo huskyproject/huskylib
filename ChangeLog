@@ -1,3 +1,8 @@
+2003-03-27 Thursday 08:55  stas_degteff
+
+	* src/strext.c (1.10), huskylib/strext.h (1.10): Move copyString()
+	& copyStringUntilSep() from fidoconfig to huskylib
+
 2003-03-26 Wednesday 19:32  stas_degteff
 
 	* src/genverst.c (1.4): fix win32 platforms representation in
@@ -10,7 +15,7 @@
 
 2003-03-26 Wednesday 12:26  stas_degteff
 
-	* src/genverst.c (1.3): display warning about unkonown platform
+	* src/genverst.c (1.3): Display warning about unknown platform
 
 2003-03-26 Wednesday 12:22  stas_degteff
 
