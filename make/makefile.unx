@@ -157,26 +157,29 @@ $(TARGETDLL):	$(OBJS)
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
 
-distclean: clean
+distclean: clean pkgclean
 	-$(RM) $(RMOPT) $(TARGETDLL)
 	-$(RM) $(RMOPT) $(TARGETLIB)
 	-$(RM) $(RMOPT) $(PROGRAMS)
-	-$(RM) $(RMOPT) $(PACKAGENAME)
-	-$(RM) $(RMOPT) file_id.diz
-	-$(RMDIR) $(RMDIROPT) huskylib
 
 doc:
 	cd ../doc ; make html
 
 package: static programs
-	@echo husky library v.$(VERH) for linux platform > file_id.diz
-	@echo "(Part of HUSKY Fidonet Software Project)" >> file_id.diz
-	@echo See http://husky.sourceforge.net and/or >> file_id.diz
-	@echo http://sourceforge.net/projects/husky >> file_id.diz
 	$(MKDIR) $(MKDIROPT) huskylib
+	@echo husky library v.$(VERH) for `uname -s` platform > huskylib/file_id.diz
+	@echo "(Part of HUSKY Fidonet Software Project)" >> huskylib/file_id.diz
+	@echo See http://husky.sourceforge.net and/or >> huskylib/file_id.diz
+	@echo http://sourceforge.net/projects/husky >> huskylib/file_id.diz
 	$(INSTALL) $(INSTOPT) $(TARGETLIB) $(PROGRAMS) ../VERSION huskylib
 	$(INSTALL) $(INSTOPT) ../COPYING ../cvsdate.h ../INSTALL ../License huskylib
-	$(INSTALL) $(INSTOPT) ../HISTORY file_id.diz ../ChangeLog  huskylib
+	$(INSTALL) $(INSTOPT) ../HISTORY ../ChangeLog  huskylib
 	$(MKDIR) $(MKDIROPT) huskylib/huskylib/
 	$(INSTALL) $(INSTOPT) ../huskylib/*.h huskylib/huskylib
 	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) huskylib/*
+
+pkgclean:
+	-$(RM) $(RMOPT) $(PACKAGENAME)
+	-$(RM) $(RMOPT) huskylib/file_id.diz
+	-$(RM) $(RMOPT) huskylib/*
+	-$(RMDIR) $(RMDIROPT) huskylib
