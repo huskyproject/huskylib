@@ -5,6 +5,7 @@ CC=     cl
 CFLAGS= -nologo -Zp1
 CDEFS=  -I..\huskylib -I.. -D_CONSOLE
 COPT=   -O2
+LFLAGS=	/link /opt:nowin98
 TLIB=    lib -nologo
 _EXE=	.exe
 _OBJ=	.obj
@@ -16,18 +17,19 @@ include makefile.inc
 {$(SRC_DIR)}.c$(_OBJ):
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
 
-all: $(TARGETLIB) gnmsgid$(_EXE)
+all: $(TARGETLIB) $(PROGRAMS)
 
 $(TARGETLIB): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
-gnmsgid$(_EXE): $(TARGETLIB)
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ $(SRC_DIR)gnmsgid.c $(TARGETLIB) \
-	    /link /opt:nowin98
+$(PROGRAMS): $(TARGETLIB)
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@$(_EXE) $(SRC_DIR)$@.c \
+	    $(TARGETLIB) $(LFLAGS)
+
 
 clean:
 	-del *$(_OBJ)
 
 distclean: clean
 	-del $(TARGETLIB)
-	-del gnmsgid$(_EXE)
+	-del *$(_EXE)

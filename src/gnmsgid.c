@@ -28,8 +28,10 @@
 
 char gnmsgid_rev[]  = "$Revision$";
 char gnmsgid_date[] = "$Date$";
+/* This code break MSVC/DLL build 
 extern char genmsgid_rev[];
 extern char genmsgid_date[];
+*/
 
 int outrunparse(char *line, unsigned long *seqoutrun)
 {
@@ -103,26 +105,32 @@ char *extract_CVS_keyword(char *str)
 
 void printversion(void)
 {
-    char *rev, *date, *gen_rev, *gen_date;
+/*    char *rev, *date, *gen_rev, *gen_date; */
+    char *rev, *date;
 
     rev = extract_CVS_keyword(gnmsgid_rev);
     date = extract_CVS_keyword(gnmsgid_date);
+/* This code break MSVC/DLL build 
     gen_rev = extract_CVS_keyword(genmsgid_rev);
     gen_date = extract_CVS_keyword(genmsgid_date);
-
+*/
     printf("gnmsgid - standalone msgid generator using husky library\n");
     printf("\nCopyright (c) Alexander Reznikov, 2:4600/220@fidonet\n");
     printf("Copyright (c) HUSKY development team.\n\n");
     printf("gnmsgid.c revision:  %s\n", str_or_unknown(rev));
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
+/* This code break MSVC/DLL build 
     printf("genmsgid.c revision: %s\n", str_or_unknown(gen_rev));
     printf("genmsgid.c date:     %s\n", str_or_unknown(gen_date));
+*/
     printf("huskylib CVS date:   %s\n", cvs_date);
 
     if (rev) free(rev);
     if (date) free(date);
+/*
     if (gen_rev) free(gen_rev);
     if (gen_date) free(gen_date);
+*/
 }
 
 int main(int argc, char *argv[])
