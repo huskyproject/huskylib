@@ -3,7 +3,7 @@
  *
  *  Copyright 2003 by Alexander Reznikov, 2:4600/220@fidonet,
  *                                        homebrewer@yandex.ru
- *  and Husky ‚ã¬ã¤é§ãªë …eam.
+ *  and Husky Team.
  *
  *  Latest version may be foind on http://husky.sourceforge.net
  *

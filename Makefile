@@ -108,10 +108,16 @@ install-lib: $(TARGETLIB)
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
 	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
 
+install-man:
+	(cd man && $(MAKE) install)
+
 install: install-dynlib install-lib install-programs install-h
 #	@list='$(PROGRAMS)'; for p in $$list; do \
 #	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
 #	done
+	@echo
+	@echo "*** For install man pages run 'gmake install-man' (unixes only)"
+	@echo
 
 
 uninstall:
