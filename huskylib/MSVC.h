@@ -46,6 +46,7 @@
 /*   must be included before function redefenition like '#define fileno _fileno' */
 #    include <sys/stat.h>
 #    include <stdio.h>
+#    include <io.h>
 /* system functions substitutions for DLL build */
 #    define fileno       _fileno
 #    define read         _read
