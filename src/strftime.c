@@ -1,20 +1,26 @@
-/*
- *  SMAPI; Modified Squish MSGAPI
+/* $Id$
  *
- *  Squish MSGAPI0 is copyright 1991 by Scott J. Dudley.  All rights reserved.
- *  Modifications released to the public domain.
+ * HUSKYLIB: common defines, types and functions for HUSKY
  *
- *  Use of this file is subject to the restrictions contain in the Squish
- *  MSGAPI0 licence agreement.  Please refer to licence.txt for complete
- *  details of the licencing restrictions.  If you do not find the text
- *  of this agreement in licence.txt, or if you do not have this file,
- *  you should contact Scott Dudley at FidoNet node 1:249/106 or Internet
- *  e-mail Scott.Dudley@f106.n249.z1.fidonet.org.
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
  *
- *  In no event should you proceed to use any of the source files in this
- *  archive without having accepted the terms of the MSGAPI0 licensing
- *  agreement, or such other agreement as you are able to reach with the
- *  author.
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
 
 /* This file contents our own implementation of strftime() function for using

@@ -1,7 +1,6 @@
 /**************************************************************************
  * $Id$
  * Calendar data declarations.
- * This file is part of HUSKYLIB.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
