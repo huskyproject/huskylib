@@ -4,3 +4,8 @@
 *.obj
 *.dsp
 *.plg
+*.o
+*.so
+*.a
+*~
+core

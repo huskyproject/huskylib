@@ -1,0 +1,45 @@
+# Microsoft Visual C++ Makefile
+include version.inc
+
+DYNLIBS = 1
+DEBUG = 0
+
+CC = gcc
+CFLAGS = -I../
+CDEFS= -DUNIX
+ifeq ($(DEBUG), 1)
+	COPT = -Wall -ggdb
+        LFLAGS = -ggdb
+else
+        COPT= -O2
+	LFLAGS = 
+endif
+
+ifeq ($(DYNLIBS), 1)
+	HUSKYLIB = libhuskylnx.so
+else
+	HUSKYLIB = libhuskylnx.a
+endif
+
+OBJ = .o
+
+include makefile.inc
+
+all: $(HUSKYLIB) 
+
+.c.o:
+		$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+
+ifeq ($(DYNLIBS), 1)
+$(HUSKYLIB): $(OBJS)
+		gcc -shared $(LFLAGS) -o $(HUSKYLIB) $(OBJS)
+else
+$(HUSKYLIB): $(OBJS)
+		ar r $(HUSKYLIB) $(OBJS)
+endif
+
+clean:
+		rm *.o *~ core
+
+distclean: clean
+		rm $(HUSKYLIB)
