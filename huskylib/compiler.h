@@ -1236,6 +1236,7 @@ int qq(void)
 #  define O_NOINHERIT      _O_NOINHERIT
 #endif
 
+#if !defined(HAS_UNISTD_H)
 #if !defined (F_OK)
 #define F_OK 0
 #endif
@@ -1247,6 +1248,7 @@ int qq(void)
 #endif
 #if !defined (R_OK)
 #define R_OK 4
+#endif
 #endif
 
 
