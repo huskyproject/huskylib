@@ -67,8 +67,6 @@
 #endif
 
 
-#define FFIND struct ffind
-
 struct ffind
 {
     /* this is the public area of the struct */
@@ -114,6 +112,7 @@ struct ffind
 #endif
 };
 
+typedef struct ffind FFIND;
 
 /*
  * I prefixed the functions below with an additional F in order to
