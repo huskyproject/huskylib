@@ -23,8 +23,9 @@ else
   LFLAGS=$(OPTLFLAGS)
 endif
 
-CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ihuskylib -I.
-LIBS=-L. -l$(LIBNAME)
+CDEFS=-D$(OSTYPE) $(ADDCDEFS) -I$(_H_DIR)
+LIBS=
+#-L. -l$(LIBNAME)
 
 ifeq ($(DYNLIBS), 1)
 all: $(TARGETLIB) $(TARGETDLL).$(VER) $(PROGRAMS)
@@ -32,11 +33,11 @@ else
 all: $(TARGETLIB) $(PROGRAMS)
 endif
 
-SRC_DIR = src/
+_SRC_DIR = src/
 _H_DIR   = huskylib/
 
-%$(_OBJ): $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$*.c
+%$(_OBJ): $(_SRC_DIR)%.c
+	$(CC) $(CFLAGS) $(CDEFS) $(_SRC_DIR)$*.c
 
 $(TARGETLIB): $(OBJS)
 	$(AR) $(AR_R) $(TARGETLIB) $?
@@ -56,7 +57,7 @@ $(TARGETDLL).$(VER): $(OBJS)
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 
-instdyn: $(TARGETLIB) $(TARGETDLL).$(VER)
+install-dynlib: $(TARGETLIB) $(TARGETDLL).$(VER)
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
 	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
@@ -71,19 +72,20 @@ ifneq (~$(LDCONFIG)~, ~~)
 endif
 
 else
-instdyn: $(TARGETLIB)
+install-dynlib:
 
 endif
 
-ifeq ($(DYNLIBS), 1)
-$(PROGRAMS): $(TARGETDLL)
-	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
-	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(LIBS)
-else
+#ifeq ($(DYNLIBS), 1)
+#$(PROGRAMS): $(TARGETDLL).$(VER)
+#	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $(_SRC_DIR)$@.c
+#	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(LIBS) $<
+#else
+#   Build programs static linked only
 $(PROGRAMS): $(TARGETLIB)
-	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
-	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
-endif
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $(_SRC_DIR)$(basename $@).c
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $(basename $@)$(_OBJ) $(TARGETLIB)
+#endif
 
 
 FORCE:
@@ -96,13 +98,20 @@ install-h-dir: FORCE
 
 install-h: install-h-dir $(HEADERS)
 
-install: install-h instdyn
+install-bindir:
+	-$(MKDIR) $(MKDIROPT) $(BINDIR)
+
+install-programs: $(PROGRAMS) install-bindir
+	$(INSTALL) $(IBOPT) $< $(BINDIR)
+
+install-lib: $(TARGETLIB)
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
 	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
-	-$(MKDIR) $(MKDIROPT) $(BINDIR)
-	@list='$(PROGRAMS)'; for p in $$list; do \
-	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
-	done
+
+install: install-dynlib install-lib install-programs install-h
+#	@list='$(PROGRAMS)'; for p in $$list; do \
+#	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
+#	done
 
 
 uninstall:
