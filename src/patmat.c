@@ -41,6 +41,10 @@
 
 
 #include <string.h>
+
+
+#define DLLEXPORT
+#include "huskyext.h"
 #include "huskylib.h"
 
 #define CTLESC '\\'

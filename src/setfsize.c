@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-#include "huskylib.h"
+#include "compiler.h"
 
 #ifdef HAS_DOS_H
 #include <dos.h>
@@ -43,6 +43,10 @@
   #include <unistd.h>
 #endif
 
+#define DLLEXPORT
+#include "huskyext.h"
+
+HUSKYEXT int _fast setfsize(int fd, long size);
 
 #ifdef __DOS__
 

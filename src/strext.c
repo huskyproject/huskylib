@@ -24,6 +24,9 @@
  */
 
 #include <string.h>
+
+#define DLLEXPORT
+#include "huskyext.h"
 #include "huskylib.h"
 
 char *_fast Strip_Trailing(char *str, char strip)

@@ -32,6 +32,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#define DLLEXPORT
+#include "huskyext.h"
+
 #include "huskylib.h"
 
 #ifdef HAS_IO_H
@@ -52,7 +55,7 @@ dword oldGenMsgId(void)
 	return seq;
 }
 
-dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGenMsgId)(void), char **errstr)
+HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGenMsgId)(void), char **errstr)
 {
 	dword seq, n, curtime;
 	FFIND *ff;
@@ -175,7 +178,7 @@ emptydir:
 	}
 }
 
-dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun)
+HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun)
 {
   return GenMsgIdEx(seqdir, max_outrun, NULL, NULL);
 }

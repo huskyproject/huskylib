@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#define DLLIMPORT
 #include "huskylib.h"
 #include "../cvsdate.h"
 

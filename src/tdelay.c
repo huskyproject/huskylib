@@ -24,8 +24,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "huskylib.h"
-
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
 #endif
@@ -34,12 +32,15 @@
 #include <dos.h>
 #endif
 
-#if defined(__OS2__)
-#define INCL_NOPM
-#define INCL_DOS    /* must be before prog.h */
-#endif
+
+#define DLLEXPORT
+#include "huskyext.h"
+HUSKYEXT void _fast tdelay(int);
+
 
 #if defined(__OS2__)
+#define INCL_NOPM
+#define INCL_DOS
 
 #include <os2.h>
 

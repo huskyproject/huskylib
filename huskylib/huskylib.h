@@ -30,27 +30,8 @@
 #include <time.h>
 
 #include "compiler.h"
-/*
- * This is compiler-specific stuff for huskylib only:
- *
- * HUSKYEXT - external variables & external functions call modifier
- *             (usualy 'extern' for static linkage)
- */
 
-#ifdef _MAKE_DLL
-#  if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#      ifndef _HUSKYEXT
-#          define HUSKYEXT __declspec(dllimport)
-#      else
-#          define HUSKYEXT __declspec(dllexport)
-#      endif /* _HUSKYEXT */
-#  else
-#      define HUSKYEXT extern
-#  endif
-#else
-#  define HUSKYEXT extern
-#endif
-
+#include "huskyext.h"
 
 #include "calendar.h"
 #include "cvtdate.h"
@@ -118,7 +99,7 @@ HUSKYEXT void put_dword(byte *ptr, dword value);
 
 
 /*-- genmsgid.c --*/
-HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);  
+HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);
 HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,
 			    dword (*altGenMsgId)(void), char **errstr);
 

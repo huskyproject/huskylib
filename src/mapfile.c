@@ -27,14 +27,24 @@
  * See also http://www.gnu.org, license may be found here.
 */
 
+#include <sys/types.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "compiler.h"
+
+#define DLLEXPORT
+#include "huskyext.h"
+
+
 
 #if defined(__NT__)
 /* WIN32 version */
 #define STRICT
 #include <windows.h>
 
-void*MapFile(char*fname)
+HUSKYEXT void*MapFile(char*fname)
 {   long len;
     HANDLE h, hm;
 
@@ -50,12 +60,12 @@ void*MapFile(char*fname)
 
 #elif defined(__UNIX__)
 /* tested on linux-glibc2, freebsd 4.2 */
-#include <sys/types.h>
 #include <sys/mman.h>
-#include <fcntl.h>
+#ifdef HAS_UNISTD_H
 #include <unistd.h>
+#endif
 
-void* MapFile( char* fname )
+HUSKYEXT void* MapFile( char* fname )
 {
     int fd;
     int len;
@@ -68,15 +78,15 @@ void* MapFile( char* fname )
 #else
 /* No file mapping. Just read file to memory
    please check include file names/dirs for your OS */
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
 #ifdef HAS_IO_H
 #include <io.h>
 #endif
+#ifdef HAS_UNISTD_H
+#include <unistd.h>
+#endif
 
 
-void* MapFile(char* fname)
+HUSKYEXT void* MapFile(char* fname)
 {
     int fd;
     long len;

@@ -23,6 +23,8 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+#define DLLEXPORT
+
 #include "huskylib.h"
 
 char weekday[][10] =

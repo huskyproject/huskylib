@@ -23,6 +23,9 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+
+#define DLLEXPORT
+#include "huskyext.h"
 #include "huskylib.h"
 
 #ifndef __LITTLE_ENDIAN__

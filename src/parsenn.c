@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+
+#define DLLEXPORT
+#include "huskyext.h"
 #include "huskylib.h"
 
 

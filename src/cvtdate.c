@@ -26,6 +26,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>             /* for memcpy */
+
+#define DLLEXPORT
+
 #include "huskylib.h"
 
 static int is_dst = -1;

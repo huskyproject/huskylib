@@ -29,6 +29,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+#define DLLEXPORT
+#include "huskyext.h"
+
 #include "huskylib.h"
 
 #ifdef HAS_DIRECT_H

@@ -37,6 +37,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DLLEXPORT
+
 #include "huskylib.h"
 
 #ifdef HAS_UNISTD_H

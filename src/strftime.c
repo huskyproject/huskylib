@@ -33,6 +33,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DLLEXPORT
+#include "huskyext.h"
 #include "huskylib.h"
 
 

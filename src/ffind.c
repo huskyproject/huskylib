@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#define DLLEXPORT
+
 #include "huskylib.h"
 
 #if defined(HAS_DIR_H)
