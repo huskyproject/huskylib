@@ -1,19 +1,19 @@
 
                   HUSKYLIB license notes.
 
-HUSKYLIB is a part of The HUSKY Fidonet Software project,
+HUSKYLIB is a part of the HUSKY Fidonet Software Project,
 see http://husky.sourceforge.net for details.
 
-Initially HUSKYLIB compose from sources moved from two libraries:
-"SMAPI; Modified Squish MSGAPI" and "FIDOCONFIG - library for fidonet configs".
+HUSKYLIB is a library of commonly-used functions in the Husky project
+and combines the following libraries: "SMAPI; Modified Squish MSGAPI"
+and "FIDOCONFIG - library for fidonet configs".
 
-FIDOCONFIG a licensed on LGPL.
+Fidoconfig is distributed on the GNU LGPL terms
 
-Squish MSGAPI0 is copyright 1991 by Scott J. Dudley on own public domain
-license.
+Squish MSGAPI0 is copyright 1991 by Scott J. Dudley on own license.
+Scott J. Dudley agreed to change SMAPI license to LGPL at 2003 year.
 
-In 2003 year Scott J. Dudley agree to change SMAPI license to LGPL and now
-HUSKYLIB license is following:
+As a result, HUSKYLIB license is following (LGPL):
 
 HUSKYLIB is free software; you can redistribute it and/or
 modify it under the terms of the GNU Library/Lesser General Public
@@ -29,4 +29,4 @@ You should have received a copy of the GNU Library/Lesser General Public
 License along with this library; see file COPYING. If not, write to the
 Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-See also http://www.gnu.org, license may be found here.
+See also http://www.gnu.org, license text may be found here.
