@@ -1,5 +1,5 @@
 # $Id$
-# Makefile to build HUSKYLIB with Mingw32 from Cygwin
+# Makefile to build HUSKYLIB/win32 with Mingw32 from Cygwin.
 # No support for the Husky build environment.
 
 # Uncomment this for compile info for gdb and display more compiler warnings
@@ -49,6 +49,9 @@ ARFLAGS	= rs
 # options for $(RM) program
 RMFLAGS	= -f
 
+
+## Library filename elements ##
+
 # Prefix to construct static library name
 LIBPREFIX=lib
 # Prefix to construct dll name
@@ -58,13 +61,20 @@ LIBSUFFIX=cyg
 # Suffix to construct dll name
 DLLSUFFIX=
 
+## make directives ##
+
 .PHONY:	distclean clean all static dll programs default
+
+## make rules ##
 
 default:
 	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
 	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
-	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
+#	@echo Run 'make dllprograms' to build dll version of programs \($(PROGRAMS)\)
+#	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
 	@echo Run 'make all' to build all above
+
+## include common makefiles part ##
 
 include makefile.inc
 
@@ -89,7 +99,8 @@ all:	static dll programs
 
 static:	$(TARGETLIB)
 dll:	$(TARGETDLL)
-programs:  $(PROGRAMS)
+programs: $(TARGETLIB) $(PROGRAMS)
+dllprograms: $(TARGETDLL) $(PROGRAMS)
 
 %$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
 	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)

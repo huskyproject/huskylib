@@ -39,6 +39,8 @@ _LIB=	.lib
 _EXE=	.exe
 _DLL=
 
+## Library filename elements ##
+
 # Prefix to construct static library name
 LIBPREFIX=
 # Prefix to construct dll name

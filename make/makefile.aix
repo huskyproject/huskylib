@@ -20,10 +20,11 @@
 
 ## programs ##
 
-CC=	cc
-AR=	ar
-RANLIB= ranlib
-RM=	rm
+CC	= cc
+AR	= ar
+RANLIB	= ranlib
+RM	= rm
+INSTALL	= install
 
 ## file suffixes ##
 
@@ -52,6 +53,8 @@ ARFLAGS	= r
 # options for $(RM) program
 RMFLAGS	= -f
 
+## Library filename elements ##
+
 # Prefix to construct static library name
 LIBPREFIX=lib
 # Prefix to construct dll name
@@ -61,12 +64,23 @@ LIBSUFFIX=aix
 # Suffix to construct dll name
 DLLSUFFIX=aix
 
+## make directives ##
+
+
+## Default make rule ##
+
+all: $(TARGETLIB)
+
+## include common makefiles part ##
 
 include makefile.inc
 
+# Additions (add into end of strings)
+LIBS	+=
+
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
-all: $(TARGETLIB)
+## make rules ##
 
 #%$(_EXE): %$(_C) $(TARGETLIB)
 #	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)

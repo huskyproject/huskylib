@@ -12,7 +12,9 @@
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
 
 
-VERH	= 0.1
+VERMAJOR= 0
+VERMINOR= 1
+VERH	= $(VERMAJOR).$(VERMINOR)
 VER	= $(VERH).0
 
 OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
@@ -39,3 +41,4 @@ H_DIR	=../h/
 
 TARGETLIB = $(LIBPREFIX)$(LIBNAME)$(LIBSUFFIX)$(_LIB)
 TARGETDLL = $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(_DLL)
+TARGET_H  = *.h

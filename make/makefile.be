@@ -16,6 +16,7 @@ GCC	= gcc
 AR	= ar
 RANLIB	= ranlib
 RM	= rm
+INSTALL	= install
 
 
 ## file suffixes ##
@@ -25,6 +26,7 @@ _OBJ	= .o
 _LIB	= .a
 _EXE	= .exe
 _DLL	= .dll
+
 
 ## program options ##
 
@@ -48,6 +50,9 @@ ARFLAGS	= r
 # options for $(RM) program
 RMFLAGS	= -f
 
+
+## Library filename elements ##
+
 # Prefix to construct static library name
 LIBPREFIX=lib
 # Prefix to construct dll name
@@ -57,19 +62,32 @@ LIBSUFFIX=be
 # Suffix to construct dll name
 DLLSUFFIX=
 
+
+## make directives ##
+
 .PHONY:	distclean clean all programs default
+
+
+## Default make rule ##
 
 default: all
 
+
+## include common makefiles part ##
+
 include makefile.inc
+
+
+## Additions (add into end of strings) ##
 
 # libraries need to build binary file
 LIBS	+=
 
-# Append includes dir
+# Append includes dir and debug code generate options (if defined)
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
-# Thunderbirds are go!
+
+## make rules ##
 
 all: $(TARGETLIB)
 
