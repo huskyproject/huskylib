@@ -1,3 +1,11 @@
+2003-06-26 Thursday 04:58  andr_lukyanov
+
+	* huskylib/ffind.h (1.9): Fixed MSVC static compilation
+
+2003-06-25 Wednesday 14:44  mche
+
+	* src/ffind.c (1.14): check hidden file attributes in win32
+
 2003-06-18 Wednesday 03:37  andr_lukyanov
 
 	* make/makefile.emx (1.5): Fixed compilation.
