@@ -79,12 +79,12 @@ void _fast tdelay(int msecs)
     DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
 }
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
@@ -101,12 +101,12 @@ void _fast tdelay(int msecs)
         ;
 }
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
@@ -118,12 +118,12 @@ void _fast tdelay(int msecs)
     _sleep((dword)msecs);
 }
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
@@ -144,14 +144,21 @@ void _fast tdelay(int msecs)
 }
 
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
-    return GetTickCount(); 
+    dword now;
+    now = GetTickCount();
+    timer_ctx->sec = now / 1000;
+    timer_ctx->msec = now % 1000;
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
-    return GetTickCount() - startVal; 
+    dword now;
+    dword diff;
+    now = GetTickCount();
+    diff = (((now/1000) - timer_ctx->sec) * 1000) + ((now % 1000) - timer_ctx->msec);
+    return diff;
 }
 
 #elif defined(__BEOS__)
@@ -163,32 +170,41 @@ void _fast tdelay(int msecs)
     snooze(msecs*1000l);
 }
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
 
 #elif defined(__UNIX__)
+#include <sys/time.h>
+#include <unistd.h>
 
 void _fast tdelay(int msecs)
 {
     usleep(msecs*1000l);
 }
 
-dword husky_SetTimer()
+void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    timer_ctx->sec = now.tv_sec;
+    timer_ctx->msec = now.tv_usec / 1000;
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    struct timeval now;
+    dword diff;
+    gettimeofday(&now, NULL);
+    diff = ((now.tv_sec - timer_ctx->sec) * 1000) + ((now.tv_usec / 1000) - timer_ctx->msec);
+    return diff;
 }
 
 #elif defined(__WATCOMC__)
@@ -196,12 +212,13 @@ void _fast tdelay(int msecs)
 {
     sleep(msecs);
 }
-dword husky_SetTimer()
+
+void husky_SetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }
 
-dword husky_GetTimer(dword startVal)
+dword husky_GetTimer(hs_time *timer_ctx)
 {
     return 0; 
 }

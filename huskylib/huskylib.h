@@ -97,10 +97,16 @@ HUSKYEXT void adaptcase(char *);
 /* Compiler-independent sleep() implementation with precisious to milliseconds */
 HUSKYEXT void _fast tdelay(int);
 
+typedef struct {
+    unsigned long sec;   /* seconds */
+    unsigned long msec;  /* miliseconds */
+} hs_time;
 
-HUSKYEXT dword husky_SetTimer();
+/* Get snapshot of current time with precision up to miliseconds */
+HUSKYEXT void husky_SetTimer(hs_time *timer_ctx);
 
-HUSKYEXT dword husky_GetTimer(dword startVal);
+/* Return difference between now and previous time snapshot */
+HUSKYEXT dword husky_GetTimer(hs_time *timer_ctx);
 
 
 /*-- genmsgid.c --*/
