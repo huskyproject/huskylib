@@ -69,18 +69,20 @@ DLLSUFFIX=mvc
 
 ## make directives ##
 
+## include common makefiles part ##
+
+include makefile.inc
 
 ## make rules ##
 
 default:
-	@echo Run 'make dll' to build dll version of library \($(TARGETDLL)\)
-	@echo Run 'make static' to build static version of library \($(TARGETLIB)\)
-	@echo Run 'make dllprograms' to build dll version of library and programs \($(TARGETDLL) $(PROGRAMS)\)
-	@echo Run 'make programs' to build static version of library and programs \($(TARGETLIB) $(PROGRAMS)\)
+	@echo Run 'make dll' to build dll version of library ($(TARGETDLL))
+	@echo Run 'make static' to build static version of library ($(TARGETLIB))
+	@echo Run 'make dllprograms' to build dll version of library and programs
+	@echo "   ($(TARGETDLL) $(PROGRAMS))"
+	@echo Run 'make programs' to build static version of library and programs
+	@echo "   ($(TARGETLIB) $(PROGRAMS))"
 
-## include common makefiles part ##
-
-include makefile.inc
 
 # libraries need to build binary file
 #LIBS	= $(LIBS)
@@ -96,7 +98,6 @@ CFLAGS	= $(CFLAGS) -I$(H_DIR) $(DEBUG)
 all:	static programs
 
 static:	$(TARGETLIB)
-dll:	$(TARGETDLL)
 programs: $(TARGETLIB) $(PROGRAMS)
 dllprograms: $(TARGETDLL) $(PROGRAMS)
 
@@ -110,10 +111,9 @@ dllprograms: $(TARGETDLL) $(PROGRAMS)
 $(TARGETLIB):	$(OBJS)
 	$(AR) $(ARFLAGS) $(LIBNAMEOPT)$@ $**
 
-$(TARGETDLL): $(OBJS)
-	-$(RM) $(RMOPT) *$(_OBJ)
-	!$(MAKE) -f makefile.mvc CFLAGS="$(CFLAGS) $(DLCFLAGS)" $**
-	$(LINK) $(LINKFLAGS) $(LIBNAMEOPT)$@ $(DLLS) $**
+dll:
+	!$(MAKE) -f makefile.mvc CFLAGS="$(CFLAGS) $(DLCFLAGS)" $(OBJS)
+	$(LINK) $(LINKFLAGS) $(LIBNAMEOPT)$(TARGETDLL) $(DLLS) $(OBJS)
 
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
