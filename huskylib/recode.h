@@ -71,12 +71,13 @@ HUSKYEXT VOID recodeToInternalCharset( CHAR *string);
  */
 HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
 
-/* Read specified translate table from file
+/* Read translate tables from file
+ * 1st parameter: input table file name (convert to internal charset)
+ * 2nd parameter: output table file name (convert to transport charset)
+ * Specify NULL instead file name if don't want set table
+ * Return 0 if success.
  */
-HUSKYEXT void getctab(CHAR *dest,  UCHAR *charMapFileName);
-
-HUSKYEXT CHAR *intab;
-HUSKYEXT CHAR *outtab;
+HUSKYEXT int getctabs(UCHAR *intabFileName, UCHAR *outtabFileName );
 
 #ifdef __cplusplus
 }

@@ -156,10 +156,12 @@ HUSKYEXT int sstrnicmp(const char *str1, const char *str2, size_t length);
 /* safety string envelope (use this in functions calls) */
 #define sstr(ss) ( ss ? ss : "" )
 
-/* strsep.c */
+
 HUSKYEXT char *strseparate(register char **stringp, register const char *delim);
 
 HUSKYEXT char *extract_CVS_keyword(char *str);
+
+HUSKYEXT int ctoi(const char *s);
 
 #ifdef __cplusplus
 }

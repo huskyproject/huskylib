@@ -62,8 +62,10 @@
 
 /***  Declarations & defines  ***********************************************/
 
-CHAR *intab  = NULL;
-CHAR *outtab = NULL;
+static CHAR *intab  = NULL;
+static CHAR *outtab = NULL;
+
+static int getctab(CHAR *dest, UCHAR *charMapFileName );
 
 /***  Implementation  *******************************************************/
 
@@ -113,29 +115,34 @@ int c;
 
 }
 
-
-HUSKYEXT int ctoi(CHAR *s)
-{
-	char *foo;
-	unsigned long res = strtoul((char*)s, &foo, 0);
-	if (*foo)	/* parse error */
-		return 0;
-	return (int)res;
+/* Read translate tables from file
+ * 1st parameter: input table file name (convert to internal charset)
+ * 2nd parameter: output table file name (convert to transport charset)
+ * Specify NULL instead file name if don't want set table
+ * Return 0 if success.
+ */
+HUSKYEXT int getctabs(UCHAR *intabFileName, UCHAR *outtabFileName )
+{ int rc=0;
+  if(intabFileName) rc += getctab(intab,intabFileName);
+  if(outtabFileName) rc += getctab(outtab,outtabFileName);
+  return rc;
 }
 
-HUSKYEXT void getctab(CHAR *dest, UCHAR *charMapFileName )
+/* Read specified translate table from file
+ */
+static int getctab(CHAR *dest, UCHAR *charMapFileName )
 {
 	FILE *fp;
 	UCHAR buf[512],*p,*q;
 	int in,on,count;
-	int line;
+	int line, rc=0;
 
 	if( !intab || !outtab ) initCharsets();
 
 	if ((fp=fopen((char *)charMapFileName,"r")) == NULL)
 	 {
 		fprintf(stderr,"getctab: cannot open mapchan file \"%s\"\n", charMapFileName);
-		return ;
+		return 1;
 	 }
 
 	count=0;	
@@ -148,26 +155,20 @@ HUSKYEXT void getctab(CHAR *dest, UCHAR *charMapFileName )
 
 		if (p && q)
 		{
-#if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
-			in = ctoi((signed char *)p);
-#else
 			in = ctoi((char *)p);
-#endif
 			if (in > 255) {
 				fprintf(stderr, "getctab: %s: line %d: char val too big\n", charMapFileName, line);
+				rc = 1;
 				break;
 			}
-#if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
-			on=ctoi((signed char *)q);
-#else
 			on=ctoi((char *)q);
-#endif
 			if (in && on)
                         {
                                 if( count++ < 256 ) dest[in]=(char)on;
                                 else
                                 {
-                                        fprintf(stderr,"getctab: char map table \"%s\" is big\n",charMapFileName);
+                                        fprintf(stderr,"getctab: char map table \"%s\" is too big\n",charMapFileName);
+                                        rc = 1;
                                         break;
                                 }
                         }
@@ -176,5 +177,5 @@ HUSKYEXT void getctab(CHAR *dest, UCHAR *charMapFileName )
 	fclose(fp);
 	
 	w_log('2',"read recoding table from %s", charMapFileName);
-	return ;
+	return rc;
 }

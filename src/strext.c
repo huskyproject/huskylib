@@ -40,6 +40,17 @@
 
 /***  Implementation  *******************************************************/
 
+HUSKYEXT int ctoi(const char *s)
+{
+  char *foo;
+  unsigned long res = strtoul(s, &foo, 0);
+  if (*foo)	/* parse error */
+    return 0;
+  if (res>(((unsigned)-1)>>1))  /* Too big */
+    return 0;
+  return (int)res;
+}
+
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
 {
     int x;
