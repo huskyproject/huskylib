@@ -1,3 +1,17 @@
+2003-03-18 Tuesday 13:03  stas_degteff
+
+	* huskylib/dirlayer.h (1.4), src/dirlayer.c (1.3): New
+	implementation for directory entries operations: husky_opendir(),
+	husky_readdir(), husky_closedir(), husky_rewinddir()
+
+2003-03-18 Tuesday 13:02  stas_degteff
+
+	* huskylib/ffind.h (1.7): Replace define to typedef: FFIND
+
+2003-03-18 Tuesday 13:01  stas_degteff
+
+	* src/ffind.c (1.11): Fix function name: FindInfo() to FFindInfo()
+
 2003-03-17 Monday 19:46  stas_degteff
 
 	* make/makefile.wcx (1.2): Try to build using Watcom C
