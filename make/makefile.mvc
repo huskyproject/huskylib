@@ -3,7 +3,7 @@
 
 CC=     cl
 CFLAGS= -nologo -Zp1
-CDEFS=  -I..\h -D__NT__ -D_CONSOLE -DPROCESSOR_ARCHITECTURE="$(PROCESSOR_ARCHITECTURE)"
+CDEFS=  -I..\h -D__NT__ -D_CONSOLE
 COPT=   -O2
 TLIB=    lib -nologo
 _OBJ=	.obj
