@@ -1,3 +1,7 @@
+2002-10-28 Monday 23:37  pgul
+
+	* afixcmd.h (1.2), afixcmn.c (1.2): Change createKludges() args
+
 2002-09-21 Saturday 12:57  pgul
 
 	* fscmn.c (1.2): cosmetic fix
