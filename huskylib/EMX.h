@@ -49,7 +49,6 @@
 #  endif
 
 #  define mymkdir(a) mkdir((a), 0)
-#  define getpid() _getpid()
 
    int unlock(int handle, long ofs, long length);
    int lock(int handle, long ofs, long length);
@@ -60,21 +59,26 @@
 #  define _XPENTRY
 #  define HUSKYEXT extern
 
+#  define mysleep(x) sleep(x)
+#  define HAS_sleep     1  /* sleep(): stdlib.h, unistd.h */
 #  define HAS_snprintf  1
 #  define HAS_vsnprintf 1
-#  define HAS_getpid    1  /* getpid() in process.h */
+#  define HAS_strlwr    1  /* strlwr() in string.h */
+#  define HAS_strupr    1  /* strupr() in string.h */
+#  define HAS_getpid    1  /* getpid() in process.h, unistd.h */
 #  define HAS_spawnvp   1  /* spawnvp() in process.h */
 #  define HAS_strftime  1  /* strftime() in time.h  */
 #  define HAS_mktime    1  /* mktime() in time.h */
 #  define HAS_popen_close 1 /* popen(); pclose() */
 #  define HAS_sopen     4   /* sopen() : in io.h, 4 parameters */
 
+#  define HAS_DOS_H     1  /* use "#include <dos.h>" for _int86 () etc. */
 #  define HAS_DIRENT_H  1  /* use "#include <dirent.h>" for opendir() etc. */
 #  define HAS_IO_H      1  /* use "#include <io.h>" */
 #  define HAS_SHARE_H   1  /* may use "#include <share.h> */
 #  define HAS_UNISTD_H  1  /* use "#include <unistd.h> */
 #  define HAS_SIGNAL_H  1  /* <signal.h> */
-#  define HAS_PROCESS_H   /* may use "#include <process.h> */
+#  define HAS_PROCESS_H 1  /* may use "#include <process.h> */
 
 #  define USE_STAT_MACROS
 
@@ -94,5 +98,10 @@ typedef unsigned short ushort;
 
 typedef signed long slong;
 typedef unsigned long ulong;
+
+#define HAS_INT64
+typedef long long int64;
+typedef signed long long sint64;
+typedef unsigned long long uint64;
 
 #endif

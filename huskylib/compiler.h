@@ -114,6 +114,7 @@
    * USE_STAT_MACROS     - may use stat() macro and non-POSIX (important!)
    *                       S_ISREG and S_ISDIR macros. (See fexist.c)
    *
+   * HAS_INT64           - "64 bit integer" type exists (int64, sint64, uint64)
    *
    ***************************************************************************
    * Functions "my*" & etc
@@ -1116,6 +1117,7 @@ int qq(void)
 #  define O_RDWR      _O_RDWR
 #endif
 
+#include <sys/types.h> /* required for sys/stat.h in EMX */
 #include <sys/stat.h>
 #if !defined(S_IFMT) && defined(_S_IFMT)
 #  define S_IFMT      _S_IFMT
