@@ -17,6 +17,7 @@ LIBNAME	= husky
 # Version
 VERMAJOR= 1
 VERMINOR= 9
+VERPATCH= 0
 VERH	= $(VERMAJOR).$(VERMINOR)
 VER	= $(VERH).0
 
@@ -24,12 +25,13 @@ VER	= $(VERH).0
 
 OBJS1	= adcase$(_OBJ) calendar$(_OBJ) cmpfname$(_OBJ) crc$(_OBJ) cvtdate$(_OBJ)
 OBJS2	= dirlayer$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
-OBJS3	= getfree$(_OBJ) ioutil$(_OBJ) log$(_OBJ) locking$(_OBJ)
+OBJS3	= genverst$(_OBJ) getfree$(_OBJ) ioutil$(_OBJ) log$(_OBJ) locking$(_OBJ)
 OBJS4	= mapfile$(_OBJ) memory$(_OBJ) qksort$(_OBJ) parsenn$(_OBJ)
 OBJS5   = patmat$(_OBJ) recode$(_OBJ) setfsize$(_OBJ) strext$(_OBJ)
-OBJS6   = strftime$(_OBJ) temp$(_OBJ) tdelay$(_OBJ) tree$(_OBJ) xstr$(_OBJ)
+OBJS6   = strftime$(_OBJ) temp$(_OBJ) tdelay$(_OBJ) tree$(_OBJ) version$(_OBJ)
+OBJS7   = xstr$(_OBJ)
 
-OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6)
+OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
 
 # Header files (please sort list to easy check by human)
 

@@ -50,6 +50,23 @@
 #include "unused.h"
 #include "xstr.h"
 
+#ifndef HUSKYLIB_VER_MAJOR
+#define HUSKYLIB_VER_MAJOR  1
+#endif
+#ifndef HUSKYLIB_VER_MINOR
+#define HUSKYLIB_VER_MINOR  9
+#endif
+#ifndef HUSKYLIB_VER_PATCH
+#define HUSKYLIB_VER_PATCH  0
+#endif
+#ifndef HUSKYLIB_VER_BRANCH
+#define HUSKYLIB_VER_BRANCH BRANCH_CURRENT
+#endif
+
+/* values for 5th parameter of GenVersionStr() */
+typedef enum {
+        BRANCH_CURRENT=1, BRANCH_STABLE=2, BRANCH_RELEASE=3
+}branch_t;
 
 /*-- flush.c --*/
 
@@ -218,5 +235,34 @@ HUSKYEXT void _fast qksort(int a[], size_t n);
 /*-- cmpfname.c --*/
 /* compare file names on all known file systems */
 HUSKYEXT int cmpfnames(const char *file1, const char *file2);
+
+
+/*-- genverst.c --*/
+
+/* Generate version string like
+ * programname/platform[-compiler] <major>.<minor>.<patchlevel>-<branch> [<cvs date>]
+ *
+ * Return malloc'ed pointer
+ *
+ * Examples:
+ * "program/w32-MVC 1.2.3-release"
+ * "program/DPMI-DJGPP 1.2.3-stable 01-10-2002"
+ * "program/FreeBSD 1.3.0-current 01-10-2002"
+ *
+ * Require cvs_date.h in module hearer files directory
+ */
+
+HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
+   unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate );
+
+
+/*-- version.c --*/
+
+/* Check version of huskylib library
+ * return zero if test failed; non-zero if passed
+ * test cvs need for DLL version only, using #include <fidoconf/cvsdate.h>
+ */
+HUSKYEXT int CheckHuskylibVersion( int need_major, int need_minor,
+                      int need_patch, branch_t need_branch, const char *cvs );
 
 #endif /*__HUSKYLIB_H__ */
