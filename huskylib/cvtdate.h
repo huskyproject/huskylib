@@ -74,7 +74,7 @@ union stamp_combo
 typedef union stamp_combo SCOMBO;
 
 HUSKYEXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
-union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st);
+HUSKYEXT union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st);
 HUSKYEXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
 HUSKYEXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
 HUSKYEXT char *_fast sc_time(union stamp_combo *sc, char *string);
