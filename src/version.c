@@ -30,8 +30,6 @@
 
 /* export functions from DLL */
 #define DLLEXPORT
-#include "huskyext.h"
-
 #include "huskylib.h"
 
 
