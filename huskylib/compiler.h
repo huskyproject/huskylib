@@ -1193,9 +1193,62 @@ int qq(void)
 #if !defined(O_BINARY) && defined(_O_BINARY)
 #  define O_BINARY    _O_BINARY
 #endif
+#if !defined(O_TEXT) && defined(_O_TEXT)
+#  define O_TEXT      _O_TEXT
+#endif
 #if !defined(O_RDWR) && defined(_O_RDWR)
 #  define O_RDWR      _O_RDWR
 #endif
+#if !defined(O_RDONLY) && defined(_O_RDONLY)
+#  define O_RDONLY      _O_RDONLY
+#endif
+#if !defined(O_WRONLY) && defined(_O_WRONLY)
+#  define O_WRONLY      _O_WRONLY
+#endif
+#if !defined(O_NONBLOCK) && defined(_O_NONBLOCK)
+#  define O_NONBLOCK      _O_NONBLOCK
+#endif
+#if !defined(O_APPEND) && defined(_O_APPEND)
+#  define O_APPEND      _O_APPEND
+#endif
+#if !defined(O_CREAT) && defined(_O_CREAT)
+#  define O_CREAT      _O_CREAT
+#endif
+#if !defined(O_TRUNC) && defined(_O_TRUNC)
+#  define O_TRUNC      _O_TRUNC
+#endif
+#if !defined(O_EXCL) && defined(_O_EXCL)
+#  define O_EXCL      _O_EXCL
+#endif
+#if !defined(O_SYNC) && defined(_O_SYNC)
+#  define O_SYNC      _O_SYNC
+#endif
+#if !defined(O_NOCTTY) && defined(_O_NOCTTY)
+#  define O_NOCTTY      _O_NOCTTY
+#endif
+#if !defined(O_SIZE) && defined(_O_SIZE)
+#  define O_SIZE      _O_SIZE
+#endif
+#if !defined(O_NDELAY) && defined(_O_NDELAY)
+#  define O_NDELAY      _O_NDELAY
+#endif
+#if !defined(O_NOINHERIT) && defined(_O_NOINHERIT)
+#  define O_NOINHERIT      _O_NOINHERIT
+#endif
+
+#if !defined (F_OK)
+#define F_OK 0
+#endif
+#if !defined (X_OK)
+#define X_OK 1
+#endif
+#if !defined (W_OK)
+#define W_OK 2
+#endif
+#if !defined (R_OK)
+#define R_OK 4
+#endif
+
 
 #include <sys/types.h> /* required for sys/stat.h in EMX */
 #include <sys/stat.h>

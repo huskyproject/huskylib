@@ -100,11 +100,7 @@ void* MapFile(char* fname)
     long len;
     void *data;
 
-#ifdef __EMX__ 
     fd = open(fname,O_RDONLY);
-#else
-    fd = open(fname,_O_RDONLY);
-#endif
     if(fd==-1) return NULL;
 
     len = lseek(fd,0,SEEK_END);
