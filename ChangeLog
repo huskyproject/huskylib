@@ -1,3 +1,7 @@
+2003-04-19 Saturday 11:17  mche
+
+	* src/tree.c (1.4): fix some memory leaks
+
 2003-04-12 Saturday 13:54  mche
 
 	* make/HuskylibDll.vcproj (1.1), HuskylibDll.vcproj (1.7): change
