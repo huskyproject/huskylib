@@ -36,7 +36,7 @@
 #include "calendar.h"
 #include "crc.h"
 #include "cvtdate.h"
-#include "dirlayer.h"
+/*#include "dirlayer.h" Don't include this file to prevent conflicts, please!!! */
 #include "fexist.h"
 #include "ffind.h"
 #include "locking.h"
