@@ -211,28 +211,21 @@ typedef   signed char        hCHAR;              /*  1 byte */
 typedef   signed char       hSCHAR;              /*  1 byte */
 typedef unsigned char       hUCHAR;              /*  1 byte */
 
-typedef   signed char        hINT8;              /*  1 byte */
-typedef   signed char       hSINT8;              /*  1 byte */
-typedef unsigned char       hUINT8;              /*  1 byte */
+typedef   signed __int8      hINT8;              /*  1 byte */
+typedef   signed __int8     hSINT8;              /*  1 byte */
+typedef unsigned __int8     hUINT8;              /*  1 byte */
 
-typedef   signed short      hINT16;              /*  2 bytes */
-typedef   signed short     hSINT16;              /*  2 bytes */
-typedef unsigned short     hUINT16;              /*  2 bytes */
+typedef   signed __int16    hINT16;              /*  2 bytes */
+typedef   signed __int16   hSINT16;              /*  2 bytes */
+typedef unsigned __int16   hUINT16;              /*  2 bytes */
 
-typedef   signed int        hINT32;              /*  4 bytes */
-typedef   signed int       hSINT32;              /*  4 bytes */
-typedef unsigned int       hUINT32;              /*  4 bytes */
+typedef   signed __int32    hINT32;              /*  4 bytes */
+typedef   signed __int32   hSINT32;              /*  4 bytes */
+typedef unsigned __int32   hUINT32;              /*  4 bytes */
 
-#ifdef _M_ALPHA    /* 64 bit system */
-  typedef   signed long long  hINT64;              /*  8 bytes */
-  typedef   signed long long hSINT64;              /*  8 bytes */
-  typedef unsigned long long hUINT64;              /*  8 bytes */
-  #define HAS_INT64
-#else
-  typedef   signed long       hINT64;              /* 8 bytes */
-  typedef   signed long      hSINT64;              /* 8 bytes */
-  typedef unsigned long      hUINT64;              /* 8 bytes */
-  #define HAS_INT64
-#endif
+typedef   signed __int64    hINT64;              /*  8 bytes */
+typedef   signed __int64   hSINT64;              /*  8 bytes */
+typedef unsigned __int64   hUINT64;              /*  8 bytes */
+#define HAS_INT64
 
 #endif
