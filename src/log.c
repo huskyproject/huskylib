@@ -203,7 +203,7 @@ void w_log(char key, char *logString, ...)
 
 LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 {
-    char *ErrorMsg, *buf = NULL;
+    char *ErrorMsg;
 
     // avoid recursive call of the exception filter
     SetUnhandledExceptionFilter(UnhandledExceptionFilter);
