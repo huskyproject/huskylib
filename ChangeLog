@@ -1,3 +1,34 @@
+2003-03-07 Friday 20:18  stas_degteff
+
+	* huskylib/: EMX.h (1.3), compiler.h (1.3): Fix non-unix builds
+
+2003-03-07 Friday 19:08  stas_degteff
+
+	* src/gnmsgid.c (1.4): Fix EMX warnings
+
+2003-03-07 Friday 19:05  stas_degteff
+
+	* make/makefile.djg (1.3): Fix DJGPP build after makefile.inc
+	r.1.10
+
+2003-03-07 Friday 19:03  stas_degteff
+
+	* make/makefile.inc (1.12): Fix non-unix GCC builds
+
+2003-03-07 Friday 19:01  stas_degteff
+
+	* huskylib/: BEOS5.h (1.2), DJGPP.h (1.2), EMX.h (1.2), MINGW32.h
+	(1.2), SASC.h (1.2), UNIX.h (1.2), WCD.h (1.2), WCO.h (1.2), WCW.h
+	(1.2), WCX.h (1.2), compiler.h (1.2): Fix sopen usage
+
+2003-03-07 Friday 18:36  stas_degteff
+
+	* src/gnmsgid.c (1.3): Fix locaion of include-file cvsdate.h
+
+2003-03-07 Friday 09:43  stas_degteff
+
+	* License (1.2): Fix spell. Thanks to Val Khokhlov 2:550/180
+
 2003-03-06 Thursday 12:41  sfpavel
 
 	* make/makefile.mvc (1.7), make/makefile.mvcdll (1.6),
