@@ -1,4 +1,4 @@
-# $id$
+# $Id$
 # Legacy makefile to build HUSKYLIB with Borland C for DOS.
 # No support for Husky build environment.
 
@@ -67,8 +67,6 @@ CFLAGS+=-I..\huskylib
 {$(SRCDIR)}.asm$(_OBJ):
 	$(ASM) $(AFLAGS) $<
 	$(AR) $(ARFLAGS) $(TARGETLIB) -+$@
-
-#$(TARGETLIB): $(OBJS1) $(OBJS2) $(OBJS3)
 
 $(TARGETLIB): $(OBJS)
 
