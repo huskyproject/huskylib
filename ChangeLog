@@ -1,3 +1,8 @@
+2003-10-16 Thursday 16:56  stas_degteff
+
+	* huskylib/EMX.h (1.11), src/ffind.c (1.16), src/ioutil.c (1.10),
+	src/mapfile.c (1.8): Fix OS/2 build. Thanks to Andy Luk'yanov
+
 2003-10-13 Monday 10:00  stas_degteff
 
 	* src/ioutil.c (1.9): Fix mingw compiler warning (incompatible
