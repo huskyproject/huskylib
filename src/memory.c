@@ -33,9 +33,7 @@
 #include <compiler.h>
 
 #define DLLEXPORT
-#include <huskyext.h>
-#include <log.h>
-
+#include <huskylib.h>
 
 #ifndef __LITTLE_ENDIAN__
 /*

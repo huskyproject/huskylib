@@ -81,6 +81,7 @@
 			CharacterSet="0">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="2"
 				AdditionalIncludeDirectories="..;.\huskylib"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_DLL;_CONSOLE;_MAKE_DLL"
