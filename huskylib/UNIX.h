@@ -111,8 +111,8 @@
 /* Other OS's may sleep with other functions */
 
 #  if defined(__SUN__)
-#    define mysleep(x) usleep(x*1000000l)
-#    define sleep(x)   usleep(x*1000000l)
+#    define mysleep(x) sleep(x)
+/*#    define sleep(x)   usleep(x*1000000l)*/
 #    define HAS_sleep     1
 #  elif defined(__BSD__) || defined(__CYGWIN__) || defined(__LINUX__) || defined(__APPLE__)
 #    define mysleep(x) sleep(x)
@@ -130,19 +130,20 @@
 #  define HAS_GRP_H            1  /* may be used "#include <grp.h>" */
 #  define HAS_SIGNAL_H         1  /* <signal.h> */
 #  define HAS_SYS_WAIT_H       1  /* <sys/wait.h> */
-#  define USE_STAT_MACROS
+#  define USE_STAT_MACROS      1
 
-#  if defined(__LINUX__) || defined(__BSD__) || defined(__CYGWIN__) || defined(__APPLE__)
-#    define HAS_mktime	/* <time.h> */
-#    define HAS_strftime	/* <time.h> */
-#    define HAS_DIRENT_H  /* <dirent.h> */
+#  if defined(__LINUX__) || defined(__BSD__) || defined(__CYGWIN__) || \
+      defined(__APPLE__) || defined(__SUN__)
+#    define HAS_mktime	  1 /* <time.h> */
+#    define HAS_strftime  1 /* <time.h> */
+#    define HAS_DIRENT_H  1 /* <dirent.h> */
 #  endif
 
 #  if defined(__CYGWIN__)
-#    define HAS_strupr	/* <string.h> from libc (newlib) */
+#    define HAS_strupr 1 /* <string.h> from libc (newlib) */
 #  endif
 
-#  define HAS_popen_close  /* popen(); pclose() */
+#  define HAS_popen_close 1 /* popen(); pclose() */
 
 
 typedef unsigned bit;
