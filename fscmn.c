@@ -9,7 +9,7 @@
 /*
 #ifdef _MAKE_DLL_MVC_
 #	include <Winbase.h>
-#	undef s_addr
+#	undef hs_addr
 #endif
 */  
 
