@@ -1,0 +1,35 @@
+# Makefile for Mingw32 CPD to cross-compile NT executables
+
+CC=gcc
+LIB=ar
+RANLIB=ranlib
+RM=rm
+
+# the space after the o is important!
+CDEFS=	-DNT -D__NT__ -DWINNT -D__CYG__ -I.. -Wall -pedantic -c -Wno-char-subscripts -mno-cygwin
+COPT=	-O2
+
+HUSKYL=	libhuskycyg.a
+
+OBJ=.o
+
+include makefile.inc
+
+default: $(HUSKYL)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+	$(LIB) r $(HUSKYL) $@
+
+$(HUSKYL): $(OBJS)
+	$(RANLIB) $(HUSKYL)
+
+clean:
+	-$(RM) *.o
+
+distclean: clean
+	-$(RM) $(HUSKYL)
+
+
+
+
