@@ -1,3 +1,7 @@
+2003-04-01 Tuesday 07:28  stas_degteff
+
+	* huskylib/MSVC.h (1.12): Remove duplicated line
+
 2003-03-31 Monday 18:49  mche
 
 	* HuskylibDll.vcproj (1.3): vcproj Project File added for building
