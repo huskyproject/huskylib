@@ -215,5 +215,8 @@ HUSKYEXT int patimat(char *raw, char *pat );
 /* quick sort integer array */
 HUSKYEXT void _fast qksort(int a[], size_t n);
 
+/*-- cmpfname.c --*/
+/* compare file names on all known file systems */
+HUSKYEXT int cmpfnames(const char *file1, const char *file2);
 
 #endif /*__HUSKYLIB_H__ */

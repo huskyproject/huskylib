@@ -22,7 +22,7 @@ VER	= $(VERH).0
 
 # Object files (please sort list to easy check by human)
 
-OBJS1	= adcase$(_OBJ) calendar$(_OBJ) crc$(_OBJ) cvtdate$(_OBJ)
+OBJS1	= adcase$(_OBJ) calendar$(_OBJ) cmpfname$(_OBJ) crc$(_OBJ) cvtdate$(_OBJ)
 OBJS2	= dirlayer$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
 OBJS3	= getfree$(_OBJ) ioutil$(_OBJ) log$(_OBJ) locking$(_OBJ)
 OBJS4	= mapfile$(_OBJ) memory$(_OBJ) qksort$(_OBJ) parsenn$(_OBJ)
