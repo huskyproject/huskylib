@@ -99,10 +99,10 @@ HUSKYEXT void _fast tdelay(int);
 
 typedef struct {
     unsigned long sec;   /* seconds */
-    unsigned long msec;  /* miliseconds */
+    unsigned long msec;  /* milliseconds */
 } hs_time;
 
-/* Get snapshot of current time with precision up to miliseconds */
+/* Get snapshot of current time with precision up to milliseconds */
 HUSKYEXT void husky_SetTimer(hs_time *timer_ctx);
 
 /* Return difference between now and previous time snapshot */
