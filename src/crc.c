@@ -39,8 +39,6 @@
 
 /* huskylib: compiler.h */
 #include <compiler.h>
-#include <typesize.h>
-
 
 /* huskylib headers */
 #define DLLEXPORT

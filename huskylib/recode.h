@@ -65,11 +65,11 @@ HUSKYEXT VOID doneCharsets(VOID);
 
 /* Translate using "intab" table
  */
-HUSKYEXT VOID recodeToInternalCharset( CHAR *string);
+HUSKYEXT VOID recodeToInternalCharset(char *string);
 
 /* Translate using "outtab" table
  */
-HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
+HUSKYEXT VOID recodeToTransportCharset(char *string);
 
 /* Read translate tables from file
  * 1st parameter: input table file name (convert to internal charset)
@@ -77,7 +77,7 @@ HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
  * Specify NULL instead file name if don't want set table
  * Return 0 if success.
  */
-HUSKYEXT int getctabs(UCHAR *intabFileName, UCHAR *outtabFileName );
+HUSKYEXT int getctabs(char *intabFileName, char *outtabFileName );
 
 #ifdef __cplusplus
 }

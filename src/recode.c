@@ -62,19 +62,19 @@
 
 /***  Declarations & defines  ***********************************************/
 
-static CHAR *intab  = NULL;
-static CHAR *outtab = NULL;
+static char *intab  = NULL;
+static char *outtab = NULL;
 
-static int getctab(CHAR *dest, UCHAR *charMapFileName );
+static int getctab(char *dest, char *charMapFileName );
 
 /***  Implementation  *******************************************************/
 
 HUSKYEXT void initCharsets(void)
 {
 	int i;
-	intab	= (CHAR *) smalloc(sizeof(CHAR) * 256);
-	outtab	= (CHAR *) smalloc(sizeof(CHAR) * 256);
-	for (i = 0; i < 256; i++) intab[i] = outtab[i] = (CHAR) i;
+	intab	= (char *) smalloc(sizeof(char) * 256);
+	outtab	= (char *) smalloc(sizeof(char) * 256);
+	for (i = 0; i < 256; i++) intab[i] = outtab[i] = (char) i;
 }
 
 HUSKYEXT void doneCharsets(void)
@@ -83,7 +83,7 @@ HUSKYEXT void doneCharsets(void)
 	nfree(outtab);
 }
 
-HUSKYEXT void recodeToInternalCharset(CHAR *string)
+HUSKYEXT void recodeToInternalCharset(char *string)
 {
 int c;
 
@@ -99,7 +99,7 @@ int c;
 
 }
 
-HUSKYEXT void recodeToTransportCharset(CHAR *string)
+HUSKYEXT void recodeToTransportCharset(char *string)
 {
 int c;
 
@@ -121,7 +121,7 @@ int c;
  * Specify NULL instead file name if don't want set table
  * Return 0 if success.
  */
-HUSKYEXT int getctabs(UCHAR *intabFileName, UCHAR *outtabFileName )
+HUSKYEXT int getctabs(char *intabFileName, char *outtabFileName )
 { int rc=0;
   if(intabFileName) rc += getctab(intab,intabFileName);
   if(outtabFileName) rc += getctab(outtab,outtabFileName);
@@ -130,10 +130,10 @@ HUSKYEXT int getctabs(UCHAR *intabFileName, UCHAR *outtabFileName )
 
 /* Read specified translate table from file
  */
-static int getctab(CHAR *dest, UCHAR *charMapFileName )
+static int getctab(char *dest, char *charMapFileName )
 {
 	FILE *fp;
-	UCHAR buf[512],*p,*q;
+	char buf[512],*p,*q;
 	int in,on,count;
 	int line, rc=0;
 
@@ -150,8 +150,8 @@ static int getctab(CHAR *dest, UCHAR *charMapFileName )
 	while (fgets((char*)buf,sizeof(buf),fp))
 	{
 		line++;
-		p=(unsigned char *)strtok((char*)buf," \t\n#");
-		q=(unsigned char *)strtok(NULL," \t\n#");
+		p=(char *)strtok((char*)buf," \t\n#");
+		q=(char *)strtok(NULL," \t\n#");
 
 		if (p && q)
 		{

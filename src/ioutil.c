@@ -91,7 +91,7 @@ HUSKYEXT int fputUINT16(FILE *out, word data)
 #endif
 
 
-HUSKYEXT INT   fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
+HUSKYEXT signed int fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
 {
    size_t i;
 

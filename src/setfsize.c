@@ -115,7 +115,7 @@ HUSKYEXT int _fast setfsize(int fd, long size);
 
   int _fast setfsize(int fd, long size)
   {
-    return ((int)DosSetFileSize((HFILE)fd, (ULONG)size));
+    return ((int)DosSetFileSize((HFILE)fd, (ULONG)size)); /*ULONG & HFILE defined in os2.h*/
   }
 
 #elif defined(__UNIX__)

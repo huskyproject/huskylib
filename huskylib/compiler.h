@@ -1362,4 +1362,14 @@ char *strupr(char *str);
   #define MIN_hSINT64  0x8000000000000000LL
 #endif
 
+#define unsigned_char_max ((unsigned char)-1)
+#define   signed_char_max ((signed char)(((unsigned  char)-1)>>1))
+#define   signed_char_min ((signed char)((((unsigned char)-1)>>1)+1))
+#define unsigned_int_max  ((unsigned int)-1)
+#define   signed_int_max  ((signed int)(((unsigned  int)-1)>>1))
+#define   signed_int_min  ((signed int)((((unsigned int)-1)>>1)+1))
+#define unsigned_long_max ((unsigned long)-1l)
+#define   signed_long_max ((signed long)(((unsigned long)-1l)>>1))
+#define   signed_long_min ((signed long)((((unsigned long)-1l)>>1)+1))
+
 #endif

@@ -121,8 +121,11 @@ HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 #endif
 
         ff->hdir = HDIR_CREATE;
-
+#ifdef __EMX__
+        if (!DosFindFirst((PCSZ) filespec, &ff->hdir, attribute, &findbuf, sizeof(findbuf), &SearchCount, 1L))
+#else
         if (!DosFindFirst((PBYTE) filespec, &ff->hdir, attribute, &findbuf, sizeof(findbuf), &SearchCount, 1L))
+#endif
         {
             ff->ff_attrib = (char)findbuf.attrFile;
             ff->ff_fsize = findbuf.cbFile;

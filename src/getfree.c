@@ -67,7 +67,6 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-#include <typesize.h>
 
 /* huskylib headers */
 #include <log.h>
@@ -97,11 +96,11 @@
 
 #include <windows.h>
 
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
     FARPROC pGetDiskFreeSpaceEx = NULL;
     BOOL rc;
-    ULONG freeSpace = ULONG_MAX;
+    unsigned long freeSpace = unsigned_long_max;
 
 
     pGetDiskFreeSpaceEx = GetProcAddress( GetModuleHandle("kernel32.dll"),
@@ -118,9 +117,8 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
             w_log (LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
         } else {
-            freeSpace = i64FreeBytesToCaller.QuadPart > (ULONGLONG)freeSpace ?
-                        freeSpace :
-                        (ULONG)i64FreeBytesToCaller.QuadPart;
+            if( i64FreeBytesToCaller.QuadPart < unsigned_long_max )
+               freeSpace = (unsigned long)i64FreeBytesToCaller.QuadPart;
             /*  Process GetDiskFreeSpaceEx results. */
         }
     }
@@ -188,10 +186,10 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 #include <os2.h>
 
 
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   FSALLOCATE fsa;
-  ULONG disknum = 0;
+  unsigned long disknum = 0;
   APIRET rc;
 
   if (isalpha (path[0]) && path[1] == ':')
@@ -205,7 +203,7 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
   if (rc)
   {
     w_log (LL_ERR, "DosQueryFSInfo error: return code = %u", rc);
-    return ULONG_MAX;		    /* Assume enough disk space */
+    return unsigned_long_max;		    /* Assume enough disk space */
   }
   else
   {
@@ -237,7 +235,7 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 
 
 #if defined(HAS_SYS_STATFS_H) || defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H) || defined(HAS_SYS_MOUNT_H)
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
 #if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
   struct statvfs sfs;
@@ -250,7 +248,7 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 #endif
   {
     w_log (LL_ERR, "cannot statfs \"%s\", assume enough space", path);
-    return ULONG_MAX;
+    return unsigned_long_max;
   }
   else
   {
@@ -264,10 +262,10 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 }
 
 #else
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
-  return ULONG_MAX;
+  return unsigned_long_max;
 }
 
 #endif
@@ -275,7 +273,7 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 
 #elif defined(__MSC__) || defined(__DJGPP__) /* alternate variand for DJGPP with DOS Fn's error check */
 
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   struct _diskfree_t df;
@@ -297,7 +295,7 @@ printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
 
 #elif defined(__DJGPP__) /* without DOS Fn's error ckeck */
 
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   struct dfree df;
@@ -319,7 +317,7 @@ printf("df.df_bsec=%x\n",  df.df_bsec);
 
 #elif defined(__DOS__) /* call int 0x21 DOS Fn 0x36 */
 
-HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   union REGS in, out;
@@ -367,9 +365,6 @@ printf("out.x.cx=%x bytes per sector\n",out.x.cx);
    return (out.x.ax & 0xffff) * out.x.bx * out.x.cx; /* OK */
   #endif
 
-/*  w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
-  return ULONG_MAX;
-*/
 }
 #else
 
@@ -384,7 +379,7 @@ int main(int argc, char**argv){
 
  if(argc>1) *sdisk = argv[1][0];
 
- f = fc_GetDiskFreeSpace(sdisk);
+ f = husky_GetDiskFreeSpace(sdisk);
  printf("Free space on %s is  %lu\n", sdisk, f);
 
  return 0;

@@ -95,7 +95,9 @@ HUSKYEXT void* MapFile(char* fname);
 
 /* getfree.c */
 /* Check free disk space */
-HUSKYEXT ULONG fc_GetDiskFreeSpace(const char *path);
+/* named husky_GetDiskFreeSpace() to avoid conflict with windows's GetDiskFreeSpace() */
+HUSKYEXT unsigned long husky_GetDiskFreeSpace(const char *path);
+#define fc_GetDiskFreeSpace(p) husky_GetDiskFreeSpace(p)  /*for compatibility with old code; to be removed */
 
 /* ioutil.c */
 HUSKYEXT word getUINT16(FILE *in);
@@ -113,7 +115,7 @@ HUSKYEXT int    fputUINT16(FILE *out, word word);
   FZ:     fputUINT16 writes word into the stream using the order lowByte, highByte.
 */
 
-HUSKYEXT int    fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter);
+HUSKYEXT signed int fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter);
 /*DOC
   Input:  n-1 chars are read at most.
           str is a buffer with the length n.

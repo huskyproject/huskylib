@@ -76,7 +76,7 @@ HUSKYEXT void _fast tdelay(int);
 
   void _fast tdelay(int msecs)
   {
-      DosSleep((ULONG)msecs);
+      DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
   }
 
 #elif defined(__DOS__)
