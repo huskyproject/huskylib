@@ -54,7 +54,7 @@
 #ifdef HAS_SYS_STATFS_H
 #include <sys/statfs.h>
 #endif
-#ifdef SYS_STATVFS_H
+#ifdef HAS_SYS_STATVFS_H
 #include <sys/statvfs.h>
 #endif
 #ifdef HAS_SYS_VFS_H

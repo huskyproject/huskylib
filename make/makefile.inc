@@ -35,7 +35,7 @@ OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6)
 
 HEADERS1= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
 HEADERS2= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
-HEADERS3= adcase.h calendar.h compiler.h crc.h cvtdate.h dirlayer.h
+HEADERS3= calendar.h compiler.h crc.h cvtdate.h dirlayer.h
 HEADERS4= fexist.h ffind.h huskyext.h huskylib.h log.h locking.h memory.h
 HEADERS5= parsenn.h recode.h strext.h temp.h tree.h typesize.h
 HEADERS6= unused.h vixie.h xstr.h

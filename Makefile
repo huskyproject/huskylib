@@ -120,7 +120,7 @@ uninstall:
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
 	-cd $(BINDIR) ;\
-	-$(RM) $(RMOPT) $(PROGRAMS)
+	$(RM) $(RMOPT) $(PROGRAMS)
 
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
