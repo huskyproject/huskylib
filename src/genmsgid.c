@@ -65,7 +65,7 @@ dword oldGenMsgId(void)
 	return seq;
 }
 
-HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGenMsgId)(void), char **errstr)
+dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGenMsgId)(void), char **errstr)
 {
 	dword seq, n, curtime;
 	FFIND *ff;
@@ -188,7 +188,7 @@ emptydir:
 	}
 }
 
-HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun)
+dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun)
 {
   return GenMsgIdEx(seqdir, max_outrun, NULL, NULL);
 }

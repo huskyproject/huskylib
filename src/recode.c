@@ -69,7 +69,7 @@ static int getctab(char *dest, char *charMapFileName );
 
 /***  Implementation  *******************************************************/
 
-HUSKYEXT void initCharsets(void)
+void initCharsets(void)
 {
 	int i;
 	intab	= (char *) smalloc(sizeof(char) * 256);
@@ -77,13 +77,13 @@ HUSKYEXT void initCharsets(void)
 	for (i = 0; i < 256; i++) intab[i] = outtab[i] = (char) i;
 }
 
-HUSKYEXT void doneCharsets(void)
+void doneCharsets(void)
 {
 	nfree(intab);
 	nfree(outtab);
 }
 
-HUSKYEXT void recodeToInternalCharset(char *string)
+void recodeToInternalCharset(char *string)
 {
 int c;
 
@@ -99,7 +99,7 @@ int c;
 
 }
 
-HUSKYEXT void recodeToTransportCharset(char *string)
+void recodeToTransportCharset(char *string)
 {
 int c;
 
@@ -121,7 +121,7 @@ int c;
  * Specify NULL instead file name if don't want set table
  * Return 0 if success.
  */
-HUSKYEXT int getctabs(char *intabFileName, char *outtabFileName )
+int getctabs(char *intabFileName, char *outtabFileName )
 { int rc=0;
   if(intabFileName) rc += getctab(intab,intabFileName);
   if(outtabFileName) rc += getctab(outtab,outtabFileName);

@@ -43,7 +43,7 @@
  * "program/FreeBSD 1.3.0-current 01-10-2002"
  * Return malloc'ed pointer
  */
-HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
+ char *GenVersionStr( const char *programname, unsigned major,
    unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate )
 {
   char *_version_str=NULL; /* compose to this var */

@@ -143,7 +143,7 @@ void pascal far flush_handle2(int fh)
 
 #elif defined (__DOS__)
 
-HUSKYEXT void pascal far flush_handle2(int fd)
+void pascal far flush_handle2(int fd)
 {
  union REGS in, out;
 
@@ -179,7 +179,7 @@ HUSKYEXT void pascal far flush_handle2(int fd)
  *  for this tip in his _Advanced MS-DOS_ book.
  */
 
-HUSKYEXT void _fast flush_handle(FILE * fp)
+void _fast flush_handle(FILE * fp)
 {
     fflush(fp);
 

@@ -110,7 +110,7 @@ int MKSTEMPS( char *tempfilename )
  * Return file descriptor or NULL
  */
 
-HUSKYEXT FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name)
+FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name)
 { int tempfh=-1; FILE *tempfd=NULL; char *tempfilename=NULL;
   char *ii=0;
 
@@ -160,7 +160,7 @@ HUSKYEXT FILE *createTempFileIn(const char *path, const char *ext, char mode, ch
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-HUSKYEXT FILE *createTempTextFile(char *tempDir, char **name)
+FILE *createTempTextFile(char *tempDir, char **name)
 { if(tempDir)
     return createTempFileIn(tempDir, TEMPFILESUFFIX, 't', name);
   else{
@@ -176,7 +176,7 @@ HUSKYEXT FILE *createTempTextFile(char *tempDir, char **name)
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-HUSKYEXT FILE *createTempBinFile(char *tempDir, char **name)
+FILE *createTempBinFile(char *tempDir, char **name)
 { if(tempDir)
     return createTempFileIn(tempDir, TEMPFILESUFFIX, 'b', name);
   else{

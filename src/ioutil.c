@@ -68,7 +68,7 @@
 #pragma warn -sig
 #endif
 
-HUSKYEXT word getUINT16(FILE *in)
+word getUINT16(FILE *in)
 {
    unsigned char dummy;
 
@@ -76,7 +76,7 @@ HUSKYEXT word getUINT16(FILE *in)
    return (dummy + (unsigned char) getc(in) * 256);
 }
 
-HUSKYEXT int fputUINT16(FILE *out, word data)
+int fputUINT16(FILE *out, word data)
 {
   unsigned char dummy;
 
@@ -91,7 +91,7 @@ HUSKYEXT int fputUINT16(FILE *out, word data)
 #endif
 
 
-HUSKYEXT signed int fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
+signed int fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
 {
    size_t i;
 
@@ -117,7 +117,7 @@ HUSKYEXT signed int fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *fil
    return n;
 }
 
-HUSKYEXT char *shell_expand(char *str)
+char *shell_expand(char *str)
 {
     char *slash = NULL, *ret = NULL, c;
 #ifdef __UNIX__
@@ -186,7 +186,7 @@ HUSKYEXT char *shell_expand(char *str)
 #define MOVE_FILE_BUFFER_SIZE 128000
 #endif
 
-HUSKYEXT int move_file(const char *from, const char *to, const int force_rewrite)
+int move_file(const char *from, const char *to, const int force_rewrite)
 {
 #if !(defined(USE_SYSTEM_COPY) && (defined(__NT__) || defined(__OS2__)))
     int rc;
@@ -256,7 +256,7 @@ HUSKYEXT int move_file(const char *from, const char *to, const int force_rewrite
 }
 
 	
-HUSKYEXT int copy_file(const char *from, const char *to, const int force_rewrite)
+int copy_file(const char *from, const char *to, const int force_rewrite)
 {
 #if !(defined(USE_SYSTEM_COPY) && (defined(__NT__) || defined(OS2)))
     char *buffer;
@@ -434,7 +434,7 @@ static char **mk_lst(const char *a)
     return list;
 }
 
-HUSKYEXT int cmdcall(const char *cmd)
+int cmdcall(const char *cmd)
 { int cmdexit=-1;
   int signal;
   char **list;
@@ -461,7 +461,7 @@ int cmdcall(const char *cmd)
 */
 #endif
 
-HUSKYEXT int lockFile(const char *lockfile, int advisoryLock)
+int lockFile(const char *lockfile, int advisoryLock)
 {
     int fh = -1;
 
@@ -503,7 +503,7 @@ HUSKYEXT int lockFile(const char *lockfile, int advisoryLock)
     return fh;
 }
 
-HUSKYEXT int FreelockFile(const char *lockfile, int fh)
+int FreelockFile(const char *lockfile, int fh)
 {
     if(fh > 0)
     	close(fh);
@@ -514,7 +514,7 @@ HUSKYEXT int FreelockFile(const char *lockfile, int fh)
 }
 
 /* converts decimal value to octal. useful for chmod() */
-HUSKYEXT unsigned int dec2oct(unsigned int decimal)
+unsigned int dec2oct(unsigned int decimal)
 {
     char tmpstr[6];
     unsigned int mode;
@@ -531,7 +531,7 @@ HUSKYEXT unsigned int dec2oct(unsigned int decimal)
     name: pointer to part of all original pathname.
 
 */
-HUSKYEXT char    *GetFilenameFromPathname(const char* pathname)
+char    *GetFilenameFromPathname(const char* pathname)
 {
     char *fname = strrchr(pathname,PATH_DELIM);
     if(fname)
@@ -548,7 +548,7 @@ HUSKYEXT char    *GetFilenameFromPathname(const char* pathname)
     may be used in Windows NT OS family).
     Returns the file (or directory) name: pointer to part of all original pathname.
 */
-HUSKYEXT char *OS_independed_basename(const char *pathname)
+char *OS_independed_basename(const char *pathname)
 { register char *fname=NULL, *pname=(char*)pathname;
 
   /* Process Unix-style, result to pathname */
@@ -565,7 +565,7 @@ HUSKYEXT char *OS_independed_basename(const char *pathname)
  * Return value is pointer to malloc'ed string;
  * if pathname is filenfme without directory return current directory (./ or .\)
  */
-HUSKYEXT char    *GetDirnameFromPathname(const char* pathname)
+char    *GetDirnameFromPathname(const char* pathname)
 {
   char *sp=NULL, *rp=NULL;
   register unsigned short lll;

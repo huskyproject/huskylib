@@ -76,7 +76,7 @@ static char *screenLogLevels = NULL;
 /***  Implementation  *******************************************************/
 
 
-HUSKYEXT void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
+void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
 {
     logFileDir = ext_logFileDir;
     logEchoToScreen = ext_logEchoToScreen;
@@ -85,7 +85,7 @@ HUSKYEXT void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_l
     return;
 }
 
-HUSKYEXT s_log *openLog(char *fileName, char *appN)
+s_log *openLog(char *fileName, char *appN)
 {
    time_t     currentTime;
    struct tm  *locTime;
@@ -147,7 +147,7 @@ HUSKYEXT s_log *openLog(char *fileName, char *appN)
    return husky_log;
 }
 
-HUSKYEXT void closeLog()
+void closeLog()
 {
    if (husky_log != NULL) {
       if (husky_log->isopen) {
@@ -161,7 +161,7 @@ HUSKYEXT void closeLog()
    }
 }
 
-HUSKYEXT void w_log(char key, char *logString, ...)
+void w_log(char key, char *logString, ...)
 {
 	time_t     currentTime;
 	struct tm  *locTime;

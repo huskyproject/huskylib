@@ -68,7 +68,7 @@
  *  Returns: NULL == File not found.
  */
 
-HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
+FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 {
     FFIND *ff;
 
@@ -285,7 +285,7 @@ HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
  *  FFindNext: Returns 0 if next file was found, non-zero if it was not.
  */
 
-HUSKYEXT int _fast FFindNext(FFIND * ff)
+int _fast FFindNext(FFIND * ff)
 {
     int rc = -1;
 
@@ -426,7 +426,7 @@ HUSKYEXT int _fast FFindNext(FFIND * ff)
  *  memory in both DOS and OS/2.
  */
 
-HUSKYEXT void _fast FFindClose(FFIND * ff)
+void _fast FFindClose(FFIND * ff)
 {
     if (ff != NULL)
     {
@@ -462,7 +462,7 @@ HUSKYEXT void _fast FFindClose(FFIND * ff)
  *  PLF Thu  10-17-1991  18:12:37
  */
 
-HUSKYEXT FFIND *_fast FFindInfo(const char *filespec)
+FFIND *_fast FFindInfo(const char *filespec)
 {
 #if !defined(__OS2__)
     return FFindOpen(filespec, 0);

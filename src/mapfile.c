@@ -51,7 +51,7 @@
 #endif
 #include <windows.h>
 
-HUSKYEXT void*MapFile(char*fname)
+void*MapFile(char*fname)
 {   long len;
     HANDLE h, hm;
 
@@ -72,7 +72,7 @@ HUSKYEXT void*MapFile(char*fname)
 #include <unistd.h>
 #endif
 
-HUSKYEXT void* MapFile( char* fname )
+void* MapFile( char* fname )
 {
     int fd;
     int len;
@@ -93,7 +93,7 @@ HUSKYEXT void* MapFile( char* fname )
 #endif
 
 
-HUSKYEXT void* MapFile(char* fname)
+void* MapFile(char* fname)
 {
     int fd;
     long len;

@@ -63,14 +63,14 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-
+#include <fexist.h>
 
 #ifdef USE_STAT_MACROS
 
 /* This is the nice code that works on UNIX and every other decent platform.
    It has been contributed by Alex S. Aganichev */
 
-HUSKYEXT int _fast fexist(const char *filename)
+int _fast fexist(const char *filename)
 {
     struct stat s;
 
@@ -79,7 +79,7 @@ HUSKYEXT int _fast fexist(const char *filename)
     return S_ISREG(s.st_mode);
 }
 
-HUSKYEXT long _fast fsize(const char *filename)
+long _fast fsize(const char *filename)
 {
     struct stat s;
 
@@ -88,7 +88,7 @@ HUSKYEXT long _fast fsize(const char *filename)
     return s.st_size;
 }
 
-HUSKYEXT int _fast direxist(const char *directory)
+int _fast direxist(const char *directory)
 {
     struct stat s;
     int rc;
@@ -137,7 +137,7 @@ HUSKYEXT int _fast direxist(const char *directory)
 
 /* Here comes the ugly platform specific and sometimes even slow code. */
 
-HUSKYEXT int _fast fexist(const char *filename)
+int _fast fexist(const char *filename)
 {
     FFIND *ff;
 
@@ -154,7 +154,7 @@ HUSKYEXT int _fast fexist(const char *filename)
     }
 }
 
-HUSKYEXT long _fast fsize(const char *filename)
+long _fast fsize(const char *filename)
 {
     FFIND *ff;
     FILE  *fp;
@@ -181,7 +181,7 @@ HUSKYEXT long _fast fsize(const char *filename)
 
 #if defined(__DOS__) || defined(__DPMI__)
 
-HUSKYEXT int _fast direxist(const char *directory)
+int _fast direxist(const char *directory)
 {
     FFIND *ff;
     char *tempstr;
@@ -236,7 +236,7 @@ HUSKYEXT int _fast direxist(const char *directory)
 #include <windows.h>
 #endif
 
-HUSKYEXT int _fast direxist(const char *directory)
+int _fast direxist(const char *directory)
 {
     char *tempstr, *p;
     size_t l;
@@ -299,7 +299,7 @@ HUSKYEXT int _fast direxist(const char *directory)
 
 #elif defined(__UNIX__)
 
-HUSKYEXT int _fast direxist(const char *directory)
+int _fast direxist(const char *directory)
 {
     FILE *fp;
 
@@ -320,7 +320,7 @@ HUSKYEXT int _fast direxist(const char *directory)
 
 #endif
 
-HUSKYEXT int _createDirectoryTree(const char *pathName) {
+int _createDirectoryTree(const char *pathName) {
 
    char *start, *slash;
    char limiter=PATH_DELIM;

@@ -64,7 +64,7 @@
 
 /***  Declarations & defines  ***********************************************/
 
-HUSKYEXT void _fast tdelay(int);
+void _fast tdelay(int);
 
 /***  Implementation  *******************************************************/
 

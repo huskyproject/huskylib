@@ -39,7 +39,7 @@
  * return zero if test failed; non-zero if passed
  * test cvs need for DLL version only, using #include <fidoconf/cvsdate.h>
  */
-HUSKYEXT int CheckHuskylibVersion( int need_major, int need_minor,
+int CheckHuskylibVersion( int need_major, int need_minor,
                       int need_patch, branch_t need_branch, const char *cvs )
 { /* We don't need check pathlevel: see huskybse/develop-docs/ */
 

@@ -74,8 +74,8 @@
  *  you must call adaptcase_refresh_dir() with the subdirectory path name
  *  as argument!
  */
-HUSKYEXT void adaptcase_refresh_dir(const char *directory);
-HUSKYEXT void adaptcase(char *);
+void adaptcase_refresh_dir(const char *directory);
+void adaptcase(char *);
 
 /***  Implementation  *******************************************************/
 

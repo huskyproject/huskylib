@@ -32,8 +32,8 @@
 #include <compiler.h>
 
 #define DLLEXPORT
-#include <huskyext.h>
-#include <strext.h>
+#include <huskylib.h>
+
 
 /* Retrieve full file name (path+file)
 Borland -     char* _fullpath
@@ -44,7 +44,7 @@ gcc/emx-os2 - int   _fullpath
 gcc/linux -   char* realpath   (not in all distributions)
 */
 #if defined (__UNIX__)
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     struct stat st1, st2;
     if (stat(file1, &st1) || stat(file2, &st2))
@@ -56,7 +56,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2)
 
 #elif  defined(__NT__)
 
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     char buf[256], path1[256], path2[256], *p;
 
@@ -72,7 +72,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2)
 }
 
 #elif defined (__OS2__)
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
   char path1[256], path2[256];
 
@@ -88,7 +88,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2)
   return sstricmp(path1, path2);
 }
 #elif defined (__DJGPP__)
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     char *path1 = NULL, *path2 = NULL;
     int result;
@@ -111,7 +111,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2)
 }
 #elif defined(__DOS__) && !defined(__FLAT__)
 #include <dos.h>
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     struct REGPACK r;
     char path1[128], path2[128];
@@ -147,7 +147,7 @@ union REGPACK {
 #endif
 };
 */
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     union REGPACK r;
     char path1[128], path2[128];
@@ -166,7 +166,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2)
     return sstricmp(path1, path2);
 }
 #else /* Unknown OS */
-HUSKYEXT int cmpfnames(const char *file1, const char *file2)
+int cmpfnames(const char *file1, const char *file2)
 {
     return sstricmp(file1, file2);
 }

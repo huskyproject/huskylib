@@ -51,7 +51,7 @@ static void near InitCvt(void)
 
 /* Convert a DOS-style bitmapped date into a 'struct tm'-type date. */
 
-HUSKYEXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate)
+struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate)
 {
   if (is_dst == -1)
   {
@@ -85,7 +85,7 @@ HUSKYEXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct t
 
 /* Convert a 'struct tm'-type date into an Opus/DOS bitmapped date */
 
-HUSKYEXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate)
+union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate)
 {
   if(tmdate && dosdate){
     dosdate->msg_st.date.da = tmdate->tm_mday;
@@ -109,7 +109,7 @@ static void print02d(char **str, int i)
   }
 }
 
-HUSKYEXT char *_fast sc_time(union stamp_combo *sc, char *string)
+char *_fast sc_time(union stamp_combo *sc, char *string)
 {
   if(sc && string)
   {
@@ -144,7 +144,7 @@ HUSKYEXT char *_fast sc_time(union stamp_combo *sc, char *string)
   return string;
 }
 
-HUSKYEXT char *_fast fts_time(char *string, struct tm *tmdate)
+char *_fast fts_time(char *string, struct tm *tmdate)
 {
     union stamp_combo dosdate;
     return sc_time(TmDate_to_DosDate(tmdate, &dosdate), string);
@@ -163,7 +163,7 @@ static void near StandardDate(union stamp_combo *d_written)
     d_written->msg_st.time.ss = 0;
 }
 
-HUSKYEXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
+void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
 {
     char temp[80];
 
@@ -272,7 +272,7 @@ HUSKYEXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_wri
     d_written->msg_st.time.ss = ss >> 1;
 }
 
-HUSKYEXT union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st)
+union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st)
 {
     time_t now;
     struct tm *tm;

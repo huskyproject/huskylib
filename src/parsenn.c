@@ -45,12 +45,12 @@ const static char *slash = "/";
 
 /***  Implementation  *******************************************************/
 
-/*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
+/*void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
 {
     ParseNN(netnode, zone, net, node, point, FALSE);
 }*/
 
-HUSKYEXT void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all)
+void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all)
 {
     char *p;
 

@@ -93,7 +93,7 @@ static char *tree_srch_real(tree **ppr_tree, int (*pfi_compare)(char *, char *),
 	EXIT(NULL)
 }
 
-HUSKYEXT char *tree_srch(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
+char *tree_srch(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
 {
     if(!(**ppr_tree).tree_r)
         return NULL;
@@ -268,7 +268,7 @@ static int tree_add_real(tree **ppr_tree, int (*pfi_compare)(char *, char *),
     EXIT(nRet)
 }
 
-HUSKYEXT int tree_add(tree **ppr_tree, int (*pfi_compare)(char *, char *),
+int tree_add(tree **ppr_tree, int (*pfi_compare)(char *, char *),
               char *pc_user, int (*pfi_delete)(char *))
 {
     return tree_add_real(&(**ppr_tree).tree_r,
@@ -489,7 +489,7 @@ static int tree_delete_real(tree **ppr_p, int (*pfi_compare)(char *, char *), ch
 				&i_balance, &i_uar_called))
 }
 
-HUSKYEXT int tree_delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
+int tree_delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
 {
     return tree_delete_real(&(**ppr_p).tree_r, pfi_compare, pc_user, pfi_uar);
 }
@@ -510,7 +510,7 @@ static int tree_trav_real(tree **ppr_tree, int (*pfi_uar)(char *))
 	EXIT(TRUE)
 }
 
-HUSKYEXT int tree_trav(tree **ppr_tree, int (*pfi_uar)(char *))
+int tree_trav(tree **ppr_tree, int (*pfi_uar)(char *))
 {
     return tree_trav_real(&(**ppr_tree).tree_r, pfi_uar);
 }
@@ -530,7 +530,7 @@ static void tree_mung_real(tree **ppr_tree, int (*pfi_uar)(char *))
 	EXITV
 }
 
-HUSKYEXT void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
+void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
 {
     tree_mung_real(&(**ppr_tree).tree_r, pfi_uar);
     if (pfi_uar)
@@ -552,12 +552,12 @@ static unsigned long tree_count_real(tree **ppr_tree)
    return tr_count;
 }
 
-HUSKYEXT unsigned long tree_count(tree **ppr_tree)
+unsigned long tree_count(tree **ppr_tree)
 {
     return tree_count_real(&(**ppr_tree).tree_r);
 }
 
-HUSKYEXT int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
+int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
 {
 	ENTER("tree_srchall")
 
@@ -573,7 +573,7 @@ HUSKYEXT int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), c
 	EXIT(TRUE)
 }
 
-HUSKYEXT void tree_init(tree **ppr_tree, char need_balance)
+void tree_init(tree **ppr_tree, char need_balance)
 {
 	ENTER("tree_init")
         *ppr_tree = NULL;

@@ -176,7 +176,7 @@ static word crc16tab[] =
 };
 
 
-HUSKYEXT dword memcrc32(const char *str, int size, dword initcrc)
+dword memcrc32(const char *str, int size, dword initcrc)
 {
   register dword crc = initcrc;
 
@@ -187,7 +187,7 @@ HUSKYEXT dword memcrc32(const char *str, int size, dword initcrc)
 }
 
 
-HUSKYEXT dword strcrc32(const char *str, dword initcrc)
+dword strcrc32(const char *str, dword initcrc)
 {
   register dword crc = initcrc;
 
@@ -198,7 +198,7 @@ HUSKYEXT dword strcrc32(const char *str, dword initcrc)
 }
 
 
-HUSKYEXT dword filecrc32(const char *filename)
+dword filecrc32(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
@@ -233,7 +233,7 @@ HUSKYEXT dword filecrc32(const char *filename)
    size: array size
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT word memcrc16(const char *str, int size, word initcrc)
+word memcrc16(const char *str, int size, word initcrc)
 {
   register word crc = initcrc;
 
@@ -247,7 +247,7 @@ HUSKYEXT word memcrc16(const char *str, int size, word initcrc)
    str: string
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT word strcrc16(const char *str, word initcrc)
+word strcrc16(const char *str, word initcrc)
 {
   register word crc = initcrc;
 
@@ -258,7 +258,7 @@ HUSKYEXT word strcrc16(const char *str, word initcrc)
 }
 
 
-HUSKYEXT word filecrc16(const char *filename)
+word filecrc16(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
@@ -296,7 +296,7 @@ HUSKYEXT word filecrc16(const char *filename)
  */
 
 /* 16-bit checksum (sum -r) for ASCIIZ string */
-HUSKYEXT word strsum16( const char *str )
+word strsum16( const char *str )
 { register dword crc=0;
 
   if(str) for (; *str; str++){
@@ -308,7 +308,7 @@ HUSKYEXT word strsum16( const char *str )
 }
 
 /* 16-bit checksum (sum -r) for array of bytes */
-HUSKYEXT word memsum16( const char *str, unsigned size )
+word memsum16( const char *str, unsigned size )
 { register dword crc=0;
 
   if(str) for (; size; str++, size--)
@@ -320,7 +320,7 @@ HUSKYEXT word memsum16( const char *str, unsigned size )
 }
 
 /* 16-bit checksum (sum -r) for file */
-HUSKYEXT word filesum16(const char *filename)
+word filesum16(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
@@ -354,7 +354,7 @@ HUSKYEXT word filesum16(const char *filename)
  */
 
 /* 32bit checksum for ASCIIZ string */
-HUSKYEXT dword strsum32( const char *str )
+dword strsum32( const char *str )
 { register dword crc=0;
 
   if(str) for (; *str; str++)
@@ -367,7 +367,7 @@ HUSKYEXT dword strsum32( const char *str )
 
 
 /* 32bit checksum for array of bytes */
-HUSKYEXT dword memsum32( const char *str, unsigned size )
+dword memsum32( const char *str, unsigned size )
 { register dword crc=0;
 
   if(str) for (; size; str++, size--)
@@ -382,7 +382,7 @@ HUSKYEXT dword memsum32( const char *str, unsigned size )
 /* 32bit checksum for file
  * plen: pointer to return file lenght, unuse if plen is NULL
  */
-HUSKYEXT dword filesum32( const char *filename, unsigned long *plen )
+dword filesum32( const char *filename, unsigned long *plen )
 { FILE *fd;
   char buffer[CRC_BUFFER_SIZE], *str;
   size_t got;

@@ -46,7 +46,7 @@
 /* Use function instead macro to prevent compiler warning or error.
  * (If file do not content any code some compilers report about error.)
  */
-HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
 { return strftime(string, maxsize, format, current_time); }
 
 #else
@@ -56,7 +56,7 @@ HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, 
  * at least in form "SET TZ=XYZ"
  */
 
-HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
 {
     const char *in;
 

@@ -28,7 +28,7 @@
 #include "compiler.h"
 
 #define DLLEXPORT
-#include "huskyext.h"
+#include <huskylib.h>
 
 
 #define NUM sizeof(array)/sizeof(array[0])
@@ -66,7 +66,7 @@ static void _fast iqksort(int *p_lo, int *p_hi)
     }
 }
 
-HUSKYEXT void _fast qksort(int a[], size_t n)
+void _fast qksort(int a[], size_t n)
 {
     if (n > 1)
     {

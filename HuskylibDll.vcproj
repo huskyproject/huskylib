@@ -131,7 +131,7 @@
 	<Files>
 		<Filter
 			Name="headerz"
-			Filter="">
+			Filter="*.h">
 			<File
 				RelativePath="huskylib\MSVC.h">
 			</File>
@@ -191,6 +191,9 @@
 			</File>
 			<File
 				RelativePath="huskylib\unused.h">
+			</File>
+			<File
+				RelativePath="huskylib\xstr.h">
 			</File>
 		</Filter>
 		<Filter

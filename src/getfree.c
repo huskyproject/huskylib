@@ -66,10 +66,8 @@
 
 /* huskylib headers */
 #define DLLEXPORT
-#include <huskyext.h>
+#include <huskylib.h>
 
-/* huskylib headers */
-#include <log.h>
 
 
 /***  Declarations & defines  ***********************************************/
@@ -96,7 +94,7 @@
 
 #include <windows.h>
 
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
     FARPROC pGetDiskFreeSpaceEx = NULL;
     BOOL rc;
@@ -186,7 +184,7 @@ HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 #include <os2.h>
 
 
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   FSALLOCATE fsa;
   unsigned long disknum = 0;
@@ -235,7 +233,7 @@ HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 
 
 #if defined(HAS_SYS_STATFS_H) || defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H) || defined(HAS_SYS_MOUNT_H)
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
 #if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
   struct statvfs sfs;
@@ -262,7 +260,7 @@ HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 }
 
 #else
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
   return unsigned_long_max;
@@ -273,7 +271,7 @@ HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
 
 #elif defined(__MSC__) || defined(__DJGPP__) /* alternate variand for DJGPP with DOS Fn's error check */
 
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   struct _diskfree_t df;
@@ -295,7 +293,7 @@ printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
 
 #elif defined(__DJGPP__) /* without DOS Fn's error ckeck */
 
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   struct dfree df;
@@ -317,7 +315,7 @@ printf("df.df_bsec=%x\n",  df.df_bsec);
 
 #elif defined(__DOS__) /* call int 0x21 DOS Fn 0x36 */
 
-HUSKYEXT unsigned long husky_GetDiskFreeSpace (const char *path)
+unsigned long husky_GetDiskFreeSpace (const char *path)
 {
   int diskno;
   union REGS in, out;

@@ -64,7 +64,7 @@
 
 /* Returns true if the pattern matches the string.
  */
-HUSKYEXT int patmat( const char *string, const char *pattern )
+int patmat( const char *string, const char *pattern )
 {
 	register const char *p, *q;
 	register char c;

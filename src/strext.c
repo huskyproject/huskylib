@@ -40,7 +40,7 @@
 
 /***  Implementation  *******************************************************/
 
-HUSKYEXT int ctoi(const char *s)
+int ctoi(const char *s)
 {
   char *foo;
   unsigned long res;
@@ -53,7 +53,7 @@ HUSKYEXT int ctoi(const char *s)
   return (int)res;
 }
 
-HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
+char *_fast Strip_Trailing(char *str, char strip)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] == strip)
@@ -63,7 +63,7 @@ HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
     return str;
 }
 
-HUSKYEXT char *_fast Add_Trailing(char *str, char add)
+char *_fast Add_Trailing(char *str, char add)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] != add)
@@ -74,7 +74,7 @@ HUSKYEXT char *_fast Add_Trailing(char *str, char add)
     return str;
 }
 
-HUSKYEXT char *_fast strocpy(char *d, const char *s)
+char *_fast strocpy(char *d, const char *s)
 {
     const char *orig;
     if(!(s&&d))return (char*)s;
@@ -83,7 +83,7 @@ HUSKYEXT char *_fast strocpy(char *d, const char *s)
     return (char*)orig;
 }
 
-HUSKYEXT char *_fast firstchar(const char *strng, const char *delim, int findword)
+char *_fast firstchar(const char *strng, const char *delim, int findword)
 {
     int isw=0, sl_s, wordno = 0;
     register int sl_d, x;
@@ -375,7 +375,7 @@ char *strseparate(char **pp, const char *delim)
   return p;
 }
 
-HUSKYEXT char *extract_CVS_keyword(char *str)
+char *extract_CVS_keyword(char *str)
 {
     int l;
     char *tmp, *r;
@@ -400,7 +400,7 @@ HUSKYEXT char *extract_CVS_keyword(char *str)
     return r;
 }
 
-HUSKYEXT int copyString(char *str, char **pmem)
+int copyString(char *str, char **pmem)
 {
    if (!(str&&pmem))
       return 1;
@@ -411,7 +411,7 @@ HUSKYEXT int copyString(char *str, char **pmem)
    return 0;
 }
 
-HUSKYEXT int copyStringUntilSep(char *str, char *seps, char **dest)
+int copyStringUntilSep(char *str, char *seps, char **dest)
 {
   char *sepPos;
 

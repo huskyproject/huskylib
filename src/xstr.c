@@ -64,7 +64,7 @@
 
 /***  Implementation  *******************************************************/
 
-HUSKYEXT char *xstralloc(char **s, size_t add)
+ char *xstralloc(char **s, size_t add)
 {
     int n;
     if (*s == NULL) {
@@ -79,19 +79,19 @@ HUSKYEXT char *xstralloc(char **s, size_t add)
     return *s + n;
 }
 
-HUSKYEXT char *xstrcat(char **s, const char *add)
+ char *xstrcat(char **s, const char *add)
 {
     return strcat(xstralloc(s, strlen(add)), add);
 }
 
-HUSKYEXT char *xstrcpy(char **s, const char *add)
+ char *xstrcpy(char **s, const char *add)
 {
     nfree(*s);
     return xstrcat(s, add);
 }
 
 
-HUSKYEXT char *xstrscat(char **s, ...)
+ char *xstrscat(char **s, ...)
 {
     va_list	ap;
     char	*q, *p;
@@ -104,7 +104,7 @@ HUSKYEXT char *xstrscat(char **s, ...)
     return p;
 }
 
-HUSKYEXT int xscatprintf(char **s, const char *format, ...)
+ int xscatprintf(char **s, const char *format, ...)
 {
     va_list ap;
 #if defined(HAS_vasprintf)

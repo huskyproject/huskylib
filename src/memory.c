@@ -45,7 +45,7 @@
  *  system architecture.
  */
 
-HUSKYEXT void put_dword(byte *ptr, dword value)
+void put_dword(byte *ptr, dword value)
 {
     ptr[0] = (value & 0xFF);
     ptr[1] = (value >> 8) & 0xFF;
@@ -60,7 +60,7 @@ HUSKYEXT void put_dword(byte *ptr, dword value)
  *  system architecture.
  */
 
-HUSKYEXT void put_word(byte *ptr, word value)
+void put_word(byte *ptr, word value)
 {
     ptr[0] = (value & 0xFF);
     ptr[1] = (value >> 8) & 0xFF;
@@ -69,7 +69,7 @@ HUSKYEXT void put_word(byte *ptr, word value)
 
 /* safe malloc, realloc, calloc */
 
-HUSKYEXT void *smalloc(size_t size)
+void *smalloc(size_t size)
 {
     void *ptr = (void *)malloc(size);
     if (ptr == NULL) {
@@ -79,7 +79,7 @@ HUSKYEXT void *smalloc(size_t size)
     return ptr;
 }
 
-HUSKYEXT void *srealloc(void *ptr, size_t size)
+void *srealloc(void *ptr, size_t size)
 {
     void *newptr = (void *)realloc(ptr, size);
     if (newptr == NULL) {
@@ -89,14 +89,14 @@ HUSKYEXT void *srealloc(void *ptr, size_t size)
     return newptr;
 }
 
-HUSKYEXT void *scalloc(size_t nmemb, size_t size)
+void *scalloc(size_t nmemb, size_t size)
 {
     void *ptr = smalloc(size*nmemb);
 	memset(ptr,'\0',size*nmemb);
     return ptr;
 }
 
-HUSKYEXT void *memdup(void *p, size_t size)
+void *memdup(void *p, size_t size)
 {
 	void *newp;
 	newp = smalloc(size);

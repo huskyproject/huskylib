@@ -84,7 +84,7 @@
 #ifdef HAS_DIRENT_H
 /* use compiler or system library: opendir/readdir/closedir */
 
-HUSKYEXT husky_DIR* husky_opendir(const char* mask)
+husky_DIR* husky_opendir(const char* mask)
 { husky_DIR dir;
 
   if(!mask) return NULL;
@@ -108,7 +108,7 @@ HUSKYEXT husky_DIR* husky_opendir(const char* mask)
   return memdup(&dir,sizeof(dir));
 }
 
-HUSKYEXT char* husky_readdir(husky_DIR* dir)
+char* husky_readdir(husky_DIR* dir)
 { struct dirent *de;
   if(!dir || !dir->internal_DIR) return 0;
 
@@ -123,7 +123,7 @@ HUSKYEXT char* husky_readdir(husky_DIR* dir)
   return dir->d_name;
 }
 
-HUSKYEXT int  husky_closedir(husky_DIR* dir)
+int  husky_closedir(husky_DIR* dir)
 { int rc;
 
   if(!dir || !dir->internal_DIR) return 0;
@@ -136,7 +136,7 @@ HUSKYEXT int  husky_closedir(husky_DIR* dir)
   return rc;
 }
 
-HUSKYEXT void  husky_rewinddir(husky_DIR* dir)
+void  husky_rewinddir(husky_DIR* dir)
 {
   if(!dir || !dir->internal_DIR) return;
 
@@ -146,7 +146,7 @@ HUSKYEXT void  husky_rewinddir(husky_DIR* dir)
 
 #else  /* Use ffind.c */
 
-HUSKYEXT husky_DIR* husky_opendir(const char* mask)
+husky_DIR* husky_opendir(const char* mask)
 { husky_DIR dir;
 
   if(!mask) return NULL;
@@ -172,7 +172,7 @@ HUSKYEXT husky_DIR* husky_opendir(const char* mask)
 }
 
 /* Note: FFindInfo/FFindNext skips "." and ".." entries */
-HUSKYEXT char* husky_readdir(husky_DIR* dir)
+char* husky_readdir(husky_DIR* dir)
 {
   if(!dir) return 0;
 
@@ -196,7 +196,7 @@ HUSKYEXT char* husky_readdir(husky_DIR* dir)
 }
 
 
-HUSKYEXT int  husky_closedir(husky_DIR* dir)
+int  husky_closedir(husky_DIR* dir)
 {
   if(!dir) return -1;
 
@@ -207,7 +207,7 @@ HUSKYEXT int  husky_closedir(husky_DIR* dir)
 }
 
 
-HUSKYEXT void  husky_rewinddir(husky_DIR* dir)
+void  husky_rewinddir(husky_DIR* dir)
 {
   if(!dir) return;
 

@@ -61,12 +61,12 @@
 
 /* huskylib headers */
 #define DLLEXPORT
-#include <huskyext.h>
+#include <huskylib.h>
 
 
 /***  Declarations & defines  ***********************************************/
 
-HUSKYEXT int _fast setfsize(int fd, long size);
+int _fast setfsize(int fd, long size);
 
 /***  Implementation  *******************************************************/
 
