@@ -71,12 +71,20 @@
 #  endif
     /* we are not on any BSD-like OS */
     /* list other UNIX os'es without getfree mechanism here */
-#  if defined( __svr4__ ) || defined( __SVR4 ) || defined (__linux__) && defined (__GLIBC__)
+#  if defined( __svr4__ ) || defined( __SVR4 )
 #  define HAS_SYS_STATVFS_H
 #  endif
 
-#  if defined (__LINUX__) && !defined(__GLIBC__)
-#  define HAS_SYS_VFS_H
+#  if defined(__SPARC__)
+#    define HAS_SYS_STATVFS_H
+#    define HAS_SYS_STATFS_H
+#    define HAS_SYS_VFS_H
+#  endif
+
+#  if defined (__LINUX__) && defined(__GLIBC__)
+#    define HAS_SYS_STATVFS_H
+#  else
+#    define HAS_SYS_VFS_H
 #  endif
 
 #  include <fcntl.h>

@@ -99,8 +99,9 @@
    * HAS_SYS_PARAM_H     - #include <sys/params.h>
    * HAS_SYS_MOUNT_H     - #include <sys/mount.h>
    * HAS_SYS_WAIT_H      - #include <sys/wait.h>
-   * HAS_SYS_STATVFS_H   - #include <sys/statvfs.h>
-   * HAS_SYS_VFS_H       - #include <sys/vfs.h>
+   * HAS_SYS_STATVFS_H   - #include <sys/statvfs.h> for statvfs(), fstatvfs()
+   * HAS_SYS_STATFS_H    - #include <sys/statfs.h>  for statfs(), fstatfs()
+   * HAS_SYS_VFS_H       - #include <sys/vfs.h> for struct vfs, getvfs()
    * HAS_SYS_SYSEXITS_H  - #include <sys/sysexits.h>
    * HAS_SYSEXITS_H      - #include <sysexits.h>
    *
@@ -111,7 +112,8 @@
    * USE_STAT_MACROS     - may use stat() macro and non-POSIX (important!)
    *                       S_ISREG and S_ISDIR macros. (See fexist.c)
    *
-   * HAS_INT64           - "64 bit integer" type exists (int64, sint64, uint64)
+   * HAS_INT64           - "64 bit integer" type exists (and my may define
+   *                       macros: int64, sint64, uint64)
    *
    ***************************************************************************
    * Functions "my*" & etc
@@ -242,9 +244,13 @@
    __unix__ = 1
    __FreeBSD__ = 4
    ===================================================================
-   GNU C on Sun
+   GNU C on Sun (on Sparkstation)
    -------------------------------------------------------------------
-   __sun__
+   __GCC_NEW_VARARGS__
+   sun __sun __sun__
+   unix __unix __unix__
+   sparc __sparc __sparc__
+   __svr4__ __SVR4
    ===================================================================
    GNU C on BeOS 5
    -------------------------------------------------------------------
@@ -576,9 +582,12 @@ int qq(void)
 #  endif
 #endif
 
-#if defined(__sun__)
+#if defined(sun) || defined(_sun) || defined(__sun) || defined(__sun__)
 #  if !defined(__SUN__)
 #    define __SUN__
+#  endif
+#  if !defined(__UNIX__)
+#    define __UNIX__
 #  endif
 #endif
 
@@ -591,7 +600,7 @@ int qq(void)
 #  endif
 #endif
 
-#if defined( __svr4__ ) || defined( __SVR4 )
+#if defined( svr4 ) || defined( __svr4__ ) || defined( __SVR4 )
 #  if !defined(__SVR4__)
 #    define __SVR4__
 #  endif
@@ -821,6 +830,22 @@ int qq(void)
 #if defined(_M_MRX000) /* MIPS */
 #endif
 
+#if defined(sparc) || defined(_sparc) || defined(__sparc) || defined(__sparc__)
+ /* Sun SparcStation */
+#  ifndef __SPARC__
+#    define __SPARC__
+#  endif
+#endif
+
+#ifdef __SPARC__
+#  ifndef __BIG_ENDIAN__
+#    define __BIG_ENDIAN__
+#  endif
+#  ifndef __FLAT__
+#    define __FLAT__
+#  endif
+#endif
+
 #ifdef __ALPHA__
 #  ifndef __BIG_ENDIAN__
 #    define __BIG_ENDIAN__
@@ -833,13 +858,6 @@ int qq(void)
 #if defined(__X86__)
 #  ifndef __LITTLE_ENDIAN__
 #    define __LITTLE_ENDIAN__
-#  endif
-#endif
-
-
-#ifdef __SUN__
-#  ifndef __FLAT__
-#    define __FLAT__
 #  endif
 #endif
 
