@@ -6,8 +6,13 @@
 
  */
 
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+/***  Declarations & defines  ***********************************************/
+
 #ifndef unused
-#if defined(PACIFIC) || defined(_MSC_VER)
+#if defined(PACIFIC) || defined(_MSC_VER) || defined(__GNUC__)
 #define unused(x)
 #elif defined(__HIGHC__)
 #define unused(x) ((x) = (x))

@@ -1,46 +1,57 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * Copyright (C) 1998-1999
- *  
- * Matthias Tichy
+/* $Id$
+ *  Provides compiler-independent types and functions to read directory contents
  *
- * Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
- * Internet: mtt@tichy.de
+ *  Copyright (C) 1998-1999
  *
- * Grimmestr. 12         Buchholzer Weg 4
- * 33098 Paderborn       40472 Duesseldorf
- * Germany               Germany
+ *  Matthias Tichy
  *
- * This file is part of FIDOCONFIG.
+ *  Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
+ *  Internet: mtt@tichy.de
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
+ *  Grimmestr. 12         Buchholzer Weg 4
+ *  33098 Paderborn       40472 Duesseldorf
+ *  Germany               Germany
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; see file COPYING. If not, write to the Free
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *****************************************************************************/
-
-/*
- *  dirent.h    Defines the types and structures used by the directory routines
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
-#ifndef DIR_H
-/* all other include their own dirent.h */
 
+#ifndef HUSKY_DIRLAYER_H
+#define HUSKY_DIRLAYER_H
+
+/* standard headers */
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
+
+/* huskylib: compiler.h */
 #include "compiler.h"
 
+
+/* compiler-dependent headers */
 #ifdef HAS_IO_H
 #include <io.h>
 #endif
@@ -57,7 +68,13 @@
 #include <direct.h>
 #endif
 
+
+/* huskylib headers */
 #include "huskyext.h"
+
+
+/***  Declarations & defines  ***********************************************/
+
 
 #ifdef __MSVC__
 #define NAME_MAX        _MAX_PATH
@@ -86,7 +103,6 @@ HUSKYEXT int  closedir(DIR*);
 #endif
 
 #if defined(__IBMC__) && !defined(__UNIX__)   /* only define it for IBM VisualAge C++ */
-#define DIR_H
 
 #define INCL_DOSERRORS
 #define INCL_DOSFILEMGR
@@ -120,4 +136,5 @@ extern DIR      *opendir( const char * );
 extern struct dirent *readdir( DIR * );
 
 #endif
+
 #endif

@@ -27,8 +27,8 @@
  *****************************************************************************
  */
 
-#ifndef __TEMP_H__
-#define __TEMP_H__
+#ifndef HUSKY_TEMP_H__
+#define HUSKY_TEMP_H__
 
 #include <stdio.h>
 #include "huskylib.h"

@@ -1,45 +1,70 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * Copyright (C) 1998-1999
- *  
- * Matthias Tichy
+/* $Id$
+ *  Provides compiler-independent functions to read directory contents
  *
- * Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
- * Internet: mtt@tichy.de
+ *  Copyright (C) 1998-1999
  *
- * Grimmestr. 12         Buchholzer Weg 4
- * 33098 Paderborn       40472 Duesseldorf
- * Germany               Germany
+ *  Matthias Tichy
  *
- * This file is part of FIDOCONFIG.
+ *  Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
+ *  Internet: mtt@tichy.de
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
+ *  Grimmestr. 12         Buchholzer Weg 4
+ *  33098 Paderborn       40472 Duesseldorf
+ *  Germany               Germany
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; see file COPYING. If not, write to the Free
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *****************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
+ */
 
-/* source to implement dir.h for ibm VisualAge C++
-*/
-
-#include "dirlayer.h"
-
-#if defined(__IBMC__) && !defined(UNIX)
+/* standard headers */
 #include <stdlib.h>
-#include <malloc.h>
 #include <string.h>
 
-DIR      *opendir( const char * dirName)
+
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+
+/* compiler-dependent headers */
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+/* huskylib headers */
+#include <dirlayer.h>
+
+
+/***  Implementation  *******************************************************/
+
+#if defined(__IBMC__) && !defined(UNIX)
+/* source to implement dir.h for IBM VisualAge C++
+*/
+
+HUSKYEXT DIR *opendir( const char * dirName)
 {
    DIR *temp;
    FILEFINDBUF3 findBuffer;
@@ -72,7 +97,7 @@ DIR      *opendir( const char * dirName)
    return temp;
 }
 
-struct dirent *readdir( DIR * dir)
+HUSKYEXT struct dirent *readdir( DIR * dir)
 {
    APIRET rc;
    FILEFINDBUF3 findBuffer;
@@ -95,7 +120,7 @@ struct dirent *readdir( DIR * dir)
    return dir;
 }
 
-int      closedir( DIR * dir)
+HUSKYEXT int closedir( DIR * dir)
 {
    APIRET rc;
 
@@ -106,7 +131,7 @@ int      closedir( DIR * dir)
 }
 
 #elif defined (__MSVC__)
-DIR* opendir(const char* mask)
+HUSKYEXT DIR* opendir(const char* mask)
 {
     DIR* dir;
     char *ch;
@@ -123,7 +148,7 @@ DIR* opendir(const char* mask)
     return dir;
 }
 
-DIR* readdir(DIR* dir)
+HUSKYEXT DIR* readdir(DIR* dir)
 {
     if (!dir) return NULL;
 
@@ -140,11 +165,11 @@ DIR* readdir(DIR* dir)
 
     dir->d_attr = (dir->_dt).attrib;
     dir->d_size = (dir->_dt).size;
-    return dir; 
+    return dir;
 }
 
 
-int  closedir(DIR* dir)
+HUSKYEXT int  closedir(DIR* dir)
 {
    int res;
 
@@ -156,5 +181,5 @@ int  closedir(DIR* dir)
    return res==0;
 }
 #else
-static const int tinaesf=0; /* this is not an empty source file :-))) */
+static const char tinaesf=0; /* this is not an empty source file :-))) */
 #endif

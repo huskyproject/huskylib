@@ -25,8 +25,8 @@
  * See also http://www.gnu.org, license may be found here.
  **************************************************************************/
 
-#ifndef __WEEKDAY_H__
-#define __WEEKDAY_H__
+#ifndef HUSKY_CALENDAR_H__
+#define HUSKY_CALENDAR_H__
 
 #include "huskyext.h"  /* compiler see directory of this (calendar.h) file */
 

@@ -35,6 +35,8 @@
 #include <calendar.h>
 #include <cvtdate.h>
 
+/***  Implementation  *******************************************************/
+
 static int is_dst = -1;
 
 /* Find out the current status of daylight savings time */

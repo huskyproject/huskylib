@@ -1,78 +1,91 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * log.c : log file maintnance routines
+/* $Id$
+ *  Provides log file maintnance routines
  *
- * Compiled from hpt/log & htick/log 
- * by Stas Degteff <g@grumbler.org>, 2:5080/102@fidonet
+ *  Compiled from hpt/log & htick/log
+ *  by Stas Degteff <g@grumbler.org>, 2:5080/102@fidonet
  *
- * Portions copyright (C) Matthias Tichy
- *                        Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
- *                        Internet: mtt@tichy.de
- * Portions copyright (C) Max Levenkov
- *                        Fido:     2:5000/117
- *                        Internet: sackett@mail.ru
- * Portions copyright (C) Gabriel Plutzar
- *                        Fido:     2:31/1
- *                        Internet: gabriel@hit.priv.at
+ *  Portions copyright (C) Matthias Tichy
+ *                         Fido:     2:2433/1245 2:2433/1247 2:2432/605.14
+ *                         Internet: mtt@tichy.de
+ *  Portions copyright (C) Max Levenkov
+ *                         Fido:     2:5000/117
+ *                         Internet: sackett@mail.ru
+ *  Portions copyright (C) Gabriel Plutzar
+ *                         Fido:     2:31/1
+ *                         Internet: gabriel@hit.priv.at
  *
- * This file is part of FIDOCONFIG library (part of the Husky FIDOnet
- * software project)
+ *  Latest version may be foind on http://husky.sourceforge.net
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2, or (at your option)
- * any later version.
  *
- * FIDOCONFIG library is distributed in the hope that it will be useful,
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with FIDOCONFIG library; see the file COPYING.  If not, write
- * to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org
- *****************************************************************************
- * $Id$
+ * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <errno.h>
-#include <huskylib/huskylib.h>
-#include <huskylib/huskylib.h>
-//#include "common.h"
-#include <huskylib/log.h>
+
+
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+
+/* compiler-dependent headers */
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+/* huskylib headers */
+#include <huskylib.h>
+
+
+/***  Declarations & defines  ***********************************************/
 
 static s_log *husky_log=NULL;
 
-#ifdef __MINGW32__
-#ifdef open
-#undef open
-#endif
-#endif
+static char *logFileDir = NULL;
+static int   logEchoToScreen;
+static char *logLevels = NULL;
+static char *screenLogLevels = NULL;
 
-char *logFileDir = NULL;
-int logEchoToScreen;
-char *logLevels = NULL;
-char *screenLogLevels = NULL;
+/***  Implementation  *******************************************************/
 
 
-void initLog(char *fc_logFileDir, int fc_logEchoToScreen, char *fc_logLevels, char *fc_screenLogLevels)
+HUSKYEXT void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
 {
-    logFileDir = fc_logFileDir;
-    logEchoToScreen = fc_logEchoToScreen;
-    logLevels = fc_logLevels;
-    screenLogLevels = fc_screenLogLevels;
+    logFileDir = ext_logFileDir;
+    logEchoToScreen = ext_logEchoToScreen;
+    logLevels = ext_logLevels;
+    screenLogLevels = ext_screenLogLevels;
     return;
 }
 
-s_log *openLog(char *fileName, char *appN)
+HUSKYEXT s_log *openLog(char *fileName, char *appN)
 {
    time_t     currentTime;
    struct tm  *locTime;
@@ -83,7 +96,7 @@ s_log *openLog(char *fileName, char *appN)
       return NULL;
    }
 
-   if( strchr( fileName, '\\' ) || strchr( fileName, '/' ) ) 
+   if( strchr( fileName, '\\' ) || strchr( fileName, '/' ) )
      pathname = fileName;
    else
      /* filename without path, construct full pathname  */
@@ -91,7 +104,7 @@ s_log *openLog(char *fileName, char *appN)
         xstrscat( &pathname, logFileDir, fileName, NULL );
      } else {
         fprintf( stderr, "LogFileDir not defined, log into screen instead\n" );
-        return NULL;      
+        return NULL;
      }
    husky_log = (s_log *) smalloc(sizeof(s_log));
    memset(husky_log, '\0', sizeof(s_log));
@@ -134,7 +147,7 @@ s_log *openLog(char *fileName, char *appN)
    return husky_log;
 }
 
-void closeLog()
+HUSKYEXT void closeLog()
 {
    if (husky_log != NULL) {
       if (husky_log->isopen) {
@@ -148,7 +161,7 @@ void closeLog()
    }
 }
 
-void w_log(char key, char *logString, ...)
+HUSKYEXT void w_log(char key, char *logString, ...)
 {
 	time_t     currentTime;
 	struct tm  *locTime;
@@ -171,7 +184,7 @@ void w_log(char key, char *logString, ...)
 			va_start(ap, logString);
 			vfprintf(husky_log->logFile, logString, ap);
 			va_end(ap);
-			putc('\n', husky_log->logFile); 
+			putc('\n', husky_log->logFile);
 			fflush(husky_log->logFile);
 		}
 

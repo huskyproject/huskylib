@@ -1,4 +1,6 @@
 /* $Id$
+ *  Provide strftime() implementation independent on compiler and/or system
+ *  libraries.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -38,6 +40,7 @@
 #define DLLEXPORT
 #include <huskyext.h>
 
+/***  Implementation  *******************************************************/
 
 #ifdef HAS_strftime
 /* Use function instead macro to prevent compiler warning or error.

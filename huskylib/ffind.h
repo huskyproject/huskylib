@@ -23,8 +23,8 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __FFIND_H__
-#define __FFIND_H__
+#ifndef HUSKY_FFIND_H__
+#define HUSKY_FFIND_H__
 
 #include <stdio.h>
 

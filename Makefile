@@ -33,7 +33,7 @@ all: $(TARGETLIB) $(PROGRAMS)
 endif
 
 SRC_DIR = src/
-H_DIR   = huskylib/
+_H_DIR   = huskylib/
 
 %$(_OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$*.c
@@ -89,10 +89,10 @@ endif
 FORCE:
 
 install-h-dir: FORCE
-	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(H_DIR)
+	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(_H_DIR)
 
 %.h: FORCE
-	-$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)$(H_DIR)
+	-$(INSTALL) $(IIOPT) $(_H_DIR)$@ $(INCDIR)$(DIRSEP)$(_H_DIR)
 
 install-h: install-h-dir $(HEADERS)
 
@@ -106,7 +106,7 @@ install: install-h instdyn
 
 
 uninstall:
-	-cd $(INCDIR)$(DIRSEP)$(H_DIR) ;\
+	-cd $(INCDIR)$(DIRSEP)$(_H_DIR) ;\
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*

@@ -38,8 +38,8 @@
  * $Id$
  */
 
-#ifndef _LOG_H
-#define _LOG_H
+#ifndef HUSKY_LOG_H
+#define HUSKY_LOG_H
 
 #include <stdio.h>
 #include "huskyext.h"

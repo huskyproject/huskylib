@@ -23,8 +23,8 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __FEXIST_H__
-#define __FEXIST_H__
+#ifndef HUSKY_FEXIST_H__
+#define HUSKY_FEXIST_H__
 
 #include "huskyext.h"  /* compiler see directory of this .h file */
 

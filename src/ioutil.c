@@ -1,39 +1,87 @@
+/* $Id$
+ *  Provide functions to compiler-indepenent I/O and file/dirname operations.
+ *  (c) Husky Developers Team
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
+ */
+
+/* standard headers */
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
+#include <ctype.h>
 
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+
+/* compiler-dependent headers */
 #ifdef HAS_PWD_H
 #include <pwd.h>
 #endif
 
 #ifdef HAS_SYS_UTIME_H
-#include <sys/utime.h>
-#else
-/* #elif defined(HAS_UTIME_H) */
-#include <utime.h>
+#  include <sys/utime.h>
+#elif defined(HAS_UTIME_H)
+#  include <utime.h>
 #endif
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+#include <huskylib.h>
+
+
+/***  Declarations & defines  ***********************************************/
+
+
+/***  Implementation  *******************************************************/
+
 
 #ifdef __TURBOC__
 #pragma warn -sig
 #endif
 
-UINT16 getUINT16(FILE *in)
+HUSKYEXT word getUINT16(FILE *in)
 {
-   UCHAR dummy;
+   unsigned char dummy;
 
-   dummy = (UCHAR) getc(in);
-   return (dummy + (UCHAR) getc(in) * 256);
+   dummy = (unsigned char) getc(in);
+   return (dummy + (unsigned char) getc(in) * 256);
 }
 
-int fputUINT16(FILE *out, UINT16 word)
+HUSKYEXT int fputUINT16(FILE *out, word data)
 {
-  UCHAR dummy;
+  unsigned char dummy;
 
-  dummy = word % 256;        /*  write high Byte */
+  dummy = data % 256;        /*  write high Byte */
   fputc(dummy, out);
-  dummy = word / 256;        /*  write low Byte */
+  dummy = data / 256;        /*  write low Byte */
   return fputc(dummy, out);
 }
 
@@ -42,14 +90,14 @@ int fputUINT16(FILE *out, UINT16 word)
 #endif
 
 
-INT   fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter)
+HUSKYEXT INT   fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
 {
    size_t i;
 
    for (i=0;i<n-1 ;i++ ) {
 	
 	  do {
-		  str[i] = (UCHAR)getc(f);
+		  str[i] = (unsigned char)getc(f);
 	  } while (filter && *filter && str[i] && strchr(filter, str[i]) != NULL);
 
       /*  if end of file */
@@ -68,7 +116,7 @@ INT   fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter)
    return n;
 }
 
-char *shell_expand(char *str)
+HUSKYEXT char *shell_expand(char *str)
 {
     char *slash = NULL, *ret = NULL, c;
 #ifdef __UNIX__
@@ -137,18 +185,18 @@ char *shell_expand(char *str)
 #define MOVE_FILE_BUFFER_SIZE 128000
 #endif
 
-int move_file(const char *from, const char *to, const int force_rewrite)
+HUSKYEXT int move_file(const char *from, const char *to, const int force_rewrite)
 {
 #if !(defined(USE_SYSTEM_COPY) && (defined(__NT__) || defined(__OS2__)))
     int rc;
 
-#ifdef COMMON_C_HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
+#ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
     if ( cmpfnames((char*)from,(char*)to) == 0 )
         return 0;
 #endif
 
 #ifdef DEBUG
-    w_log( LL_DEBUGY, __FILE__ ":%u:move_file(%s,%s,%d)", __LINE__, from, to, force_rewrite );
+    w_log( LL_DEBUGZ, __FILE__ ":%u:move_file(%s,%s,%d)", __LINE__, from, to, force_rewrite );
 #endif
     if(force_rewrite)
       remove(to);
@@ -158,14 +206,14 @@ int move_file(const char *from, const char *to, const int force_rewrite)
     }
 
 #ifdef DEBUG
-    w_log( LL_DEBUGY, __FILE__ ":%u:move_file()", __LINE__ );
+    w_log( LL_DEBUGZ, __FILE__ ":%u:move_file()", __LINE__ );
 #endif
     rc = rename(from, to);
     if (!rc) {               /* rename succeeded. fine! */
 #elif defined(__NT__) && defined(USE_SYSTEM_COPY)
     int rc;
 
-#ifdef COMMON_C_HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
+#ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
     if ( cmpfnames((char*)from,(char*)to) == 0 )
         return 0;
 #endif
@@ -181,7 +229,7 @@ int move_file(const char *from, const char *to, const int force_rewrite)
 #elif defined(__OS2__) && defined(USE_SYSTEM_COPY)
     USHORT rc;
 
-#ifdef COMMON_C_HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
+#ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
     if ( cmpfnames((char*)from,(char*)to) == 0 )
         return 0;
 #endif
@@ -207,21 +255,25 @@ int move_file(const char *from, const char *to, const int force_rewrite)
 }
 
 	
-int copy_file(const char *from, const char *to, const int force_rewrite)
+HUSKYEXT int copy_file(const char *from, const char *to, const int force_rewrite)
 {
 #if !(defined(USE_SYSTEM_COPY) && (defined(__NT__) || defined(OS2)))
     char *buffer;
     size_t read;
     FILE *fin, *fout;
     struct stat st;
+# if defined(_MAKE_DLL_MVC_)
+    struct _utimbuf ut;
+# else
     struct utimbuf ut;
+# endif
     int fh=-1;
 
 #ifdef DEBUG
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file(%s,%s,%d)", __LINE__, from, to, force_rewrite );
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file(%s,%s,%d)", __LINE__, from, to, force_rewrite );
 #endif
 
-#ifdef COMMON_C_HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
+#ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
     if ( cmpfnames((char*)from,(char*)to) == 0 )
         return 0;
 #endif
@@ -233,13 +285,13 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     if (stat(from, &st)) return -1; /* file does not exist */
 
 #ifdef DEBUG
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file()", __LINE__);
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
 #endif
     fin = fopen(from, "rb");        /* todo: use open( ..., O_CREAT| ..., ...)
                                      * to prevent file overwrite */
     if (fin == NULL) { nfree(buffer); return -1; }
 #ifdef DEBUG
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file()", __LINE__);
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
 #endif
     fh = open( to, (force_rewrite ? 0 : O_EXCL) | O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, S_IREAD | S_IWRITE );
     if( fh<0 ){
@@ -250,14 +302,14 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     }
 #ifdef __UNIX__
 /*     flock(to,O_EXLOCK); */
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file()", __LINE__);
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     /* try to save file ownership if it is possible */
     if (fchown(fh, st.st_uid, st.st_gid) != 0)
         fchmod(fh, st.st_mode & 01777);
     else
         fchmod(fh, st.st_mode);
 #endif
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file()", __LINE__);
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fout = fdopen(fh, "wb");
     if (fout == NULL) { fh=errno; nfree(buffer); fclose(fin); errno=fh; return -1; }
 
@@ -267,7 +319,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 	{   fh=errno;
 	    fclose(fout); fclose(fin); remove(to); nfree(buffer);
             errno=fh;
-            w_log( LL_DEBUGY, __FILE__ ":%u:copy_file() failed", __LINE__);
+            w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
 	    return -1;
 	}
     }
@@ -279,7 +331,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 	fclose(fin);
         remove(to);
         errno=fh;
-        w_log( LL_DEBUGY, __FILE__ ":%u:copy_file() failed", __LINE__);
+        w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
 	return -1;
     }
     fclose(fin);
@@ -289,12 +341,16 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 	fclose(fin);
         remove(to);
         errno=fh;
-        w_log( LL_DEBUGY, __FILE__ ":%u:copy_file() failed", __LINE__);
+        w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
 	return -1;
     }
     ut.actime = st.st_atime;
     ut.modtime = st.st_mtime;
+# if defined(_MAKE_DLL_MVC_)
+    _utime(to, &ut);
+# else
     utime(to, &ut);
+# endif
 #elif defined (__NT__) && defined(USE_SYSTEM_COPY)
     int rc = 0;
 
@@ -316,7 +372,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 #elif defined (OS2) && defined(USE_SYSTEM_COPY)
     USHORT rc;
 
-#ifdef COMMON_C_HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
+#ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
     if ( cmpfnames((char*)from,(char*)to) == 0 )
         return 0;
 #endif
@@ -334,7 +390,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
       return -1;
     }
 #endif
-    w_log( LL_DEBUGY, __FILE__ ":%u:copy_file() OK", __LINE__);
+    w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() OK", __LINE__);
     return 0;
 }
 
@@ -349,7 +405,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
  * 1st element points to string begin.
  * Return NULL if argument is NULL
  */
-char **mk_lst(const char *a)
+static char **mk_lst(const char *a)
 {
     char *p, *q, **list=NULL, end=0, num=0;
 
@@ -377,7 +433,7 @@ char **mk_lst(const char *a)
     return list;
 }
 
-int cmdcall(const char *cmd)
+HUSKYEXT int cmdcall(const char *cmd)
 { int cmdexit=-1;
   char **list;
 
@@ -401,7 +457,7 @@ int cmdcall(const char *cmd)
 */
 #endif
 
-int lockFile(const char *lockfile, int advisoryLock)
+HUSKYEXT int lockFile(const char *lockfile, int advisoryLock)
 {
     int fh = -1;
 
@@ -443,7 +499,7 @@ int lockFile(const char *lockfile, int advisoryLock)
     return fh;
 }
 
-int FreelockFile(const char *lockfile, int fh)
+HUSKYEXT int FreelockFile(const char *lockfile, int fh)
 {
     if(fh > 0)
     	close(fh);
@@ -454,7 +510,7 @@ int FreelockFile(const char *lockfile, int fh)
 }
 
 /* converts decimal value to octal. useful for chmod() */
-unsigned int dec2oct(unsigned int decimal)
+HUSKYEXT unsigned int dec2oct(unsigned int decimal)
 {
     char tmpstr[6];
     unsigned int mode;
@@ -471,7 +527,7 @@ unsigned int dec2oct(unsigned int decimal)
     name: pointer to part of all original pathname.
 
 */
-char    *GetFilenameFromPathname(const char* pathname)
+HUSKYEXT char    *GetFilenameFromPathname(const char* pathname)
 {
     char *fname = strrchr(pathname,PATH_DELIM);
     if(fname)
@@ -488,7 +544,7 @@ char    *GetFilenameFromPathname(const char* pathname)
     may be used in Windows NT OS family).
     Returns the file (or directory) name: pointer to part of all original pathname.
 */
-char *OS_independed_basename(const char *pathname)
+HUSKYEXT char *OS_independed_basename(const char *pathname)
 { register char *fname=NULL, *pname=(char*)pathname;
 
   /* Process Unix-style, result to pathname */
@@ -505,7 +561,7 @@ char *OS_independed_basename(const char *pathname)
  * Return value is pointer to malloc'ed string;
  * if pathname is filenfme without directory return current directory (./ or .\)
  */
-char    *GetDirnameFromPathname(const char* pathname)
+HUSKYEXT char    *GetDirnameFromPathname(const char* pathname)
 {
   char *sp=NULL, *rp=NULL;
   register unsigned short lll;

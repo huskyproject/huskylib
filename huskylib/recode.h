@@ -38,8 +38,8 @@
  * $Id$
  */
 
-#ifndef RECODE_H
-#define RECODE_H
+#ifndef HUSKY_RECODE_H
+#define HUSKY_RECODE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,17 +52,6 @@ HUSKYEXT VOID doneCharsets(VOID);
 HUSKYEXT VOID recodeToInternalCharset( CHAR *string);
 HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
 HUSKYEXT void getctab(CHAR *dest,  UCHAR *charMapFileName);
-
-
-#ifndef _MAKE_DLL_MVC_
-   extern CHAR *intab;
-   extern CHAR *outtab;
-#else
-   HUSKYEXT CHAR *intab;
-   HUSKYEXT CHAR *outtab;
-#endif
-
-
 
 #ifdef __cplusplus
 }

@@ -1,17 +1,34 @@
-/*
-   gnmsgid - standalone msgid generator using husky library
-   Copyright 2003 by Alexander Reznikov, 2:4600/220@fidonet,
-                                         homebrewer@yadex.ru
-   and HUSKY team.
-
-   This file is part of HUSKY project
-
-   This is free software, you can FREE redistribute or modify it.
-
-*/
-
 /* $Id$
- * standalone msgid generator: print new msgid to stdout
+ *  standalone msgid generator: print new msgid to stdout
+ *
+ *  Copyright 2003 by Alexander Reznikov, 2:4600/220@fidonet,
+ *                                        homebrewer@yandex.ru
+ *  and Husky ‚ã¬ã¤é§ãªë …eam.
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
 
 /* standard headers */
@@ -32,15 +49,17 @@
 #include "../cvsdate.h"
 
 
+/***  Declarations & defines  ***********************************************/
+
 #define check_stricmp(a, b) (stricmp(a, b) == 0)
 #define str_or_unknown(str) (str? str: "unknown")
 
 char gnmsgid_rev[]  = "$Revision$";
 char gnmsgid_date[] = "$Date$";
-/* This code break MSVC/DLL build
-extern char genmsgid_rev[];
-extern char genmsgid_date[];
-*/
+
+
+/***  Implementation  *******************************************************/
+
 
 int outrunparse(char *line, unsigned long *seqoutrun)
 {
@@ -95,27 +114,16 @@ void printversion(void)
 
     rev = extract_CVS_keyword(gnmsgid_rev);
     date = extract_CVS_keyword(gnmsgid_date);
-/* This code break MSVC/DLL build
-    gen_rev = extract_CVS_keyword(genmsgid_rev);
-    gen_date = extract_CVS_keyword(genmsgid_date);
-*/
+
     printf("gnmsgid - standalone msgid generator using husky library\n");
     printf("\nCopyright (c) Alexander Reznikov, 2:4600/220@fidonet\n");
     printf("Copyright (c) HUSKY development team.\n\n");
     printf("gnmsgid.c revision:  %s\n", str_or_unknown(rev));
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
-/* This code break MSVC/DLL build
-    printf("genmsgid.c revision: %s\n", str_or_unknown(gen_rev));
-    printf("genmsgid.c date:     %s\n", str_or_unknown(gen_date));
-*/
     printf("huskylib CVS date:   %s\n", cvs_date);
 
     if (rev) free(rev);
     if (date) free(date);
-/*
-    if (gen_rev) free(gen_rev);
-    if (gen_date) free(gen_date);
-*/
 }
 
 int main(int argc, char *argv[])
@@ -128,7 +136,6 @@ int main(int argc, char *argv[])
     dword msgid;
     char *msgiderr;
 
-    /* seqdir = (char *)put_dword(NULL, 1); */  /* Segfault! */
     seqdir = NULL;
     seqoutrun = 0;
     usage = 0;

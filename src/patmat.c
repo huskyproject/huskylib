@@ -1,8 +1,15 @@
 /*
- *  PATMAT.C - Pattern matching. Taken from sh sources
- */
-/* $Id$ */
-/*
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ * $Id$
+ *  Provides functions to pattern matching. Taken from sh sources
+ *
+ * Copyright (c) 1999-2003
+ *      The Husky Developers Team
+ *
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -39,24 +46,30 @@
  *
  */
 
-
 /* standard headers */
 #include <string.h>
+
 
 /* huskylib: compiler.h */
 #include <compiler.h>
 
+
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+
+/* huskylib headers */
 #include <huskylib.h>
+
+
+/***  Declarations & defines  ***********************************************/
 
 #define CTLESC '\\'
 
-/*
- * Returns true if the pattern matches the string.
- */
+/***  Implementation  *******************************************************/
 
+/* Returns true if the pattern matches the string.
+ */
 HUSKYEXT int patmat( const char *string, const char *pattern )
 {
 	register const char *p, *q;

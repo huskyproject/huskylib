@@ -42,10 +42,13 @@
 #include <huskyext.h>
 
 
+/***  Implementation  *******************************************************/
 
-#if defined(__NT__)
-/* WIN32 version */
-#define STRICT
+#if defined(__NT__) /* WIN32 version */
+
+#ifndef __MINGW32__
+#  define STRICT
+#endif
 #include <windows.h>
 
 HUSKYEXT void*MapFile(char*fname)

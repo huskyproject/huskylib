@@ -1,6 +1,6 @@
-/*****************************************************************************
- * String utilities for HPT (FTN NetMail/EchoMail Tosser)
- *****************************************************************************
+/* $Id$
+ *  Provides funstions to operate dinamically allocated strings.
+
  * Copyright (C) 1997-2000
  *
  * Kolya Nesterov
@@ -8,29 +8,52 @@
  * Fido:     2:463/567
  * Kiev, Ukraine
  *
- * This file is part of FIDOCONFIG.
+ *  Latest version may be foind on http://husky.sourceforge.net
  *
- * HPT is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
  *
- * HPT is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with HPT; see the file COPYING.  If not, write to the Free
- * Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *****************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
+ */
+
+/* standard headers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
-#include "xstr.h"
+
+
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+/* huskylib headers */
+#include <memory.h>
+#include <xstr.h>
+
+
+/***  Declarations & defines  ***********************************************/
 
 #if defined(VSPRINTF_ONLY)
 #undef HAS_vsnprintf
@@ -39,7 +62,9 @@
 
 #define N_PRINTFBUF     1024
 
-char *xstralloc(char **s, size_t add)
+/***  Implementation  *******************************************************/
+
+HUSKYEXT char *xstralloc(char **s, size_t add)
 {
     int n;
     if (*s == NULL) {
@@ -54,19 +79,19 @@ char *xstralloc(char **s, size_t add)
     return *s + n;
 }
 
-char *xstrcat(char **s, const char *add)
+HUSKYEXT char *xstrcat(char **s, const char *add)
 {
     return strcat(xstralloc(s, strlen(add)), add);
 }
 
-char *xstrcpy(char **s, const char *add)
+HUSKYEXT char *xstrcpy(char **s, const char *add)
 {
     nfree(*s);
     return xstrcat(s, add);
 }
 
 
-char *xstrscat(char **s, ...)
+HUSKYEXT char *xstrscat(char **s, ...)
 {
     va_list	ap;
     char	*q, *p;
@@ -79,7 +104,7 @@ char *xstrscat(char **s, ...)
     return p;
 }
 
-int xscatprintf(char **s, const char *format, ...)
+HUSKYEXT int xscatprintf(char **s, const char *format, ...)
 {
     va_list ap;
 #if defined(HAS_vasprintf)

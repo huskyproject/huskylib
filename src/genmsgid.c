@@ -1,4 +1,7 @@
 /* $Id$
+ *  Provides function to generate strong unique 32-bit number uses in FTN MSGID
+ *  (message ID)
+ *  Written at 2002 by Pavel Goulchuck 2:463/68 pgul@pgul.kiev.ua
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides functions to file and directory existence check
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

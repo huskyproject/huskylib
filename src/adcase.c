@@ -1,9 +1,33 @@
-/*
- *  ADCASE.C
- *  Provides case insensitive file name matching on UNIX filesystems. 
- *  Written 1999 by Tobias Ernst and released to the public domain. *
+/* $Id$
+ *  Provides case insensitive file name matching on UNIX filesystems.
+ *  Written at 1999 by Tobias Ernst and released to the public domain.
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
 
+
+/* standard headers */
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,9 +38,10 @@
 #include <sys/types.h>
 
 
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
+/* huskylib: compiler.h */
+#include <compiler.h>
 
+/* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
 #   include <unistd.h>
 #endif
@@ -29,17 +54,32 @@
 #  include <dirent.h>
 #endif
 
-#ifdef __UNIX__
-
 #ifdef HAS_SYS_PARAMS_H
-#   include <io.h>
+#   include <sys/params.h>
 #endif
 
-#if 0
-  #if (defined(__unix__) || defined(unix)) && !defined(USG)
-  #include <sys/param.h>          /* used to differentiate BSD from SYSV  */
-  #endif                                
-#endif                                
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+#include <memory.h>
+#include <unused.h>
+
+
+/***  Declarations & defines  ***********************************************/
+
+/*  ATTENTION: The adaptcase routine builds an internal cache which never
+ *  expires. If you ever add files to or remove files to a subdirectory and
+ *  later want to have adaptcase map this particular file name properly,
+ *  you must call adaptcase_refresh_dir() with the subdirectory path name
+ *  as argument!
+ */
+HUSKYEXT void adaptcase_refresh_dir(const char *directory);
+HUSKYEXT void adaptcase(char *);
+
+/***  Implementation  *******************************************************/
+
+#ifdef __UNIX__
 
 /* The adaptcase routine behaves as follows: It assumes that pathname
    is a path name which may contain multiple dashes, and it assumes
@@ -59,7 +99,7 @@
    problem is that opendir / readdir is very slow ...). If you ever
    have to fix something in this routine, you'd better rewrite it from
    scratch.
- 
+
  *  ATTENTION: The adaptcase routine builds an internal cache which never
  *  expires. If you ever add files to or remove files to a subdirectory and
  *  later want to have adaptcase map this particular file name properly,
@@ -97,24 +137,24 @@ static int cache_find_cmp(const void *a, const void *b)
 {
     return strcasecmp((const char *)a, current_cache+(*((const size_t *)b)));
 }
-  
+
 /* #define TRACECACHE */
 
-#ifdef BSD
+#ifdef __BSD__
 #define DIRENTLEN(x) ((x)->d_namlen)
 #else
 #define DIRENTLEN(x) (strlen((x)->d_name))
 #endif
 
-void adaptcase_refresh_dir(char *directory)
+void adaptcase_refresh_dir(const char *directory)
 {
     int k = strlen(directory), l;
-    
+
     if (k && directory[k-1] == '/')
     {
         k--;
     }
-    
+
     if (k != 0)
     {
         l = adaptcase_cache_position;
@@ -148,14 +188,14 @@ void adaptcase(char *pathname)
 #ifdef TRACECACHE
     FILE *ftrc;
 #endif
-    
+
     if (!*pathname)
         return;
 #ifdef TRACECACHE
     ftrc = fopen ("trace.log", "a");
     fprintf(ftrc, "--Query: %s\n", pathname);
-#endif    
-    
+#endif
+
     if (adaptcase_cache_position == -1)
     {
         /* initialise the cache */
@@ -163,7 +203,7 @@ void adaptcase(char *pathname)
                sizeof(struct adaptcase_cache_entry));
         adaptcase_cache_position = 0;
     }
-    
+
     k = strlen(pathname);
 
     if (k > 2)
@@ -174,7 +214,7 @@ void adaptcase(char *pathname)
     {
         k = 0;
     }
-    
+
     j = 0; i = 0;
 
 
@@ -188,13 +228,13 @@ start_over:
             if (adaptcase_cache[l].query != NULL)
             {
                 if ((!memcmp(adaptcase_cache[l].query,pathname,k)) &&
-                    (adaptcase_cache[l].query[k] == '\0'))                                                  
+                    (adaptcase_cache[l].query[k] == '\0'))
                 {
                     /* cache hit for the directory */
 #ifdef TRACECACHE
                     fprintf (ftrc, "Cache hit for Dir: %s\n",
                              adaptcase_cache[l].result);
-#endif                   
+#endif
                     memcpy(buf, adaptcase_cache[l].result, k);
                     buf[k] = '/';
                     current_cache=adaptcase_cache[l].raw_cache;
@@ -207,7 +247,7 @@ start_over:
                     {
 #ifdef TRACECACHE
                         fprintf (ftrc, "Cache miss for file.\n");
-#endif                   
+#endif
 
                         /* file does not exist - convert to lower c. */
                         for (n = k + 1; pathname[n-1]; n++)
@@ -218,7 +258,7 @@ start_over:
 #ifdef TRACECACHE
                         fprintf(ftrc, "Return: %s\n", pathname);
                         fclose(ftrc);
-#endif    
+#endif
                         return;
                     }
                     else
@@ -226,7 +266,7 @@ start_over:
 #ifdef TRACECACHE
                         fprintf (ftrc, "Cache hit for file: %s\n",
                                  adaptcase_cache[l].raw_cache+(*m));
-#endif                   
+#endif
 
                         /* file does exist = cache hit for the file */
                         for (n = k + 1; pathname[n-1]; n++)
@@ -249,19 +289,19 @@ start_over:
 
 #ifdef TRACECACHE
         fprintf (ftrc, "Cache miss for directory.\n");
-#endif                   
+#endif
 
 
         /* no hit for the directory */
         addresult = 1;
     }
 
-               
+
     while (pathname[i])
     {
         if (pathname[i] == '/')
         {
-            buf[i] = pathname[i]; 
+            buf[i] = pathname[i];
             if (addresult && i == k)
             {
                 goto add_to_cache;
@@ -275,7 +315,7 @@ cache_failure:
             {
                 fprintf (ftrc, "Error opening directory %s\n", buf);
             }
-#endif            
+#endif
         }
         else
         {
@@ -286,7 +326,7 @@ cache_failure:
             {
                 fprintf (ftrc, "Error opening directory ./\n");
             }
-#endif            
+#endif
         }
 
         j = i;
@@ -302,7 +342,7 @@ cache_failure:
                 if (!strcasecmp(dp->d_name, buf + j))
                 {
                     /* file exists, take over it's name */
-            
+
                     assert(i - j == DIRENTLEN(dp));
                     memcpy(buf + j, dp->d_name, DIRENTLEN(dp) + 1);
                     closedir(dirp);
@@ -316,7 +356,7 @@ cache_failure:
         {
             /* file does not exist - so the rest is brand new and
                should be converted to lower case */
-            
+
             for (i = j; pathname[i]; i++)
                 buf[i] = tolower(pathname[i]);
             buf[i] = '\0';
@@ -350,7 +390,7 @@ add_to_cache:
 
         adaptcase_cache[l].n = 0;
         raw_high = 0;
-        
+
         c = buf[k]; buf[k] = '\0';
         if ((dirp = opendir(buf)) == NULL)
         {
@@ -370,7 +410,7 @@ add_to_cache:
                     goto cache_error;
                 }
             }
-           
+
             if (adaptcase_cache[l].n == nmax - 1)
             {
                 if ((adaptcase_cache[l].cache_index =
@@ -396,12 +436,12 @@ add_to_cache:
         adaptcase_cache[l].query[k] = '\0';
         memcpy(adaptcase_cache[l].result, buf, k);
         adaptcase_cache[l].result[k] = '\0';
-        
+
         adaptcase_cache_position = l;
 
 #ifdef TRACECACHE
         fprintf  (ftrc, "Sucessfully added cache entry.\n");
-#endif        
+#endif
         goto start_over;
 
     cache_error:
@@ -410,18 +450,18 @@ add_to_cache:
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
         nfree(adaptcase_cache[l].cache_index);
-        
+
             if (dirp != NULL)
         {
             closedir(dirp);
         }
 #ifdef TRACECACHE
         fprintf  (ftrc, "Error in building cache entry.\n");
-#endif        
+#endif
         addresult = 0;
         goto cache_failure;
     }
-        
+
 #ifdef TRACECACHE
     fprintf(ftrc, "Return: %s\n", pathname);
     fclose(ftrc);
@@ -430,13 +470,11 @@ add_to_cache:
     return;
 }
 
- 
+
 #else
 
 /* Not UNIX - Just convert the file to lower case, it will work because
    the FS is case insensitive */
-
-#include "adcase.h"
 
 void adaptcase (char *str)
 {
@@ -446,19 +484,12 @@ void adaptcase (char *str)
     }
 }
 
-#ifndef unused
-#ifdef __GNUC__
-#define unused(x)
-#else
-#define unused(x) (x)
-#endif
-#endif
-
-void adaptcase_refresh_dir(char *directory)
+void adaptcase_refresh_dir(const char *directory)
 {
     unused(directory);
 }
-#endif  
+#endif
+
 
 #if defined (TEST)
 int main(int argc, char **argv)

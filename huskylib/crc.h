@@ -27,37 +27,30 @@
  * $Id$
  */
 
-#ifndef _CRC_H
-#define _CRC_H
+#ifndef HUSKY_CRC_H
+#define HUSKY_CRC_H
+
+#include "typesize.h"
+#include "huskyext.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "typesize.h"
-#include "huskyext.h"
-
 
 /* CRC32 initial value */
-#define CRC32INIT ((UINT32)0xFFFFFFFFUL)
+#define CRC32INIT ((dword)0xFFFFFFFFUL)
 /* CRC16 initial value */
-#define CRC16INIT ((UINT16)0)
+#define CRC16INIT ((word)0)
 
 
-/* Define read() buffer */
-#ifdef __FLAT__
-#define CRC_BUFFER_SIZE 80000
-#else
-/* DOS-like OS (64K memory segment) */
-#define CRC_BUFFER_SIZE 32767
-#endif
 
 /* Calculate CRC32 for memory array
    str: array
    size: array size
    initcrc: initial value (start from 0xFFFFFFFFUL)
  */
-HUSKYEXT   UINT32 memcrc32(const char *str, int size, UINT32 initcrc);
+HUSKYEXT   dword memcrc32(const char *str, int size, dword initcrc);
 
 /* Alias for memcrc32() */
 #define crc32(x,y,z) memcrc32(x,y,z)
@@ -66,19 +59,19 @@ HUSKYEXT   UINT32 memcrc32(const char *str, int size, UINT32 initcrc);
    str: string
    initcrc: initial value (start from 0xFFFFFFFFUL)
  */
-HUSKYEXT   UINT32 strcrc32(const char *str, UINT32 initcrc);
+HUSKYEXT   dword strcrc32(const char *str, dword initcrc);
 
 /* Calculate CRC32 for file
    filename: file name for calculate CRC32
  */
-HUSKYEXT   UINT32 filecrc32(const char *filename);
+HUSKYEXT   dword filecrc32(const char *filename);
 
 /* Calculate CRC16 for memory array
    str: array
    size: array size
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT   UINT16 memcrc16(const char *str, int size, UINT16 initcrc);
+HUSKYEXT   word memcrc16(const char *str, int size, word initcrc);
 
 /* Alias for memcrc16() */
 #define crc16(x,y,z) memcrc32(x,y,z)
@@ -87,12 +80,12 @@ HUSKYEXT   UINT16 memcrc16(const char *str, int size, UINT16 initcrc);
    str: string
    initcrc: initial value (start from 0x0000)
  */
-HUSKYEXT   UINT16 strcrc16(const char *str, UINT16 initcrc);
+HUSKYEXT   word strcrc16(const char *str, word initcrc);
 
 /* Calculate CRC16 for file
    filename: file name for calculate CRC16
  */
-HUSKYEXT   UINT16 filecrc16(const char *filename);
+HUSKYEXT   word filecrc16(const char *filename);
 
 
 /*=======================================================================
@@ -105,15 +98,15 @@ HUSKYEXT   UINT16 filecrc16(const char *filename);
  */
 
 /* 16-bit checksum (sum -r) for ASCIIZ string */
-HUSKYEXT UINT16 strsum16( const char *str );
+HUSKYEXT word strsum16( const char *str );
 #define strsumr strsum16
 
 /* 16-bit checksum (sum -r) for array of bytes */
-HUSKYEXT UINT16 memsum16( const char *str, unsigned size );
+HUSKYEXT word memsum16( const char *str, unsigned size );
 #define memsumr memsum16
 
 /* 16-bit checksum (sum -r) for file */
-HUSKYEXT UINT16 filesum16(const char *filename);
+HUSKYEXT word filesum16(const char *filename);
 #define filesumr(fn) filesum16((fn),NULL)
 
 
@@ -125,15 +118,15 @@ HUSKYEXT UINT16 filesum16(const char *filename);
  */
 
 /* 32bit checksum for ASCIIZ string */
-HUSKYEXT UINT32 strsum32( const char *str );
+HUSKYEXT dword strsum32( const char *str );
 
 /* 32bit checksum for array of bytes */
-HUSKYEXT UINT32 memsum32( const char *str, unsigned size );
+HUSKYEXT dword memsum32( const char *str, unsigned size );
 
 /* 32bit checksum for file
  * plen: pointer to return file lenght, unuse if plen is NULL
  */
-HUSKYEXT UINT32 filesum32( const char *filename, unsigned long *plen );
+HUSKYEXT dword filesum32( const char *filename, unsigned long *plen );
 
 
 #ifdef __cplusplus

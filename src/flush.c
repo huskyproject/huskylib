@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provide compiler-independent functions to file buffers flush.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

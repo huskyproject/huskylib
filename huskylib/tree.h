@@ -3,10 +3,10 @@
  */
 
 
-#ifndef	_TREE_FLAG
-#define	_TREE_FLAG
+#ifndef	HUSKY_TREE_H
+#define	HUSKY_TREE_H
 
-#include "huskylib.h"
+#include "huskyext.h"
 
 typedef struct  tree_s
 {
@@ -33,4 +33,4 @@ HUSKYEXT unsigned long tree_count(tree **ppr_tree);
 
 HUSKYEXT int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *),char * pc_user);
 
-#endif /*_TREE_FLAG*/
+#endif

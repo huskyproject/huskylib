@@ -44,6 +44,8 @@
 #  define farread read
 #  define farwrite write
 
+#  define HAS_UTIME_H 1
+
 #  if (defined(__APPLE__) && defined(__MACH__)) || defined(__NetBSD__) || defined(__FreeBSD__) || defined(_AIX) || defined(__SUN__) || defined(__LINUX__) || defined(__osf__) || defined(__hpux) || defined(__OpenBSD__) || defined(__CYGWIN__)
 #    define mymkdir(a) mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 #  else
@@ -81,10 +83,12 @@
 #    define HAS_SYS_VFS_H
 #  endif
 
-#  if defined (__LINUX__) && defined(__GLIBC__)
-#    define HAS_SYS_STATVFS_H
-#  else
-#    define HAS_SYS_VFS_H
+#  if defined (__LINUX__)
+#    if defined(__GLIBC__)
+#      define HAS_SYS_STATVFS_H
+#    else
+#      define HAS_SYS_VFS_H
+#    endif
 #  endif
 
 #  include <fcntl.h>

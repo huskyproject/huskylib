@@ -1,4 +1,5 @@
 /* $Id$
+ * Provide extra set of functions to operate with strings.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -23,14 +24,21 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+
+
+/* huskylib: compiler.h */
+#include <compiler.h>
 
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
 #include <huskylib.h>
+
+/***  Implementation  *******************************************************/
 
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
 {
@@ -334,9 +342,9 @@ char *strseparate(char **pp, const char *delim)
 
   if ((p = *pp) == '\0')
     return 0;
-    
+
   if (!*p) return 0;
-  
+
   if ((q = strpbrk (p, delim)) != NULL)
     {
       *pp = q + 1;

@@ -92,8 +92,9 @@
 #  define HAS_IO_H      1   /* use "#include <io.h> */
 #  define HAS_SHARE_H   1   /* may use "#include <share.h> */
 #  define HAS_UNISTD_H  1   /* use "#include <unistd.h> */
-#  define HAS_SIGNAL_H  1  /* <signal.h> */
-#  define HAS_PROCESS_H   /* may use "#include <process.h> */
+#  define HAS_SIGNAL_H  1   /* <signal.h> */
+#  define HAS_PROCESS_H 1   /* may use "#include <process.h> */
+#  define HAS_UTIME_H   1
 
 #  define USE_STAT_MACROS
 

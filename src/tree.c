@@ -1,29 +1,55 @@
-/* as_tree - tree library for as
- * vix 14dec85 [written]
- * vix 02feb86 [added tree balancing from wirth "a+ds=p" p. 220-221]
- * vix 06feb86 [added tree_mung()]
- * vix 20jun86 [added tree_delete per wirth a+ds (mod2 v.) p. 224]
- * vix 23jun86 [added delete uar to add for replaced nodes]
- * mtt 08aug98 [added tree_count for count of knots]
- * avv 03feb00 [added tree_srchall for full search]
- */
-#include <stdlib.h>
-
-
-/* This program text was created by Paul Vixie using examples from the book:
+/* $Id$
+ *  Provides functions to operate with linked binary tree.
+ *
+ * This program text was created by Paul Vixie using examples from the book:
  * "Algorithms & Data Structures," Niklaus Wirth, Prentice-Hall, 1986, ISBN
- * 0-13-022005-1.  This code and associated documentation is hereby placed
- * in the public domain.
+ * 0-13-022005-1.
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
 
-
-/*#define		DEBUG	"tree"*/
-
-
+/* standard headers */
+#include <stdlib.h>
 #include <stdio.h>
-#include <huskylib/huskylib.h>
-#include <huskylib/vixie.h>
-#include "tree.h"
+
+
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+/* huskylib headers */
+#include <vixie.h>
+#include <tree.h>
+#include <memory.h>
+
+/***  Declarations & defines  ***********************************************/
 
 #if defined(DEBUG) /*|| defined(_DEBUG)*/
 #define		PRMSG(msg)	printf("DEBUG: '%s'\n", msg);
@@ -31,9 +57,11 @@
 #define		PRMSG(msg)
 #endif
 
-unsigned long tr_count;
+static unsigned long tr_count;
 
-char *tree_srch_real(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
+/***  Implementation  *******************************************************/
+
+static char *tree_srch_real(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
 {
 	register int	i_comp;
 
@@ -65,7 +93,7 @@ char *tree_srch_real(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *
 	EXIT(NULL)
 }
 
-char *tree_srch(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
+HUSKYEXT char *tree_srch(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
 {
     if(!(**ppr_tree).tree_r)
         return NULL;
@@ -227,7 +255,7 @@ static int sprout(tree **ppr, char *pc_data, int *pi_balance,
 	EXIT(0)
 }
 
-int tree_add_real(tree **ppr_tree, int (*pfi_compare)(char *, char *),
+static int tree_add_real(tree **ppr_tree, int (*pfi_compare)(char *, char *),
 	      char *pc_user, int (*pfi_delete)(char *), char need_balance)
 {
 	/* int	sprout(); */
@@ -240,10 +268,10 @@ int tree_add_real(tree **ppr_tree, int (*pfi_compare)(char *, char *),
     EXIT(nRet)
 }
 
-int tree_add(tree **ppr_tree, int (*pfi_compare)(char *, char *),
+HUSKYEXT int tree_add(tree **ppr_tree, int (*pfi_compare)(char *, char *),
               char *pc_user, int (*pfi_delete)(char *))
 {
-    return tree_add_real(&(**ppr_tree).tree_r, 
+    return tree_add_real(&(**ppr_tree).tree_r,
                                   pfi_compare,
                                       pc_user,
                                    pfi_delete,
@@ -452,7 +480,7 @@ static int delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_use
 }
 
 
-int tree_delete_real(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
+static int tree_delete_real(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
 {
 	int	i_balance = FALSE, i_uar_called = FALSE;
 
@@ -461,12 +489,12 @@ int tree_delete_real(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_
 				&i_balance, &i_uar_called))
 }
 
-int tree_delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
+HUSKYEXT int tree_delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *))
 {
     return tree_delete_real(&(**ppr_p).tree_r, pfi_compare, pc_user, pfi_uar);
 }
 
-int tree_trav_real(tree **ppr_tree, int (*pfi_uar)(char *))
+static int tree_trav_real(tree **ppr_tree, int (*pfi_uar)(char *))
 {
 	ENTER("tree_trav")
 
@@ -482,12 +510,12 @@ int tree_trav_real(tree **ppr_tree, int (*pfi_uar)(char *))
 	EXIT(TRUE)
 }
 
-int tree_trav(tree **ppr_tree, int (*pfi_uar)(char *))
+HUSKYEXT int tree_trav(tree **ppr_tree, int (*pfi_uar)(char *))
 {
     return tree_trav_real(&(**ppr_tree).tree_r, pfi_uar);
 }
 
-void tree_mung_real(tree **ppr_tree, int (*pfi_uar)(char *))
+static void tree_mung_real(tree **ppr_tree, int (*pfi_uar)(char *))
 {
 	ENTER("tree_mung")
 	if (*ppr_tree)
@@ -502,7 +530,7 @@ void tree_mung_real(tree **ppr_tree, int (*pfi_uar)(char *))
 	EXITV
 }
 
-void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
+HUSKYEXT void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
 {
     tree_mung_real(&(**ppr_tree).tree_r, pfi_uar);
     if (pfi_uar)
@@ -510,26 +538,26 @@ void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
     nfree(*ppr_tree);
 }
 
-int countEach(char *pc_data)
+static int countEach(char *pc_data)
 {
    ENTER("count")
    tr_count++;
    EXIT(TRUE)
 }
 
-unsigned long tree_count_real(tree **ppr_tree)
+static unsigned long tree_count_real(tree **ppr_tree)
 {
    tr_count = 0;
    tree_trav(ppr_tree, countEach);
    return tr_count;
 }
 
-unsigned long tree_count(tree **ppr_tree)
+HUSKYEXT unsigned long tree_count(tree **ppr_tree)
 {
     return tree_count_real(&(**ppr_tree).tree_r);
 }
 
-int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
+HUSKYEXT int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_user)
 {
 	ENTER("tree_srchall")
 
@@ -545,7 +573,7 @@ int tree_srchall(tree **ppr_tree, int (*pfi_compare)(char *, char *), char *pc_u
 	EXIT(TRUE)
 }
 
-void tree_init(tree **ppr_tree, char need_balance)
+HUSKYEXT void tree_init(tree **ppr_tree, char need_balance)
 {
 	ENTER("tree_init")
         *ppr_tree = NULL;

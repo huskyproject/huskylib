@@ -1,6 +1,6 @@
 /* $Id$ */
-#if !defined    (_TYPESIZE_H)
-#define _TYPESIZE_H
+#ifndef HUSKY_TYPESIZE_H
+#define HUSKY_TYPESIZE_H
 
 /*  */
 /*   typesize.h                         written by tom schlangen */

@@ -445,8 +445,8 @@
  **************************************************************************/
 
 
-#ifndef __COMPILER_H__
-#define __COMPILER_H__
+#ifndef HUSKY_COMPILER_H__
+#define HUSKY_COMPILER_H__
 
 /* small code to demonstrate gcc 2.96 bugs:
 char q[2048], *p;

@@ -23,12 +23,14 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __HUSKYLIB_H__
-#define __HUSKYLIB_H__
+#ifndef HUSKY_HUSKYLIB_H__
+#define HUSKY_HUSKYLIB_H__
 
+/* standard headers */
 #include <stdio.h>
 #include <time.h>
 
+/* huskylib headers */
 #include "compiler.h"
 #include "huskyext.h"
 #include "calendar.h"
@@ -50,57 +52,33 @@
 
 
 /*-- flush.c --*/
+
+/* fflush() analog with file hanle as argument */
 #ifdef __DOS__
 /* flushasm.asm for DOS, redefined for known implementations in flush.c */
-void pascal far flush_handle2(int fd);
+HUSKYEXT void pascal far flush_handle2(int fh);
 #endif
 
-void _fast flush_handle(FILE * fp);
+/* Compiler-independent fflush() implementation */
+HUSKYEXT void _fast flush_handle(FILE * fp);
 
 
-/*-- tdelay.c --*/
+/*-- adcase.c -------------------------------------------------------------*/
+
+/*  ATTENTION: The adaptcase routine builds an internal cache which never
+ *  expires. If you ever add files to or remove files to a subdirectory and
+ *  later want to have adaptcase map this particular file name properly,
+ *  you must call adaptcase_refresh_dir() with the subdirectory path name
+ *  as argument!
+ */
+
+HUSKYEXT void adaptcase_refresh_dir(const char *directory);
+HUSKYEXT void adaptcase(char *);
+
+
+/*-- tdelay.c -------------------------------------------------------------*/
+/* Compiler-independent sleep() implementation with precisious to milliseconds */
 HUSKYEXT void _fast tdelay(int);
-
-
-/*-- memory.c --*/
-#ifdef __LITTLE_ENDIAN__
-
-#define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
-#define put_word(ptr, val)	(*(word *)(ptr) = (val))
-#define get_dword(ptr)		(*(dword *)(ptr))
-#define get_word(ptr)		(*(word *)(ptr))
-
-#else
-
-HUSKYEXT void put_word(byte *ptr, word value);
-HUSKYEXT void put_dword(byte *ptr, dword value);
-/*
- *  get_dword
- *
- *  Reads in a 4 byte word that is stored in little endian (Intel) notation
- *  and converts it to the local representation n an architecture-
- *  independent manner
- */
-
-#define get_dword(ptr)            \
-   ((dword)((unsigned char)(ptr)[0]) |           \
-    (((dword)((unsigned char)(ptr)[1])) << 8)  | \
-    (((dword)((unsigned char)(ptr)[2])) << 16) | \
-    (((dword)((unsigned char)(ptr)[3])) << 24))  \
-
-/*
- *  get_word
- *
- *  Reads in a 2 byte word that is stored in little endian (Intel) notation
- *  and converts it to the local representation in an architecture-
- *  independent manner
- */
-
-#define get_word(ptr)         \
-    ((word)((unsigned char)(ptr)[0]) |         \
-     (((word)((unsigned char)(ptr)[1])) << 8 ))
-
-#endif /* __LITTLE_ENDIAN__ */
 
 
 /*-- genmsgid.c --*/
@@ -120,22 +98,22 @@ HUSKYEXT void* MapFile(char* fname);
 HUSKYEXT ULONG fc_GetDiskFreeSpace(const char *path);
 
 /* ioutil.c */
-HUSKYEXT UINT16 getUINT16(FILE *in);
+HUSKYEXT word getUINT16(FILE *in);
 /*DOC
   Input:  in is an file stream opened for reading.
-  Output: getUINT16 returns an UINT16
+  Output: getUINT16 returns an word
   FZ:     the UINT15 is read from the stream using the method lowByte, highByte.
 */
 
-HUSKYEXT int    fputUINT16(FILE *out, UINT16 word);
+HUSKYEXT int    fputUINT16(FILE *out, word word);
 /*DOC
   Input:  out is an file opened for writing.
-          word is the UINT16 which should be written
+          word is the word which should be written
   Output: fputUIN16 returns the return of the second fputc call.
   FZ:     fputUINT16 writes word into the stream using the order lowByte, highByte.
 */
 
-HUSKYEXT INT    fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter);
+HUSKYEXT int    fgetsUntil0(UCHAR *str, size_t n, FILE *f, char *filter);
 /*DOC
   Input:  n-1 chars are read at most.
           str is a buffer with the length n.
@@ -151,6 +129,7 @@ HUSKYEXT char   *shell_expand(char *str);
    Ouput: a pointer to a \0 terminated string is returned which must be free'd
    FZ:    shell_expand expands the strings just like ~/.msged to /home/mtt/.msged
           see sh(1) for further explanations
+   Note:  *str re-allocated if need
 */
 
 /* will be moved to huskylib */
@@ -182,7 +161,7 @@ HUSKYEXT int cmdcall(const char *cmd);
 #endif
 
 /* Converts decimal value to octal [useful for chmod()] */
-unsigned int dec2oct(unsigned int decimal);
+HUSKYEXT unsigned int dec2oct(unsigned int decimal);
 
 /* try to create and lock lockfile */
 /* returns -1 if fail */

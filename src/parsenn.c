@@ -28,17 +28,22 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-/* huskylib headers */
+/* huskylib: compiler.h */
 #include <compiler.h>
+
+/* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
 
 #include <parsenn.h>
 #include <strext.h>
 
+/***  Declarations & defines  ***********************************************/
 
 const static char *colon = ":";
 const static char *slash = "/";
+
+/***  Implementation  *******************************************************/
 
 /*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
 {

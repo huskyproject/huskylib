@@ -23,8 +23,8 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __CVTDATE_H__
-#define __CVTDATE_H__
+#ifndef HUSKY_CVTDATE_H__
+#define HUSKY_CVTDATE_H__
 
 #include "huskyext.h"  /* compiler see directory of this .h file */
 

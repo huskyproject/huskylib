@@ -1,7 +1,5 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * recode.c : charsets translating routines
+/* $Id$
+ *  Provides charsets translating routines
  *
  * Compiled from hpt/recode
  * by Stas Degteff <g@grumbler.org>, 2:5080/102@fidonet
@@ -16,38 +14,60 @@
  *                        Fido:     2:5000/117
  *                        Internet: sackett@mail.ru
  *
- * This file is part of FIDOCONFIG library (part of the Husky FIDOnet
- * software project)
+ *  Latest version may be foind on http://husky.sourceforge.net
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2, or (at your option)
- * any later version.
  *
- * FIDOCONFIG library is distributed in the hope that it will be useful,
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with FIDOCONFIG library; see the file COPYING.  If not, write
- * to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org
- *****************************************************************************
- * $Id$
+ * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <huskylib/huskylib.h>
 
-CHAR *intab  = NULL;
 
-CHAR *outtab = NULL;
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-VOID initCharsets(VOID)
+
+/* compiler-dependent headers */
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+/* huskylib headers */
+#include <huskylib.h>
+
+
+/***  Declarations & defines  ***********************************************/
+
+static CHAR *intab  = NULL;
+static CHAR *outtab = NULL;
+
+/***  Implementation  *******************************************************/
+
+HUSKYEXT void initCharsets(void)
 {
 	int i;
 	intab	= (CHAR *) smalloc(sizeof(CHAR) * 256);
@@ -55,38 +75,38 @@ VOID initCharsets(VOID)
 	for (i = 0; i < 256; i++) intab[i] = outtab[i] = (CHAR) i;
 }
 
-VOID doneCharsets(VOID)
+HUSKYEXT void doneCharsets(void)
 {
 	nfree(intab);
 	nfree(outtab);
 }
 
-VOID recodeToInternalCharset(CHAR *string)
+HUSKYEXT void recodeToInternalCharset(CHAR *string)
 {
-INT c;
+int c;
 
     if( !intab || !outtab ) initCharsets();
 
     if (string != NULL) {
 	for( ; *string != '\000'; string++ )
 	    {
-	    c=((INT)*string)&0xFF;
+	    c=((int)*string)&0xFF;
         *string = intab[c];
         }
     }
 
 }
 
-VOID recodeToTransportCharset(CHAR *string)
+HUSKYEXT void recodeToTransportCharset(CHAR *string)
 {
-INT c;
+int c;
 
     if( !intab || !outtab ) initCharsets();
 
     if (string != NULL) {
 	for( ; *string != '\000'; string++ )
 	    {
-	    c=((INT)*string)&0xFF;
+	    c=((int)*string)&0xFF;
         *string = outtab[c];
         }
     }
@@ -94,21 +114,21 @@ INT c;
 }
 
 
-INT ctoi(CHAR *s)
+HUSKYEXT int ctoi(CHAR *s)
 {
 	char *foo;
 	unsigned long res = strtoul((char*)s, &foo, 0);
 	if (*foo)	/* parse error */
 		return 0;
-	return (INT)res;
+	return (int)res;
 }
 
-void getctab(CHAR *dest, UCHAR *charMapFileName )
+HUSKYEXT void getctab(CHAR *dest, UCHAR *charMapFileName )
 {
 	FILE *fp;
 	UCHAR buf[512],*p,*q;
 	int in,on,count;
-	INT line;
+	int line;
 
 	if( !intab || !outtab ) initCharsets();
 
@@ -128,7 +148,7 @@ void getctab(CHAR *dest, UCHAR *charMapFileName )
 
 		if (p && q)
 		{
-#if defined(__WATCOMC__) && defined(__DOS4G__)
+#if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
 			in = ctoi((signed char *)p);
 #else
 			in = ctoi((char *)p);
@@ -137,7 +157,7 @@ void getctab(CHAR *dest, UCHAR *charMapFileName )
 				fprintf(stderr, "getctab: %s: line %d: char val too big\n", charMapFileName, line);
 				break;
 			}
-#if defined(__WATCOMC__) && defined(__DOS4G__)
+#if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
 			on=ctoi((signed char *)q);
 #else
 			on=ctoi((char *)q);

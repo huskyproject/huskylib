@@ -1,5 +1,4 @@
-/*
- * locking.c
+/* $Id$
  *
  * This file implements record locking for platforms where the lock(),
  * unlock() and/or sopen() functions are not available. It also
@@ -22,18 +21,45 @@
  *   lock, unlock and sopen provieded by the CRTL
  *   waitlock defined as a loop calling lock and then sleep
  *
- * Written by Tobias Ernst @ 2:2476/418, released to the public domain.
+ *  Written by Tobias Ernst @ 2:2476/418.
  *
+ *  Latest version may be foind on http://husky.sourceforge.net
+ *
+ *
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
+
 /* standard headers */
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 
+
 /* huskylib: compiler.h */
 #include <compiler.h>
 
-/* standard headers */
+
+/* compiler-dependent headers */
 #ifdef HAS_DIRECT_H
 #  include <direct.h>
 #endif
@@ -50,11 +76,17 @@
 #  include <dos.h>
 #endif
 
+
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+
+
+/* huskylib headers */
 #include <huskylib.h>
 
+
+/***  Declarations & defines  ***********************************************/
 
 /* Test for locking functions avaiable in OS
  */
@@ -66,7 +98,7 @@ HUSKYEXT int waitlock2(int handle, long ofs, long length, long t);
 HUSKYEXT int sopen(const char *name, int oflag, int ishared, int mode);
 #endif
 
-/* implementations */
+/***  Implementation  *******************************************************/
 
 #ifdef __DJGPP__
 #include <dpmi.h>

@@ -29,6 +29,7 @@ CC	= gcc
 AR	= ar
 RANLIB	= ranlib
 INSTALL	= install
+RM	= rm
 
 ## file suffixes ##
 
@@ -79,7 +80,6 @@ DLLSUFFIX=
 #.PHONY:	distclean clean all static programs default
 .SUFFIXES: .c.o
 .MAIN: default
-.PATH:  $(SRC_DIR)
 
 ## Default make rule ##
 
@@ -103,6 +103,8 @@ LIBS	+=
 # Append includes dir and debug code generate options (if defined)
 CFLAGS	+= -I$(H_DIR)
 
+TARGETDLL+=$(VER)
+
 ## make rules ##
 
 all:	static dll programs
@@ -111,6 +113,7 @@ static:	$(TARGETLIB)
 dll:	$(TARGETDLL)
 programs:  $(PROGRAMS)
 
+.PATH:  $(SRC_DIR)
 $(_C)$(_OBJ):
 	$(CC) $(CFLAGS) $(CDEFS) $(DEBUG) $(OBJOPT) $<
 
@@ -148,10 +151,9 @@ linstall: $(TARGETLIB)
 
 dinstall: $(TARGETDLL)
 	$(INSTALL) $(IDOPT) $(LIBDIR)
-	cp $(TARGETDLL) $(TARGETDLL).$(VER)
-	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
-	ln -sf $(LIBDIR)$(TARGETDLL).$(VER) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
-	ln -sf $(LIBDIR)$(TARGETDLL).$(VER) $(LIBDIR)$(TARGETDLL).$(VERH)
+	$(INSTALL) $(ILOPT) $(TARGETDLL) $(LIBDIR)
+	ln -sf $(LIBDIR)$(TARGETDLL) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
+	ln -sf $(LIBDIR)$(TARGETDLL) $(LIBDIR)$(TARGETDLL).$(VERH)
 
 hinstall:
 	$(INSTALL) $(IDOPT) $(INCDIR)
@@ -164,6 +166,7 @@ uninstall-progs:
 
 uninstall-lib:
 	-$(RM) $(RMFLAGS) $(LIBDIR)$(TARGETDLL)
+	-$(RM) $(RMFLAGS) $(LIBDIR)$(TARGETDLL).$(VERH)
 	-$(RM) $(RMFLAGS) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
 
 uninstall-h:

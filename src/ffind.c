@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides compiler-independent functions like DOS findfirst() and findnext()
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -31,9 +32,8 @@
 
 /* huskylib: compiler.h */
 #include <compiler.h>
-#include <huskylib.h>
 
-/* standard headers */
+/* compiler-dependent headers */
 #if defined(HAS_DIR_H)
 #  include <dir.h>
 #endif
@@ -45,6 +45,7 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+#include <huskylib.h>
 #include <ffind.h>
 
 
@@ -67,7 +68,7 @@
  *  Returns: NULL == File not found.
  */
 
-FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
+HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
 {
     FFIND *ff;
 
@@ -281,7 +282,7 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
  *  FFindNext: Returns 0 if next file was found, non-zero if it was not.
  */
 
-int _fast FFindNext(FFIND * ff)
+HUSKYEXT int _fast FFindNext(FFIND * ff)
 {
     int rc = -1;
 
@@ -422,7 +423,7 @@ int _fast FFindNext(FFIND * ff)
  *  memory in both DOS and OS/2.
  */
 
-void _fast FFindClose(FFIND * ff)
+HUSKYEXT void _fast FFindClose(FFIND * ff)
 {
     if (ff != NULL)
     {
@@ -458,7 +459,7 @@ void _fast FFindClose(FFIND * ff)
  *  PLF Thu  10-17-1991  18:12:37
  */
 
-FFIND *_fast FindInfo(const char *filespec)
+HUSKYEXT FFIND *_fast FindInfo(const char *filespec)
 {
 #if !defined(__OS2__)
     return FFindOpen(filespec, 0);
@@ -502,7 +503,7 @@ FFIND *_fast FindInfo(const char *filespec)
 #endif
 }
 
-#ifdef TEST
+#ifdef TEST /* Text functions section ======================================*/
 
 #ifndef TRUE
 #define TRUE 1

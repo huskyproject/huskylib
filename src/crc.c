@@ -1,41 +1,71 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * crc.c : crc calculation routines
- *
- * Collected & written by Stas Degteff <g@grumbler.org> 2:5080/102
- * (c) Stas Degteff
- * (c) HUSKY Developers Team
+/* $Id$
+ *  Provides crc calculation routines
+ *  Collected & written by Stas Degteff <g@grumbler.org> 2:5080/102
+ *  (c) Stas Degteff
+ *  (c) HUSKY Developers Team
  *
  * Latest version may be foind on http://husky.sourceforge.net
  *
- * This file is part of FIDOCONFIG library (part of the Husky FIDOnet
- * software project)
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2, or (at your option)
- * any later version.
+ * HUSKYLIB: common defines, types and functions for HUSKY
  *
- * FIDOCONFIG library is distributed in the hope that it will be useful,
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with FIDOCONFIG library; see the file COPYING.  If not, write
- * to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org
- *****************************************************************************
- * $Id$
+ * See also http://www.gnu.org, license may be found here.
  */
+
+/* standard headers */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
+
+
+/* huskylib: compiler.h */
+#include <compiler.h>
+#include <typesize.h>
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+#include <memory.h>
+#include <crc.h>
+
+/***  Declarations & defines  ***********************************************/
+
+#ifndef CRC_BUFFER_SIZE
+  /* Define buffer size for read() */
+  #ifdef __FLAT__
+    #define CRC_BUFFER_SIZE 80000
+  #else
+    /* DOS-like OS (64K memory segment) */
+    #ifdef __FARDATA__
+      #define CRC_BUFFER_SIZE 65500
+    #else
+      #define CRC_BUFFER_SIZE 32767
+    #endif
+  #endif
+#endif
+
+/***  Implementation  *******************************************************/
 
 /**************************** CRC32 table ******************************/
 
@@ -71,7 +101,7 @@
 /*	   hardware you could probably optimize the shift in assembler by  */
 /*	   using byte-swap instructions.				   */
 
-static UINT32 crc32tab[] =	/* CRC polynomial 0xedb88320 */
+static dword crc32tab[] =	/* CRC polynomial 0xedb88320 */
 {
   0x00000000UL, 0x77073096UL, 0xee0e612cUL, 0x990951baUL, 0x076dc419UL, 0x706af48fUL, 0xe963a535UL, 0x9e6495a3UL,
   0x0edb8832UL, 0x79dcb8a4UL, 0xe0d5e91eUL, 0x97d2d988UL, 0x09b64c2bUL, 0x7eb17cbdUL, 0xe7b82d07UL, 0x90bf1d91UL,
@@ -111,7 +141,7 @@ static UINT32 crc32tab[] =	/* CRC polynomial 0xedb88320 */
 /**************************** CRC16 table ******************************/
 
 /* CCITT recommended polinomial table */
-UINT16 crc16tab[] =
+static word crc16tab[] =
 {
    0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
    0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
@@ -148,9 +178,9 @@ UINT16 crc16tab[] =
 };
 
 
-UINT32 memcrc32(const char *str, int size, UINT32 initcrc)
+HUSKYEXT dword memcrc32(const char *str, int size, dword initcrc)
 {
-  register UINT32 crc = initcrc;
+  register dword crc = initcrc;
 
   if(str) for (; size; str++, size--)
     crc = crc32tab[((int) crc ^ (*str)) & 0xff] ^ ((crc >> 8) & 0x00ffffffUL);
@@ -159,9 +189,9 @@ UINT32 memcrc32(const char *str, int size, UINT32 initcrc)
 }
 
 
-UINT32 strcrc32(const char *str, UINT32 initcrc)
+HUSKYEXT dword strcrc32(const char *str, dword initcrc)
 {
-  register UINT32 crc = initcrc;
+  register dword crc = initcrc;
 
   if(str) for (; *str; str++)
     crc = crc32tab[((int) crc ^ (*str)) & 0xff] ^ ((crc >> 8) & 0x00ffffffUL);
@@ -170,12 +200,12 @@ UINT32 strcrc32(const char *str, UINT32 initcrc)
 }
 
 
-UINT32 filecrc32(const char *filename)
+HUSKYEXT dword filecrc32(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
   size_t got;
-  UINT32 crc;
+  dword crc;
 
   fd = fopen(filename, "rb");
 
@@ -205,9 +235,9 @@ UINT32 filecrc32(const char *filename)
    size: array size
    initcrc: initial value (start from 0x0000)
  */
-UINT16 memcrc16(const char *str, int size, UINT16 initcrc)
+HUSKYEXT word memcrc16(const char *str, int size, word initcrc)
 {
-  register UINT16 crc = initcrc;
+  register word crc = initcrc;
 
   if(str) for (; size; str++, size--)
      crc = ( (crc<<8) ^ crc16tab[(char)(crc>>8)^(*str)] ) & 0xFFFF;
@@ -219,9 +249,9 @@ UINT16 memcrc16(const char *str, int size, UINT16 initcrc)
    str: string
    initcrc: initial value (start from 0x0000)
  */
-UINT16 strcrc16(const char *str, UINT16 initcrc)
+HUSKYEXT word strcrc16(const char *str, word initcrc)
 {
-  register UINT16 crc = initcrc;
+  register word crc = initcrc;
 
   if(str) for (; *str; str++)
     crc =  ( (crc<<8) ^ crc16tab[(char)(crc>>8)^(*str)] ) & 0xFFFF;
@@ -230,12 +260,12 @@ UINT16 strcrc16(const char *str, UINT16 initcrc)
 }
 
 
-UINT16 filecrc16(const char *filename)
+HUSKYEXT word filecrc16(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
   size_t got;
-  UINT16 crc;
+  word crc;
 
   fd = fopen(filename, "rb");
 
@@ -268,36 +298,36 @@ UINT16 filecrc16(const char *filename)
  */
 
 /* 16-bit checksum (sum -r) for ASCIIZ string */
-UINT16 strsum16( const char *str )
-{ register UINT32 crc=0;
+HUSKYEXT word strsum16( const char *str )
+{ register dword crc=0;
 
   if(str) for (; *str; str++){
     if (crc & 1) crc |= 0x10000;
     crc = ((crc >> 1) + *str) & 0xffff;
   }
 
-  return (UINT16)crc;
+  return (word)crc;
 }
 
 /* 16-bit checksum (sum -r) for array of bytes */
-UINT16 memsum16( const char *str, unsigned size )
-{ register UINT32 crc=0;
+HUSKYEXT word memsum16( const char *str, unsigned size )
+{ register dword crc=0;
 
   if(str) for (; size; str++, size--)
   { if (crc & 1) crc |= 0x10000;
     crc = ((crc >> 1) + *str) & 0xffff;
   }
 
-  return (UINT16)crc;
+  return (word)crc;
 }
 
 /* 16-bit checksum (sum -r) for file */
-UINT16 filesum16(const char *filename)
+HUSKYEXT word filesum16(const char *filename)
 {
   FILE *fd;
   unsigned char* buffer;
   size_t got;
-  UINT16 crc=0;
+  word crc=0;
 
   fd = fopen(filename, "rb");
 
@@ -326,39 +356,39 @@ UINT16 filesum16(const char *filename)
  */
 
 /* 32bit checksum for ASCIIZ string */
-UINT32 strsum32( const char *str )
-{ register UINT32 crc=0;
+HUSKYEXT dword strsum32( const char *str )
+{ register dword crc=0;
 
   if(str) for (; *str; str++)
             crc += *str;
 
   crc = (crc & 0xffff) + (crc >> 16);
 
-  return (UINT32)crc;
+  return (dword)crc;
 }
 
 
 /* 32bit checksum for array of bytes */
-UINT32 memsum32( const char *str, unsigned size )
-{ register UINT32 crc=0;
+HUSKYEXT dword memsum32( const char *str, unsigned size )
+{ register dword crc=0;
 
   if(str) for (; size; str++, size--)
             crc += *str;
 
   crc = (crc & 0xffff) + (crc >> 16);
 
-  return (UINT32)crc;
+  return (dword)crc;
 }
 
 
 /* 32bit checksum for file
  * plen: pointer to return file lenght, unuse if plen is NULL
  */
-UINT32 filesum32( const char *filename, unsigned long *plen )
+HUSKYEXT dword filesum32( const char *filename, unsigned long *plen )
 { FILE *fd;
   char buffer[CRC_BUFFER_SIZE], *str;
   size_t got;
-  register UINT32 crc=0;
+  register dword crc=0;
   register unsigned long len=0;
 
   fd = fopen(filename, "rb");

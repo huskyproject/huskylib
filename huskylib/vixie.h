@@ -45,8 +45,8 @@ MAIN:   Should be defined for a program containing a main() function which
 #endif  /*DOCUMENTATION*/
 
 
-#ifndef _VIXIE_FLAG
-#define _VIXIE_FLAG
+#ifndef HUSKY_VIXIE_H
+#define HUSKY_VIXIE_H
 
 
                                                 /*--- debugging stuff ---*/
@@ -87,4 +87,4 @@ extern  int     I_PROC;
 extern  char    *APC_PROCS[MAXPROC];
 #endif
 
-#endif /* _VIXIE_FLAG*/
+#endif

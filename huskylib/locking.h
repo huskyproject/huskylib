@@ -23,8 +23,8 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __LOCKING_H__
-# define __LOCKING_H__
+#ifndef HUSKY_LOCKING_H__
+# define HUSKY_LOCKING_H__
 
 #include "huskyext.h"  /* compiler see directory of this .h file */
 

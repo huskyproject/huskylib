@@ -19,16 +19,16 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with HPT; see the file COPYING.  If not, write to the Free
  * Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *****************************************************************************/
-#ifndef _XSTR_H
-#define _XSTR_H
+#ifndef HUSKY_XSTR_H
+#define HUSKY_XSTR_H
 
 HUSKYEXT char *xstralloc(char **s, size_t add);
-/* 
+/*
  * Adds to variable "s" "add" bytes (allocates or reallocates it)
  */
 
@@ -49,7 +49,7 @@ HUSKYEXT char *xstrcpy(char **s, const char *add);
  */
 
 HUSKYEXT int xscatprintf(char **s, const char *format, ...);
-/* 
+/*
  * sprintf's "format" to the end of "s". Reallocates it when it needs
  * return value: number of bytes added.
  */

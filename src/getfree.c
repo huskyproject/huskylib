@@ -1,19 +1,38 @@
-/*
- * This was taken from BinkD and modified a bit for hpt -- ml, 2001
+/* $Id$
+ *  Provides compiler-independent function for take free disk space value.
+ *
+ *  This code taken from BinkD and modified a bit for Husky by Max Levenkov
+ *  at 2001
+ *  Copyright (c) 1997 by Fydodor Ustinov
+ *                       FIDONet 2:5020/79
+ *
+ *  Latest version may be foind on http://husky.sourceforge.net
  *
  *
- * $Id$
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * See also http://www.gnu.org, license may be found here.
  */
 
-/*--------------------------------------------------------------------*/
-/*       Copyright (c) 1997 by Fydodor Ustinov                        */
-/*                             FIDONet 2:5020/79                      */
-/*                                                                    */
-/*  This program is  free software;  you can  redistribute it and/or  */
-/*  modify it  under  the terms of the GNU General Public License as  */
-/*  published  by the  Free Software Foundation; either version 2 of  */
-/*  the License, or (at your option) any later version. See COPYING.  */
-/*--------------------------------------------------------------------*/
+/* standard headers */
 
 #include <stdio.h>
 #include <limits.h>
@@ -21,27 +40,59 @@
 #include <sys/types.h>
 
 
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-#ifdef __NT__
-#  ifdef __WATCOMC__
-#     include <direct.h>
-#     ifndef MAXPATHLEN
-#       define MAXPATHLEN NAME_MAX
-#     endif
-#  elif defined (__MSVC__)
-#     include <stdlib.h>
-#     ifndef MAXPATHLEN
-#       define MAXPATHLEN _MAX_PATH
-#     endif
-#  endif
 
+/* compiler-dependent headers */
+#ifdef HAS_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+#ifdef HAS_SYS_MOUNT_H
+#include <sys/mount.h>
+#endif
+#ifdef HAS_SYS_STATFS_H
+#include <sys/statfs.h>
+#endif
+#ifdef SYS_STATVFS_H
+#include <sys/statvfs.h>
+#endif
+#ifdef HAS_SYS_VFS_H
+#include <sys/vfs.h>
+#endif
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+#include <typesize.h>
+
+/* huskylib headers */
+#include <log.h>
+
+
+/***  Declarations & defines  ***********************************************/
+
+#ifdef __WATCOMC__NT__
 #  ifndef MAXPATHLEN
-#     define MAXPATHLEN 255
+#    define MAXPATHLEN NAME_MAX
 #  endif
+#endif
 
-/*  #include <windows.h> included in typesize.h */
+#ifdef __MSVC__
+#  ifndef MAXPATHLEN
+#    define MAXPATHLEN _MAX_PATH
+#  endif
+#endif
+
+#ifndef MAXPATHLEN
+#   define MAXPATHLEN 255
+#endif
+
+/***  Implementation  *******************************************************/
+
+#ifdef __WIN32__
+
+#include <windows.h>
 
 ULONG fc_GetDiskFreeSpace (const char *path)
 {
@@ -182,51 +233,10 @@ ULONG fc_GetDiskFreeSpace (const char *path)
  */
 
 
-/* TE: test for FreeBSD, NetBSD, OpenBSD or any other BSD 4.4 - derived OS */
-#if (defined(__unix__) || defined(unix)) && !defined(USG)
-#include <sys/param.h>
-#endif
-#if defined(BSD)
-#if (BSD >= 199103)
-  /* now we can be sure we are on BSD 4.4 */
-#include <sys/mount.h>
-  /* fake the following code to think we had a sys/statfs.h so it uses
-     the proper code segments */
-#ifndef _SYS_STATFS_H
-#define _SYS_STATFS_H
-#endif
-#endif
-#else
-  /* we are not on any BSD-like OS */
-  /* list other UNIX os'es without getfree mechanism here */
-#if defined( __svr4__ ) || defined( __SVR4 ) || defined (__linux__) && defined (__GLIBC__)
-#include <sys/statvfs.h>
-#ifndef _SYS_STATVFS_H
-#define _SYS_STATVFS_H
-#elif !defined (__BEOS__)
-#include <sys/vfs.h>
-#endif /* BEOS */
-#endif /* svr4 or linux */
-
-#if defined (__linux__) && !defined(__GLIBC__)
-#include <sys/vfs.h>
-#ifndef _SYS_STATFS_H
-#define _SYS_STATFS_H
-#endif /* _SYS_STATFS_H */
-#endif /* linux &! GLIBC */
-
-#endif /* not BSD-like OS */
-
-/*
-#if !(defined(_SYS_STATFS_H) || defined(_SYS_STATVFS_H))
-#error no statfs() or statvfs() in your system!
-#endif
-*/
-
-#if defined(_SYS_STATFS_H) || defined(_SYS_STATVFS_H)
+#if defined(HAS_SYS_STATFS_H) || defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H) || defined(HAS_SYS_MOUNT_H)
 ULONG fc_GetDiskFreeSpace (const char *path)
 {
-#ifdef _SYS_STATVFS_H
+#if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
   struct statvfs sfs;
 
   if (statvfs (path, &sfs) != 0)

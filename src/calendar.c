@@ -1,4 +1,6 @@
 /* $Id$
+ *  Provides months, days names and etc. calendar data.
+ *  (c) HUSKY Developers Team
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

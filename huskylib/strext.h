@@ -23,10 +23,14 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __STREXT_H__
-#define __STREXT_H__
+#ifndef HUSKY_STREXT_H__
+#define HUSKY_STREXT_H__
 
 #include "huskyext.h"  /* compiler see directory of this .h file */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip);
 HUSKYEXT char *_fast Add_Trailing(char *str, char add);
@@ -151,5 +155,9 @@ HUSKYEXT int sstrnicmp(const char *str1, const char *str2, size_t length);
 HUSKYEXT char *strseparate(register char **stringp, register const char *delim);
 
 HUSKYEXT char *extract_CVS_keyword(char *str);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
