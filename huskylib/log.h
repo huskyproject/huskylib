@@ -197,6 +197,12 @@ HUSKYEXT void w_log(char key, char *logString, ...);
   FZ:     if the key is in keysAllowed the logString will be written to the log.
 */
 
+#ifdef __NT__ 
+#include <windows.h>
+#include <winbase.h>
+HUSKYEXT LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
