@@ -68,12 +68,16 @@
 #    define HAS_sleep     1
 #  else
 #    define _XPENTRY
+#    define mymkdir(x) _mkdir(x)
 #  endif
 
-#  define HAS_MALLOC_H        /* use "#include <malloc.h>" for malloc() etc. */
-#  define HAS_IO_H     1  /* may use "#include <io.h> */
-#  define HAS_SHARE_H  1  /* may use "#include <share.h> */
-#  define HAS_PROCESS_H   /* may use "#include <process.h> */
+#  define HAS_MALLOC_H  1  /* use "#include <malloc.h>" for malloc() etc. */
+#  define HAS_IO_H      1  /* may use "#include <io.h> */
+#  define HAS_SHARE_H   1  /* may use "#include <share.h> */
+#  define HAS_PROCESS_H 1  /* may use "#include <process.h> */
+#  define HAS_DOS_H     1  /* definitions for MS-DOS interface routines */
+#  define HAS_DIRECT_H  1  /* function declarations for directory handling/creation */
+#  define HAS_SYS_UTIME_H 1 /* definitions/declarations for utime() */
 
 #  define USE_STAT_MACROS
 

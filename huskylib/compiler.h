@@ -89,6 +89,8 @@
    * HAS_DPMI_H          - may be used "#include <dpmi.h>"
    * HAS_DIR_H           - may be used "#include <dir.h>" for findfirst() etc.
    * HAS_DIRENT_H        - may be used "#include <dirent.h>" for opendir() etc.
+   * HAS_DIRECT_H        - may be used "#include <direct.h>"
+                         (function declarations for directory handling/creation)
    * HAS_IO_H            - may be used "#include <io.h>"
    * HAS_UNISTD_H        - may be used "#include <unistd.h>"
    * HAS_PROCESS_H       - may be used "#include <process.h>"
@@ -429,6 +431,15 @@
    M_I286   is defined if buld code for system based on 80286
    _QC      = 1
    __STDC__ = 0
+   ===================================================================
+   Microsoft C C/C++ 7.0
+   -------------------------------------------------------------------
+   MSDOS  _M_I86  M_I86  _M_I8086  M_I8086 _QC _MSC_VER
+   Some values:
+   _MSC_VER=700 (0x2BC)
+
+   Variable types sizes (in bytes):
+   char=1; short=2; int=2; long=4
    ===================================================================
 
    ===================================================================
