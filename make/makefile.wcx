@@ -1,64 +1,219 @@
 # $Id$
-# Makefile for Building SMAPI with Watcom C for DOS/386 (DOS4G/DOS4GW extender)
-# No support for Husky build environment.
-#
-# Predefines: __WATCOMC__,
-# __DOS4G__ (-bt=dos4g), __FLAT__ (-mf)
 
+# Makefile to build Huskylib with Watcom C for DOS/386 (DOS4G/DOS4GW extender)
+# No support for the Husky build environment.
+
+# Uncomment this for compile info for debugger and display more compiler warnings
+DEBUG	= -DDEBUG
+
+# Uncomment this for strip all simbols from binaries to reduce file sizes
+#STRIP	=
+
+
+## programs ##
+
+# compiler
 CC	= wcl386
-CFLAGS	= -zq -wx -oneatx -4 -bt=dos4g -mf -fpi87 -c
-CDEFS	=
-LFLAGS	= -mf -l=dos4g -fpi87
-EXENAMEFLAG	= -fe=
-
+# library tool
 AR	= wlib
-AROPT	= -b -q
-ASMPROG	= wasm
+# library indexer
+RANLIB	=
+# linker program
+LINK	= wlink
+# archiver program
+ARCHIVER= pkzip
+# file removing command
 RM	= del
+# create directory command
+MKDIR	= mkdir
+# remove directory command
+RMDIR	= rmdir
+# copy command
+CP	= copy
+# move command
+MV	= move
+# install command
+INSTALL	= copy
+# groff program (man pages formatter, possible use man2html perl script)
+GROFF	=
 
-C	= .c
-LIB	= .lib
-DLLIB	= .dll
-OBJ	= .obj
-EXE	= .exe
-ASM	= .asm
-ERR	= .err
+## file suffixes ##
 
-TARGET	= smapiwcx$(LIB)
-GNMSGID = gnmsgid$(EXE)
+# source file
+_C	= .c
+# object file
+_OBJ	= .o
+# binary (executable) file
+_EXE	= .exe
+# static library
+_LIB	= .lib
+# shared library
+_DLL	= .dll
+# shared library definitions file (export/import lists & etc.)
+_DEF	= .def
+# shared library exported list
+_EXP	= .exp
+# archive (package) file
+_ARC	= .zip
+# documentation file (".info", ".html", ".div", ...)
+_HTML	= .htm
+# text file
+_TXT	= .txt
+# compiler error output files
+_ERR	= .err
 
-NULL     = @%null
-SYMBOLIC = .SYMBOLIC
 
+## program options ##
+
+# compiler defines
+CDEFS	=
+# common compiler options
+CFLAGS	= -zq -wx -oneatx -4 -bt=dos4g -mf -fpi87
+# linker options
+LFLAGS	= -mf -l=dos4g -fpi87
+# options for compile only (link is off)
+OBJOPT	= -c
+# options for build static library
+LIBOPT	=
+# options for build dll
+DLLOPT  =
+# option for specify output file name
+NAMEOPT	= -fe=
+# options for $(AR) program
+ARFLAGS	= -b -q
+# options for $(RM) program
+RMFLAGS	=
+# options for archiver
+ARCFLAGS= -r
+# create directory command options
+MKDIROPT=
+# remove directory command options
+RMDIROPT=
+# install command options
+INSTOPT	= /b
+# copy command options
+CPOPT	= /b
+# move command options
+MVOPT	=
+# groff program option (this example doing format man page to html page)
+GROFFOPT=
+
+
+## Library filename elements ##
+
+# Prefix to construct static library name
+LIBPREFIX=
+# Prefix to construct dll name
+DLLPREFIX=
+# Suffix to construct library name
+LIBSUFFIX=wcx
+# Suffix to construct dll name
+DLLSUFFIX=
+
+## make directives ##
+
+# rules without dependencies and (possible) actions - prevent warnings
 .DEFAULT
-	$(NULL)
+	@%null
+
+## Default make rule ##
+
+default: all .SYMBOLIC
+#	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
+#	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
+#	@echo Run 'make dllprograms' to build dll version of programs \($(PROGRAMS)\)
+#	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
+#	@echo Run 'make all' to build all above
+
+## include common makefiles part ##
 
 !include makefile.inc
 
-#default :  $__MAKEFILES__
-#	wmake -u -f makefile.wcx all
-default : all $(SYMBOLIC)
+# libraries need to build binary file
+LIBS	+=
 
-programs: $(GNMSGID) $(SYMBOLIC)
+## other, usualy not modify below ##
 
-all : $(TARGET) programs $(SYMBOLIC)
-#all : $(TARGET) $(GNMSGID)  $(SYMBOLIC)
+## Additions (add into end of strings) ##
+CFLAGS	+= -I$(H_DIR)
 
-.c$(OBJ) :
-	$(CC) $(CFLAGS) $(CDEFS)  $<
-	$(AR) $(AROPT) $(TARGET) -+$@
+## make rules ##
 
-$(TARGET) : $(OBJS)  $(SYMBOLIC)
+all:	static programs .SYMBOLIC
 
-$(GNMSGID) : $(GMOBJS)
-	$(CC) $(LFLAGS) $(EXENAMEFLAG)$(GNMSGID) $@$(C) $(GMOBJS) $(TARGET)
+static:	$(TARGETLIB) .SYMBOLIC
+dll:	$(TARGETDLL) .SYMBOLIC
+programs: $(TARGETLIB) $(PROGRAMS) .SYMBOLIC
+dllprograms: $(TARGETDLL) $(PROGRAMS) .SYMBOLIC
 
-.IGNORE
 
-clean :
-	-$(RM) *$(OBJ)
-	-$(RM) *$(ERR)
+$(_C): $(SRC_DIR)
+$(_C)$(_OBJ):
+	$(CC) $(CFLAGS) $(STRIP) $(DEBUG) $(CDEFS) $(OBJOPT) $<
+	$(AR) $(ARFLAGS) $(TARGETLIB) $@
 
-distclean : clean
-	-$(RM) $(TARGET)
-	-$(RM) $(GENMSGID)
+#$(_C): $(SRC_DIR)
+#$(_C)$(_EXE): $(TARGETLIB)
+$(PROGRAMS): $(TARGETLIB)
+	$(CC) $(STRIP) $(DEBUG) $(CFLAGS) $(LFLAGS) $(CDEFS) $(NAMEOPT)$@ $(SRC_DIR)$*$(_C) $^ $(LIBS)
+
+$(TARGETLIB):	$(OBJS)
+	
+$(TARGETDLL):	$(OBJS)
+	$(CC) $(DLLOPT) $(CFLAGS) $(STRIP) $(DEBUG) $(NAMEOPT)$@ $^
+
+
+clean: .SYMBOLIC
+	-$(RM) $(RMOPT) *$(_OBJ)
+	-$(RM) $(RMOPT) *$(_ERR)
+
+distclean: clean pkgclean .SYMBOLIC
+#	-$(RM) $(RMOPT) $(TARGETDLL)
+	-$(RM) $(RMOPT) $(TARGETLIB)
+	-$(RM) $(RMOPT) $(PROGRAMS)
+
+pkg-doc-dir: pkg-dir .SYMBOLIC
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)\doc
+
+pkg-man: pkg-doc-dir .SYMBOLIC
+	for %%f ( ..\man\*.1 ) do $(CP) $(CPOPT) %f $(PACKAGEBASE)\doc\*$(_TXT)
+	
+pkg-dir: .SYMBOLIC
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)
+
+pkg-h-dir: .SYMBOLIC
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)\huskylib
+
+$(HEADERS): pkg-h-dir .SYMBOLIC
+	$(CP) $(CPOPT) $(H_DIR)$@ $(PACKAGEBASE)\huskylib\$@
+
+pkg-h: $(HEADERS) .SYMBOLIC
+
+pkg-readme: pkg-dir .SYMBOLIC
+	@echo XXXXX library v.$(VER) for `uname -s` platform > $(PACKAGEBASE)/file_id.diz
+	@echo "(Part of HUSKY Fidonet Software Project)" >> $(PACKAGEBASE)/file_id.diz
+	@echo See http://husky.sourceforge.net and/or >> $(PACKAGEBASE)/file_id.diz
+	@echo http://sourceforge.net/projects/husky >> $(PACKAGEBASE)/file_id.diz
+	$(CP) $(CPOPT) ../COPYING ../cvsdate.h ../INSTALL ../LICENSE $(PACKAGEBASE)
+	$(CP) $(CPOPT) ../HISTORY ../ChangeLog ../VERSION ../README  $(PACKAGEBASE)
+
+pkg-bin-dir: .SYMBOLIC
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/bin
+
+pkg-bin: pkg-bin-dir .SYMBOLIC
+	$(CP) $(CPOPT) $(TARGETLIB) $(TARGETDLL) $(PROGRAMS) $(PACKAGEBASE)/bin
+
+package: static dll programs doc pkg-dir pkg-h pkg-doc pkg-man pkg-readme pkg-bin .SYMBOLIC
+	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) $(PACKAGEBASE)/*
+
+pkgdistclean: pkgclean .SYMBOLIC
+	-$(RM) $(RMOPT) $(PACKAGENAME)
+
+pkgclean: .SYMBOLIC
+	-$(RM) $(RMOPT) $(PACKAGEBASE)\huskylib\*.h
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)\huskylib
+	-$(RM) $(RMOPT) $(PACKAGEBASE)\doc\*.*
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)\doc
+	-$(RM) $(RMOPT) $(PACKAGEBASE)bin\*.*
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)\bin
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)
