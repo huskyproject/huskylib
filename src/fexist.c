@@ -88,6 +88,15 @@ long _fast fsize(const char *filename)
     return s.st_size;
 }
 
+time_t _fast fmtime(const char *filename)
+{
+    struct stat s;
+
+    if (stat (filename, &s))
+        return -1L;
+    return s.st_mtime;
+}
+
 int _fast direxist(const char *directory)
 {
     struct stat s;
@@ -141,7 +150,7 @@ int _fast fexist(const char *filename)
 {
     FFIND *ff;
 
-    ff = FFindOpen(filename, 0);
+    ff = FFindInfo(filename);
 
     if (ff)
     {
@@ -160,13 +169,13 @@ long _fast fsize(const char *filename)
     FILE  *fp;
     long ret = -1L;
 
-    ff = FFindOpen(filename, 0);
+    ff = FFindInfo(filename);
 
     if (ff)
     {
 #ifndef __UNIX__
 	ret = ff->ff_fsize;
-	if (ret != -1L)
+	if (ret == -1L)
 #endif
 	{   fp = fopen(filename, "rb");
 	    fseek(fp, 0, SEEK_END);
@@ -177,6 +186,35 @@ long _fast fsize(const char *filename)
     }
 
     return ret;
+}
+
+time_t _fast fmtime(const char *filename)
+{
+#ifdef __UNIX__
+    return -1L;
+#else
+    FFIND *ff;
+    FILE  *fp;
+    time_t ret = -1L;
+
+    ff = FFindInfo(filename);
+
+    if (ff)
+    {
+    	struct tm t;
+    	t.tm_sec  = ff->ff_ftime & 0x1f;
+    	t.tm_min  = (ff->ff_ftime >> 5) & 0x3f;
+    	t.tm_hour = (ff->ff_ftime >> 11) & 0x1f;
+    	t.tm_mday = ff->ff_fdate & 0x1f;
+    	t.tm_mon  = ((ff->ff_fdate >> 5) & 0x0f) - 1;
+    	t.tm_year = ((ff->ff_fdate >> 9) & 0x07f) + 1980 - 1900;
+    	t.tm_isdst = -1;
+        FFindClose(ff);
+        return mktime(&t);
+    }
+
+    return ret;
+#endif
 }
 
 #if defined(__DOS__) || defined(__DPMI__)

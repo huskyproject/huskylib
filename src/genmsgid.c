@@ -116,7 +116,7 @@ dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGen
 		seq = 0;
 		max_fname[0] = '\0';
 		strcpy(pname, "*.*");
-		ff = FFindOpen(seqpath, 0);
+		ff = FFindInfo(seqpath);
 		if (ff == NULL) { /* file not found */
 			*pname = '\0';
 			if (try == 0) {

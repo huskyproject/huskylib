@@ -32,6 +32,7 @@
 
 HUSKYEXT int _fast fexist(const char *filename);
 HUSKYEXT long _fast fsize(const char *filename);
+HUSKYEXT time_t _fast fmtime(const char *filename);
 HUSKYEXT int _fast direxist(const char *directory);
 /*DOC
   Input:  a pointer to a \0 terminated string
