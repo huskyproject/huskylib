@@ -10,11 +10,13 @@
 NOMAN=	1
 prefix= 	/usr/local
 LIBDIR= 	$(prefix)/lib
-CFLAGS= 	-Wall -DUNIX -O3
+CFLAGS= 	-Wall -O3
 
-LIB=		smapi
-SHLIB_MAJOR=	2
-SHLIB_MINOR=	2.3
+.include <makefile.inc>
+
+LIB=		$(LIBNAME)
+SHLIB_MAJOR=	$(VERMAJOR)
+SHLIB_MINOR=	$(VERMAJOR).$(VERMINOR)
 
 OBJ=	.o
 
@@ -24,7 +26,4 @@ OBJ=	.o
    CFLAGS+= -fstrength-reduce -m486
 .endif
 
-.include <makefile.inc>
-
 .include <bsd.lib.mk>
-
