@@ -159,9 +159,26 @@ HUSKYEXT int sstrnicmp(const char *str1, const char *str2, size_t length);
 
 HUSKYEXT char *strseparate(register char **stringp, register const char *delim);
 
+/* Extract contents from CVS/RCS keyvords (like $Revision$)
+ * Return malloc'ed string
+ */
 HUSKYEXT char *extract_CVS_keyword(char *str);
 
+/* Convert char to integer with range checking
+ */
 HUSKYEXT int ctoi(const char *s);
+
+/* Copy string from str to (*pmem), allocating memory as needed
+   NOTE! *pmem must be NULL, if not NULL, it will be free().
+ */
+HUSKYEXT int copyString(char *str, char **pmem);
+
+/* Copy chars from str to (*dest) until one of the chars in seps appears
+ * memory is allocated as needed
+ * *dest will be freed if non-NULL
+ * returns number of chars copied
+ */
+HUSKYEXT int copyStringUntilSep(char *str, char *seps, char **dest);
 
 #ifdef __cplusplus
 }

@@ -391,3 +391,35 @@ HUSKYEXT char *extract_CVS_keyword(char *str)
 
     return r;
 }
+
+HUSKYEXT int copyString(char *str, char **pmem)
+{
+   if (str==NULL)
+      return 1;
+
+   nfree(*pmem);
+   *pmem = (char *) sstrdup (str);
+
+   return 0;
+}
+
+HUSKYEXT int copyStringUntilSep(char *str, char *seps, char **dest)
+{
+  char *sepPos;
+
+  if ((!str) || (!(*str)))
+    return 0;
+
+  nfree(*dest);
+  sepPos = strpbrk(str, seps);
+  if (sepPos)
+  {
+    *dest = malloc(sepPos - str + 1);
+    strnzcpy(*dest, str, sepPos - str);
+
+    return (sepPos - str);
+  }
+
+  *dest = (char *) sstrdup(str);
+  return strlen(str);
+}
