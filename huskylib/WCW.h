@@ -45,4 +45,6 @@
 #      define MAXPATHLEN NAME_MAX
 #    endif
 
+#  define HAS_sopen     3   /* sopen() : in io.h, 3 or 4 parameters */
+
 #endif

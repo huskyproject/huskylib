@@ -58,6 +58,7 @@
 #  define strncasecmp strnicmp
 
 #  define _XPENTRY
+#  define HUSKYEXT extern
 
 #  define HAS_snprintf  1
 #  define HAS_vsnprintf 1
@@ -65,7 +66,8 @@
 #  define HAS_spawnvp   1  /* spawnvp() in process.h */
 #  define HAS_strftime  1  /* strftime() in time.h  */
 #  define HAS_mktime    1  /* mktime() in time.h */
-#  define HAS_popen_close  /* popen(); pclose() */
+#  define HAS_popen_close 1 /* popen(); pclose() */
+#  define HAS_sopen     4   /* sopen() : in io.h, 4 parameters */
 
 #  define HAS_DIRENT_H  1  /* use "#include <dirent.h>" for opendir() etc. */
 #  define HAS_IO_H      1  /* use "#include <io.h>" */

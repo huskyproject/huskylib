@@ -94,7 +94,7 @@
 #  define HAS_mktime     /* time.h */
 #  define HAS_strftime   /* time.h */
 #  define HAS_ACCESS    /* access() in io.h */
-#  define HAS_sopen
+#  define HAS_sopen     3   /* sopen() : in io.h, 3 or 4 parameters */
 
 #  define HAS_MALLOC_H   /* may use "#include <malloc.h>" for malloc() etc. */
 #  define HAS_IO_H       /* may use "#include <io.h> */

@@ -140,6 +140,7 @@
    int lock(int handle, long ofs, long length);   /* in locking.c */
    int unlock(int handle, long ofs, long length);
    int sopen(const char *name, int oflag, int ishared, int mode);
+#  define HAS_sopen     4   /* sopen() : in io.h, 4 parameters */
 
 
 typedef unsigned bit;

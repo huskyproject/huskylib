@@ -40,4 +40,6 @@
 
 /*#  define mysleep(x) DosSleep(x*1000)*/  /* os2/bsedos.h */
 
+#  define HAS_sopen     3   /* sopen() : in io.h, 3 or 4 parameters */
+
 #endif

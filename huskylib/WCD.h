@@ -48,6 +48,7 @@
 
 #  define HAS_dos_read 1      /* dos_read() */
 #  define dos_read _dos_read  /* _dos_read() in dos.h */
+#  define HAS_sopen     3   /* sopen() : in io.h, 3 or 4 parameters */
 
 #  define _XPENTRY   pascal
 

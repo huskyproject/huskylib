@@ -62,7 +62,7 @@
 */
 
 #define SH_DENYNONE 0
-#define sopen(a,b,c,d) open((a),(b),(d))
+/*#define sopen(a,b,c,d) open((a),(b),(d))*/
 
 #define _XPENTRY
 

@@ -54,7 +54,9 @@
 
    int lock(int handle, long ofs, long length);   /* in locking.c */
    int unlock(int handle, long ofs, long length);
+
    int sopen(const char *name, int oflag, int ishared, int mode);
+#  define HAS_sopen     4   /* sopen() : 4 parameters */
 
 #  define tell(a) lseek((a),0,SEEK_CUR)
 

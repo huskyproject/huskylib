@@ -72,7 +72,9 @@
    * HAS_getpid          - getpid() presents
    * HAS_mktime          - mktime() presents or defined here
    * HAS_strftime        - strftime() presents
-   * HAS_sopen           - sopen() presents
+   * HAS_sopen           - sopen() presents; set to number of parameters:
+   *                       to 4 if defined like "sopen(path, access, shflag, mode)"
+   *                       to 3 if defined like "sopen(path, access, shflag)"
    * HAS_sleep           - sleep() presents or defined here
    * HAS_dos_read        - dos_read() presents or defined here
    * HAS_popen_close     - popen(); pclose() ("pipe open" and "pipe close")

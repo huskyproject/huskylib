@@ -82,10 +82,12 @@
 #  define HAS_spawnvp   1   /* spawnvp() in process.h */
 #  define HAS_strftime  1   /* strftime() in time.h  */
 #  define HAS_mktime    1   /* mktime() in time.h */
-#  define HAS_popen_close  /* popen(); pclose() */
-#  define HAS_sopen     1   /* sopen() : in io.h */
+#  define HAS_popen_close 1 /* popen(); pclose() */
+#  define HAS_sopen     4   /* sopen() : in io.h, 4 parameters */
 
 #  define HAS_DIR_H     1   /* use "#include <dir.h>" for findfirst() etc. */
+#  define HAS_DIRENT_H  1   /* use "#include <dirent.h>" for DIR, opendir() etc. */
+#  define HAS_DIRECT_H  1   /* use "#include <direct.h>" for DIR, opendir() etc. */
 #  define HAS_DOS_H     1
 #  define HAS_DPMI_H    1
 #  define HAS_IO_H      1   /* use "#include <io.h> */
