@@ -1,7 +1,7 @@
 /*
  *  PATMAT.C - Pattern matching. Taken from sh sources
  */
-
+/* $Id$ */
 /*
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -142,6 +142,20 @@ breakloop:
 	if (*q != '\0')
 		return 0;
 	return 1;
+}
+
+int patimat(char *raw,char *pat)
+{
+    char *upraw=NULL, *uppat=NULL;
+    int i;
+
+    if (raw) upraw=strUpper(sstrdup(raw));
+    if (pat) uppat=strUpper(sstrdup(pat));
+    i=patmat(upraw,uppat);
+    nfree(upraw);
+    nfree(uppat);
+
+    return(i);
 }
 
 

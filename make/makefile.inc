@@ -24,17 +24,20 @@ VER	= $(VERH).0
 OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ)
 OBJS2	= genmsgid$(_OBJ) locking$(_OBJ) mapfile$(_OBJ) memory$(_OBJ) parsenn$(_OBJ)
 OBJS3	= patmat$(_OBJ) setfsize$(_OBJ) strext$(_OBJ) strftime$(_OBJ) tdelay$(_OBJ)
-OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
+OBJS4	= log$(_OBJ) xstr$(_OBJ) tree$(_OBJ) temp$(_OBJ) recode$(_OBJ) crc$(_OBJ) 
+OBJS5   = getfree$(_OBJ) dirlayer$(_OBJ) ioutil$(_OBJ) adcase$(_OBJ)
+OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5)
 
-# Header files (please sort list to easy check by human)
-HEADERS1= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
-HEADERS2= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
-HEADERS3= calendar.h compiler.h cvtdate.h fexist.h ffind.h huskyext.h
-HEADERS4= huskylib.h locking.h strext.h unused.h vixie.h
-HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
+# Header files
+HEADERS1= calendar.h compiler.h cvtdate.h fexist.h ffind.h huskylib.h locking.h
+HEADERS2= parsenn.h patmat.h strext.h unused.h vixie.h huskyext.h memory.h
+HEADERS3= log.h xstr.h tree.h temp.h typesize.h recode.h crc.h dirlayer.h adcase.h
+HEADERS4= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
+HEADERS5= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
+HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4) $(HEADERS5)
 
 # Binary file(s) to build from sources
-PROGRAMS= gnmsgid$(_EXE)
+PROGRAMS= gnmsgid$(_EXE) tlog$(_EXE)
 
 SRC_DIR	=../src/
 H_DIR	=../huskylib/

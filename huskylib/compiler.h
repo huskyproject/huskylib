@@ -1269,4 +1269,6 @@ char *strupr(char *str);
 #define FALSE           0
 #endif
 
+#include "typesize.h"
+
 #endif

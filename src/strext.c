@@ -24,11 +24,13 @@
  */
 
 #include <string.h>
+#include <ctype.h>
 #include <stdlib.h>
 
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+#include <huskylib.h>
 
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
 {
@@ -141,6 +143,209 @@ HUSKYEXT char *_fast firstchar(const char *strng, const char *delim, int findwor
     }
 
     return NULL;
+}
+
+char *strrstr(const char *HAYSTACK, const char *NEEDLE)
+{
+   char *start = NULL, *temp = NULL;
+
+   temp = strstr(HAYSTACK, NEEDLE);
+   while (temp  != NULL) {
+      start = temp;
+      temp = strstr(temp+1,NEEDLE);
+   }
+   return start;
+}
+
+/*
+ * Find the first occurrence of find in s ignoring case
+ */
+char *fc_stristr(const char *str, const char *find)
+{
+    char ch, sc;
+    const char *str1 = NULL, *find1 = NULL;
+
+    if(str)
+    {
+        find++;
+        if ((ch = *(find-1)) != 0) {
+            do {
+                do {
+                    str++;
+                    if ((sc = *(str-1)) == 0) return (NULL);
+                } while (tolower((unsigned char) sc) != tolower((unsigned char) ch));
+
+                for(str1=str,find1=find; *find1 && *str1 && tolower(*find1)==tolower(*str1); str1++,find1++);
+
+            } while (*find1);
+            str--;
+        }
+    }
+    return ((char *)str);
+}
+
+char *stripLeadingChars(char *str, const char *chr)
+{
+   char *i = str;
+
+   if (str != NULL) {
+
+      while (NULL != strchr(chr, *i)) {       /*  *i is in chr */
+         i++;
+      } /* endwhile */                        /*  i points to the first occurences */
+                                              /*  of a character not in chr */
+      strcpy(str, i);
+   }
+   return str;
+}
+
+/*DOC
+  Input:  str is a \0-terminated string
+          chr contains a list of characters.
+  Output: stripTrailingChars returns a pointer to a string
+  FZ:     all trailing characters which are in chr are deleted.
+          str is changed and returned (not reallocated, simply shorted).
+*/
+char *stripTrailingChars(char *str, const char *chr)
+{
+   char *i;
+
+   if( (str != NULL) && strlen(str)>0 ) {
+      i = str+strlen(str)-1;
+      while( (NULL != strchr(chr, *i)) && (i>=str) )
+         *i-- = '\0';
+   }
+   return str;
+}
+
+
+char *strUpper(char *str)
+{
+   char *temp = str;
+
+   while(*str != 0) {
+      *str = (char)toupper(*str);
+      str++;
+   }
+   return temp;
+}
+
+char *strLower(char *str)
+{
+   char *temp = str;
+
+   while(*str != 0) {
+      *str = (char)tolower(*str);
+      str++;
+   }
+   return temp;
+}
+
+char *sstrdup(const char *src)
+{
+    char *ptr;
+
+    if (src == NULL) return NULL;
+/*    if (!strlen(src)) return NULL; */
+    ptr = strdup (src);
+    if (ptr == NULL) {
+		w_log(LL_CRIT, "out of memory");
+		abort();
+    }
+    return ptr;
+}
+
+/* safe strcmp */
+int sstrcmp(const char *str1, const char *str2)
+{
+  if( str1==str2 ) return 0;  /* strings match */
+  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+  return strcmp(str1,str2);   /* compare strings */
+}
+
+/* safety strncmp */
+int sstrncmp(const char *str1, const char *str2, size_t length)
+{
+  if( str1==str2 ) return 0;  /* strings match */
+  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+  return strncmp(str1,str2, length);  /* compare strings */
+}
+
+/* safe stricmp (case-insencitive) */
+int sstricmp(const char *str1, const char *str2)
+{
+  if( str1==str2 ) return 0;  /* strings match */
+  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+  return stricmp(str1,str2);   /* compare strings */
+}
+
+/* safety strnicmp (case-insencitive) */
+int sstrnicmp(const char *str1, const char *str2, size_t length)
+{
+  if( str1==str2 ) return 0;  /* strings match */
+  if( str1==NULL ) return -1; /* str1(NULL) < str2(not NULL) */
+  if( str2==NULL ) return 1;  /* str1(not NULL) > str2(NULL) */
+  return strnicmp(str1,str2, length);  /* compare strings */
+}
+
+/* From binkd sources (tools.c), modified by Stas Degteff
+ * Copyes not more than len chars from src into dst, but, unlike strncpy(),
+ * it appends '\0' even if src is longer than len.
+ * Return dst
+ * Prevent memory faults:
+ *  - if dst is NULL doing nothing and return NULL
+ *  - if src is NULL and dst not NULL store '\0' into dst[0] and return it.
+ */
+char *strnzcpy (char *dst, const char *src, size_t len)
+{
+  if (!dst) return NULL;
+  if (!src) {
+     dst[0]='\0';
+     return dst;
+  }
+  dst[len - 1] = 0;
+  return strncpy (dst, src, len - 1);
+}
+
+/* From binkd sources (tools.c), modified by Stas Degteff
+ * Concantenate not more than len chars from src into dst, but, unlike
+ * strncat(), it appends '\0' even if src is longer than len.
+ * Return dst
+ * Prevent memory faults:
+ *  - if dst is NULL doing nothing and return NULL
+ *  - if src is NULL doing nothing and return dst.
+ */
+char *strnzcat (char *dst, const char *src, size_t len)
+{
+  size_t x;
+
+  if (!dst) return NULL;
+  if (!src) return dst;
+  x = strlen (dst);
+  return strnzcpy (dst + x, src, len);
+}
+
+char *strseparate(char **pp, const char *delim)
+{
+  char *p, *q;
+
+  if ((p = *pp) == '\0')
+    return 0;
+    
+  if (!*p) return 0;
+  
+  if ((q = strpbrk (p, delim)) != NULL)
+    {
+      *pp = q + 1;
+      *q = '\0';
+      while (**pp && strchr(delim, **pp)) (*pp)++;
+    }
+  else
+    *pp = 0;
+  return p;
 }
 
 HUSKYEXT char *extract_CVS_keyword(char *str)
