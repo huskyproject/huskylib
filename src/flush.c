@@ -130,7 +130,7 @@ void pascal far flush_handle2(int fh)
 }
 */
 
-#elif defined(__WATCOMC__DOS__)
+#elif defined(__WATCOMC__DOS__) || defined(__MSC__)
 
 #include <dos.h>
 /*
@@ -146,7 +146,7 @@ void pascal far flush_handle2(int fh)
 HUSKYEXT void pascal far flush_handle2(int fd)
 {
  union REGS in, out;
- 
+
  in.h.ah=0x45;
 #if defined(__DPMI__) && !defined(__DJGPP__)
  in.x.ebx=fd;
