@@ -20,16 +20,23 @@
 #ifndef __FFIND_H__
 #define __FFIND_H__
 
+#include <stdio.h>
+
 #include "compiler.h"
 
-#ifdef SASC
-#  include <stdio.h>
+#ifdef HAS_DOS_H
 #  include <dos.h>
-#elif defined(__UNIX__)
-#  include <stdio.h>
+#endif
+#if defined(HAS_UNISTD_H)
 #  include <unistd.h>
+#endif
+#if defined(HAS_DIRENT_H)
 #  include <dirent.h>
 #endif
+#if defined(HAS_DIR_H)
+#include <dir.h>
+#endif
+
 
 #if defined(__RSXNT__) || defined(__MINGW32__) || defined(__MSVC__)
 #   define WIN32_LEAN_AND_MEAN
@@ -52,15 +59,6 @@
 
 
 #define FFIND struct ffind
-
-#if defined(__DJGPP__) || defined(__TURBOC__)
-#include <dir.h>
-#endif
-
-#if defined(__WATCOMC__) || defined(__MSC__)
-#include <dos.h>
-#endif
-
 
 struct ffind
 {
@@ -103,7 +101,7 @@ struct ffind
     char attrib_srch;
 
 #else
-#error Unknown compiler!
+#error Unable to determine compiler and target operating system!
 #endif
 };
 
@@ -126,18 +124,5 @@ void _fast FFindClose(FFIND * ff);
 #define MSDOS_ARCHIVE   0x20
 #define MSDOS_RSVD1     0x40
 #define MSDOS_RSVD2     0x80
-
-#ifdef USEDIRFORTC
-
-#include <dir.h>
-
-#elif defined(__EMX__)
-#include <sys/types.h>
-#include <sys/dir.h>
-#elif defined(__UNIX__)
-#elif defined(SASC)
-#else
-#include <direct.h>
-#endif
 
 #endif
