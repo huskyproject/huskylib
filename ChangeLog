@@ -1,3 +1,33 @@
+2003-10-17 Friday 09:31  stas_degteff
+
+	* src/tdelay.c (1.17): Fix preprocesor directives
+
+2003-10-17 Friday 09:31  stas_degteff
+
+	* src/mapfile.c (1.10): Fix open() usage
+
+2003-10-17 Friday 09:28  stas_degteff
+
+	* make/makefile.cyg (1.13): Add a 'clean' tag
+
+2003-10-17 Friday 09:26  stas_degteff
+
+	* huskylib/compiler.h (1.19): Fix open() usage
+
+2003-10-17 Friday 08:45  stas_degteff
+
+	* src/ffind.c (1.18): Remove duplicated #include
+
+2003-10-17 Friday 07:09  andr_lukyanov
+
+	* make/: makefile.cyg (1.12), makefile.djg (1.10), makefile.emx
+	(1.6): Fix compilation with huskymak.cfg.*
+
+2003-10-17 Friday 04:36  andr_lukyanov
+
+	* src/: ffind.c (1.17), getfree.c (1.9), ioutil.c (1.11), mapfile.c
+	(1.9), tdelay.c (1.16): Fixed OS/2 EMX compilation
+
 2003-10-16 Thursday 16:56  stas_degteff
 
 	* huskylib/EMX.h (1.11), src/ffind.c (1.16), src/ioutil.c (1.10),
