@@ -21,14 +21,14 @@
 
 #include "compiler.h"
 #include "huskylib.h"
-#include "cvsdate.h"
+#include "../cvsdate.h"
 
 #define check_stricmp(a, b) (stricmp(a, b) == 0)
 #define str_or_unknown(str) (str? str: "unknown")
 
 char gnmsgid_rev[]  = "$Revision$";
 char gnmsgid_date[] = "$Date$";
-/* This code break MSVC/DLL build 
+/* This code break MSVC/DLL build
 extern char genmsgid_rev[];
 extern char genmsgid_date[];
 */
@@ -110,7 +110,7 @@ void printversion(void)
 
     rev = extract_CVS_keyword(gnmsgid_rev);
     date = extract_CVS_keyword(gnmsgid_date);
-/* This code break MSVC/DLL build 
+/* This code break MSVC/DLL build
     gen_rev = extract_CVS_keyword(genmsgid_rev);
     gen_date = extract_CVS_keyword(genmsgid_date);
 */
@@ -119,7 +119,7 @@ void printversion(void)
     printf("Copyright (c) HUSKY development team.\n\n");
     printf("gnmsgid.c revision:  %s\n", str_or_unknown(rev));
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
-/* This code break MSVC/DLL build 
+/* This code break MSVC/DLL build
     printf("genmsgid.c revision: %s\n", str_or_unknown(gen_rev));
     printf("genmsgid.c date:     %s\n", str_or_unknown(gen_date));
 */
