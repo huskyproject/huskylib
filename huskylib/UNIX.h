@@ -80,13 +80,13 @@
 #  define HAS_SYS_PARAM_H
 #  endif
 
-#  if (defined(BSD) && (BSD >= 199103)) || (defined(__FreeBSD__) && (__FreeBSD__ = 4))
+#  if ((defined(BSD) && (BSD >= 199103)) || (defined(__FreeBSD__) && (__FreeBSD__ == 4)))
     /* now we can be sure we are on BSD 4.4 */
 #  define HAS_SYS_MOUNT_H
 #  endif
 
 /* FreeBSD 5.x */
-#  if (defined(__FreeBSD__) && (__FreeBSD__ = 5))
+#  if (defined(__FreeBSD__) && (__FreeBSD__ == 5))
 #  define HAS_SYS_STATVFS_H
 #  endif
 
