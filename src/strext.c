@@ -214,19 +214,12 @@ char *fc_stristr(const char *str, const char *find)
 
 char *stripLeadingChars(char *str, const char *chr)
 {
-   char *i = str;
-
-   if (str&&chr) {
-
-      while ((*i > 0) && (NULL != strchr(chr, *i))) {       /*  *i is in chr */
-         i++;
-      } /* endwhile */                        /*  i points to the first occurences */
-                                              /*  of a character not in chr */
-      strcpy(str, i);
-   }
-   return str;
+    if (str && chr && *chr) {
+        int i = strspn(str, chr);
+        memmove(str, str + i, strlen(str) - i+1);
+    }
+    return str;
 }
-
 /*DOC
   Input:  str is a \0-terminated string
           chr contains a list of characters.
