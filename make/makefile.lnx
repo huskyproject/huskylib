@@ -1,6 +1,6 @@
 # $Id$
 
-# Makefile to build husky with linux C on ZZZZZ
+# Makefile to build husky with GNU C on linux system
 # No support for the Husky build environment.
 
 # Uncomment this for compile info for gdb and display more compiler warnings
