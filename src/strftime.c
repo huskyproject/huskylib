@@ -173,7 +173,7 @@ HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, 
                           todo2: implement full parsing TZ env.var */
                     strncpy(out, scrptr, 3);
                     out[3] = '\0';
-                    strupr(out);
+                    out = strUpper(out);
                 }
                 else
                 {
