@@ -53,9 +53,6 @@
      void far *farcalloc(int n, int m);
 #  endif
 
-  int unlock(int handle, long ofs, long length);
-  int lock(int handle, long ofs, long length);
-
 #  ifdef __OS2__
     /* just don't use 16 bit OS/2, we doubt that it still works */
 #    define farread read

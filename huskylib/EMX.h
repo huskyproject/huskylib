@@ -50,9 +50,6 @@
 
 #  define mymkdir(a) mkdir((a), 0)
 
-   int unlock(int handle, long ofs, long length);
-   int lock(int handle, long ofs, long length);
-
 #  define strcasecmp stricmp
 #  define strncasecmp strnicmp
 
@@ -81,6 +78,7 @@
 #  define HAS_PROCESS_H 1  /* may use "#include <process.h> */
 
 #  define USE_STAT_MACROS
+
 
 typedef unsigned bit;
 

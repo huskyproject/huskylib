@@ -178,10 +178,6 @@
 #  define HAS_DIRECT_H     /* #include <direct.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
-   HUSKYEXT int unlock(int handle, long ofs, long length);
-   HUSKYEXT int lock(int handle, long ofs, long length);
-
-
 
 typedef unsigned bit;
 

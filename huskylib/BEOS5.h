@@ -52,12 +52,6 @@
 
 #  define mymkdir(a) mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 
-   int lock(int handle, long ofs, long length);   /* in locking.c */
-   int unlock(int handle, long ofs, long length);
-
-   int sopen(const char *name, int oflag, int ishared, int mode);
-#  define HAS_sopen     4   /* sopen() : 4 parameters */
-
 #  define tell(a) lseek((a),0,SEEK_CUR)
 
 #  include <fcntl.h>
@@ -98,7 +92,6 @@
 #  define HAS_SYS_SYSEXITS_H   1  /*  <sys/sysexits.h> */
 #  define HAS_SYS_WAIT_H       1  /* <sys/wait.h> */
 #  define HAS_SYS_STATVFS_H    1
-
 
 typedef unsigned bit;
 

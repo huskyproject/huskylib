@@ -44,14 +44,14 @@
 #define farwrite write
 #define mymkdir(a) mkdir((a))
 
-#define unlock(a,b,c) unused(a)
-#define lock(a,b,c) 0
 #define mysleep(x) unused(x)
 
 #include <fcntlh.>
 #ifndef O_BINARY
 # define O_BINARY 0 /* O_BINARY flag has no effect under UNIX */
 #endif
+
+#define _XPENTRY
 
 #error "Don't know how to implement record locking."
 /* Using an executable that does no support record locking is
@@ -60,11 +60,10 @@
    to obtain a lock on the very first byte of a SQD file which
    indicates that no other program should use the message area now.
 */
+/*#define unlock(a,b,c) unused(a)*/
+/*#define lock(a,b,c) 0*/
 
 #define SH_DENYNONE 0
-/*#define sopen(a,b,c,d) open((a),(b),(d))*/
-
-#define _XPENTRY
 
 typedef unsigned bit;
 
@@ -82,5 +81,6 @@ typedef signed short sshort;
 
 typedef signed long slong;
 typedef unsigned long ulong;
+
 
 #endif

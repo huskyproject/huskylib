@@ -71,9 +71,6 @@
 /*#  define strcasecmp  stricmp*/
 /*#  define strncasecmp strnicmp*/
 
-  int unlock(int handle, long ofs, long length);
-  int lock(int handle, long ofs, long length);
-
 /* older mingw headers are too lazy ... */
 #  include <share.h>
 #  define sopen _sopen

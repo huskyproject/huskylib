@@ -49,16 +49,6 @@
 #  define sleep(x)   DosSlep(1000L*(x))
 #  define HAS_sleep     1
 
-#  define unlock(a,b,c) unused(a)
-#  define lock(a,b,c) 0
-#  error "Don't know how to implement record locking."
-/* Using an executable that does no support record locking is
-   discouraged in a multitasking environment. If you want to
-   do it anyway, you may uncomment this line. Record lokcing is used
-   to obtain a lock on the very first byte of a SQD file which
-   indicates that no other program should use the message area now.
-*/
-
 #  define _XPENTRY
 
 #  define HAS_MALLOC_H 1      /* use "#include <malloc.h>" for malloc() etc. */
@@ -82,5 +72,16 @@ typedef unsigned short ushort;
 
 typedef signed long slong;
 typedef unsigned long ulong;
+
+#error "Don't know how to implement record locking."
+/* Using an executable that does no support record locking is
+   discouraged in a multitasking environment. If you want to
+   do it anyway, you may uncomment this line. Record locking is used
+   to obtain a lock on the very first byte of a SQD file which
+   indicates that no other program should use the message area now.
+*/
+
+#define SH_DENYNONE 0
+/*#define sopen(a,b,c,d) open((a),(b),(d))*/
 
 #endif
