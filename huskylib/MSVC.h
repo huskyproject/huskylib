@@ -224,14 +224,14 @@ typedef   signed int       hSINT32;              /*  4 bytes */
 typedef unsigned int       hUINT32;              /*  4 bytes */
 
 #ifdef _M_ALPHA    /* 64 bit system */
-  typedef   signed long       hINT64;              /* 8 bytes */
-  typedef   signed long      hSINT64;              /* 8 bytes */
-  typedef unsigned long      hUINT64;              /* 8 bytes */
-  #define HAS_INT64
-#else
   typedef   signed long long  hINT64;              /*  8 bytes */
   typedef   signed long long hSINT64;              /*  8 bytes */
   typedef unsigned long long hUINT64;              /*  8 bytes */
+  #define HAS_INT64
+#else
+  typedef   signed long       hINT64;              /* 8 bytes */
+  typedef   signed long      hSINT64;              /* 8 bytes */
+  typedef unsigned long      hUINT64;              /* 8 bytes */
   #define HAS_INT64
 #endif
 
