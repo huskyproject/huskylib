@@ -1272,4 +1272,59 @@ char *strupr(char *str);
 
 #include "typesize.h"
 
+/* variable sizes for common (platform-independed) husky types **************/
+
+#define MAX_hBYTE    0xff        /* Max value for var type "byte"  */
+#define MIN_hBYTE    0           /* Min value for var type "byte"  */
+#define MAX_hSBYTE   0xef        /* Max value for var type "sbyte" */
+#define MIN_hSBYTE   0x80        /* Min value for var type "sbyte" */
+
+#define MAX_hWORD    0xffff      /* Max value for var type "word"  */
+#define MIN_hWORD    0           /* Min value for var type "word"  */
+#define MAX_hSWORD   0xefff      /* Max value for var type "sword" */
+#define MIN_hSWORD   0x8000      /* Max value for var type "sword" */
+
+#define MAX_hDWORD   0xffffffffl /* Max value for var type "dword"  */
+#define MIN_hDWORD   0l          /* Max value for var type "dword"  */
+#define MAX_hSDWORD  0xefffffffl /* Max value for var type "sdword" */
+#define MIN_hSDWORD  0x80000000l /* Max value for var type "sdword" */
+
+#define MAX_hUCHAR   0xff
+#define MIN_hUCHAR   0
+#define MAX_hCHAR    0xef
+#define MIN_hCHAR    0x80
+#define MAX_hSCHAR   0xef
+#define MIN_hSCHAR   0x80
+
+#define MAX_hUINT8   0xff
+#define MIN_hUINT8   0
+#define MAX_hINT8    0xef
+#define MIN_hINT8    0x80
+#define MAX_hSINT8   0xef
+#define MIN_hSINT8   0x80
+
+#define MAX_hUINT16  0xffff
+#define MIN_hUINT16  0
+#define MAX_hINT16   0xefff
+#define MIN_hINT16   0x8000
+#define MAX_hSINT16  0xefff
+#define MIN_hSINT16  0x8000
+
+#define MAX_hUINT32  0xffffffffl
+#define MIN_hUINT32  0l
+#define MAX_hINT32   0xefffffffl
+#define MIN_hINT32   0x80000000l
+#define MAX_hSINT32  0xefffffffl
+#define MIN_hSINT32  0x80000000l
+
+
+#ifdef HAS_INT64
+  #define MAX_hUINT64  0xffffffffffffffff
+  #define MIN_hUINT64  0
+  #define MAX_hINT64   0xefffffffffffffff
+  #define MIN_hINT64   0x8000000000000000
+  #define MAX_hSINT64  0xefffffffffffffff
+  #define MIN_hSINT64  0x8000000000000000
+#endif
+
 #endif
