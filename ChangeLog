@@ -1,3 +1,8 @@
+2003-10-24 Friday 11:39  stas_degteff
+
+	* huskylib/compiler.h (1.20): Fix a re-definition of R_OK, X_OK,
+	W_OK, F_OK
+
 2003-10-23 Thursday 08:58  stas_degteff
 
 	* make/makefile.cyg (1.14): Remove duplicated entry (first
