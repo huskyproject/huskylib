@@ -148,26 +148,20 @@ HUSKYEXT void getctab(CHAR *dest, UCHAR *charMapFileName )
 
 		if (p && q)
 		{
-/* Old code
 #if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
 			in = ctoi((signed char *)p);
 #else
 			in = ctoi((char *)p);
 #endif
-*/
-			in = ctoi((CHAR *)p);
 			if (in > 255) {
 				fprintf(stderr, "getctab: %s: line %d: char val too big\n", charMapFileName, line);
 				break;
 			}
-/* Old code
 #if (defined(__WATCOMC__) && defined(__DOS4G__)) || defined(__DJGPP__) || defined(__BSD__)
 			on=ctoi((signed char *)q);
 #else
 			on=ctoi((char *)q);
 #endif
-*/
-			on = ctoi((CHAR *)q);
 			if (in && on)
                         {
                                 if( count++ < 256 ) dest[in]=(char)on;
