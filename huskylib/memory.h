@@ -30,6 +30,8 @@
 #ifndef HUSKY_MEMORY_H__
 #define HUSKY_MEMORY_H__
 
+#include <stdlib.h>
+
 /* huskylib: compiler.h */
 #include "compiler.h"
 
