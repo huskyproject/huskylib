@@ -83,9 +83,15 @@ int xpatmat(const char *string, const char *pattern, const int ncase)
 			if (*q++ == '\0')
 				return 0;
 			break;
+        case '#':
+            if (*q == '\0')
+                return 0;
+            else if (!isdigit(*q++))
+                return 0;
+            break;
 		case '*':
 			c = *p;
-			if (c != CTLESC && c != '?' && c != '*' && c != '[') {
+            if (c != CTLESC && c != '?' && c != '*' && c != '[' && c != '#') {
 				while (*q != c) {
 				        if (ncase && toupper(*q) == toupper(c))
                                                 break;
