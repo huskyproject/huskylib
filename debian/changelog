@@ -1,3 +1,11 @@
+huskylib (1.9-20030317-1) unstable; urgency=low
+
+  * New cvs version
+  * Update version number: libhusky0->libhusky1
+  * Ship gnmsgid program with debian package
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Mon, 17 Mar 2003 12:01:58 +0500
+
 huskylib (0.1-20030311-1) unstable; urgency=low
 
   * New cvs version

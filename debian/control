@@ -8,7 +8,7 @@ Standards-Version: 3.5.8
 Package: libhusky-dev
 Section: devel
 Architecture: any
-Depends: libhusky0 (= ${Source-Version}), libc6-dev, huskybase (>> 2.0-0)
+Depends: libhusky1 (= ${Source-Version}), libc6-dev, huskybase (>> 2.0-0)
 Description: Common library for all Husky-Packages
  huskylib include common functions for all Husky software:
  memory management, operations with strings, input/output for
@@ -17,7 +17,7 @@ Description: Common library for all Husky-Packages
  This Package holds the Development files. Only needed if you want
  to compile other Husky-Packages.
 
-Package: libhusky0
+Package: libhusky1
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}
