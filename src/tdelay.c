@@ -79,32 +79,12 @@ void _fast tdelay(int msecs)
     DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
 }
 
-void husky_SetTimer(hs_time *timer_ctx)
-{
-    return; 
-}
-
-dword husky_GetTimer(hs_time *timer_ctx)
-{
-    return 0; 
-}
-
 #elif defined(__DOS__) && !defined(__DPMI__)
 void _fast tdelay(int msecs)
 {
     clock_t ctEnd;
     ctEnd = clock() + (long)msecs * (long)CLK_TCK / 1000L;
     while (clock() < ctEnd);
-}
-
-void husky_SetTimer(hs_time *timer_ctx)
-{
-    return; 
-}
-
-dword husky_GetTimer(hs_time *timer_ctx)
-{
-    return 0; 
 }
 
 #elif defined(__WIN32__) || (__MINGW32__)
@@ -121,6 +101,35 @@ void _fast tdelay(int msecs)
     Sleep((dword)msecs);
 }
 
+#elif defined(__BEOS__)
+
+#include <be/kernel/scheduler.h>
+
+void _fast tdelay(int msecs)
+{
+    snooze(msecs*1000l);
+}
+
+#elif defined(__UNIX__) || defined(__DPMI__)
+#include <sys/time.h>
+#include <unistd.h>
+
+void _fast tdelay(int msecs)
+{
+    usleep(msecs*1000l);
+}
+#elif defined(__WATCOMC__)
+void _fast tdelay(int msecs)
+{
+    sleep(msecs);
+}
+
+#else
+#error Unknown OS (tdelay)
+#endif
+
+#if defined(__WIN32__) || (__MINGW32__)
+/* win32/nt not mingw (MS VC, cygwin -mno-cygwin, Borland C/win32, Watcom C)*/
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
@@ -139,35 +148,7 @@ dword husky_GetTimer(hs_time *timer_ctx)
     return diff;
 }
 
-#elif defined(__BEOS__)
-
-#include <be/kernel/scheduler.h>
-
-void _fast tdelay(int msecs)
-{
-    snooze(msecs*1000l);
-}
-
-void husky_SetTimer(hs_time *timer_ctx)
-{
-    return; 
-}
-
-dword husky_GetTimer(hs_time *timer_ctx)
-{
-    return 0; 
-}
-
-
-#elif defined(__UNIX__) || defined(__DPMI__)
-#include <sys/time.h>
-#include <unistd.h>
-
-void _fast tdelay(int msecs)
-{
-    usleep(msecs*1000l);
-}
-
+#elif defined (__UNIX__) || (__BEOS__) || (__DJGPP__) || (__CYGWIN__) || (__EMX__)
 void husky_SetTimer(hs_time *timer_ctx)
 {
     struct timeval now;
@@ -185,23 +166,6 @@ dword husky_GetTimer(hs_time *timer_ctx)
     return diff;
 }
 
-#elif defined(__WATCOMC__)
-void _fast tdelay(int msecs)
-{
-    sleep(msecs);
-}
-
-void husky_SetTimer(hs_time *timer_ctx)
-{
-    return; 
-}
-
-dword husky_GetTimer(hs_time *timer_ctx)
-{
-    return 0; 
-}
-
-
 #else
-#error Unknown OS
+#error Unknown OS (husky_*Timer)
 #endif
