@@ -223,6 +223,8 @@ HUSKYEXT char    *GetDirnameFromPathname(const char* pathname);
 
 #define dirname(f) GetDirnameFromPathname(f)
 
+/* will be moved to huskylib */
+HUSKYEXT void fillCmdStatement(char *cmd, const char *call, const char *archive, const char *file, const char *path);
 
 /*-- patmat.c --*/
 HUSKYEXT int patmat( const char *raw, const char *pat );

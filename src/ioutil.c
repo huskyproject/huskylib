@@ -585,3 +585,37 @@ char    *GetDirnameFromPathname(const char* pathname)
 
   return rp;
 }
+
+void fillCmdStatement(char *cmd, const char *call, const char *archiv, const char *file, const char *path)
+{
+    const char *start, *tmp, *add;
+#ifdef __WIN32__
+    char *p;
+#endif
+    char fullarch[256];
+    char fullpath[256];
+
+#ifdef __WIN32__
+    GetFullPathName(archiv, sizeof(fullarch), fullarch, &p);
+    if(*path)
+    GetFullPathName(path, sizeof(fullpath), fullpath, &p);
+#else
+    strnzcpy(fullpath,path, 255);
+    strnzcpy(fullarch,archiv, 255);
+#endif
+
+    *cmd = '\0';  start = NULL;
+    for (tmp = call; (start = strchr(tmp, '$')) != NULL; tmp = start + 2) {
+        switch(*(start + 1)) {
+        case 'a': add = fullarch; break;
+        case 'p': add = fullpath; break;
+        case 'f': add = file; break;
+        default:
+            strncat(cmd, tmp, (size_t) (start - tmp + 1));
+            start--; continue;
+        };
+        strnzcat(cmd, tmp, (size_t) (start - tmp + 1));
+        strcat(cmd, add);
+    };
+    strcat(cmd, tmp);
+}
