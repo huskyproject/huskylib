@@ -1,3 +1,8 @@
+2003-10-13 Monday 10:00  stas_degteff
+
+	* src/ioutil.c (1.9): Fix mingw compiler warning (incompatible
+	pointer type)
+
 2003-09-30 Tuesday 19:17  i_zkh
 
 	* huskylib/huskylib.h (1.20): Minor spelling fix
