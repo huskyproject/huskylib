@@ -1,3 +1,11 @@
+2003-04-28 Monday 19:25  d_sergienko
+
+	* src/mapfile.c (1.7): dos2unix
+
+2003-04-28 Monday 15:04  mche
+
+	* src/mapfile.c (1.6): prevent macro redefinition
+
 2003-04-27 Sunday 16:34  d_sergienko
 
 	* src/adcase.c (1.6): CRLF->LF conversion
