@@ -43,7 +43,7 @@ $(LIB_S): $(OBJS)
 	$(AR) $(AR_R) $(LIB_S) $?
 ifdef RANLIB
 	$(RANLIB) $(LIB_S)
-endif                                                             
+endif
 
 ifeq ($(DYNLIBS), 1)
   ifeq (~$(MKSHARED)~,~ld~)
@@ -83,7 +83,7 @@ install-h-dir: FORCE
 
 %.h: FORCE
 	$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)huskylib
-        
+
 install-h: install-h-dir $(HEADERS)
 
 install: install-h instdyn
@@ -100,7 +100,6 @@ uninstall:
 
 clean:
 	-$(RM) $(RMOPT) *$(OBJ)
-	-$(RM) $(RMOPT) *~
 
 distclean: clean
 	-$(RM) $(RMOPT) $(LIB_S)
