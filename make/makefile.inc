@@ -2,7 +2,7 @@
 #
 # Common makefiles part (include-file) for huskylib
 
-# Use defines:
+# Use defines before including this file:
 # _OBJ	object files suffix begins with point (".o", ".obj", ... )
 # _LIB	library files suffix begins with point (".a", ".lib", ... )
 # _DLL	dinamic linking library files suffix begins with point (".dll", ".so", ...)
@@ -10,7 +10,6 @@
 # LIBSUFFIX  library filename suffix (compiler ID, three characters, somewhere empty)
 # DLLPREFIX  dinamic linking library prefix (usually empty)
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
-
 
 VERMAJOR= 0
 VERMINOR= 1
@@ -20,13 +19,13 @@ VER	= $(VERH).0
 OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
 OBJS2	= memory$(_OBJ) parsenn$(_OBJ) patmat$(_OBJ) setfsize$(_OBJ) strext$(_OBJ)
 OBJS3	= strftime$(_OBJ) tdelay$(_OBJ)
+OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
 
 HEADERS1= calendar.h compiler.h cvtdate.h ffind.h huskylib.h patmat.h
 HEADERS2= parsenn.h strext.h unused.h vixie.h
-
-HEADERS	= $(HEADERS1) $(HEADERS2)
-
-OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
+HEADERS3= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
+HEADERS4= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
+HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
 
 PROGRAMS=
 

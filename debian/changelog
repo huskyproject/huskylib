@@ -1,3 +1,10 @@
+huskylib (0.1-20030305-1) unstable; urgency=low
+
+  * New cvs version
+  * Depends for new huskybase (>> 2.0-0)
+
+ -- Pavel Andreew <pavel@collage.etel.ru>  Wed,  5 Mar 2003 21:06:36 +0500
+
 huskylib (0.1-20030304-1) unstable; urgency=low
 
   * Initial Release.

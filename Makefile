@@ -73,11 +73,10 @@ endif
 FORCE:
 
 install-h-dir: FORCE
-	-$(MKDIR) $(MKDIROPT) $(INCDIR)
 	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(H_DIR)
 
 %.h: FORCE
-	$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)$(H_DIR)
+	-$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)$(H_DIR)
 
 install-h: install-h-dir $(HEADERS)
 
