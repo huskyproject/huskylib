@@ -413,6 +413,10 @@ int _fast FFindNext(FFIND * ff)
             {
                 ff->ff_attrib |= MSDOS_SUBDIR;
             }
+            if (ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
+            {
+                ff->ff_attrib |= _A_HIDDEN;
+            }
             rc = 0;
         }
 
