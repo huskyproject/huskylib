@@ -1,3 +1,7 @@
+2003-05-23 Friday 04:31  lmike
+
+	* huskylib.qpg (1.2): Previous commit was bad, fixed file contents.
+
 2003-05-20 Tuesday 14:39  d_sergienko
 
 	* huskylib.qpg (1.1), make/makefile.inc (1.30), make/makefile.qnx
