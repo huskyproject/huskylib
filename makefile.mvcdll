@@ -11,13 +11,14 @@ HUSKYL=	huskymvc.lib
 OTHERL=	..\smapi\smapimvc.lib ..\fidoconf\fconfmvc.lib msvcrt.lib Kernel32.lib /opt:nowin98
 LINKOPTS = $(OTHERL) /nologo /nodefaultlib /dll  /out:"huskymvc.dll" /implib:"huskymvc.lib"
 
-OBJS1 =  log.obj recode.obj crc.obj afixcmd.obj afixcmn.obj arealist.obj
+OBJS1 =  log.obj recode.obj crc.obj afixcmd.obj afixcmn.obj arealist.obj fscmn.obj
 
 all:    $(HUSKYL) 
 
 $(HUSKYL):
 		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c log.c
 		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c crc.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c fscmn.c
 		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c recode.c
 		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c afixcmd.c
 		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c afixcmn.c
