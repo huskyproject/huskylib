@@ -44,17 +44,34 @@ RM	= rm
 MKDIR	= mkdir
 # remove directory command
 RMDIR	= rm
-# copy/move command
+# install command
 INSTALL	= install
+# copy command
+CP	= cp
+# move command
+MV	= mv
 
 
 ## file suffixes ##
 
+# source file
 _C	= .c
+# object file
 _OBJ	= .o
-_LIB	= .a
+# binary (executable) file
 _EXE	=
-_DLL	= .so
+# static library
+_LIB	= .a
+# shared library
+_DLL	= .dll
+# shared library definitions file (export/import lists & etc.)
+_DEF	= .def
+# shared library exported list
+_EXP	= .exp
+# archive (package) file
+_ARC	= .tar.gz
+# documentation file (".info", ".html", ".div", ...)
+_HTML	= .html
 
 
 ## program options ##
@@ -99,7 +116,8 @@ DLLSUFFIX=
 
 
 ## Binary package name ##
-PACKAGENAME=$(LIBNAME)$(LIBPREFIX)-$(LIBSUFFIX)-$(VER).tgz
+PACKAGEBASE=$(LIBNAME)$(LIBPREFIX)-$(LIBSUFFIX)-$(VERH)
+PACKAGENAME=$(LIBNAME)$(LIBPREFIX)-$(LIBSUFFIX)-$(VERH)$(_ARC)
 
 
 ## make directives ##
@@ -165,21 +183,28 @@ distclean: clean pkgclean
 doc:
 	cd ../doc ; make html
 
-package: static programs
-	$(MKDIR) $(MKDIROPT) huskylib
-	@echo husky library v.$(VERH) for `uname -s` platform > huskylib/file_id.diz
-	@echo "(Part of HUSKY Fidonet Software Project)" >> huskylib/file_id.diz
-	@echo See http://husky.sourceforge.net and/or >> huskylib/file_id.diz
-	@echo http://sourceforge.net/projects/husky >> huskylib/file_id.diz
-	$(INSTALL) $(INSTOPT) $(TARGETLIB) $(PROGRAMS) ../VERSION huskylib
-	$(INSTALL) $(INSTOPT) ../COPYING ../cvsdate.h ../INSTALL ../License huskylib
-	$(INSTALL) $(INSTOPT) ../HISTORY ../ChangeLog  huskylib
-	$(MKDIR) $(MKDIROPT) huskylib/huskylib/
-	$(INSTALL) $(INSTOPT) ../huskylib/*.h huskylib/huskylib
-	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) huskylib/*
+pkg-dir:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)
+
+$(HEADERS):
+	$(CP) $(CPOPT) $@ $(PACKAGEBASE)/huskylib
+
+pkg-h: $(HEADERS)
+
+package: static programs pkg-dir pkg-h
+	@echo husky library v.$(VERH) for `uname -s` platform > $(PACKAGEBASE)/file_id.diz
+	@echo "(Part of HUSKY Fidonet Software Project)" >> $(PACKAGEBASE)/file_id.diz
+	@echo See http://husky.sourceforge.net and/or >> $(PACKAGEBASE)/file_id.diz
+	@echo http://sourceforge.net/projects/husky >> $(PACKAGEBASE)/file_id.diz
+	$(CP) $(CPOPT) $(TARGETLIB) $(PROGRAMS) ../VERSION $(PACKAGEBASE)
+	$(CP) $(CPOPT) ../COPYING ../cvsdate.h ../INSTALL ../License $(PACKAGEBASE)
+	$(CP) $(CPOPT) ../HISTORY ../ChangeLog  $(PACKAGEBASE)
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/huskylib/
+	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) $(PACKAGEBASE)/*
 
 pkgclean:
 	-$(RM) $(RMOPT) $(PACKAGENAME)
-	-$(RM) $(RMOPT) huskylib/file_id.diz
-	-$(RM) $(RMOPT) huskylib/*
-	-$(RMDIR) $(RMDIROPT) huskylib
+	-$(RM) $(RMOPT) $(PACKAGEBASE)/file_id.diz
+	-$(RM) $(RMOPT) $(PACKAGEBASE)/huskylib/*
+	-$(RM) $(RMOPT) $(PACKAGEBASE)/*
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)
