@@ -1,3 +1,7 @@
+2003-09-23 Tuesday 07:25  andr_lukyanov
+
+	* src/ioutil.c (1.8): Fix cygwin/MinGW32 compiler warning
+
 2003-09-19 Friday 09:21  andr_lukyanov
 
 	* make/makefile.mgw (1.5): Fixed mingw32 compilations
