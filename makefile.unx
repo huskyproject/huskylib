@@ -1,0 +1,109 @@
+# Makefile for husky on BSD and Mac OS X
+
+_DLL=.so
+_LIB=.a
+_OBJ=.o
+EXENAMEFLAG=-o 
+
+LIBPREFIX=lib
+DLLPREFIX=lib
+
+include make/makefile.inc
+
+CDEFS=-DUNIX  -Ihuskylib -I.
+CFLAGS=-c
+AR_R=r
+RANLIB=ranlib
+
+all: $(TARGETLIB) $(PROGRAMS)
+
+SRC_DIR = src/
+H_DIR   = huskylib/
+
+%$(_OBJ): $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$*.c
+
+$(TARGETLIB): $(OBJS)
+	$(AR) $(AR_R) $(TARGETLIB) $?
+ifdef RANLIB
+	$(RANLIB) $(TARGETLIB)
+endif
+
+ifeq ($(DYNLIBS), 1)
+  ifeq (~$(MKSHARED)~,~ld~)
+$(TARGETDLL).$(VER): $(OBJS)
+	$(LD) $(LFLAGS) -o $(TARGETDLL).$(VER) $(OBJS)
+  else
+$(TARGETDLL).$(VER): $(OBJS)
+	$(CC) -shared -Wl,-soname,$(TARGETDLL).$(VERH) \
+          -o $(TARGETDLL).$(VER) $(OBJS)
+  endif
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
+
+instdyn: $(TARGETLIB) $(TARGETDLL).$(VER)
+	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
+	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
+# Changed the symlinks from symlinks with full path to just symlinks.
+# Better so :)
+	cd $(LIBDIR) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
+ifneq (~$(LDCONFIG)~, ~~)
+	$(LDCONFIG)
+endif
+
+else
+instdyn: $(TARGETLIB)
+
+endif
+
+ifeq ($(DYNLIBS), 1)
+$(PROGRAMS): $(TARGETDLL)
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(LIBS)
+else
+$(PROGRAMS): $(TARGETLIB)
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
+endif
+
+
+FORCE:
+
+install-h-dir: FORCE
+	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(H_DIR)
+
+%.h: FORCE
+	-$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)$(H_DIR)
+
+install-h: install-h-dir $(HEADERS)
+
+install: install-h instdyn
+	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
+	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
+	-$(MKDIR) $(MKDIROPT) $(BINDIR)
+	@list='$(PROGRAMS)'; for p in $$list; do \
+	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
+	done
+
+
+uninstall:
+	-cd $(INCDIR)$(DIRSEP)$(H_DIR) ;\
+	$(RM) $(RMOPT) $(HEADERS)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
+	-cd $(BINDIR) ;\
+	-$(RM) $(RMOPT) $(PROGRAMS)
+
+clean:
+	-$(RM) $(RMOPT) *$(_OBJ)
+	-$(RM) $(RMOPT) $(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(TARGETDLL)
+
+distclean: clean
+	-$(RM) $(RMOPT) $(TARGETLIB)
+	-$(RM) $(RMOPT) $(TARGETDLL).$(VER)
+	-$(RM) $(RMOPT) $(PROGRAMS)
