@@ -1,4 +1,3 @@
-#define TEST
 /* $Id$
  *  Provides compiler-independent function for take free disk space value.
  *
