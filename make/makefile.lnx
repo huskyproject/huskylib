@@ -148,7 +148,8 @@ doc:
 package: static programs
 	@echo husky library v.$(VERH) for linux platform > file_id.diz
 	@echo "(Part of HUSKY Fidonet Software Project)" >> file_id.diz
-	@echo See http://husky.sourceforge.net >> file_id.diz
+	@echo See http://husky.sourceforge.net and/or >> file_id.diz
+	@echo http://sourceforge.net/projects/husky >> file_id.diz
 	$(MKDIR) $(MKDIROPT) huskylib
 	$(INSTALL) $(INSTOPT) $(TARGETLIB) $(PROGRAMS) ../VERSION huskylib
 	$(INSTALL) $(INSTOPT) ../COPYING ../cvsdate.h ../INSTALL ../License huskylib
