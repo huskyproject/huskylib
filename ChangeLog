@@ -1,3 +1,8 @@
+2003-04-12 Saturday 13:54  mche
+
+	* make/HuskylibDll.vcproj (1.1), HuskylibDll.vcproj (1.7): change
+	location
+
 2003-04-11 Friday 07:11  mche
 
 	* HuskylibDll.vcproj (1.6): fix GUIDs of projects
