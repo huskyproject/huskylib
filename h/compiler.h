@@ -1551,6 +1551,7 @@ int qq(void)
 #  define HAS_strftime  1   /* strftime() in time.h  */
 #  define HAS_mktime    1   /* mktime() in time.h */
 #  define HAS_popen_close  /* popen(); pclose() */
+#  define HAS_sopen     1   /* sopen() : in io.h */
 
 #  define HAS_DIR_H     1   /* use "#include <dir.h>" for findfirst() etc. */
 #  define HAS_DOS_H     1
