@@ -1,3 +1,8 @@
+2002-11-27 Wednesday 00:08  nssoft
+
+	* afixcmd.c (1.2), afixcmd.h (1.3), afixcmn.c (1.3), fscmn.c (1.3):
+	s_addr --> hs_addr
+
 2002-10-28 Monday 23:37  pgul
 
 	* afixcmd.h (1.2), afixcmn.c (1.2): Change createKludges() args
