@@ -7,7 +7,7 @@
 #
 
 # Uncomment this for compile info for debugger and display more compiler warnings
-DEBUG	= /D_DEBUG /Zi
+#DEBUG	= /D_DEBUG /Zi
 
 # Uncomment this for strip all simbols from binaries to reduce file sizes
 #STRIP	=
@@ -99,7 +99,7 @@ all:	static programs
 
 static:	$(TARGETLIB)
 programs: $(TARGETLIB) $(PROGRAMS)
-dllprograms: $(TARGETDLL) $(PROGRAMS)
+dllprograms: dll $(PROGRAMS)
 
 
 {$(SRC_DIR)}$(_C)$(_OBJ):

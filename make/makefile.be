@@ -103,5 +103,5 @@ $(TARGETLIB): $(OBJS)
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
 
-distclean:
+distclean: clean
 	-$(RM) $(RMOPT) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS)

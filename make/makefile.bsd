@@ -124,7 +124,7 @@ $(TARGETDLL):	$(OBJS)
 clean: .PHONY
 	-$(RM) $(RMFLAGS) *$(_OBJ)
 
-distclean: .PHONY
+distclean: clean
 	-$(RM) $(RMFLAGS) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS)
 
 

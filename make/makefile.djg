@@ -93,6 +93,6 @@ $(TARGETLIB):	$(OBJS)
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
 
-distclean:
+distclean: clean
 	-$(RM) $(RMOPT) $(TARGETLIB)
-#	-$(RM) $(RMOPT) $(PROGRAMS)
+	-$(RM) $(RMOPT) *$(_EXE)
