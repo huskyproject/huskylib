@@ -23,7 +23,7 @@ else
   LFLAGS=$(OPTLFLAGS)
 endif
 
-CDEFS=-D$(OSTYPE) $(ADDCDEFS) -I. -Ihuskylib
+CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ihuskylib -I.
 
 ifeq ($(DYNLIBS), 1)
 all: $(TARGETLIB) $(TARGETDLL).$(VER) $(PROGRAMS)

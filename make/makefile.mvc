@@ -3,7 +3,7 @@
 
 CC=     cl
 CFLAGS= -nologo -Zp1
-CDEFS=  -I.. -I..\huskylib -D__NT__ -D_CONSOLE
+CDEFS=  -I..\huskylib -I.. -D_CONSOLE
 COPT=   -O2
 TLIB=    lib -nologo
 _EXE=	.exe

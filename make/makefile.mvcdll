@@ -3,7 +3,7 @@
 
 CC=     cl
 CFLAGS= -nologo -MD -Zp1
-CDEFS=  -I.. -I..\huskylib -D__NT__ -D_CONSOLE -D_MAKE_DLL -D_HUSKYEXT
+CDEFS=  -I..\huskylib -I.. -D_CONSOLE -D_MAKE_DLL -D_HUSKYEXT
 COPT=   -Ob2
 LINK=   link
 LINKOPTS= msvcrt.lib Kernel32.lib /nologo /opt:nowin98 /dll /nodefaultlib
