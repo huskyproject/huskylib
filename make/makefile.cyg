@@ -65,7 +65,7 @@ DLLSUFFIX=
 
 .PHONY:	distclean clean all static dll programs default
 
-## make rules ##
+## Default make rule ##
 
 default:
 	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
@@ -95,6 +95,8 @@ endif
 
 ## Additions (add into end of strings) ##
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
+
+## make rules ##
 
 all:	static dll programs
 

@@ -55,9 +55,15 @@ LIBSUFFIX=djg
 # Suffix to construct dll name
 DLLSUFFIX=
 
+## make directives ##
+
 .PHONY:	distclean clean all static programs default
 
+## Default make rule ##
+
 default: all
+
+## include common makefiles part ##
 
 include makefile.inc
 
@@ -66,6 +72,8 @@ LIBS	+=
 
 ## Additions (add into end of strings) ##
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
+
+## make rules ##
 
 all:	static programs
 
