@@ -512,7 +512,11 @@ static int tree_trav_real(tree **ppr_tree, int (*pfi_uar)(char *))
 
 int tree_trav(tree **ppr_tree, int (*pfi_uar)(char *))
 {
-    return tree_trav_real(&(**ppr_tree).tree_r, pfi_uar);
+    if (*ppr_tree)
+    {
+        return tree_trav_real(&(**ppr_tree).tree_r, pfi_uar);
+    }
+    return 0;
 }
 
 static void tree_mung_real(tree **ppr_tree, int (*pfi_uar)(char *))
