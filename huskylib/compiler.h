@@ -548,6 +548,10 @@ int qq(void)
 #    ifndef __WIN32__
 #      define __WIN32__
 #    endif
+#  ifndef __NT__
+#   define __NT__
+#  endif
+
 #  endif
 #  if (_MSC_VER < 1000)
    /* Microsoft C or Microsoft QuickC for MS-DOS or OS/2 */
