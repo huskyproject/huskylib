@@ -92,14 +92,14 @@ HUSKYEXT char *stripTrailingChars(char *str, const char *chr);
 HUSKYEXT char   *strUpper(char *str);
 /*DOC
   Input:  str is a \0 terminated string
-  Output: a pointer to a \0 terminated string is returned.
+  Output: str
   FZ:     strUpper converts the string from lower case to upper case.
   */
 
 HUSKYEXT char   *strLower(char *str);
 /*DOC
   Input:  str is a \0 terminated string
-  Output: a pointer to a \0 terminated string is returned.
+  Output: str
   FZ:     strLower converts the string from upper case to lower case.
 */
 

@@ -43,7 +43,9 @@
 HUSKYEXT int ctoi(const char *s)
 {
   char *foo;
-  unsigned long res = strtoul(s, &foo, 0);
+  unsigned long res;
+  if(!s) return 0;
+  res = strtoul(s, &foo, 0);
   if (*foo)	/* parse error */
     return 0;
   if (res>(((unsigned)-1)>>1))  /* Too big */
@@ -75,6 +77,7 @@ HUSKYEXT char *_fast Add_Trailing(char *str, char add)
 HUSKYEXT char *_fast strocpy(char *d, const char *s)
 {
     const char *orig;
+    if(!(s&&d))return (char*)s;
     orig = s;
     memmove(d, s, strlen(s) + 1);
     return (char*)orig;
@@ -166,14 +169,16 @@ HUSKYEXT char *_fast firstchar(const char *strng, const char *delim, int findwor
 
 char *strrstr(const char *HAYSTACK, const char *NEEDLE)
 {
-   char *start = NULL, *temp = NULL;
+  char *start = NULL, *temp = NULL;
 
+  if(HAYSTACK&&NEEDLE){
    temp = strstr(HAYSTACK, NEEDLE);
    while (temp  != NULL) {
       start = temp;
       temp = strstr(temp+1,NEEDLE);
    }
-   return start;
+  }
+  return start;
 }
 
 /*
@@ -184,7 +189,7 @@ char *fc_stristr(const char *str, const char *find)
     char ch, sc;
     const char *str1 = NULL, *find1 = NULL;
 
-    if(str)
+    if(str&&find)
     {
         find++;
         if ((ch = *(find-1)) != 0) {
@@ -207,7 +212,7 @@ char *stripLeadingChars(char *str, const char *chr)
 {
    char *i = str;
 
-   if (str != NULL) {
+   if (str&&chr) {
 
       while (NULL != strchr(chr, *i)) {       /*  *i is in chr */
          i++;
@@ -228,9 +233,10 @@ char *stripLeadingChars(char *str, const char *chr)
 char *stripTrailingChars(char *str, const char *chr)
 {
    char *i;
+   register int l;
 
-   if( (str != NULL) && strlen(str)>0 ) {
-      i = str+strlen(str)-1;
+   if( str && chr && (l=strlen(str))>0 ) {
+      i = str+l-1;
       while( (NULL != strchr(chr, *i)) && (i>=str) )
          *i-- = '\0';
    }
@@ -242,7 +248,7 @@ char *strUpper(char *str)
 {
    char *temp = str;
 
-   while(*str != 0) {
+   if(str) while(*str != 0) {
       *str = (char)toupper(*str);
       str++;
    }
@@ -253,7 +259,7 @@ char *strLower(char *str)
 {
    char *temp = str;
 
-   while(*str != 0) {
+   if(str) while(*str != 0) {
       *str = (char)tolower(*str);
       str++;
    }
@@ -351,10 +357,12 @@ char *strseparate(char **pp, const char *delim)
 {
   char *p, *q;
 
-  if ((p = *pp) == '\0')
-    return 0;
+  if (!(pp&&delim)) return NULL;
 
-  if (!*p) return 0;
+  if ((p = *pp) == '\0')
+    return NULL;
+
+  if (!*p) return NULL;
 
   if ((q = strpbrk (p, delim)) != NULL)
     {
@@ -363,7 +371,7 @@ char *strseparate(char **pp, const char *delim)
       while (**pp && strchr(delim, **pp)) (*pp)++;
     }
   else
-    *pp = 0;
+    *pp = NULL;
   return p;
 }
 
@@ -394,7 +402,7 @@ HUSKYEXT char *extract_CVS_keyword(char *str)
 
 HUSKYEXT int copyString(char *str, char **pmem)
 {
-   if (str==NULL)
+   if (!(str&&pmem))
       return 1;
 
    nfree(*pmem);
@@ -407,7 +415,7 @@ HUSKYEXT int copyStringUntilSep(char *str, char *seps, char **dest)
 {
   char *sepPos;
 
-  if ((!str) || (!(*str)))
+  if ((!str) || (!(*str)) || !(seps&&dest) )
     return 0;
 
   nfree(*dest);
