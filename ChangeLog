@@ -1,3 +1,7 @@
+2004-03-15 Monday 13:01  stas_degteff
+
+	* huskylib/crc.h (1.4): Fix MS VC 7.0 build
+
 2004-03-13 Saturday 15:50  stas_degteff
 
 	* src/crc.c (1.5): Fix CRC16 routines for big endian and little
