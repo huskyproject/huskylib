@@ -1,3 +1,8 @@
+2003-04-25 Friday 04:36  andr_lukyanov
+
+	* make/: makefile.cyg (1.11), makefile.djg (1.9): Fixed
+	compilation. Remark DEBUG mode.
+
 2003-04-19 Saturday 11:17  mche
 
 	* src/tree.c (1.4): fix some memory leaks
