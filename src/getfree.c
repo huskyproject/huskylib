@@ -1,3 +1,4 @@
+#define TEST
 /* $Id$
  *  Provides compiler-independent function for take free disk space value.
  *
@@ -59,6 +60,9 @@
 #endif
 #ifdef HAS_SYS_VFS_H
 #include <sys/vfs.h>
+#endif
+#ifdef HAS_DOS_H
+#include <dos.h>
 #endif
 
 /* huskylib headers */
@@ -269,16 +273,121 @@ HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 
 #endif
 
-#elif defined(__DOS__)
 
+#elif defined(__MSC__) || defined(__DJGPP__) /* alternate variand for DJGPP with DOS Fn's error check */
 
 HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
-  w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
+  int diskno;
+  struct _diskfree_t df;
+
+  if(!path || !*path) return 0l;
+
+  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+  if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
+  if(_dos_getdiskfree(diskno, &df)) return 0; /* invalid disk */
+
+#ifdef TEST
+printf("diskno=%i\n",diskno);
+printf("df.avail_clusters=%x\n", df.avail_clusters);
+printf("df.sectors_per_cluster=%x\n",   df.sectors_per_cluster);
+printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
+#endif
+  return df.avail_clusters * df.sectors_per_cluster * df.bytes_per_sector;
+}
+
+#elif defined(__DJGPP__) /* without DOS Fn's error ckeck */
+
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+{
+  int diskno;
+  struct dfree df;
+
+  if(!path || !*path) return 0l;
+
+  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+  if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
+  getdfree(diskno, &df);
+
+#ifdef TEST
+printf("diskno=%i\n",diskno);
+printf("df.df_avail=%x\n", df.df_avail);
+printf("df.df_sclus=%x\n",   df.df_sclus);
+printf("df.df_bsec=%x\n",  df.df_bsec);
+#endif
+  return df.df_avail * df.df_bsec * df.df_sclus;
+}
+
+#elif defined(__DOS__) /* call int 0x21 DOS Fn 0x36 */
+
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
+{
+  int diskno;
+  union REGS in, out;
+
+  if(!path || !*path) return 0l;
+
+  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+  if(diskno<1 || diskno >25) return 0;        /* illegal diskno */
+
+/* [DOS Fn 36H: Get Disk Free Space]
+ *  Returns: AX    ffffH   if DL was an invalid drive number
+ *                 else    sectors per cluster if no error
+ *           BX    available clusters (allocation units)
+ *           CX    bytes per sector (usually 512)
+ *           DX    total clusters on the disk
+ */
+
+  in.h.ah=0x36;   /* DOS Fn 36H: Get Disk Free Space */
+  in.h.dl=diskno;
+  #if defined(__DPMI__) && !defined(__DJGPP__)
+   int386(0x21, &in, &out);
+#ifdef TEST
+printf("out.x.eax=%lx available clusters\n",out.x.eax);
+printf("out.x.ebx=%lx sectors per cluster (0xffff = error)\n",out.x.ebx);
+printf("out.x.ecx=%lx bytes per sector\n",out.x.ecx);
+#endif
+   if((out.x.eax & 0xffff) == 0xffff )
+     return 0; /* bad drive number in DL */
+   return (out.x.eax & 0xffff) * (out.x.ebx & 0xffff) * (out.x.ecx & 0xffff);
+  #else
+   int86(0x21,&in,&out);
+#ifdef TEST
+#ifdef __DJGPP__
+printf("out.x.bx=%lx available clusters\n",out.x.bx);
+printf("out.x.ax=%lx sectors per cluster (0xffff = error)\n",out.x.ax);
+printf("out.x.cx=%lx bytes per sector\n",out.x.cx);
+#else
+printf("out.x.bx=%x available clusters\n",out.x.bx);
+printf("out.x.ax=%x sectors per cluster (0xffff = error)\n",out.x.ax);
+printf("out.x.cx=%x bytes per sector\n",out.x.cx);
+#endif
+#endif
+   if((out.x.ax & 0xffff) == 0xffff )
+     return 0; /* bad drive number in DL */
+   return (out.x.ax & 0xffff) * out.x.bx * out.x.cx; /* OK */
+  #endif
+
+/*  w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
   return ULONG_MAX;
+*/
 }
 #else
 
 #error "unknown system!"
 
+#endif
+
+#ifdef TEST
+
+int main(int argc, char**argv){
+ unsigned long f; char *sdisk="c:\\";
+
+ if(argc>1) *sdisk = argv[1][0];
+
+ f = fc_GetDiskFreeSpace(sdisk);
+ printf("Free space on %s is  %lu\n", sdisk, f);
+
+ return 0;
+}
 #endif
