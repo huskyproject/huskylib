@@ -1,3 +1,7 @@
+2003-10-20 Monday 01:03  andr_lukyanov
+
+	* src/tdelay.c (1.18): Fixed MSVC compilation
+
 2003-10-17 Friday 09:31  stas_degteff
 
 	* src/tdelay.c (1.17): Fix preprocesor directives
