@@ -1,3 +1,8 @@
+2004-03-13 Saturday 15:50  stas_degteff
+
+	* src/crc.c (1.5): Fix CRC16 routines for big endian and little
+	endian platforms
+
 2004-02-07 Saturday 23:30  d_sergienko
 
 	* huskylib/typesize.h (1.5): NetBSD support added
