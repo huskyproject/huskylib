@@ -28,7 +28,7 @@ PROGRAMS=
 # Usually compose from LIBPREFIX, LIBSUFFIX and LIB.
 LIBS=
 
-LIBNAME = huskylib
+LIBNAME = husky
 
 SRC_DIR	=../src/
 H_DIR	=../h/

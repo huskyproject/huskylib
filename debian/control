@@ -1,0 +1,28 @@
+Source: huskylib
+Section: libs
+Priority: optional
+Maintainer: Pavel Andreew <pavel@collage.etel.ru>
+Build-Depends: debhelper (>> 4.0.0), huskybase
+Standards-Version: 3.5.8
+
+Package: libhusky-dev
+Section: devel
+Architecture: any
+Depends: libhusky0 (= ${Source-Version}), libc6-dev, huskybase
+Description: Common library for all Husky-Packages
+ huskylib include common functions for all Husky software:
+ memory management, operations with strings, input/output for
+ filesystem an so on.
+ .
+ This Package holds the Development files. Only needed if you want
+ to compile other Husky-Packages.
+
+Package: libhusky0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Suggests: libhusky-dev
+Description: Common library for all Husky-Packages
+ huskylib include common functions for all Husky software:
+ memory management, operations with strings, input/output for
+ filesystem an so on.
