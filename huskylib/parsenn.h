@@ -26,6 +26,8 @@
 #ifndef __PARSENN_H__
 #define __PARSENN_H__
 
+#include <huskylib/huskyext.h>
+
 #define ZONE_ALL  56685u
 #define NET_ALL   56685u
 #define NODE_ALL  56685u

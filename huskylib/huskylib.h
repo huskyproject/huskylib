@@ -29,19 +29,17 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "compiler.h"
-
-#include "huskyext.h"
-
-#include "calendar.h"
-#include "cvtdate.h"
-#include "fexist.h"
-#include "ffind.h"
-#include "locking.h"
-#include "parsenn.h"
-#include "patmat.h"
-#include "strext.h"
-#include "unused.h"
+#include <huskylib/compiler.h>
+#include <huskylib/huskyext.h>
+#include <huskylib/calendar.h>
+#include <huskylib/cvtdate.h>
+#include <huskylib/fexist.h>
+#include <huskylib/ffind.h>
+#include <huskylib/locking.h>
+#include <huskylib/parsenn.h>
+#include <huskylib/patmat.h>
+#include <huskylib/strext.h>
+#include <huskylib/unused.h>
 
 
 /*-- flush.c --*/

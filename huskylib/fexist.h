@@ -26,6 +26,8 @@
 #ifndef __FEXIST_H__
 #define __FEXIST_H__
 
+#include <huskylib/huskyext.h>
+
 HUSKYEXT int _fast fexist(const char *filename);
 HUSKYEXT long _fast fsize(const char *filename);
 HUSKYEXT int _fast direxist(const char *directory);

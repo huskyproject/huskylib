@@ -1,6 +1,9 @@
 /*
  *  Suppress warning about unused parameter.  Written by Paul Edwards and
  *  released to the public domain.  Modified by Andrew Clarke.
+
+ $Id$
+
  */
 
 #ifndef unused

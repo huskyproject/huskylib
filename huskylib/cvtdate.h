@@ -27,6 +27,7 @@
 #define __CVTDATE_H__
 
 #include <huskylib/huskyext.h>
+
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
 /*typedef unsigned short bits;*/
 #else

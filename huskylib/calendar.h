@@ -28,6 +28,8 @@
 #ifndef __WEEKDAY_H__
 #define __WEEKDAY_H__
 
+#include <huskylib/huskyext.h>
+
 HUSKYEXT char _stdc months[][10];
 HUSKYEXT char _stdc weekday[][10];
 

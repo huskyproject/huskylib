@@ -26,6 +26,8 @@
 #ifndef __LOCKING_H__
 # define __LOCKING_H__
 
+#include <huskylib/huskyext.h>
+
 /* Test for locking functions avaiable in OS
  */
 HUSKYEXT sword far pascal shareloaded(void);

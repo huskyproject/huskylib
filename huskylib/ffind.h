@@ -28,7 +28,9 @@
 
 #include <stdio.h>
 
-#include "compiler.h"
+#include <huskylib/compiler.h>
+#include <huskylib/huskyext.h>
+
 
 #ifdef HAS_DOS_H
 #  include <dos.h>
