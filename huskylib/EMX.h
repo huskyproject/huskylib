@@ -107,8 +107,8 @@ typedef signed long slong;
 typedef unsigned long ulong;
 
 #define HAS_INT64
-typedef long long int64;
-typedef signed long long sint64;
-typedef unsigned long long uint64;
+typedef long long          hINT64;
+typedef signed long long   hSINT64;
+typedef unsigned long long hUINT64;
 
 #endif

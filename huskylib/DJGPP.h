@@ -125,4 +125,10 @@ typedef unsigned short ushort;
 typedef signed long slong;
 typedef unsigned long ulong;
 
+
+#define HAS_INT64
+typedef long long          hINT64;
+typedef signed long long   hSINT64;
+typedef unsigned long long hUINT64;
+
 #endif
