@@ -56,7 +56,7 @@ DLLSUFFIX=
 
 SRCDIR=..\src\
 
-CFLAGS+=-I..\h
+CFLAGS+=-I..\huskylib
 
 # Thunderbirds are go!
 
