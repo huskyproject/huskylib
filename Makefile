@@ -74,10 +74,13 @@ instdyn: $(TARGETLIB)
 
 endif
 
-$(PROGRAMS): $(OBJS)
 ifeq ($(DYNLIBS), 1)
+$(PROGRAMS): $(TARGETDLL)
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
 	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(LIBS)
 else
+$(PROGRAMS): $(TARGETLIB)
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
 	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
 endif
 
