@@ -1,3 +1,44 @@
+2003-03-04 Tuesday 19:20  stas_degteff
+
+	* make/makefile.be (1.2): unify makefiles
+
+2003-03-04 Tuesday 13:53  stas_degteff
+
+	* make/: makefile.aix (1.3), makefile.bcd (1.3), makefile.cyg
+	(1.3), makefile.inc (1.5): Unify makefiles
+
+2003-03-04 Tuesday 13:09  stas_degteff
+
+	* h/compiler.h (1.4): use unistd.h in BeOS
+
+2003-03-04 Tuesday 09:26  sfpavel
+
+	* make/: makefile.inc (1.4), makefile.mvc (1.2), makefile.mvcdll
+	(1.2): Build with makefile.mvc*
+
+2003-03-04 Tuesday 07:39  sfpavel
+
+	* debian/: docs (1.2), libhusky0.docs (1.1): Fix documentation for
+	debian package
+
+2003-03-04 Tuesday 07:36  sfpavel
+
+	* debian/changelog (1.1), debian/control (1.1), debian/copyright
+	(1.1), debian/docs (1.1), debian/libhusky-dev.files (1.1),
+	debian/libhusky-dev.links (1.1), debian/libhusky0.files (1.1),
+	debian/libhusky0.shlibs (1.1), debian/rules (1.1),
+	make/makefile.inc (1.3): Create debian packages
+
+2003-03-04 Tuesday 06:39  sfpavel
+
+	* h/calendar.h (1.3), h/compiler.h (1.3), h/cvtdate.h (1.3),
+	h/ffind.h (1.3), h/huskylib.h (1.3), h/parsenn.h (1.2), h/patmat.h
+	(1.3), h/strext.h (1.3), h/typedefs.h (1.3), h/vixie.h (1.2),
+	src/calendar.c (1.2), src/cvtdate.c (1.2), src/fexist.c (1.2),
+	src/ffind.c (1.3), src/genmsgid.c (1.2), src/memory.c (1.2),
+	src/parsenn.c (1.2), src/strext.c (1.2), src/strftime.c (1.2):
+	Update license information
+
 2003-03-03 Monday 20:34  stas_degteff
 
 	* make/: makefile.aix (1.2), makefile.bcd (1.2), makefile.cyg
