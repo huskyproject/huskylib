@@ -1,8 +1,8 @@
 # $Id$
 #
-# Legacy makefile for building huskylib (static or shared library)
-# on FreeBSD/OpenBSD/NetBSD using BSD make.
-# Run 'make linstall' to install library into $(LIBDIR)
+# Legacy makefile for building huskylib (static or shared library, static
+# linked programs) on FreeBSD/OpenBSD/NetBSD using BSD native make.
+# Run 'make linstall' to install library(ies) into $(LIBDIR)
 # Run 'make hinstall' to install C header files.
 # No support for the Husky build environment.
 
@@ -76,15 +76,17 @@ DLLSUFFIX=
 
 ## make directives ##
 
-.PHONY:	distclean clean all static programs default
-
+#.PHONY:	distclean clean all static programs default
+.SUFFIXES: .c.o
+.MAIN: default
+.PATH:  $(SRC_DIR)
 
 ## Default make rule ##
 
-default: .MAIN
+default:
 	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
 	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
-#	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
+	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
 #	@echo Run 'make dllprograms' to build dll version of programs \($(PROGRAMS)\)
 	@echo Run 'make all' to build all above
 
@@ -99,7 +101,7 @@ default: .MAIN
 LIBS	+=
 
 # Append includes dir and debug code generate options (if defined)
-CFLAGS	+= -I$(H_DIR) $(DEBUG)
+CFLAGS	+= -I$(H_DIR)
 
 ## make rules ##
 
@@ -109,30 +111,32 @@ static:	$(TARGETLIB)
 dll:	$(TARGETDLL)
 programs:  $(PROGRAMS)
 
-#.c.o:
-%$(_OBJ): $(SRC_DIR)%$(_C)
-	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
+$(_C)$(_OBJ):
+	$(CC) $(CFLAGS) $(CDEFS) $(DEBUG) $(OBJOPT) $<
 
 $(TARGETLIB):	$(OBJS)
 	$(AR) $(ARFLAGS) $@ $?
 	$(RANLIB) $@
 	
 $(TARGETDLL):	$(OBJS)
-	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $^
+	$(CC) $(DLLOPT) $(CFLAGS) $(DEBUG) $(NAMEOPT)$@ $?
+
+$(PROGRAMS): $(TARGETLIB)
+	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(DEBUG) $(NAMEOPT)$@ $(SRC_DIR)$*$(_C) $(TARGETLIB) $(LIBS)
 
 
-clean: .PHONY
+clean:
 	-$(RM) $(RMFLAGS) *$(_OBJ)
 
 distclean: clean
-	-$(RM) $(RMFLAGS) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS)
+	-$(RM) $(RMFLAGS) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS) $(TARGETDLL).$(VER)
 
 
-install: .PHONY
-#	@echo " Run 'make proginstall' to install programs into $(BINDIR)"
+install:
 	@echo " Run 'make linstall' to install static library into $(LIBDIR)"
 	@echo " Run 'make dinstall' to install shared library into $(LIBDIR)"
 	@echo " Run 'make hinstall' to install C header files into $(INCDIR)"
+	@echo " Run 'make proginstall' to install programs into $(BINDIR)"
 
 proginstall: $(PROGRAMS)
 	$(INSTALL) $(IDOPT) $(BINDIR)
@@ -144,22 +148,24 @@ linstall: $(TARGETLIB)
 
 dinstall: $(TARGETDLL)
 	$(INSTALL) $(IDOPT) $(LIBDIR)
-	$(INSTALL) $(ILOPT) $(TARGETDLL) $(LIBDIR)
-	ln -sf $(LIBDIR)$(TARGETDLL) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
+	cp $(TARGETDLL) $(TARGETDLL).$(VER)
+	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
+	ln -sf $(LIBDIR)$(TARGETDLL).$(VER) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
+	ln -sf $(LIBDIR)$(TARGETDLL).$(VER) $(LIBDIR)$(TARGETDLL).$(VERH)
 
-hinstall: .PHONY
+hinstall:
 	$(INSTALL) $(IDOPT) $(INCDIR)
 	$(INSTALL) $(IIOPT) $(TARGET_H) $(INCDIR)
 
 uninstall: uninstall-h uninstall-lib uninstall-progs
 
-uninstall-progs: .PHONY
+uninstall-progs:
 	-cd $(BINDIR) ; $(RM) $(RMFLAGS) $(PROGRAMS)
 
-uninstall-lib: .PHONY
+uninstall-lib:
 	-$(RM) $(RMFLAGS) $(LIBDIR)$(TARGETDLL)
 	-$(RM) $(RMFLAGS) $(LIBDIR)$(TARGETDLL).$(VERMAJOR)
 
-uninstall-h: .PHONY
+uninstall-h:
 	-cd $(INCDIR) ; $(RM) $(RMFLAGS) $(TARGET_H)
 	-$(RM) $(RMFLAGS) $(INCDIR)
