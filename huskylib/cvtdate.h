@@ -75,6 +75,8 @@ union stamp_combo
 
 typedef union stamp_combo SCOMBO;
 
+HUSKYEXT int _fast
+              gettz(void);
 HUSKYEXT void _fast
               ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
 HUSKYEXT union stamp_combo *_fast

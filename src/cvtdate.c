@@ -44,6 +44,28 @@
 
 static int is_dst = -1;
 
+/* Get time zone offset */
+
+int _fast gettz(void)
+{
+   static int tz = 0xBAD;
+
+   if (tz == 0xBAD) {
+     struct tm *tm;
+     time_t t, gt;
+
+     t = time(NULL);
+     tzset();
+     tm = gmtime (&t);
+     tm->tm_isdst = 0;
+     gt = mktime(tm);
+     tm = localtime (&t);
+     tm->tm_isdst = 0;
+     tz = (int)(((long)mktime(tm)-(long)gt));
+   }
+   return tz;
+}
+
 /* Find out the current status of daylight savings time */
 
 static void near InitCvt(void)
