@@ -67,7 +67,7 @@ void*MapFile(char*fname)
     return MapViewOfFile( hm, FILE_MAP_READ, 0, 0, len );
 }
 
-#elif defined(__UNIX__)
+#elif defined(__UNIX__) /* && !defined(__EMX__) /* EMX is not unix but macro __UNIX__ is predefined */
 /* tested on linux-glibc2, freebsd 4.2 */
 #include <sys/mman.h>
 #ifdef HAS_UNISTD_H

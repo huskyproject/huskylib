@@ -54,6 +54,7 @@
 #  define INCL_NOPM
 #  define INCL_DOS
 #  include <os2.h>
+#  include <sys/types.h>
 #  if defined(__FLAT__)
 #    undef DosQPathInfo
 #    define DosQPathInfo(a,b,c,d,e)  DosQueryPathInfo(a,b,c,d)

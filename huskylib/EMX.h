@@ -42,6 +42,8 @@
 #  define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */
 #endif
 
+#undef __UNIX__
+
 #  define _stdc
 #  define _intr
 #  define _intcast
@@ -85,6 +87,7 @@
 #  define HAS_UNISTD_H  1  /* use "#include <unistd.h> */
 #  define HAS_SIGNAL_H  1  /* <signal.h> */
 #  define HAS_PROCESS_H 1  /* may use "#include <process.h> */
+#  define HAS_PWD_H
 #  define HAS_UTIME_H   1
 
 #  define USE_STAT_MACROS
