@@ -1,3 +1,11 @@
+2003-03-21 Friday 06:34  stas_degteff
+
+	* huskylib/huskylib.h (1.13): include huskylib/dirlayer.h
+
+2003-03-21 Friday 05:26  sfpavel
+
+	* src/getfree.c (1.4): Export fc_GetDiskFreeSpace() from MSVC dll
+
 2003-03-19 Wednesday 09:39  stas_degteff
 
 	* src/: flush.c (1.6), locking.c (1.6): Replace assembler code with
