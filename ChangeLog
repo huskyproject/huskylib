@@ -1,3 +1,8 @@
+2003-08-24 Sunday 08:33  d_sergienko
+
+	* huskylib/huskylib.h (1.17), src/ioutil.c (1.7):
+	fillCmdStatement() moved to huskylib
+
 2003-08-17 Sunday 06:05  d_sergienko
 
 	* huskylib/UNIX.h (1.15): fix FreeBSD compatibility
