@@ -1,0 +1,12 @@
+HUSKYLIB history file
+
+huskylib 0.1
+
+1. MAJOR feature improvements:
+  - move compiler-specific declarations, types of data and common functions
+    from smapi and fidoconfig: new life for huskylib.
+
+2. IMPORTANT bugfixes:
+
+
+$Id$
