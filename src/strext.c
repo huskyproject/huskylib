@@ -218,7 +218,7 @@ char *stripLeadingChars(char *str, const char *chr)
 
    if (str&&chr) {
 
-      while (NULL != strchr(chr, *i)) {       /*  *i is in chr */
+      while ((*i > 0) && (NULL != strchr(chr, *i))) {       /*  *i is in chr */
          i++;
       } /* endwhile */                        /*  i points to the first occurences */
                                               /*  of a character not in chr */
