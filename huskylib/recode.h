@@ -53,6 +53,9 @@ HUSKYEXT VOID recodeToInternalCharset( CHAR *string);
 HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
 HUSKYEXT void getctab(CHAR *dest,  UCHAR *charMapFileName);
 
+HUSKYEXT CHAR *intab;
+HUSKYEXT CHAR *outtab;
+
 #ifdef __cplusplus
 }
 #endif

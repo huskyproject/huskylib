@@ -62,8 +62,8 @@
 
 /***  Declarations & defines  ***********************************************/
 
-static CHAR *intab  = NULL;
-static CHAR *outtab = NULL;
+CHAR *intab  = NULL;
+CHAR *outtab = NULL;
 
 /***  Implementation  *******************************************************/
 

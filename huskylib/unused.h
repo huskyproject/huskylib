@@ -7,7 +7,7 @@
  */
 
 /* huskylib: compiler.h */
-#include <compiler.h>
+#include "compiler.h"
 
 /***  Declarations & defines  ***********************************************/
 
