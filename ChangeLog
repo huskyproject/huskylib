@@ -1,3 +1,20 @@
+2004-01-05 Monday 04:58  d_sergienko
+
+	* src/tests/move_file.c (1.1): new test for move_file()
+
+2004-01-05 Monday 02:24  d_sergienko
+
+	* src/tests/stripRoundingChars.c (1.1): new test for strip*Chars()
+
+2004-01-05 Monday 02:06  d_sergienko
+
+	* src/strext.c (1.16): CRLF->LF translation
+
+2003-12-29 Monday 10:51  val_khokhlov
+
+	* huskylib/huskylib.h (1.21), src/patmat.c (1.11): patmat() and
+	patimat() combined into a single function
+
 2003-12-02 Tuesday 19:12  mche
 
 	* src/strext.c (1.15): new design for stripLeadingChars
