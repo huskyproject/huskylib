@@ -436,6 +436,7 @@ static char **mk_lst(const char *a)
 
 HUSKYEXT int cmdcall(const char *cmd)
 { int cmdexit=-1;
+  int signal;
   char **list;
 
   if( (list = mk_lst(cmd)) ) {
@@ -449,7 +450,9 @@ HUSKYEXT int cmdcall(const char *cmd)
     nfree(list);
   }
 
-  return cmdexit;
+  if( (signal=(cmdexit & 0xff)) ) /* system error! */
+    w_log(LL_ERROR, "Command execute error (spawnwp()): signal %i (Run command '%s')", signal, cmd);
+  return (cmdexit & 0xFF00)>>8;   /* return code */
 }
 #else
 /*
