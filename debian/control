@@ -2,13 +2,13 @@ Source: huskylib
 Section: libs
 Priority: optional
 Maintainer: Pavel Andreew <pavel@collage.etel.ru>
-Build-Depends: debhelper (>> 4.0.0), huskybase
+Build-Depends: debhelper (>> 4.0.0), huskybase (>> 2.0-0)
 Standards-Version: 3.5.8
 
 Package: libhusky-dev
 Section: devel
 Architecture: any
-Depends: libhusky0 (= ${Source-Version}), libc6-dev, huskybase
+Depends: libhusky0 (= ${Source-Version}), libc6-dev, huskybase (>> 2.0-0)
 Description: Common library for all Husky-Packages
  huskylib include common functions for all Husky software:
  memory management, operations with strings, input/output for
