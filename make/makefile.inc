@@ -34,7 +34,7 @@ HEADERS4= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
 HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
 
 # Binary file(s) to build from sources
-PROGRAMS= gnmsgid
+PROGRAMS= gnmsgid$(_EXE)
 
 # HUSKY libraries required to build binary file(s)
 # Usually compose from LIBPREFIX, LIBSUFFIX and LIB.
