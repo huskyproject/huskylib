@@ -8,7 +8,7 @@ TLIB=   lib -nologo
 LINK=   link
 
 HUSKYL=	huskymvc.lib
-OTHERL=	..\smapi\smapimvc.lib ..\fidoconf\fconfmvc.lib msvcrt.lib Kernel32.lib /opt:nowin98
+OTHERL=	..\smapi\smapimvc.lib ..\fidoconf\fconfmvc.lib /opt:nowin98
 LINKOPTS = $(OTHERL) /nologo /nodefaultlib /dll  /out:"huskymvc.dll" /implib:"huskymvc.lib"
 
 OBJ=.obj
@@ -26,7 +26,7 @@ $(HUSKYL): $(OBJS)
 
 
 clean:
-        -del *.obj *.lib
+	-del *.obj *.lib *.exp
 
 distclean: clean
 	-del *.exe *.dll

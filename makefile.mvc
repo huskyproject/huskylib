@@ -1,0 +1,28 @@
+# Microsoft Visual C++ Makefile
+
+CC=     cl
+CFLAGS= -nologo -Zp1 -I..
+CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE -DUSE_SYSTEM_COPY
+COPT=   -O2
+TLIB=   lib -nologo
+
+HUSKYL=	huskymvc.lib
+OTHERL=	..\smapi\smapimvc.lib ..\fidoconf\fconfmvc.lib
+
+OBJ=.obj
+
+!include makefile.inc
+
+all: $(HUSKYL) 
+
+.c.obj:
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $<
+
+$(HUSKYL): $(OBJS)
+	$(TLIB) /out:$@ $(OBJS)
+
+
+clean:
+        -del *.obj *.lib *.exp
+
+distclean: clean
