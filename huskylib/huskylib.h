@@ -86,10 +86,10 @@ HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);
 HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,
 			    dword (*altGenMsgId)(void), char **errstr);
 
-/* setfsize.c */
+/*-- setfsize.c --*/
 HUSKYEXT int _fast setfsize(int fd, long size);
 
-/* mapfile.c */
+/*-- mapfile.c --*/
 /* Mapping file to memory implementation for several OS. */
 HUSKYEXT void* MapFile(char* fname);
 
@@ -205,9 +205,13 @@ HUSKYEXT char    *GetDirnameFromPathname(const char* pathname);
 #define dirname(f) GetDirnameFromPathname(f)
 
 
-/* patmat.c */
+/*-- patmat.c --*/
 HUSKYEXT int patmat( const char *raw, const char *pat );
 HUSKYEXT int patimat(char *raw, char *pat );
+
+/*-- qksort.c --*/
+/* quick sort integer array */
+HUSKYEXT void _fast qksort(int a[], size_t n);
 
 
 #endif /*__HUSKYLIB_H__ */

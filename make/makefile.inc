@@ -25,9 +25,9 @@ VER	= $(VERH).0
 OBJS1	= adcase$(_OBJ) calendar$(_OBJ) crc$(_OBJ) cvtdate$(_OBJ)
 OBJS2	= dirlayer$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
 OBJS3	= getfree$(_OBJ) ioutil$(_OBJ) log$(_OBJ) locking$(_OBJ)
-OBJS4	= mapfile$(_OBJ) memory$(_OBJ) parsenn$(_OBJ) patmat$(_OBJ)
-OBJS5   = recode$(_OBJ) setfsize$(_OBJ) strext$(_OBJ) strftime$(_OBJ)
-OBJS6   = temp$(_OBJ) tdelay$(_OBJ) tree$(_OBJ) xstr$(_OBJ)
+OBJS4	= mapfile$(_OBJ) memory$(_OBJ) qksort$(_OBJ) parsenn$(_OBJ)
+OBJS5   = patmat$(_OBJ) recode$(_OBJ) setfsize$(_OBJ) strext$(_OBJ)
+OBJS6   = strftime$(_OBJ) temp$(_OBJ) tdelay$(_OBJ) tree$(_OBJ) xstr$(_OBJ)
 
 OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6)
 
