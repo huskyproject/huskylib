@@ -105,8 +105,8 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\nd_r\lib"
 				IgnoreAllDefaultLibraries="TRUE"
-				ProgramDatabaseFile="..\nd_r\obj/fidoconf.pdb"
-				ImportLibrary="..\nd_r\lib/fconfmvc.lib"/>
+				ProgramDatabaseFile="..\nd_r\obj/huskylib.pdb"
+				ImportLibrary="..\nd_r\lib/huskylib.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
