@@ -48,7 +48,7 @@ HUSKYEXT int waitlock(int handle, long ofs, long length);
 HUSKYEXT int waitlock2(int handle, long ofs, long length, long t);
 
 #ifndef HAS_sopen
-#define HAS_sopen 4  /* sopen() : 4 parameters */
+/* #define HAS_sopen 4  */ /* sopen() : 4 parameters */
 HUSKYEXT int sopen(const char *name, int oflag, int ishared, int mode);
 #endif
 
