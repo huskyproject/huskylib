@@ -125,4 +125,8 @@ HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,
 /* setfsize.c */
 HUSKYEXT int _fast setfsize(int fd, long size);
 
-#endif
+/* mapfile.c */
+/* Mapping file to memory implementation for several OS. */
+HUSKYEXT void* MapFile(char* fname);
+
+#endif /*__HUSKYLIB_H__ */
