@@ -1,3 +1,15 @@
+2003-05-15 Thursday 08:16  d_sergienko
+
+	* make/makefile.qnx (1.1): makefile.qnx added
+
+2003-05-15 Thursday 08:10  d_sergienko
+
+	* huskylib/UNIX.h (1.12), huskylib/compiler.h (1.17),
+	huskylib/typesize.h (1.4), src/adcase.c (1.7), src/cvtdate.c
+	(1.11), src/genmsgid.c (1.10), src/gnmsgid.c (1.13), src/strext.c
+	(1.13): 
+	QNX 6.x support
+
 2003-05-06 Tuesday 17:30  mche
 
 	* src/: tree.c (1.5), tree.c (1.6): fix bug with counting tree
