@@ -180,7 +180,6 @@
 #  define HAS_IO_H         /* may use "#include <io.h> */
 #  define HAS_SHARE_H      /* may use "#include <share.h> */
 #  define HAS_MALLOC_H     /* use "#include <malloc.h>" for malloc() etc. */
-#  define HAS_DIRECT_H
 #  define HAS_SYS_UTIME_H  /* #include <sys/utime.h> in alternate to <utime.h> */
 #  define HAS_DIRECT_H     /* #include <direct.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
