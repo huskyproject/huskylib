@@ -41,7 +41,6 @@
 #include "log.h"
 #include "memory.h"
 #include "parsenn.h"
-#include "patmat.h"
 #include "recode.h"
 #include "strext.h"
 #include "temp.h"
@@ -229,7 +228,7 @@ HUSKYEXT char    *GetDirnameFromPathname(const char* pathname);
 
 /* patmat.c */
 HUSKYEXT int patmat( const char *raw, const char *pat );
-HUSKYEXT int patimat( const char *raw, const char *pat );
+HUSKYEXT int patimat(char *raw, char *pat );
 
 
 #endif /*__HUSKYLIB_H__ */

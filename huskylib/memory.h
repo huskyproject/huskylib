@@ -28,7 +28,7 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-#include <huskylib/huskyext.h>
+#include "huskyext.h"
 
 #define nfree(a) { if (a != NULL) { free(a); a = NULL; } }
 

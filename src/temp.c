@@ -34,8 +34,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-#include <huskylib/compiler.h>
-#include <huskylib/huskylib.h>
+#include <compiler.h>
+#include <huskylib.h>
 
 #ifdef HAS_UNISTD_H
 #   include <unistd.h>

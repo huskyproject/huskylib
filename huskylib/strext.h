@@ -150,6 +150,6 @@ HUSKYEXT int sstrnicmp(const char *str1, const char *str2, size_t length);
 /* strsep.c */
 HUSKYEXT char *strseparate(register char **stringp, register const char *delim);
 
-HUSKYEXT char *extract_CVS_keyword(char *str)
+HUSKYEXT char *extract_CVS_keyword(char *str);
 
 #endif

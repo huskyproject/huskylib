@@ -23,11 +23,15 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /* huskylib: compiler.h */
 #include <compiler.h>
 
 #define DLLEXPORT
 #include <huskyext.h>
+#include <log.h>
 
 #ifndef __LITTLE_ENDIAN__
 /*
@@ -66,7 +70,7 @@ void *smalloc(size_t size)
 {
     void *ptr = (void *)malloc(size);
     if (ptr == NULL) {
-//		w_log(LL_CRIT, "out of memory");
+		w_log(LL_CRIT, "out of memory");
 		abort();
     }
     return ptr;
@@ -76,7 +80,7 @@ void *srealloc(void *ptr, size_t size)
 {
     void *newptr = (void *)realloc(ptr, size);
     if (newptr == NULL) {
-//		w_log(LL_CRIT, "out of memory");
+		w_log(LL_CRIT, "out of memory");
 		abort();
     }
     return newptr;

@@ -30,7 +30,8 @@
 #ifndef __TEMP_H__
 #define __TEMP_H__
 
-#include <huskylib/huskyext.h>
+#include <stdio.h>
+#include "huskylib.h"
 
 /* Default temporary files suffix (==extension in DOS-like OS)
  * (re)define it in your program source if want other.
@@ -66,7 +67,6 @@ HUSKYEXT FILE *createTempTextFile(char *tempDir, char **name);
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-
 
 HUSKYEXT FILE *createTempBinFile(char *tempDir, char **name);
 /* Create new file with random name & default suffix (binary mode).

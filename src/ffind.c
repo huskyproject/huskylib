@@ -31,6 +31,7 @@
 
 /* huskylib: compiler.h */
 #include <compiler.h>
+#include <huskylib.h>
 
 /* standard headers */
 #if defined(HAS_DIR_H)

@@ -49,6 +49,7 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+#include <huskylib.h>
 
 #define CTLESC '\\'
 

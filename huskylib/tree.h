@@ -6,7 +6,7 @@
 #ifndef	_TREE_FLAG
 #define	_TREE_FLAG
 
-#include <huskylib/huskylib.h>
+#include "huskylib.h"
 
 typedef struct  tree_s
 {
