@@ -23,17 +23,32 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __PARSENN_H__
-#define __PARSENN_H__
+/* WATCOM C/C++ for DOS (16 bit) */
 
-#include "compiler.h"
+#ifndef HUSKY_WCD_H
+#define HUSKY_WCD_H
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
-#define POINT_ALL 56685u
+#  define _stdc      cdecl
+#  define _intr      interrupt far
+#  define _intcast   void (_intr *)()
+#  define _veccast   _intcast
+#  define _fast      pascal
 
-void  _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
-void  _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+#  ifdef __FAR_DATA__
+#    define farread    read
+#    define farwrite   write
+#  else
+#    define farread    trivial_farread
+#    define farwrite   trivial_farwrite
+#    define NEED_trivial_farread   1
+#    define NEED_trivial_farwrite  1
+     int trivial_farread( int handle, void far *buffer, unsigned len );
+     int trivial_farwrite( int handle, void far *buffer, unsigned len );
+#  endif
+
+#  define HAS_dos_read 1      /* dos_read() */
+#  define dos_read _dos_read  /* _dos_read() in dos.h */
+
+#  define _XPENTRY   pascal
 
 #endif

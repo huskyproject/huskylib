@@ -24,7 +24,6 @@
  */
 
 #include <compiler.h>
-#include <typedefs.h>
 
 #ifndef __LITTLE_ENDIAN__
 /*

@@ -22,7 +22,7 @@ OBJS2	= memory$(_OBJ) parsenn$(_OBJ) patmat$(_OBJ) setfsize$(_OBJ) strext$(_OBJ)
 OBJS3	= strftime$(_OBJ) tdelay$(_OBJ)
 
 HEADERS1= calendar.h compiler.h cvtdate.h ffind.h huskylib.h patmat.h
-HEADERS2= parsenn.h strext.h typedefs.h unused.h vixie.h
+HEADERS2= parsenn.h strext.h unused.h vixie.h
 
 HEADERS	= $(HEADERS1) $(HEADERS2)
 
@@ -37,7 +37,7 @@ LIBS	=
 LIBNAME	= husky
 
 SRC_DIR	=../src/
-H_DIR	=../h/
+H_DIR	=../huskylib/
 
 TARGETLIB = $(LIBPREFIX)$(LIBNAME)$(LIBSUFFIX)$(_LIB)
 TARGETDLL = $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(_DLL)

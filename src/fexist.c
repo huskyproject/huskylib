@@ -39,7 +39,6 @@
 #include <string.h>
 
 #include "compiler.h"
-#include "typedefs.h"
 
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>

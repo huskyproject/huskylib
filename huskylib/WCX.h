@@ -23,17 +23,20 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __PARSENN_H__
-#define __PARSENN_H__
+/* WATCOM C/C++ for DOS/DMPI (DOS4G) */
 
-#include "compiler.h"
+#ifndef HUSKY_WCX_H
+#define HUSKY_WCX_H
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
-#define POINT_ALL 56685u
+#  define _stdc      cdecl
+#  define _intr      interrupt far
+#  define _intcast   void (_intr *)()
+#  define _veccast   _intcast
+#  define _fast      pascal
 
-void  _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
-void  _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+#  define farread    read
+#  define farwrite   write
+
+#  define _XPENTRY   pascal
 
 #endif

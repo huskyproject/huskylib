@@ -39,7 +39,6 @@
 #endif
 
 #include "ffind.h"
-#include "typedefs.h"
 
 #define MAX_OUTRUN	(3ul*365*24*60*60) /* 3 year */
 

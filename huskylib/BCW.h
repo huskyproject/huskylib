@@ -23,17 +23,27 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __PARSENN_H__
-#define __PARSENN_H__
+/* Borland C/C++ for Win32 */
 
-#include "compiler.h"
+#ifndef HUSKY_BCW_H
+#define HUSKY_BCW_H
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
-#define POINT_ALL 56685u
+#  define _stdc cdecl
+#  define _intr
+#  define _intcast
+#  define _veccast
+#  define _fast _fastcall
+#  define _loadds
+#  define near
+#  undef  far
+#  define far
 
-void  _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
-void  _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+#  define farread read
+#  define farwrite write
+
+#  define _XPENTRY
+
+#  define strcasecmp stricmp
+#  define strncasecmp strncmpi
 
 #endif

@@ -23,17 +23,26 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __PARSENN_H__
-#define __PARSENN_H__
+/* WATCOM C/C++ for Windows NT */
 
-#include "compiler.h"
+#ifndef HUSKY_WCW_H
+#define HUSKY_WCW_H
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
-#define POINT_ALL 56685u
+#    define _stdc
+#    define _intr
+#    define _intcast
+#    define _veccast
+#    define _fast
+#    define farread  read
+#    define farwrite write
 
-void  _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
-void  _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+#    define _XPENTRY pascal
+
+/*#  define mysleep(x) Sleep(x*1000) */ /* winbase.h */
+
+#    include <limits.h>
+#    ifndef MAXPATHLEN
+#      define MAXPATHLEN NAME_MAX
+#    endif
 
 #endif

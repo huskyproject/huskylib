@@ -23,17 +23,31 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __PARSENN_H__
-#define __PARSENN_H__
+/* Turbo C/C++ & Borland C/C++ for MS-DOS */
 
-#include "compiler.h"
+#ifndef HUSKY_BCD_H
+#define HUSKY_BCD_H
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
-#define POINT_ALL 56685u
+   /* for BC++ 3.1 */
+#  define strcasecmp stricmp
+#  define strncasecmp strncmpi
 
-void  _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
-void  _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+#  define _stdc cdecl
+#  define _intr interrupt far
+#  define _intcast void (_intr *)()
+#  define _veccast _intcast
+#  define _fast _fastcall
+#  define _loadds
+
+   /* #include <conio.h> */
+#  define mysleep(x) delay(x);
+#  define sleep(x) delay(x);
+#  define HAS_sleep     1
+
+#  ifndef _XPENTRY
+#    define _XPENTRY
+#  endif
+
+#  define mode_t int
 
 #endif
