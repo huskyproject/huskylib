@@ -85,7 +85,7 @@ struct ffind
     struct find_t ffbuf;
     unsigned long hdir;   /* directory handle from DosFindFirst */
 
-#elif defined(__OS2__)
+#elif defined(__OS2__) || defined(__EMX__)
 #if defined(__386__) || defined(__FLAT__)
     unsigned long hdir;   /* directory handle from DosFindFirst */
 #else
