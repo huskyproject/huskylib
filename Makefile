@@ -21,7 +21,7 @@ else
   CFLAGS=$(WARNFLAGS) $(OPTCFLAGS)
 endif
 
-CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ih
+CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ihuskylib
 
 ifeq ($(DYNLIBS), 1)
 all: $(TARGETLIB) $(TARGETDLL).$(VER)
@@ -30,7 +30,7 @@ all: $(TARGETLIB)
 endif
 
 SRC_DIR = src/
-H_DIR   = h/
+H_DIR   = huskylib/
 
 %$(_OBJ): $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$*.c
@@ -74,10 +74,10 @@ FORCE:
 
 install-h-dir: FORCE
 	-$(MKDIR) $(MKDIROPT) $(INCDIR)
-	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)huskylib
+	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(H_DIR)
 
 %.h: FORCE
-	$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)huskylib
+	$(INSTALL) $(IIOPT) $(H_DIR)$@ $(INCDIR)$(DIRSEP)$(H_DIR)
 
 install-h: install-h-dir $(HEADERS)
 
@@ -86,7 +86,7 @@ install: install-h instdyn
 	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
 
 uninstall:
-	-cd $(INCDIR)$(DIRSEP)huskylib$(DIRSEP) ;\
+	-cd $(INCDIR)$(DIRSEP)$(H_DIR) ;\
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VER)
