@@ -228,7 +228,10 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
     case EXCEPTION_STACK_OVERFLOW           : ErrorMsg = "Stack overflow"; break;
     case EXCEPTION_INVALID_DISPOSITION      : ErrorMsg = "Invalid disposition"; break;
     case EXCEPTION_GUARD_PAGE               : ErrorMsg = "Guard page"; break;
+/* gcc 2.95.2 in Mingw32 knows nothing about this */
+#ifndef __MINGW32__
     case EXCEPTION_INVALID_HANDLE           : ErrorMsg = "Invalid handle"; break;
+#endif
     default : ErrorMsg = "Unknown error";
     }
     w_log(LL_CRIT, "Exception 0x%08x (%s) at address 0x%08x",
