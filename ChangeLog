@@ -1,3 +1,7 @@
+2003-04-11 Friday 07:11  mche
+
+	* HuskylibDll.vcproj (1.6): fix GUIDs of projects
+
 2003-04-02 Wednesday 18:09  mche
 
 	* src/adcase.c (1.4): fix MSVC compilation
