@@ -1,0 +1,6 @@
+*.exp
+*.dll
+*.lib
+*.obj
+*.dsp
+*.plg
