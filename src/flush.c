@@ -29,15 +29,15 @@
 #include "../huskylib/compiler.h"
 
 
-#if !defined(__UNIX__) && !defined(SASC)
+#if defined(HAS_IO_H)
 #include <io.h>
 #endif
 
-#if defined(__UNIX__) || defined(__DJGPP__)
+#if defined(HAS_UNISTD_H)
 #include <unistd.h>
 #endif
 
-#if !defined(__IBMC__) && !defined(__DOS__) && !defined(__UNIX__) && !defined(__MINGW32__) && !defined(__MSVC__)
+#if defined(HAS_DOS_H)
 #include <dos.h>
 #endif
 
@@ -92,7 +92,7 @@ void pascal far flush_handle2(int fh)
 */
 #define flush_handle2(f)  DosBufReset((HFILE) f)
 
-#elif defined(__NT__) || defined(__MINGW32__)
+#elif defined(__WIN32__)
 
 #ifdef __RSXNT__
 #  include <emx/syscalls.h>
