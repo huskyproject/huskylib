@@ -28,7 +28,7 @@ OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
 
 # Header files
 HEADERS1= calendar.h compiler.h cvtdate.h fexist.h ffind.h huskylib.h locking.h
-HEADERS2= parsenn.h patmat.h strext.h unused.h vixie.h
+HEADERS2= parsenn.h patmat.h strext.h unused.h vixie.h huskyext.h
 HEADERS3= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
 HEADERS4= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
 HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
