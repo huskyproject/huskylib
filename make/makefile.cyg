@@ -1,5 +1,5 @@
 # $Id$
-# Makefile for Building SMAPI with Mingw32 for NT.
+# Makefile to build HUSKYLIB with Mingw32 from Cygwin
 # No support for the Husky build environment.
 
 # Uncomment this for compile info for gdb and display more compiler warnings
@@ -47,11 +47,27 @@ NAMEOPT	= -o
 # options for $(AR) program
 ARFLAGS	= rs
 
-## files ##
-TARGET	= libsmapicyg$(LIB)
-DLLTARGET= smapi$(DLL)
+# Prefix to construct static library name
+LIBPREFIX=lib
+# Prefix to construct dll name
+DLLPREFIX=
+# Suffix to construct library name
+LIBSUFFIX=cyg
+# Suffix to construct dll name
+DLLSUFFIX=
+
+.PHONY:	distclean clean all static dll programs default
+
+default:
+	@echo Run 'make dll' to build dll version \($(DLLTARGET), $(PROGRAMS)\)
+	@echo Run 'make static' to build static version \($(TARGET), $(PROGRAMS)\)
+	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
+	@echo Run 'make all' to build all above
+
+include makefile.inc
+
 # libraries need to build binary file
-LIBS	=
+LIBS	+=
 
 ## other, usualy not modify below ##
 CYGWIN_VERSION	= $(shell uname -r)
@@ -65,40 +81,30 @@ endif
 endif
 endif
 
-CFLAGS	+= $(DEBUG)
-
-.PHONY:	distclean clean all static dll programs default
-
-include makefile.inc
-
-default:
-	@echo Run 'make dll' to build dll version \($(DLLTARGET), $(PROGRAMS)\)
-	@echo Run 'make static' to build static version \($(TARGET), $(PROGRAMS)\)
-	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
-	@echo Run 'make all' to build all above
+CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
 all:	static dll programs
 
-static:	$(TARGET)
-dll:	$(DLLTARGET)
+static:	$(TARGETLIB)
+dll:	$(TARGETDLL)
 programs:  $(PROGRAMS)
 
-%.exe:	%.c $(TARGET)
+%$(EXE): $(SRC_DIR)%$(C) $(TARGETLIB)
 	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
 
-.c.o:
+%$(OBJ): $(SRC_DIR)%$(C)
 	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
 
-$(TARGET):	$(OBJS)
-	$(AR) $(ARFLAGS) $(TARGET) $?
-#	$(RANLIB) $(TARGET)   # 'ar rs' doing this
+$(TARGETLIB):	$(OBJS)
+	$(AR) $(ARFLAGS) $@ $?
+#	$(RANLIB) $@   # 'ar rs' doing this
 	
-$(DLLTARGET):	$(OBJS)
+$(TARGETDLL):	$(OBJS)
 	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $^
 
 
 clean:
-	-$(RM) *$(OBJ)
+	-$(RM) $(RMOPT) *$(OBJ)
 
 distclean:
-	-$(RM) $(DLLTARGET) $(TARGET) $(PROGRAMS)
+	-$(RM) $(RMOPT) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS)
