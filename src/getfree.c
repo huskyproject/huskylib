@@ -94,7 +94,7 @@
 
 #include <windows.h>
 
-ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
     FARPROC pGetDiskFreeSpaceEx = NULL;
     BOOL rc;
@@ -185,7 +185,7 @@ ULONG fc_GetDiskFreeSpace (const char *path)
 #include <os2.h>
 
 
-ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
   FSALLOCATE fsa;
   ULONG disknum = 0;
@@ -234,7 +234,7 @@ ULONG fc_GetDiskFreeSpace (const char *path)
 
 
 #if defined(HAS_SYS_STATFS_H) || defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H) || defined(HAS_SYS_MOUNT_H)
-ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
 #if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
   struct statvfs sfs;
@@ -261,7 +261,7 @@ ULONG fc_GetDiskFreeSpace (const char *path)
 }
 
 #else
-ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
   w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
   return ULONG_MAX;
@@ -272,7 +272,7 @@ ULONG fc_GetDiskFreeSpace (const char *path)
 #elif defined(__DOS__)
 
 
-ULONG fc_GetDiskFreeSpace (const char *path)
+HUSKYEXT ULONG fc_GetDiskFreeSpace (const char *path)
 {
   w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
   return ULONG_MAX;
