@@ -46,7 +46,7 @@ _DEF	= .def
 # compiler defines
 CDEFS	= -D__RSXNT__
 # common compiler options
-CFLAGS	= -Wall -w -Zwin32
+CFLAGS	= -Wno-long-long -Wall -w -Zwin32
 # linker options
 LFLAGS	=
 # options for compile only (link is off)

@@ -9,7 +9,7 @@
 prefix=	/usr/local
 
 # Uncomment this for compile info for gdb and display more compiler warnings
-DEBUG	= -g -pedantic
+DEBUG	= -g -pedantic -Wno-long-long 
 
 # Uncomment this for strip all simbols from binaries to reduce file sizes
 #STRIP	= -s

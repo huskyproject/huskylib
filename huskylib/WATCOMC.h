@@ -101,4 +101,35 @@ typedef unsigned short ushort;
 typedef signed long slong;
 typedef unsigned long ulong;
 
+
+
+typedef   signed char        hCHAR;              /*  1 byte */
+typedef   signed char       hSCHAR;              /*  1 byte */
+typedef unsigned char       hUCHAR;              /*  1 byte */
+
+typedef   signed char        hINT8;              /*  1 byte */
+typedef   signed char       hSINT8;              /*  1 byte */
+typedef unsigned char       hUINT8;              /*  1 byte */
+
+typedef   signed short      hINT16;              /*  2 bytes */
+typedef   signed short     hSINT16;              /*  2 bytes */
+typedef unsigned short     hUINT16;              /*  2 bytes */
+
+#ifdef __ALPHA__    /* add other 64 bit systems here */
+typedef   signed int        hINT32;              /*  4 bytes */
+typedef   signed int       hSINT32;              /*  4 bytes */
+typedef unsigned int       hUINT32;              /*  4 bytes */
+#else
+typedef   signed long       hINT32;              /*  4 bytes */
+typedef   signed long      hSINT32;              /*  4 bytes */
+typedef unsigned long      hUINT32;              /*  4 bytes */
+#endif
+
+#if __WATCOMC__ >1000
+typedef   signed __int64    hINT64;            /*  8 bytes */
+typedef   signed __int64   hSINT64;            /*  8 bytes */
+typedef unsigned __int64   hUINT64;            /*  8 bytes */
+#define HAS_INT64
+#endif
+
 #endif

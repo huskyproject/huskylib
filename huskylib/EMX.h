@@ -106,9 +106,27 @@ typedef unsigned short ushort;
 typedef signed long slong;
 typedef unsigned long ulong;
 
+
+typedef   signed char        hCHAR;              /*  1 byte */
+typedef   signed char       hSCHAR;              /*  1 byte */
+typedef unsigned char       hUCHAR;              /*  1 byte */
+
+typedef   signed char        hINT8;              /*  1 byte */
+typedef   signed char       hSINT8;              /*  1 byte */
+typedef unsigned char       hUINT8;              /*  1 byte */
+
+typedef   signed short      hINT16;              /*  2 bytes */
+typedef   signed short     hSINT16;              /*  2 bytes */
+typedef unsigned short     hUINT16;              /*  2 bytes */
+
+typedef   signed int        hINT32;              /*  4 bytes */
+typedef   signed int       hSINT32;              /*  4 bytes */
+typedef unsigned int       hUINT32;              /*  4 bytes */
+
+/* Not all GCC support this, test please (Stas Degteff) */
+typedef   signed long long  hINT64;              /*  8 bytes */
+typedef   signed long long hSINT64;              /*  8 bytes */
+typedef unsigned long long hUINT64;              /*  8 bytes */
 #define HAS_INT64
-typedef long long          hINT64;
-typedef signed long long   hSINT64;
-typedef unsigned long long hUINT64;
 
 #endif

@@ -118,6 +118,28 @@
    * HAS_INT64           - "64 bit integer" type exists (and my may define
    *                       macros: int64, sint64, uint64)
    *
+   * The basic set/list of unified types required to be present
+   * for each compiler is:
+   * --------+-----------------+----+-----------------------
+   *  name   | description     |size| range
+   * --------+-----------------+----+-----------------------
+   * hCHAR   | signed char     | 1  | -128..127
+   * hSCHAR  | signed char     | 1  | -128..127
+   * hUCHAR  | unsigned char   | 1  | 0..255
+   * hINT16  | signed word     | 2  | -32768..32767
+   * hSINT16 | signed word     | 2  | -32768..32767
+   * hUINT16 | unsigned word   | 2  | 0..65535
+   * hINT32  | signed dword    | 4  | -2147483648..2147483647
+   * hSINT32 | signed dword    | 4  | -2147483648..2147483647
+   * hUINT32 | unsigned dword  | 4  | 0..4294967295
+   * --------+-----------------+----+-----------------------
+   * In addition, if possible, define also:
+   * --------+-----------------+----+------------------------------------------
+   * hINT64  | signed ddword   | 8  | -9223372036854775808..9223372036854775807
+   * hSINT64 | signed ddword   | 8  | -9223372036854775808..9223372036854775807
+   * hUINT64 | unsigned ddword | 8  | 0..18446744073709551615
+   * --------+-----------------+----+------------------------------------------
+   *
    ***************************************************************************
    * Functions "my*" & etc
    *
@@ -225,6 +247,8 @@
    __VERSION__=3.2
    __DJGPP__ =__DJGPP =DJGPP  =2
    DJGPP_MINOR = __DJGPP_MINOR =__DJGPP_MINOR__ =3
+   Variable types sizes (in bytes):
+   char=1; short=2; int=4; long=4
    ===================================================================
    EMX (OS/2)                                (GNU C clone)
    -------------------------------------------------------------------
@@ -1330,12 +1354,12 @@ char *strupr(char *str);
 
 
 #ifdef HAS_INT64
-  #define MAX_hUINT64  0xffffffffffffffff
-  #define MIN_hUINT64  0
-  #define MAX_hINT64   0xefffffffffffffff
-  #define MIN_hINT64   0x8000000000000000
-  #define MAX_hSINT64  0xefffffffffffffff
-  #define MIN_hSINT64  0x8000000000000000
+  #define MAX_hUINT64  0xffffffffffffffffULL
+  #define MIN_hUINT64  0ULL
+  #define MAX_hINT64   0xefffffffffffffffLL
+  #define MIN_hINT64   0x8000000000000000LL
+  #define MAX_hSINT64  0xefffffffffffffffLL
+  #define MIN_hSINT64  0x8000000000000000LL
 #endif
 
 #endif
