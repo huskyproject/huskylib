@@ -94,16 +94,20 @@ install-h: install-h-dir $(HEADERS)
 
 install: install-h instdyn
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
-	-$(MKDIR) $(MKDIROPT) $(BINDIR)
 	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
-	$(INSTALL) $(IBOPT) $(PROGRAMS) $(BINDIR)
+	-$(MKDIR) $(MKDIROPT) $(BINDIR)
+	@list='$(PROGRAMS)'; for p in $$list; do \
+	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
+	done
+
 
 uninstall:
 	-cd $(INCDIR)$(DIRSEP)$(H_DIR) ;\
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
-	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)$(PROGRAMS)
+	-cd $(BINDIR) ;\
+	-$(RM) $(RMOPT) $(PROGRAMS)
 
 clean:
 	-$(RM) $(RMOPT) *$(_OBJ)
