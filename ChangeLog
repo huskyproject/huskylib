@@ -1,3 +1,31 @@
+2003-03-31 Monday 18:49  mche
+
+	* HuskylibDll.vcproj (1.3): vcproj Project File added for building
+	dynamyc smapi library in Microsoft Visual Studio .NET
+
+2003-03-31 Monday 18:39  mche
+
+	* HuskylibDll.vcproj (1.2), huskylib/MSVC.h (1.11): fix function
+	redefinition
+
+2003-03-31 Monday 17:11  mche
+
+	* huskylib/MSVC.h (1.10): fix function redefinition
+
+2003-03-31 Monday 17:09  mche
+
+	* HuskylibDll.vcproj (1.1): vcproj Project File added for building
+	dynamyc huskylib library in Microsoft Visual Studio .NET
+
+2003-03-31 Monday 06:52  stas_degteff
+
+	* src/strftime.c (1.9): Remove useless assignment statement
+
+2003-03-31 Monday 06:48  stas_degteff
+
+	* huskylib/strext.h (1.11), src/strext.c (1.11): Prevent memory
+	faults (check pointers)
+
 2003-03-29 Saturday 20:32  d_sergienko
 
 	* src/strftime.c (1.8): use strUpper() instead of strupr()
