@@ -12,7 +12,7 @@ DEBUG	= -g -pedantic
 
 ## programs ##
 
-GCC	= gcc
+CC	= gcc
 AR	= ar
 RANLIB	= ranlib
 RM	= rm

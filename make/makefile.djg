@@ -1,5 +1,5 @@
 # $Id$
-# Makefile to build HUSKYLIB with Mingw32 from Cygwin
+# Makefile to build HUSKYLIB with DJGPP
 # No support for the Husky build environment.
 
 # Uncomment this for compile info for gdb and display more compiler warnings
@@ -11,7 +11,7 @@ DEBUG	= -g -pedantic
 
 ## programs ##
 
-GCC	= gcc
+CC	= gcc
 AR	= ar
 RANLIB	= ranlib
 RM	= del
@@ -64,6 +64,7 @@ include makefile.inc
 # libraries need to build binary file
 LIBS	+=
 
+## Additions (add into end of strings) ##
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
 all:	static programs

@@ -12,7 +12,7 @@ DEBUG	= -g -pedantic
 ## programs ##
 
 #use this line if you are using MINGW32 on a Windows box
-GCC	= gcc
+CC	= gcc
 AR	= ar
 RANLIB	= ranlib
 
@@ -93,6 +93,7 @@ endif
 endif
 endif
 
+## Additions (add into end of strings) ##
 CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
 all:	static dll programs

@@ -25,7 +25,7 @@ IIOPT	= -m 444 -c
 IDOPT	= -d -m 755
 
 ## programs ##
-GCC	= gcc
+CC	= gcc
 AR	= ar
 RANLIB	= ranlib
 INSTALL	= install
