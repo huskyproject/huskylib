@@ -38,8 +38,10 @@
 /* standard headers */
 #include <stdlib.h>
 #include <time.h>
-#include <sys/time.h>
 
+#if !defined(_MSC_VER)
+#include <sys/time.h>
+#endif
 
 /* huskylib: compiler.h */
 #include <compiler.h>
