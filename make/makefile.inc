@@ -12,7 +12,7 @@
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
 
 # Library name
-LIBNAME	= huskylib
+LIBNAME	= husky
 
 # Version
 VERMAJOR= 0
@@ -36,13 +36,13 @@ HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
 # Binary file(s) to build from sources
 PROGRAMS= gnmsgid$(_EXE)
 
-# HUSKY libraries required to build binary file(s)
-# Usually compose from LIBPREFIX, LIBSUFFIX and LIB.
-LIBS	= -L. -l$(LIBNAME)
-
 SRC_DIR	=../src/
 H_DIR	=../huskylib/
 
+# Usually compose from LIBPREFIX, LIBSUFFIX and LIB.
 TARGETLIB = $(LIBPREFIX)$(LIBNAME)$(LIBSUFFIX)$(_LIB)
 TARGETDLL = $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(_DLL)
 TARGET_H  = *.h
+
+# List of HUSKY libraries required to build binary file(s)
+LIBS	=
