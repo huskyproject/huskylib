@@ -141,7 +141,9 @@
 #    define HAS_vsnprintf 1
 #  endif
 
-#  define HAS_SYSEXITS_H       1  /*  <sysexits.h> */
+#  if !defined(__QNXNTO__)
+#    define HAS_SYSEXITS_H       1  /*  <sysexits.h> */
+#  endif /* __QNXNTO__ */
 #  define HAS_UNISTD_H         1  /* <unistd.h> */
 #  define HAS_PWD_H            1  /* <pwd.h> */
 #  define HAS_GRP_H            1  /* may be used "#include <grp.h>" */
@@ -163,6 +165,7 @@
 #  if defined(__QNXNTO__)
 #    define HAS_sopen 1     /* <fcntl.h> */
 #    define HAS_STRINGS_H 1
+#    define HAS_SYSLOG_H 1
 #  endif
 
 #  define HAS_popen_close 1 /* popen(); pclose() */

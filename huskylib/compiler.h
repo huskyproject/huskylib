@@ -99,6 +99,8 @@
    * HAS_GRP_H           - may be used "#include <grp.h>"
    * HAS_UTIME_H         - may be used "#include <utime.h>"
    * HAS_STRINGS_H       - may be used "#include <strings.h>"
+   * HAS_SYSLOG_H        - may be used "#include <syslog.h>"
+   * HAS_SYS_SYSLOG_H    - may be used "#include <sys/syslog.h>"
    * HAS_SYS_UTIME_H     - #include <sys/utime.h> in alternate to <utime.h>
    * HAS_SYS_PARAM_H     - #include <sys/params.h>
    * HAS_SYS_MOUNT_H     - #include <sys/mount.h>
