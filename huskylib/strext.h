@@ -26,8 +26,6 @@
 #ifndef __STREXT_H__
 #define __STREXT_H__
 
-#include "compiler.h"
-
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip);
 HUSKYEXT char *_fast Add_Trailing(char *str, char add);
 HUSKYEXT char *_fast strocpy(char *d, char *s);

@@ -117,10 +117,10 @@ struct ffind
  * prevent name clashes with the Win32 API
  */
 
-FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute);
-FFIND *_fast FFindInfo(const char *filespec);
-int _fast FFindNext(FFIND * ff);
-void _fast FFindClose(FFIND * ff);
+HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute);
+HUSKYEXT FFIND *_fast FFindInfo(const char *filespec);
+HUSKYEXT int _fast FFindNext(FFIND * ff);
+HUSKYEXT void _fast FFindClose(FFIND * ff);
 
 #define MSDOS_READONLY  0x01
 #define MSDOS_HIDDEN    0x02

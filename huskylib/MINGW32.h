@@ -50,7 +50,6 @@
 #  undef  far
 #  define far
 #  define _XPENTRY
-#  define HUSKYEXT extern
 
 #  define farread _read
 #  define farwrite _write

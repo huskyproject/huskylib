@@ -23,33 +23,21 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#ifndef __LOCKING_H__
-# define __LOCKING_H__
+#ifndef __FEXIST_H__
+#define __FEXIST_H__
 
-/* Test for locking functions avaiable in OS
- */
-HUSKYEXT sword far pascal shareloaded(void);
+HUSKYEXT int _fast fexist(const char *filename);
+HUSKYEXT long _fast fsize(const char *filename);
+HUSKYEXT int _fast direxist(const char *directory);
+/*DOC
+  Input:  a pointer to a \0 terminated string
+  Output: 0 if successfull, 1 else
+  FZ:     pathName is a correct directory name
+          createDirectoryTree creates the directory and all parental directories
+          if they do not exist.
 
-/* file locking implementation
- */
-HUSKYEXT int lock(int handle, long ofs, long length);
-
-/* file unlocking implementation
- */
-HUSKYEXT int unlock(int handle, long ofs, long length);
-
-/* waitlock2() wait some (OS or runtime library default) time for a lock
- */
-HUSKYEXT int waitlock(int handle, long ofs, long length);
-
-/* waitlock2() wait <t> seconds for a lock
- * THERE SHOULD BE A BETTER WAY TO MAKE A TIMED LOCK
- */
-HUSKYEXT int waitlock2(int handle, long ofs, long length, long t);
-
-#ifndef HAS_sopen
-#define HAS_sopen 4  /* sopen() : 4 parameters */
-HUSKYEXT int sopen(const char *name, int oflag, int ishared, int mode);
-#endif
+  was taken from hpt\fcommon
+*/
+HUSKYEXT int  _createDirectoryTree(const char *pathName);
 
 #endif

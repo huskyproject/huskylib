@@ -30,11 +30,6 @@
 
 #  ifdef _MAKE_DLL
 #    define _MAKE_DLL_MVC_
-#    ifndef _HUSKYEXT
-#      define HUSKYEXT __declspec(dllimport)
-#    else
-#      define HUSKYEXT __declspec(dllexport)
-#    endif /* _HUSKYEXT */
 /*   must be included before function redefenition like '#define fileno _fileno' */
 #    include <sys/stat.h>
 #    include <stdio.h>
@@ -67,9 +62,6 @@
 #    define chdir        _chdir
 #    define getcwd       _getcwd
 #    define isatty       _isatty
-
-#  else  /* ifdef _MAKE_DLL */
-#    define HUSKYEXT    extern
 #  endif /* ifdef _MAKE_DLL */
 
 #   include <limits.h>

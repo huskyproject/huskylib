@@ -59,7 +59,6 @@
 /*#  undef  far*/
 #  define far
 #  define _XPENTRY
-#  define HUSKYEXT extern
 
 #  define farread read
 #  define farwrite write

@@ -30,19 +30,53 @@
 #include <time.h>
 
 #include "compiler.h"
-#include "cvtdate.h"
+/*
+ * This is compiler-specific stuff for huskylib only:
+ *
+ * HUSKYEXT - external variables & external functions call modifier
+ *             (usualy 'extern' for static linkage)
+ */
 
+#ifdef _MAKE_DLL
+#  if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#      ifndef _HUSKYEXT
+#          define HUSKYEXT __declspec(dllimport)
+#      else
+#          define HUSKYEXT __declspec(dllexport)
+#      endif /* _HUSKYEXT */
+#  else
+#      define HUSKYEXT extern
+#  endif
+#else
+#  define HUSKYEXT extern
+#endif
+
+
+
+#include "cvtdate.h"
+#include "fexist.h"
+#include "ffind.h"
+#include "locking.h"
+#include "parsenn.h"
+#include "patmat.h"
+#include "strext.h"
+#include "unused.h"
+
+
+/*-- flush.c --*/
 #ifdef __DOS__
 /* flushasm.asm for DOS, redefined for known implementations in flush.c */
 void pascal far flush_handle2(int fd);
 #endif
 
 void _fast flush_handle(FILE * fp);
-HUSKYEXT int _fast fexist(const char *filename);
-HUSKYEXT long _fast fsize(const char *filename);
-HUSKYEXT int _fast direxist(const char *directory);
-void _fast tdelay(int);
-HUSKYEXT int _fast setfsize(int fd, long size);
+
+
+/*-- tdelay.c --*/
+HUSKYEXT void _fast tdelay(int);
+
+
+/*-- memory.c --*/
 #ifdef __LITTLE_ENDIAN__
 
 #define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
@@ -52,8 +86,8 @@ HUSKYEXT int _fast setfsize(int fd, long size);
 
 #else
 
-HUSKYEXT void put_word(byte *ptr, word value);      /* memory.c */
-HUSKYEXT void put_dword(byte *ptr, dword value);    /* memory.c */
+HUSKYEXT void put_word(byte *ptr, word value);
+HUSKYEXT void put_dword(byte *ptr, dword value);
 /*
  *  get_dword
  *
@@ -82,19 +116,13 @@ HUSKYEXT void put_dword(byte *ptr, dword value);    /* memory.c */
 
 #endif /* __LITTLE_ENDIAN__ */
 
-HUSKYEXT int  _createDirectoryTree(const char *pathName);
-/*DOC
-  Input:  a pointer to a \0 terminated string
-  Output: 0 if successfull, 1 else
-  FZ:     pathName is a correct directory name
-          createDirectoryTree creates the directory and all parental directories
-          if they do not exist.
 
-  was taken from hpt\fcommon
-*/
-
-HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);  /* genmsgid.c */
-HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, /* genmsgid.c */
+/*-- genmsgid.c --*/
+HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);  
+HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,
 			    dword (*altGenMsgId)(void), char **errstr);
+
+/* setfsize.c */
+HUSKYEXT int _fast setfsize(int fd, long size);
 
 #endif

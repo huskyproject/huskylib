@@ -29,7 +29,6 @@
 #define HUSKY_BEOS5_H
 
 #  define _XPENTRY
-#  define HUSKYEXT extern
 #  define _intr
 #  define _intcast
 #  define _veccast

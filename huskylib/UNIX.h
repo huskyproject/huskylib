@@ -28,7 +28,6 @@
 #ifndef HUSKY_UNIX_H
 #define HUSKY_UNIX_H
 
-#  define HUSKYEXT extern
 #  define _stdc
 #  define _intr
 #  define _intcast

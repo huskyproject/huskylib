@@ -29,8 +29,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#include "../huskylib/compiler.h"
-/* !!! Don't include locking.h into this file !!! */
+#include "huskylib.h"
 
 #ifdef HAS_DIRECT_H
 #  include <direct.h>
@@ -48,10 +47,7 @@
 #  include <dos.h>
 #endif
 
-#include "../huskylib/huskylib.h"
-
 #ifdef __DJGPP__
-
 #include <dpmi.h>
 
 sword far pascal shareloaded(void)

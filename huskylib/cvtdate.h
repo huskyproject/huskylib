@@ -26,8 +26,6 @@
 #ifndef __CVTDATE_H__
 #define __CVTDATE_H__
 
-#include "compiler.h"
-
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
 /*typedef unsigned short bits;*/
 #else

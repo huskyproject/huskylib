@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-#include "../huskylib/compiler.h"
+#include "huskylib.h"
 
 #ifdef HAS_DOS_H
 #include <dos.h>

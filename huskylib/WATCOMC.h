@@ -29,7 +29,6 @@
 #define HUSKY_WATCOMC_H
 
 #  define mode_t int
-#  define HUSKYEXT extern
 
 #  define strcasecmp  stricmp
 #  define strncasecmp strnicmp

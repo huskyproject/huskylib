@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include "../huskylib/compiler.h"
+#include "compiler.h"
 
 #if defined(HAS_DIR_H)
 #  include <dir.h>
@@ -37,7 +37,7 @@
 #  include <dos.h>
 #endif
 
-#include "../huskylib/ffind.h"
+#include "huskylib.h"
 
 #ifdef __OS2__
 #  define INCL_NOPM
@@ -47,10 +47,6 @@
 #    undef DosQPathInfo
 #    define DosQPathInfo(a,b,c,d,e)  DosQueryPathInfo(a,b,c,d)
 #  endif
-#endif
-
-#ifdef __UNIX__
-#  include "../huskylib/patmat.h"
 #endif
 
 /*

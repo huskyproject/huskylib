@@ -53,9 +53,6 @@
    *
    * _loadds  - (used for x86 16 bit only) 'load data segment' code modifyer
    *
-   * HUSKYEXT - external variables & external functions call modifier
-   *             (usualy 'extern' for static linkage)
-   *
    * _XPENTRY  - system procedures calling (conversion) modifyer
    *             ("pascal", "_system" & etc)
    *
@@ -1149,15 +1146,6 @@ int qq(void)
 #   define mysleep(x)
 #endif
 
-#ifndef HUSKYEXT
-#   ifdef __GNUC__
-#       warning Please set HUSKYEXT to extern or proprietary token
-#   else
-#       pragma message("Please set HUSKYEXT to extern or proprietary token")
-#   endif
-#   define HUSKYEXT extern
-#endif
-
 #ifndef _XPENTRY
 #   ifdef __GNUC__
 #       warning Please check your compiler to system functions call modifyer and define _XPENTRY
@@ -1196,8 +1184,9 @@ int qq(void)
   * performed.
   * waitlock2 works like a timed waitlock.
   */
-extern int waitlock(int, long, long);
-extern int waitlock2(int, long, long, long);
+/* moved to lock.h */
+/* extern int waitlock(int, long, long); */
+/* extern int waitlock2(int, long, long, long); */
 
 #if !defined(HAS_mktime)
 

@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "../huskylib/compiler.h"
-#include "../huskylib/huskylib.h"
+#include "compiler.h"
+#include "huskylib.h"
 #include "../cvsdate.h"
 
 #define check_stricmp(a, b) (stricmp(a, b) == 0)

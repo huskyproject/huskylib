@@ -33,12 +33,11 @@
 #endif
 */
 
-#include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../huskylib/compiler.h"
+#include "huskylib.h"
 
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
@@ -61,7 +60,6 @@
 #  include <sys/stat.h>
 #endif
 
-#include "../huskylib/ffind.h"
 
 #ifdef USE_STAT_MACROS
 

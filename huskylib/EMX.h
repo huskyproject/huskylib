@@ -54,7 +54,6 @@
 #  define strncasecmp strnicmp
 
 #  define _XPENTRY
-#  define HUSKYEXT extern
 
 #  define mysleep(x) sleep(x)
 #  define HAS_sleep     1  /* sleep(): stdlib.h, unistd.h */
