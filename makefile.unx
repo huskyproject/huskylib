@@ -10,7 +10,7 @@ DLLPREFIX=lib
 
 include make/makefile.inc
 
-CDEFS=-DUNIX  -Ihuskylib -I.
+CDEFS=-Ihuskylib -I.
 CFLAGS=-c
 AR_R=r
 RANLIB=ranlib

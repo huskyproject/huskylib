@@ -612,6 +612,11 @@ int qq(void)
 #  endif
 #endif
 
+#if defined(__APPLE__) && defined(__MACH__)
+#  if !defined(__UNIX__)
+#    define __UNIX__
+#  endif
+#endif
 
 #if defined(__DOS4G__) /* DOS4G/W dos-dpmi extender */
 #ifndef __DPMI__
