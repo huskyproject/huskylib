@@ -21,6 +21,15 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
+#include <time.h>
+
+#include "../huskylib/compiler.h"
+
+#ifdef HAS_UNISTD_H
+#  include <unistd.h>
+#endif
+
 #if defined(__DOS__) || defined(__DPMI__)
 #include <dos.h>
 #endif
@@ -29,8 +38,6 @@
 #define INCL_NOPM
 #define INCL_DOS    /* must be before prog.h */
 #endif
-
-#include "compiler.h"
 
 #if defined(__OS2__)
 
@@ -42,7 +49,6 @@
   }
 
 #elif defined(__DOS__)
-#include <time.h>
 
   void _fast tdelay(int msecs)
   {
@@ -56,7 +62,6 @@
 
 #elif defined(__MINGW32__)
 
-#include <stdlib.h>
   void _fast tdelay(int msecs)
   {
     _sleep((dword)msecs);
@@ -85,8 +90,6 @@
   }
 
 #elif defined(__UNIX__)
-
-#include <unistd.h>
 
   void _fast tdelay(int msecs)
   {

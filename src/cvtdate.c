@@ -26,8 +26,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>             /* for memcpy */
-#include "cvtdate.h"
-#include "calendar.h"
+#include "../huskylib/cvtdate.h"
+#include "../huskylib/calendar.h"
 
 static int is_dst = -1;
 

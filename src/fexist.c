@@ -38,7 +38,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "compiler.h"
+#include "../huskylib/compiler.h"
 
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
@@ -61,7 +61,7 @@
 #  include <sys/stat.h>
 #endif
 
-#include "ffind.h"
+#include "../huskylib/ffind.h"
 
 #ifdef USE_STAT_MACROS
 

@@ -27,8 +27,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "parsenn.h"
-#include "strext.h"
+#include "../huskylib/parsenn.h"
+#include "../huskylib/strext.h"
 
 static char *colon = ":";
 static char *slash = "/";

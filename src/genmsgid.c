@@ -32,13 +32,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "compiler.h"
-#include "huskylib.h"
+#include "../huskylib/compiler.h"
+#include "../huskylib/huskylib.h"
 #ifdef HAS_IO_H
 #   include <io.h>
 #endif
 
-#include "ffind.h"
+#include "../huskylib/ffind.h"
 
 #define MAX_OUTRUN	(3ul*365*24*60*60) /* 3 year */
 

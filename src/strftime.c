@@ -33,8 +33,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "compiler.h"
-#include "calendar.h"
+#include "../huskylib/compiler.h"
+#include "../huskylib/calendar.h"
 
 #ifdef HAS_strftime
 /* Use function instead macro to prevent compiler warning or error.

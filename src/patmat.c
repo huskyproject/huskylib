@@ -41,7 +41,7 @@
 
 
 #include <string.h>
-#include "patmat.h"
+#include "../huskylib/patmat.h"
 
 #define CTLESC '\\'
 
