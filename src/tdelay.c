@@ -38,6 +38,7 @@
 /* standard headers */
 #include <stdlib.h>
 #include <time.h>
+#include <sys/time.h>
 
 
 /* huskylib: compiler.h */
@@ -74,10 +75,6 @@ void _fast tdelay(int);
 
 #include <os2.h>
 
-#if defined(__EMX__)
-#include <sys/time.h>
-#endif
-
 void _fast tdelay(int msecs)
 {
     DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
@@ -91,7 +88,7 @@ void _fast tdelay(int msecs)
     while (clock() < ctEnd);
 }
 
-#elif defined(__WIN32__) || (__MINGW32__)
+#elif defined(__WIN32__) || defined(__MINGW32__)
 
 #include <windows.h>
 /*# if defined(__TURBOC__)
@@ -113,7 +110,7 @@ void _fast tdelay(int msecs)
     snooze(msecs*1000l);
 }
 
-#elif defined(__UNIX__) || (__DPMI__)
+#elif defined(__UNIX__) || defined(__DPMI__)
 #include <sys/time.h>
 #include <unistd.h>
 
@@ -132,7 +129,7 @@ void _fast tdelay(int msecs)
 #error Unknown OS (tdelay)
 #endif
 
-#if defined(__WIN32__) || (__MINGW32__)
+#if defined(__WIN32__) || defined(__MINGW32__)
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
@@ -151,7 +148,7 @@ dword husky_GetTimer(hs_time *timer_ctx)
     return diff;
 }
 
-#elif defined (__UNIX__) || (__BEOS__) || (__DJGPP__) || (__CYGWIN__) || (__EMX__)
+#elif defined (__UNIX__) || defined(__BEOS__) || defined(__DJGPP__) || defined(__CYGWIN__) || defined(__EMX__)
 void husky_SetTimer(hs_time *timer_ctx)
 {
     struct timeval now;
