@@ -1,3 +1,13 @@
+2004-02-07 Saturday 23:30  d_sergienko
+
+	* huskylib/typesize.h (1.5): NetBSD support added
+
+2004-01-31 Saturday 20:34  mche
+
+	* src/patmat.c (1.12): added ability of usin '#' mask for matchin
+	digit in pattern matching now xpatmat has full compability with VB
+	"Like" operator
+
 2004-01-21 Wednesday 03:51  andr_lukyanov
 
 	* make/makefile.mvc (1.13): Fix MSVC compilation
