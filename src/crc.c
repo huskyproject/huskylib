@@ -227,18 +227,19 @@ dword filecrc32(const char *filename)
   return crc ^ 0xFFFFFFFFUL;
 }
 
+#define _byteCRC16_(b, crc) (hUINT16)(((hUINT16)crc << 8) ^ crc16tab[(hUINT8)((((hUINT16)crc >> 8) ^ ((hUINT8)(b))) & 0xff)])
 
 /* Calculate CRC16 for memory array
    str: array
    size: array size
    initcrc: initial value (start from 0x0000)
  */
-word memcrc16(const char *str, int size, word initcrc)
+hUINT16 memcrc16(const char *str, int size, hUINT16 initcrc)
 {
-  register word crc = initcrc;
+  hUINT16 crc = initcrc;
 
   if(str) for (; size; str++, size--)
-     crc = ( (crc<<8) ^ crc16tab[(char)(crc>>8)^(*str)] ) & 0xFFFF;
+  { crc = _byteCRC16_(*str,crc); }
 
   return crc;
 }
@@ -247,12 +248,12 @@ word memcrc16(const char *str, int size, word initcrc)
    str: string
    initcrc: initial value (start from 0x0000)
  */
-word strcrc16(const char *str, word initcrc)
+hUINT16 strcrc16(const char *str, hUINT16 initcrc)
 {
-  register word crc = initcrc;
+  hUINT16 crc = initcrc;
 
   if(str) for (; *str; str++)
-    crc =  ( (crc<<8) ^ crc16tab[(char)(crc>>8)^(*str)] ) & 0xFFFF;
+  { crc = _byteCRC16_(*str,crc); }
 
   return crc;
 }
