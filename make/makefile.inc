@@ -12,7 +12,7 @@
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
 
 # Library name
-LIBNAME	= husky
+LIBNAME	= huskylib
 
 # Version
 VERMAJOR= 0
