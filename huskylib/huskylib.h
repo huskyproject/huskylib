@@ -98,6 +98,11 @@ HUSKYEXT void adaptcase(char *);
 HUSKYEXT void _fast tdelay(int);
 
 
+HUSKYEXT dword husky_SetTimer();
+
+HUSKYEXT dword husky_GetTimer(dword startVal);
+
+
 /*-- genmsgid.c --*/
 HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);
 HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,

@@ -74,65 +74,139 @@ void _fast tdelay(int);
 
 #include <os2.h>
 
-  void _fast tdelay(int msecs)
-  {
-      DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
-  }
+void _fast tdelay(int msecs)
+{
+    DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
+}
+
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
 
 #elif defined(__DOS__)
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     clock_t ctEnd;
 
     ctEnd = clock() + (long)msecs * (long)CLK_TCK / 1000L;
 
     while (clock() < ctEnd)
-      ;
-  }
+        ;
+}
+
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
 
 #elif defined(__MINGW32__)
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     _sleep((dword)msecs);
-  }
+}
+
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
+
 
 #elif defined(__WIN32__)
 /* win32/nt not mingw or `cygwin -mno-cygwin`  (MS VC, Borland C/win32, Watcom C)*/
 
 #include <windows.h>
 /*# if defined(__TURBOC__)
-   extern void __stdcall Sleep(dword ms);
+extern void __stdcall Sleep(dword ms);
 # else
-   extern void Sleep(dword ms);
+extern void Sleep(dword ms);
 # endif*/
-   void _fast tdelay(int msecs)
-   {
+void _fast tdelay(int msecs)
+{
     Sleep((dword)msecs);
-   }
+}
+
+
+dword husky_SetTimer()
+{
+    return GetTickCount(); 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return GetTickCount() - startVal; 
+}
 
 #elif defined(__BEOS__)
 
 #include <be/kernel/scheduler.h>
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     snooze(msecs*1000l);
-  }
+}
+
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
+
 
 #elif defined(__UNIX__)
 
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     usleep(msecs*1000l);
-  }
+}
+
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
 
 #elif defined(__WATCOMC__)
-  void _fast tdelay(int msecs)
-  {
+void _fast tdelay(int msecs)
+{
     sleep(msecs);
-  }
+}
+dword husky_SetTimer()
+{
+    return 0; 
+}
+
+dword husky_GetTimer(dword startVal)
+{
+    return 0; 
+}
+
+
 #else
 #error Unknown OS
 #endif
