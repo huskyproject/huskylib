@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "compiler.h"
 #include "huskylib.h"
 #include "../cvsdate.h"
 

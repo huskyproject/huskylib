@@ -28,12 +28,10 @@
 #ifndef __WEEKDAY_H__
 #define __WEEKDAY_H__
 
-#include "compiler.h"
+HUSKYEXT char _stdc months[][10];
+HUSKYEXT char _stdc weekday[][10];
 
-extern char _stdc months[][10];
-extern char _stdc weekday[][10];
-
-extern char _stdc months_ab[][4];
-extern char _stdc weekday_ab[][4];
+HUSKYEXT char _stdc months_ab[][4];
+HUSKYEXT char _stdc weekday_ab[][4];
 
 #endif

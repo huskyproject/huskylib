@@ -27,7 +27,6 @@
 #include <time.h>
 #include <string.h>             /* for memcpy */
 #include "huskylib.h"
-#include "calendar.h"
 
 static int is_dst = -1;
 

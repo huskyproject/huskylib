@@ -23,7 +23,7 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#include "../huskylib/calendar.h"
+#include "huskylib.h"
 
 char weekday[][10] =
 {

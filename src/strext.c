@@ -24,7 +24,7 @@
  */
 
 #include <string.h>
-#include "../huskylib/compiler.h"
+#include "huskylib.h"
 
 char *_fast Strip_Trailing(char *str, char strip)
 {

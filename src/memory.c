@@ -23,7 +23,7 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
-#include "../huskylib/compiler.h"
+#include "huskylib.h"
 
 #ifndef __LITTLE_ENDIAN__
 /*

@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include "compiler.h"
+#include "huskylib.h"
 
 #if defined(HAS_DIR_H)
 #  include <dir.h>
@@ -36,8 +36,6 @@
 #if defined(HAS_DOS_H)
 #  include <dos.h>
 #endif
-
-#include "huskylib.h"
 
 #ifdef __OS2__
 #  define INCL_NOPM

@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../huskylib/compiler.h"
+#include "huskylib.h"
 
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
