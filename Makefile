@@ -81,7 +81,7 @@ $(PROGRAMS): $(TARGETDLL)
 else
 $(PROGRAMS): $(TARGETLIB)
 	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$@.c
-	$(CC) $(LFLAGS) -static $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
+	$(CC) $(LFLAGS) $(EXENAMEFLAG) $@ $@$(_OBJ) $(TARGETLIB)
 endif
 
 
