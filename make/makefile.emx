@@ -4,16 +4,17 @@
 
 
 # Uncomment this for compile info for gebugger and display more compiler warnings
-DEBUG	= -g -pedantic
+# DEBUG	= -g -pedantic
 
 # Uncomment this for strip all simbols from binaries to reduce file sizes
-#STRIP	= -s
+STRIP	= -s
 
 
 ## programs ##
 
 CC	= gcc
-AR	= emxomfar
+AR	= ar
+AR_R	= r
 RANLIB	= ranlib
 RM	= cmd /c del
 
@@ -32,7 +33,7 @@ _DEF	= .def
 # compiler defines
 CDEFS	=
 # common compiler options
-CFLAGS	= -Wno-long-long -Wall -O3 -fomit-frame-pointer -fstrength-reduce -Zcrtdll
+CFLAGS	= -Wall -O3 -fomit-frame-pointer -fstrength-reduce -Zcrtdll
 # options for compile only (link is off)
 OBJOPT	= -c
 # options for build static library
@@ -86,7 +87,7 @@ static:	$(TARGETLIB)
 programs:  $(PROGRAMS)
 
 %$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
-	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $< $(TARGETLIB)
+	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT) $@ $< $(TARGETLIB)
 
 %$(_OBJ): $(SRC_DIR)%$(_C)
 	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
