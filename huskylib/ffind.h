@@ -103,6 +103,7 @@ struct ffind
     char lastbit[FILENAME_MAX];
 
 #elif defined(__RSXNT__) || defined(__MINGW32__) || defined(__MSVC__)
+#   define _A_HIDDEN       0x02
     WIN32_FIND_DATA InfoBuf;
     HANDLE hDirA;
     char attrib_srch;
