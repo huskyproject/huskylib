@@ -81,7 +81,7 @@ void _fast tdelay(int msecs)
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    return; 
 }
 
 dword husky_GetTimer(hs_time *timer_ctx)
@@ -89,21 +89,17 @@ dword husky_GetTimer(hs_time *timer_ctx)
     return 0; 
 }
 
-#elif defined(__DOS__)
-
+#elif defined(__DOS__) && !defined(__DPMI__)
 void _fast tdelay(int msecs)
 {
     clock_t ctEnd;
-
     ctEnd = clock() + (long)msecs * (long)CLK_TCK / 1000L;
-
-    while (clock() < ctEnd)
-        ;
+    while (clock() < ctEnd);
 }
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    return; 
 }
 
 dword husky_GetTimer(hs_time *timer_ctx)
@@ -111,26 +107,8 @@ dword husky_GetTimer(hs_time *timer_ctx)
     return 0; 
 }
 
-#elif defined(__MINGW32__)
-
-void _fast tdelay(int msecs)
-{
-    _sleep((dword)msecs);
-}
-
-void husky_SetTimer(hs_time *timer_ctx)
-{
-    return ; 
-}
-
-dword husky_GetTimer(hs_time *timer_ctx)
-{
-    return 0; 
-}
-
-
-#elif defined(__WIN32__)
-/* win32/nt not mingw or `cygwin -mno-cygwin`  (MS VC, Borland C/win32, Watcom C)*/
+#elif defined(__WIN32__) || (__MINGW32__)
+/* win32/nt not mingw (MS VC, cygwin -mno-cygwin, Borland C/win32, Watcom C)*/
 
 #include <windows.h>
 /*# if defined(__TURBOC__)
@@ -172,7 +150,7 @@ void _fast tdelay(int msecs)
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    return; 
 }
 
 dword husky_GetTimer(hs_time *timer_ctx)
@@ -181,7 +159,7 @@ dword husky_GetTimer(hs_time *timer_ctx)
 }
 
 
-#elif defined(__UNIX__)
+#elif defined(__UNIX__) || defined(__DPMI__)
 #include <sys/time.h>
 #include <unistd.h>
 
@@ -215,7 +193,7 @@ void _fast tdelay(int msecs)
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    return; 
 }
 
 dword husky_GetTimer(hs_time *timer_ctx)
