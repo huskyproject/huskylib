@@ -179,7 +179,7 @@ void w_log(char key, char *logString, ...)
 		locTime = localtime(&currentTime);
 
 		if (log) {
-			fprintf(husky_log->logFile, "%c %02u.%02u.%02u  ",
+            fprintf(husky_log->logFile, "%c %02u:%02u:%02u  ",
 					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
 			va_start(ap, logString);
 			vfprintf(husky_log->logFile, logString, ap);
@@ -189,7 +189,7 @@ void w_log(char key, char *logString, ...)
 		}
 
 		if (screen) {
-			printf("%c %02u.%02u.%02u  ",
+            printf("%c %02u:%02u:%02u  ",
 					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
 			va_start(ap, logString);
 			vprintf(logString, ap);

@@ -8,5 +8,8 @@ huskylib 0.1
 
 2. IMPORTANT bugfixes:
 
+3. MINOR changes:
+  - changed time separator in logs. now ':' will be used instead of '.'.
+    Don't forget to update your scripts.
 
 $Id$
