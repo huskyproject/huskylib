@@ -1,3 +1,7 @@
+2003-03-10 Monday 17:51  stas_degteff
+
+	* make/makefile.mgw (1.2): Unify makefiles
+
 2003-03-09 Sunday 19:36  stas_degteff
 
 	* make/: makefile.emo (1.2), makefile.emx (1.2): EMX makefiles:
