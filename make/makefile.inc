@@ -19,7 +19,7 @@ VERMAJOR= 1
 VERMINOR= 9
 VERPATCH= 0
 VERH	= $(VERMAJOR).$(VERMINOR)
-VER	= $(VERH).0
+VER	= $(VERH).$(VERPATCH)
 
 # Object files (please sort list to easy check by human)
 

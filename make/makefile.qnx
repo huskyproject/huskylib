@@ -1,7 +1,7 @@
 # $Id$
 #
-# Generic makefile for building huskylib (static and dynamic libraries)
-# on QNX Neutrino using GNU C
+# makefile for building huskylib (static and dynamic libraries)
+# on QNX Neutrino using GNU C.
 # No support for the Husky build environment (huskymak.cfg)
 # Use GNU version of make utility with this file.
 #
@@ -14,6 +14,7 @@ prefix=	/opt
 # Uncomment this for strip all symbols from binaries to reduce file sizes
 STRIPLIB = strip -g
 STRIPDLL = strip --strip-unneeded
+STRIPPROGRAM = strip
 
 ## Directories & permissions ##
 
@@ -52,6 +53,8 @@ CP	= cp
 MV	= mv
 # groff program (man pages formatter, possible use man2html perl script)
 GROFF	= groff
+# link command
+LN	= ln
 
 
 ## file suffixes ##
@@ -155,6 +158,7 @@ include makefile.inc
 DLLOBJS:=$(OBJS)
 
 DLLPROGRAMS:=$(PROGRAMS)
+TARGETDLL:=$(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)-$(VER)$(_DLL)
 
 # libraries need to build binary file
 LIBS	+=
@@ -179,6 +183,7 @@ dllprograms:	$(TARGETDLL) $(DLLPROGRAMS)
 
 $(DLLPROGRAMS):	$(TARGETDLL)
 		$(CC) $(DEBUG) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $(SRC_DIR)$@$(_C) -L./ -l$(LIBNAME)$(DLLSUFFIX) $(LIBS)
+		$(STRIPPROGRAM) $@
 
 %$(_LIBOBJ):	$(SRC_DIR)%$(_C)
 		$(CC) $(CFLAGS) $(DEBUG) $(CDEFS) $(OBJOPT) $< $(NAMEOPT) $@
@@ -194,7 +199,7 @@ $(TARGETLIB):	$(LIBOBJS)
 $(TARGETDLL):	$(DLLOBJS)
 		$(CC) $(DLLOPT) $(DEBUG) $(CFLAGS) $(NAMEOPT)$@ $^
 		$(STRIPDLL) $@
-
+		$(LN) -s $@ $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(_DLL)
 
 clean:
 	$(RM) $(RMOPT) *$(_LIBOBJ) *$(_DLLOBJ) $(TARGETLIB) $(TARGETDLL) $(PROGRAMS)
