@@ -265,6 +265,10 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
             {
                 ff->ff_attrib |= MSDOS_SUBDIR;
             }
+            if (ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
+            {
+                ff->ff_attrib |= _A_HIDDEN;
+            }
         }
         else
         {
