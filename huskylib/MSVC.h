@@ -28,6 +28,18 @@
 #ifndef HUSKY_MSVC_H
 #define HUSKY_MSVC_H
 
+#ifndef _MSC_VER
+#  error This file used only with MS Visual C !
+#endif
+
+#if _MSC_VER<1000
+#  error This file used only with MS Visual C !
+#endif
+
+#if _MSC_VER<1200
+#  error We can't build HUSKY on your MS Visual C version, sorry.
+#endif
+
 #  ifdef _MAKE_DLL
 #    define _MAKE_DLL_MVC_
 /*   must be included before function redefenition like '#define fileno _fileno' */

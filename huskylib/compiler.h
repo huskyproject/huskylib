@@ -369,8 +369,9 @@
    ===================================================================
    Microsoft Visual C/C++
    -------------------------------------------------------------------
-   _MSC_VER    value is greated or eq 1200
-   _MSC_VER=1200 (0x4B0) - MS Visual C++ v6.0 sp5:
+   _MSC_VER    value is greated or eq 1000
+   _MSC_VER=1020 (0x3FC) - MS Visual C++ v4.2:
+   _MSC_VER=1200 (0x4B0) - MS Visual C++ v6.0:
    --------
    _WIN32      Defined for applications for Win32. Always defined.
    _CHAR_UNSIGNED Default char type is unsigned. Defined when /J is specified.
@@ -497,13 +498,13 @@ int qq(void)
 #endif
 
 #if defined(_MSC_VER)
-#  if (_MSC_VER >= 1200) /* MS Visual C/C++ */
+#  if (_MSC_VER >= 1000) /* MS Visual C/C++ */
 #    define __MSVC__
 #    ifndef __WIN32__
 #      define __WIN32__
 #    endif
 #  endif
-#  if (_MSC_VER < 1200)
+#  if (_MSC_VER < 1000)
    /* Microsoft C or Microsoft QuickC for MS-DOS or OS/2 */
 #    define __MSC__
 #    ifdef __OS2__
