@@ -120,7 +120,7 @@ void _fast tdelay(int msecs)
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
-    return 0; 
+    return ; 
 }
 
 dword husky_GetTimer(hs_time *timer_ctx)
