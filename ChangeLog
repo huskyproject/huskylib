@@ -1,3 +1,8 @@
+2005-02-03 Thursday 18:53  val_khokhlov
+
+	* huskylib/cvtdate.h (1.10), src/cvtdate.c (1.12): move gettz()
+	function to huskylib
+
 2005-01-13 Thursday 20:08  val_khokhlov
 
 	* huskylib/fexist.h (1.6), src/fexist.c (1.10), src/genmsgid.c
