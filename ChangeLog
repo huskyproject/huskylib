@@ -1,3 +1,28 @@
+2003-09-19 Friday 09:21  andr_lukyanov
+
+	* make/makefile.mgw (1.5): Fixed mingw32 compilations
+
+2003-09-19 Friday 09:17  andr_lukyanov
+
+	* src/tdelay.c (1.14): Create husky_*Timer for DPMI, cygwin,
+	mingw32 compilations
+
+2003-09-19 Friday 06:17  stas_degteff
+
+	* src/log.c (1.7): dos2unix (part of file)
+
+2003-09-19 Friday 06:14  stas_degteff
+
+	* src/log.c (1.6): Remove unused var
+
+2003-09-19 Friday 06:14  stas_degteff
+
+	* src/tdelay.c (1.13): Fix return value in VOID function
+
+2003-09-19 Friday 06:09  stas_degteff
+
+	* huskylib/ffind.h (1.10): fix macros redefinition
+
 2003-09-18 Thursday 20:04  d_sergienko
 
 	* src/tests/timer.c (1.1): add test for tdelay()+husky_*Timer()
