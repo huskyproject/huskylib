@@ -21,8 +21,8 @@ VERH	= $(VERMAJOR).$(VERMINOR)
 VER	= $(VERH).0
 
 # Object files
-OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
-OBJS2	= locking$(_OBJ) memory$(_OBJ) parsenn$(_OBJ) patmat$(_OBJ)
+OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) flush$(_OBJ)
+OBJS2	= genmsgid$(_OBJ) locking$(_OBJ) memory$(_OBJ) parsenn$(_OBJ) patmat$(_OBJ)
 OBJS3	= setfsize$(_OBJ) strext$(_OBJ) strftime$(_OBJ) tdelay$(_OBJ)
 OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
 
