@@ -1,3 +1,7 @@
+2003-08-17 Sunday 06:05  d_sergienko
+
+	* huskylib/UNIX.h (1.15): fix FreeBSD compatibility
+
 2003-08-16 Saturday 13:38  d_sergienko
 
 	* huskylib/UNIX.h (1.14): added FreeBSD 5.x support for getfree.c
