@@ -8,70 +8,65 @@ else
 include ../huskymak.cfg
 endif
 
+ifeq ($(OSTYPE), UNIX)
+  LIBPREFIX=lib
+  DLLPREFIX=lib
+endif
+
 include make/makefile.inc
 
-LIB_D = $(LIBPREFIX)$(LIBNAME).so.$(VER)
-LIB_S = $(LIBPREFIX)$(LIBNAME).a
-
 ifeq ($(DEBUG), 1)
-  CFLAGS=	$(WARNFLAGS) $(DEBCFLAGS)
+  CFLAGS=$(WARNFLAGS) $(DEBCFLAGS)
 else
-  CFLAGS=	$(WARNFLAGS) $(OPTCFLAGS)
+  CFLAGS=$(WARNFLAGS) $(OPTCFLAGS)
 endif
 
-ifneq ($(OSTYPE), UNIX)
-#  LIBPREFIX=
-else
-  LIBPREFIX=lib
-endif
-
-CDEFS=	-D$(OSTYPE) $(ADDCDEFS) -Ih
+CDEFS=-D$(OSTYPE) $(ADDCDEFS) -Ih
 
 ifeq ($(DYNLIBS), 1)
-all: $(LIB_S) $(LIB_D)
+all: $(TARGETLIB) $(TARGETDLL).$(VER)
 else
-all: $(LIB_S)
+all: $(TARGETLIB)
 endif
 
 SRC_DIR = src/
 H_DIR   = h/
 
-%$(OBJ): $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(CDEFS)  $(SRC_DIR)$*.c
+%$(_OBJ): $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) $(CDEFS) $(SRC_DIR)$*.c
 
-$(LIB_S): $(OBJS)
-	$(AR) $(AR_R) $(LIB_S) $?
+$(TARGETLIB): $(OBJS)
+	$(AR) $(AR_R) $(TARGETLIB) $?
 ifdef RANLIB
-	$(RANLIB) $(LIB_S)
+	$(RANLIB) $(TARGETLIB)
 endif
 
 ifeq ($(DYNLIBS), 1)
   ifeq (~$(MKSHARED)~,~ld~)
-$(LIBPREFIX)$(LIBNAME).so.$(VER): $(OBJS)
-	$(LD) $(OPTLFLAGS) \
-	      -o $(LIBPREFIX)$(LIBNAME).so.$(VER) $(OBJS)
+$(TARGETDLL).$(VER): $(OBJS)
+	$(LD) $(OPTLFLAGS) -o $(TARGETDLL).$(VER) $(OBJS)
   else
-$(LIBPREFIX)$(LIBNAME).so.$(VER): $(OBJS)
-	$(CC) -shared -Wl,-soname,$(LIBPREFIX)$(LIBNAME).so.$(VERH) \
-          -o $(LIBPREFIX)$(LIBNAME).so.$(VER) $(OBJS)
+$(TARGETDLL).$(VER): $(OBJS)
+	$(CC) -shared -Wl,-soname,$(TARGETDLL).$(VERH) \
+          -o $(TARGETDLL).$(VER) $(OBJS)
   endif
 
-instdyn: $(LIB_S) $(LIBPREFIX)$(LIBNAME).so.$(VER)
+instdyn: $(TARGETLIB) $(TARGETDLL).$(VER)
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
-	$(INSTALL) $(ILOPT) $(LIBPREFIX)$(LIBNAME).so.$(VER) $(LIBDIR)
-	-$(RM) $(RMOPT) $(LIBDIR)/$(LIBPREFIX)$(LIBNAME).so.$(VERH)
-	-$(RM) $(RMOPT) $(LIBDIR)/$(LIBPREFIX)$(LIBNAME).so
+	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
 # Changed the symlinks from symlinks with full path to just symlinks.
 # Better so :)
 	cd $(LIBDIR) ;\
-	$(LN) $(LNOPT) $(LIBPREFIX)$(LIBNAME).so.$(VER) $(LIBPREFIX)$(LIBNAME).so.$(VERH) ;\
-	$(LN) $(LNOPT) $(LIBPREFIX)$(LIBNAME).so.$(VER) $(LIBPREFIX)$(LIBNAME).so
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 ifneq (~$(LDCONFIG)~, ~~)
 	$(LDCONFIG)
 endif
 
 else
-instdyn: $(LIB_S)
+instdyn: $(TARGETLIB)
 
 endif
 
@@ -88,19 +83,19 @@ install-h: install-h-dir $(HEADERS)
 
 install: install-h instdyn
 	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
-	$(INSTALL) $(ISLOPT) $(LIB_S) $(LIBDIR)
+	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
 
 uninstall:
-	-cd $(INCDIR)$(DIRSEP)$(LIBNAME)$(DIRSEP) ;\
+	-cd $(INCDIR)$(DIRSEP)huskylib$(DIRSEP) ;\
 	$(RM) $(RMOPT) $(HEADERS)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(LIB_S)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(LIBPREFIX)$(LIBNAME).so.$(VER)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(LIBPREFIX)$(LIBNAME).so.$(VERH)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(LIBPREFIX)$(LIBNAME).so
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VER)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
 
 clean:
-	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean: clean
-	-$(RM) $(RMOPT) $(LIB_S)
-	-$(RM) $(RMOPT) $(LIB_D)
+	-$(RM) $(RMOPT) $(TARGETLIB)
+	-$(RM) $(RMOPT) $(TARGETDLL).$(VER)

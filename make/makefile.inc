@@ -5,7 +5,7 @@
 # Use defines:
 # _OBJ	object files suffix begins with point (".o", ".obj", ... )
 # _LIB	library files suffix begins with point (".a", ".lib", ... )
-# _DLL	dinamic linking library files suffix begins with point (".dll", ...)
+# _DLL	dinamic linking library files suffix begins with point (".dll", ".so", ...)
 # LIBPREFIX  library filename prefix ("lib", "", ...)
 # LIBSUFFIX  library filename suffix (compiler ID, three characters, somewhere empty)
 # DLLPREFIX  dinamic linking library prefix (usually empty)
