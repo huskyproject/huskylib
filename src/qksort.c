@@ -24,6 +24,7 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+#include <stddef.h>
 #include "compiler.h"
 
 #define DLLEXPORT
