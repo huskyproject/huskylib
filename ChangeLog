@@ -1,3 +1,9 @@
+2003-05-20 Tuesday 14:39  d_sergienko
+
+	* huskylib.qpg (1.1), make/makefile.inc (1.30), make/makefile.qnx
+	(1.2): 
+	QNX fixes; added huskylib.qpg
+
 2003-05-15 Thursday 08:16  d_sergienko
 
 	* make/makefile.qnx (1.1): makefile.qnx added
