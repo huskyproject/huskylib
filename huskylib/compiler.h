@@ -98,6 +98,7 @@
    * HAS_PWD_H           - may be used "#include <pwd.h>"
    * HAS_GRP_H           - may be used "#include <grp.h>"
    * HAS_UTIME_H         - may be used "#include <utime.h>"
+   * HAS_STRINGS_H       - may be used "#include <strings.h>"
    * HAS_SYS_UTIME_H     - #include <sys/utime.h> in alternate to <utime.h>
    * HAS_SYS_PARAM_H     - #include <sys/params.h>
    * HAS_SYS_MOUNT_H     - #include <sys/mount.h>
@@ -198,6 +199,7 @@
    * __UNIX__  - All unix-like OS
    * __BSD__   - BSD UNIX clones (BSDI, BSD/OS, FreeBSD, NetBSD, OpenBSD & etc)
    * __LINUX__ - GNU/Linux (unix clone)
+   * __QNXNTO__- QNX Neutrino
    * __AMIGA__ - AmigaOS
    * __ALPHA__ - The Alpha CPU
    * __X86__   - Intel's x86 series CPU
@@ -645,6 +647,12 @@ int qq(void)
 #  if !defined(__LINUX__)
 #    define __LINUX__
 #  endif
+#  if !defined(__UNIX__)
+#    define __UNIX__
+#  endif
+#endif
+
+#if defined(__QNXNTO__)
 #  if !defined(__UNIX__)
 #    define __UNIX__
 #  endif
@@ -1118,7 +1126,7 @@ int qq(void)
 #  include "BEOS5.h"
 
 #elif defined(__UNIX__) && !defined(__BEOS__)
-/* Unix clones: Linux, FreeBSD, SUNOS (Solaris), MacOS etc. */
+/* Unix clones: Linux, FreeBSD, SUNOS (Solaris), MacOS, QNX etc. */
 #  include "UNIX.h"
 
 #elif defined(SASC) /* SAS C for AmigaDOS ************************************/

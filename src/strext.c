@@ -33,6 +33,10 @@
 /* huskylib: compiler.h */
 #include <compiler.h>
 
+#ifdef HAS_STRINGS_H
+#   include <strings.h>
+#endif
+
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>

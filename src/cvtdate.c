@@ -36,6 +36,10 @@
 #include <calendar.h>
 #include <cvtdate.h>
 
+#ifdef HAS_STRINGS_H
+#   include <strings.h>
+#endif
+
 /***  Implementation  *******************************************************/
 
 static int is_dst = -1;

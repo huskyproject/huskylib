@@ -56,13 +56,16 @@
 
 #  define HAS_UTIME_H 1
 
-#  if (defined(__APPLE__) && defined(__MACH__)) || defined(__NetBSD__) || defined(__FreeBSD__) || defined(_AIX) || defined(__SUN__) || defined(__LINUX__) || defined(__osf__) || defined(__hpux) || defined(__OpenBSD__) || defined(__CYGWIN__)
+#  if (defined(__APPLE__) && defined(__MACH__)) || defined(__NetBSD__) || \
+       defined(__FreeBSD__) || defined(_AIX) || defined(__SUN__) || \
+       defined(__LINUX__) || defined(__osf__) || defined(__hpux) || \
+       defined(__OpenBSD__) || defined(__CYGWIN__) || defined(__QNXNTO__)
 #    define mymkdir(a) mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 #  else
 #    define mymkdir(a) __mkdir((a), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 #  endif
 
-#  ifndef __SUN__
+#  if !defined(__SUN__) && !defined(__QNXNTO__)
 #    define tell(a) lseek((a),0,SEEK_CUR)
 #  endif
 
@@ -128,7 +131,7 @@
 #    define mysleep(x) sleep(x)
 /*#    define sleep(x)   usleep(x*1000000l)*/
 #    define HAS_sleep     1
-#  elif defined(__BSD__) || defined(__CYGWIN__) || defined(__LINUX__) || defined(__APPLE__)
+#  elif defined(__BSD__) || defined(__CYGWIN__) || defined(__LINUX__) || defined(__APPLE__) || defined (__QNXNTO__)
 #    define mysleep(x) sleep(x)
 #    define HAS_sleep     1
 #  endif
@@ -147,7 +150,7 @@
 #  define USE_STAT_MACROS      1
 
 #  if defined(__LINUX__) || defined(__BSD__) || defined(__CYGWIN__) || \
-      defined(__APPLE__) || defined(__SUN__)
+      defined(__APPLE__) || defined(__SUN__) || defined(__QNXNTO__)
 #    define HAS_mktime	  1 /* <time.h> */
 #    define HAS_strftime  1 /* <time.h> */
 #    define HAS_DIRENT_H  1 /* <dirent.h> */
@@ -155,6 +158,11 @@
 
 #  if defined(__CYGWIN__)
 #    define HAS_strupr 1 /* <string.h> from libc (newlib) */
+#  endif
+
+#  if defined(__QNXNTO__)
+#    define HAS_sopen 1     /* <fcntl.h> */
+#    define HAS_STRINGS_H 1
 #  endif
 
 #  define HAS_popen_close 1 /* popen(); pclose() */
