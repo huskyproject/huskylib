@@ -1,3 +1,8 @@
+2003-05-06 Tuesday 17:30  mche
+
+	* src/: tree.c (1.5), tree.c (1.6): fix bug with counting tree
+	nodes
+
 2003-04-28 Monday 19:25  d_sergienko
 
 	* src/mapfile.c (1.7): dos2unix
