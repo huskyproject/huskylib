@@ -72,7 +72,7 @@ static:	$(TARGETLIB)
 programs:  $(PROGRAMS)
 
 %$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
-	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
+	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $< $(TARGETLIB)
 
 %$(_OBJ): $(SRC_DIR)%$(_C)
 	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
