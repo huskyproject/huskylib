@@ -1,0 +1,33 @@
+# Microsoft Visual C++ Makefile
+
+CC=     cl
+CFLAGS= -nologo -MD -Zp1 -I..
+CDEFS=  -D__NT__ -DNT -DWINNT -D_CONSOLE -DUSE_SYSTEM_COPY -D_MAKE_DLL -D_FCONF_EXT
+COPT=   -Ob2
+TLIB=   lib -nologo
+LINK=   link
+
+HUSKYL=	huskymvc.lib
+OTHERL=	..\smapi\smapimvc.lib ..\fidoconf\fconfmvc.lib msvcrt.lib Kernel32.lib /opt:nowin98
+LINKOPTS = $(OTHERL) /nologo /nodefaultlib /dll  /out:"huskymvc.dll" /implib:"huskymvc.lib"
+
+OBJS1 =  log.obj recode.obj crc.obj afixcmd.obj afixcmn.obj arealist.obj
+
+all:    $(HUSKYL) 
+
+$(HUSKYL):
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c log.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c crc.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c recode.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c afixcmd.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c afixcmn.c
+		$(CC) $(CFLAGS) $(CDEFS)  $(COPT) -c arealist.c
+
+		$(LINK) $(LINKOPTS) $(OBJS1)
+
+
+clean:
+        -del *.obj *.lib
+
+distclean: clean
+	-del *.exe *.dll
