@@ -1,0 +1,260 @@
+# $Id$
+#
+# Generic makefile for building huskylib (static and dynamic libraries)
+# on QNX Neutrino using GNU C
+# No support for the Husky build environment (huskymak.cfg)
+# Use GNU version of make utility with this file.
+#
+
+prefix=	/opt
+
+# Uncomment this for compile info for gdb and display more compiler warnings
+# DEBUG	= -g
+
+# Uncomment this for strip all symbols from binaries to reduce file sizes
+STRIPLIB = strip -g
+STRIPDLL = strip --strip-unneeded
+
+## Directories & permissions ##
+
+BINDIR	= $(prefix)/bin/
+LIBDIR	= $(prefix)/lib/
+INCDIR	= $(prefix)/include/huskylib/
+IBOPT	= -m 555 -c
+ILOPT	= -m 444 -c
+IIOPT	= -m 444 -c
+IDOPT	= -d -m 755
+
+
+## programs ##
+
+# compiler
+CC	= gcc
+# library tool
+AR	= ar
+# library indexer
+RANLIB	= ranlib
+# linker program
+LINK	= ld
+# archiver program
+ARCHIVER= tar
+# file removing command
+RM	= rm
+# create directory command
+MKDIR	= mkdir
+# remove directory command
+RMDIR	= rm
+# install command
+INSTALL	= install
+# copy command
+CP	= cp
+# move command
+MV	= mv
+# groff program (man pages formatter, possible use man2html perl script)
+GROFF	= groff
+
+
+## file suffixes ##
+
+# source file
+_C	= .c
+# static library object file
+_LIBOBJ	= .o
+# dynamic object file
+_DLLOBJ	= .xo
+# binary (executable) file
+_EXE	=
+# static library
+_LIB	= .a
+# shared library
+_DLL	= .so
+# shared library definitions file (export/import lists & etc.)
+_DEF	= .def
+# shared library exported list
+_EXP	= .exp
+# archive (package) file
+_ARC	= .tar.gz
+# documentation file (".info", ".html", ".div", ...)
+_HTML	= .html
+# text file
+_TXT	= .txt
+
+
+## program options ##
+
+# compiler defines
+CDEFS	=
+# common compiler options
+CFLAGS	= -Wall -O2
+# linker options
+LFLAGS	=
+# options for compile only (link is off)
+OBJOPT	= -c
+# options for build static library
+LIBOPT	= -static
+# options for build dll
+DLLOPT  = -shared -fPIC
+# option for specify output file name
+NAMEOPT	= -o
+# options for $(AR) program
+ARFLAGS	= r
+# options for $(RM) program
+RMFLAGS	= -f
+# options for archiver
+ARCFLAGS= -c -z -f
+# create directory command options
+MKDIROPT= -p
+# remove directory command options
+RMDIROPT= -rf
+# copy command options
+CPOPT	=
+# move command options
+MVOPT	=
+# install command options
+INSTOPT	= -c
+# groff program option (this example doing format man page to html page)
+GROFFOPT= -mman -Thtml
+
+
+## Library filename elements ##
+
+# Prefix to construct static library name
+LIBPREFIX=lib
+# Prefix to construct dll name
+DLLPREFIX=lib
+# Suffix to construct library name
+LIBSUFFIX=qnx
+# Suffix to construct dll name
+DLLSUFFIX=qnx
+
+
+## Binary package name ##
+PACKAGEBASE=$(LIBNAME)$(LIBPREFIX)-$(LIBSUFFIX)-$(VERH)
+PACKAGENAME=$(LIBNAME)$(LIBPREFIX)-$(LIBSUFFIX)-$(VERH)$(_ARC)
+
+
+## make directives ##
+
+# rules without dependencies and (possible) actions - prevent warnings
+.PHONY:	distclean clean all static programs default \
+	install hinstall linstall pinstall dinstall \
+	uninstall-progs uninstall-lib uninstall-h
+
+
+## Default make rule ##
+
+default: all
+
+## include common makefiles part ##
+_OBJ:=$(_LIBOBJ)
+include makefile.inc
+LIBOBJS:=$(OBJS)
+
+_OBJ:=$(_DLLOBJ)
+include makefile.inc
+DLLOBJS:=$(OBJS)
+
+DLLPROGRAMS:=$(PROGRAMS)
+
+# libraries need to build binary file
+LIBS	+=
+
+## other, usualy not modify below ##
+
+## Additions (add into end of strings) ##
+CFLAGS	+= -I$(H_DIR)
+
+## make rules ##
+
+all:		static dll dllprograms
+
+static:		$(TARGETLIB)
+dll:		$(TARGETDLL)
+
+programs:	$(TARGETLIB) $(PROGRAMS)
+dllprograms:	$(TARGETDLL) $(DLLPROGRAMS)
+
+#$(PROGRAMS):	$(TARGETLIB)
+#		$(CC) $(DEBUG) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $(SRC_DIR)$@$(_C) $(TARGETLIB) $(LIBS)
+
+$(DLLPROGRAMS):	$(TARGETDLL)
+		$(CC) $(DEBUG) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $(SRC_DIR)$@$(_C) -L./ -l$(LIBNAME)$(DLLSUFFIX) $(LIBS)
+
+%$(_LIBOBJ):	$(SRC_DIR)%$(_C)
+		$(CC) $(CFLAGS) $(DEBUG) $(CDEFS) $(OBJOPT) $< $(NAMEOPT) $@
+
+%$(_DLLOBJ):	$(SRC_DIR)%$(_C)
+		$(CC) $(DLLOPT) $(CFLAGS) $(DEBUG) $(CDEFS) $(OBJOPT) $< $(NAMEOPT) $@
+
+$(TARGETLIB):	$(LIBOBJS)
+		$(AR) $(ARFLAGS) $@ $(LIBOBJS)
+		$(RANLIB) $@
+		$(STRIPLIB) $@
+
+$(TARGETDLL):	$(DLLOBJS)
+		$(CC) $(DLLOPT) $(DEBUG) $(CFLAGS) $(NAMEOPT)$@ $^
+		$(STRIPDLL) $@
+
+
+clean:
+	$(RM) $(RMOPT) *$(_LIBOBJ) *$(_DLLOBJ) $(TARGETLIB) $(TARGETDLL) $(PROGRAMS)
+
+distclean: clean pkgclean
+	-$(RM) $(RMOPT) $(TARGETDLL)
+	-$(RM) $(RMOPT) $(TARGETLIB)
+	-$(RM) $(RMOPT) $(PROGRAMS)
+
+doc:
+	cd ../doc ; make html
+
+pkg-doc-dir:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/doc
+
+pkg-doc: doc pkg-doc-dir
+	$(CP) $(CPOPT) ../doc/*$(_HTML) $(PACKAGEBASE)/doc
+
+pkg-man: pkg-doc-dir
+	for f in ../man/*.1 ; \
+	 do $(GROFF) $(GROFFOPT) $$f > $(PACKAGEBASE)/doc/`basename $$f`$(_HTML) ; done
+
+pkg-man-alt:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/man/man1
+	$(CP) $(CPOPT) ../man/*.1 $(PACKAGEBASE)/man/man1
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/man/man5
+	$(CP) $(CPOPT) ../man/*.5 $(PACKAGEBASE)/man/man5
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/man/man8
+	$(CP) $(CPOPT) ../man/*.8 $(PACKAGEBASE)/man/man8
+	
+pkg-dir:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)
+
+pkg-h-dir:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/huskylib
+
+$(HEADERS): pkg-h-dir
+	$(CP) $(CPOPT) $(H_DIR)$@ $(PACKAGEBASE)/huskylib/$@
+
+pkg-h: $(HEADERS)
+
+pkg-readme: pkg-dir
+	@echo XXXXX library v.$(VER) for `uname -s` platform > $(PACKAGEBASE)/file_id.diz
+	@echo "(Part of HUSKY Fidonet Software Project)" >> $(PACKAGEBASE)/file_id.diz
+	@echo See http://husky.sourceforge.net and/or >> $(PACKAGEBASE)/file_id.diz
+	@echo http://sourceforge.net/projects/husky >> $(PACKAGEBASE)/file_id.diz
+	$(CP) $(CPOPT) ../COPYING ../cvsdate.h ../INSTALL ../License $(PACKAGEBASE)
+	$(CP) $(CPOPT) ../HISTORY ../ChangeLog ../VERSION $(PACKAGEBASE)
+
+pkg-bin-dir:
+	-$(MKDIR) $(MKDIROPT) $(PACKAGEBASE)/bin
+
+pkg-bin: static programs pkg-bin-dir
+	$(CP) $(CPOPT) $(TARGETLIB) $(PACKAGEBASE)/bin
+
+package: pkg-dir pkg-h pkg-man pkg-readme pkg-bin
+	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) $(PACKAGEBASE)
+
+pkgclean:
+	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)
+
+pkgdistclean: pkgclean
+	-$(RM) $(RMOPT) $(PACKAGENAME)
