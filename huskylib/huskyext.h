@@ -1,5 +1,6 @@
 /* $Id$
  *
+
  * This file may be included many times.
  *
  * Declare compiler-specific macro:
@@ -14,7 +15,7 @@
 #include "compiler.h"
 
 #if defined(DLLEXPORT) && defined(DLLIMPORT)
-# error "DLLEXPORT and DLLIMPORT can't defined simultaneously!"
+# error "DLLEXPORT and DLLIMPORT can't be defined simultaneously!"
 #endif
 
 #undef HUSKYEXT
