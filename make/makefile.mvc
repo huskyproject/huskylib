@@ -23,7 +23,7 @@ $(TARGETLIB): $(OBJS)
 	$(TLIB) /out:$@ $(OBJS)
 
 $(PROGRAMS): $(TARGETLIB)
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@$(_EXE) $(SRC_DIR)$@.c \
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$*$(_EXE) $(SRC_DIR)$*.c \
 	    $(TARGETLIB) $(LFLAGS)
 
 
