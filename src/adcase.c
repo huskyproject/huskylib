@@ -476,10 +476,7 @@ add_to_cache:
 
 void adaptcase (char *str)
 {
-    for (; *str; str++)
-    {
-        *str = (char)tolower(*str);
-    }
+    unused(str);
 }
 
 void adaptcase_refresh_dir(const char *directory)
