@@ -1,3 +1,7 @@
+2003-12-02 Tuesday 19:12  mche
+
+	* src/strext.c (1.15): new design for stripLeadingChars
+
 2003-12-01 Monday 20:31  mche
 
 	* src/strext.c (1.14): function stripLeadingChars fix garbage
