@@ -42,7 +42,7 @@
 
 /* standard headers */
 #include <string.h>
-
+#include <ctype.h>
 
 /* huskylib: compiler.h */
 #include <compiler.h>
@@ -64,7 +64,7 @@
 
 /* Returns true if the pattern matches the string.
  */
-int patmat( const char *string, const char *pattern )
+int xpatmat(const char *string, const char *pattern, const int ncase)
 {
 	register const char *p, *q;
 	register char c;
@@ -87,13 +87,15 @@ int patmat( const char *string, const char *pattern )
 			c = *p;
 			if (c != CTLESC && c != '?' && c != '*' && c != '[') {
 				while (*q != c) {
+				        if (ncase && toupper(*q) == toupper(c))
+                                                break;
 					if (*q == '\0')
 						return 0;
 					q++;
 				}
 			}
 			do {
-				if (patmat(q, p))
+				if (xpatmat(q, p, ncase))
 					return 1;
 			} while (*q++ != '\0');
 			return 0;
@@ -141,7 +143,11 @@ int patmat( const char *string, const char *pattern )
 			break;
 		}
 dft:	        default:
-			if (*q++ != c)
+                        if (ncase) {
+                             if (toupper(*q++) != toupper(c))
+                                return 0;
+                        }
+			else if (*q++ != c)
 				return 0;
 			break;
 		}
@@ -151,21 +157,6 @@ breakloop:
 		return 0;
 	return 1;
 }
-
-int patimat(char *raw,char *pat)
-{
-    char *upraw=NULL, *uppat=NULL;
-    int i;
-
-    if (raw) upraw=strUpper(sstrdup(raw));
-    if (pat) uppat=strUpper(sstrdup(pat));
-    i=patmat(upraw,uppat);
-    nfree(upraw);
-    nfree(uppat);
-
-    return(i);
-}
-
 
 #ifdef TEST
 

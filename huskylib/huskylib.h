@@ -238,8 +238,11 @@ HUSKYEXT char    *GetDirnameFromPathname(const char* pathname);
 HUSKYEXT void fillCmdStatement(char *cmd, const char *call, const char *archive, const char *file, const char *path);
 
 /*-- patmat.c --*/
-HUSKYEXT int patmat( const char *raw, const char *pat );
-HUSKYEXT int patimat(char *raw, char *pat );
+/*HUSKYEXT int patmat( const char *raw, const char *pat );
+HUSKYEXT int patimat(char *raw, char *pat );*/
+HUSKYEXT int xpatmat(const char *raw, const char *pat, const int ncase);
+#define patmat(raw, pat)  xpatmat(raw, pat, 0)
+#define patimat(raw, pat) xpatmat(raw, pat, 1)
 
 /*-- qksort.c --*/
 /* quick sort integer array */
