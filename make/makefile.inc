@@ -12,15 +12,15 @@
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
 
 
-VERH =  0.1
-VER  =  $(VERH).0
+VERH = 0.1
+VER  = $(VERH).0
 
-OBJS	=  calendar$(OBJ) cvtdate$(OBJ) fexist$(OBJ) ffind$(OBJ) genmsgid$(OBJ)
-OBJS	+= memory$(OBJ) parsenn$(OBJ) patmat$(OBJ) setfsize$(OBJ) strext$(OBJ)
-OBJS	+= strftime$(OBJ) tdelay$(OBJ)
+OBJS =  calendar$(OBJ) cvtdate$(OBJ) fexist$(OBJ) ffind$(OBJ) genmsgid$(OBJ) \
+	memory$(OBJ) parsenn$(OBJ) patmat$(OBJ) setfsize$(OBJ) strext$(OBJ) \
+	strftime$(OBJ) tdelay$(OBJ)
 
-HEADERS	= calendar.h compiler.h cvtdate.h ffind.h huskylib.h patmat.h parsenn.h
-HEADERS	+=strext.h typedefs.h unused.h vixie.h
+HEADERS	= calendar.h compiler.h cvtdate.h ffind.h huskylib.h patmat.h \
+	  parsenn.h strext.h typedefs.h unused.h vixie.h
 
 PROGRAMS=
 
@@ -33,5 +33,5 @@ LIBNAME = husky
 SRC_DIR	=../src/
 H_DIR	=../h/
 
-TARGETLIB	= $(LIBPREFIX)$(LIBNAME)$(LIBSUFFIX)$(LIB)
-TARGETDLL	= $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(DLL)
+TARGETLIB = $(LIBPREFIX)$(LIBNAME)$(LIBSUFFIX)$(LIB)
+TARGETDLL = $(DLLPREFIX)$(LIBNAME)$(DLLSUFFIX)$(DLL)
