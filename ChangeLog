@@ -1,44 +1,44 @@
-2002-06-14 Friday 10:32  d.sergienko
+2002-06-14 Friday 17:32  d.sergienko
 
 	* .cvsignore (1.2), Makefile (1.3), makefile.lnx (1.1), version.inc
 	(1.1): added makefiles for linux and huskymak.cfg
 
-2002-06-14 Friday 09:27  mche
+2002-06-14 Friday 16:27  mche
 
 	* makefile.cyg (1.1): cygwin makefile added
 
-2002-06-14 Friday 09:11  mche
+2002-06-14 Friday 16:11  mche
 
 	* makefile.mvc (1.1), makefile.mvcdll (1.4): msvc makefiles added
 
-2002-06-14 Friday 09:01  mche
+2002-06-14 Friday 16:01  mche
 
 	* makefile.inc (1.1), makefile.mvcdll (1.3): makefiles structure
 	changed
 
-2002-06-14 Friday 08:53  mche
+2002-06-14 Friday 15:53  mche
 
 	* .cvs2cl (1.1), .cvsignore (1.1): no message
 
-2002-06-14 Friday 02:40  mche
+2002-06-14 Friday 09:40  mche
 
 	* fscmn.c (1.1), fscmn.h (1.1), makefile.mvcdll (1.2): fscmn.*
 	contain some functions works with files,directories  and their
 	names.	taken from fidoconf/common.h
 
-2002-06-14 Friday 02:03  mche
+2002-06-14 Friday 09:03  mche
 
 	* afixcmd.c (1.1), afixcmd.h (1.1), afixcmn.c (1.1), arealist.c
 	(1.1), arealist.h (1.1), crc.c (1.1), crc.h (1.1), log.c (1.1),
 	log.h (1.1), makefile.mvcdll (1.1), recode.c (1.1), recode.h (1.1):
 	there are som files that need to move from fidoconfig
 
-2001-03-18 Sunday 00:36  oliver.grimm
+2001-03-18 Sunday 08:36  oliver.grimm
 
 	* Makefile (1.2), compiler.h (1.2), locking.c (1.2), locking.h
 	(1.2): OG: Removed huskylib repository
 
-2001-03-12 Monday 09:43  oliver.grimm
+2001-03-12 Monday 17:43  oliver.grimm
 
 	* Makefile (1.1), compiler.h (1.1), locking.c (1.1), locking.h
 	(1.1): Initial revision
