@@ -21,11 +21,14 @@
  *                                                                         *
  ***************************************************************************/
 
+/* standard headers */
 #include <stdlib.h>
 #include <time.h>
 
-#include "../huskylib/compiler.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
+/* standard headers */
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
 #endif
@@ -35,8 +38,10 @@
 #endif
 
 
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
+#include <huskyext.h>
+
 HUSKYEXT void _fast tdelay(int);
 
 

@@ -26,14 +26,15 @@
 #ifndef __PARSENN_H__
 #define __PARSENN_H__
 
-#include <huskylib/huskyext.h>
+#include "huskyext.h"  /* compiler see directory of this .h file */
 
 #define ZONE_ALL  56685u
 #define NET_ALL   56685u
 #define NODE_ALL  56685u
 #define POINT_ALL 56685u
 
-HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);
+/*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);*/
+#define Parse_NetNode(netnode, zone, net, node, point) ParseNN(netnode, zone, net, node, point, FALSE)
 HUSKYEXT void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
 
 #endif

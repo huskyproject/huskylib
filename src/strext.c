@@ -24,12 +24,13 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
-#include "huskylib.h"
+#include <huskyext.h>
 
-char *_fast Strip_Trailing(char *str, char strip)
+HUSKYEXT char *_fast Strip_Trailing(char *str, char strip)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] == strip)
@@ -39,7 +40,7 @@ char *_fast Strip_Trailing(char *str, char strip)
     return str;
 }
 
-char *_fast Add_Trailing(char *str, char add)
+HUSKYEXT char *_fast Add_Trailing(char *str, char add)
 {
     int x;
     if (str && *str && str[x = strlen(str) - 1] != add)
@@ -50,20 +51,20 @@ char *_fast Add_Trailing(char *str, char add)
     return str;
 }
 
-char *_fast strocpy(char *d, char *s)
+HUSKYEXT char *_fast strocpy(char *d, const char *s)
 {
-    char *orig;
+    const char *orig;
     orig = s;
     memmove(d, s, strlen(s) + 1);
-    return orig;
+    return (char*)orig;
 }
 
-char *_fast firstchar(char *strng, char *delim, int findword)
+HUSKYEXT char *_fast firstchar(const char *strng, const char *delim, int findword)
 {
     int isw=0, sl_s, wordno = 0;
     register int sl_d, x;
-    register char *string=strng;
-    char *oldstring=strng;
+    register const char *string=strng;
+    const char *oldstring=strng;
 
     /* We can't do *anything* if the string or delim is NULL or blank... */
 
@@ -130,14 +131,39 @@ char *_fast firstchar(char *strng, char *delim, int findword)
         {
             if (string == oldstring || string == oldstring + sl_s)
             {
-                return string;
+                return (char*)string;
             }
             else
             {
-                return string + 1;
+                return (char*)string + 1;
             }
         }
     }
 
     return NULL;
+}
+
+HUSKYEXT char *extract_CVS_keyword(char *str)
+{
+    int l;
+    char *tmp, *r;
+
+    if(!str)
+        return NULL;
+
+    tmp = strchr(str, 0x20);
+
+    if ((!tmp)||(!*(++tmp)))
+        return NULL;
+
+    l = strlen(tmp);
+
+    if (l<3)
+        return NULL;
+
+    r = malloc(l-1);
+    strncpy(r, tmp, l-2);
+    r[l-2] = 0;
+
+    return r;
 }

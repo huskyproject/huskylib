@@ -26,9 +26,9 @@
 #ifndef __PATMAT_H__
 #define __PATMAT_H__
 
-#include <huskylib/huskyext.h>
+#include "huskyext.h"  /* compiler see directory of this .h file */
 
 /* released to the public domain */
-HUSKYEXT int patmat(char *raw, char *pat);
+/*HUSKYEXT int patmat(char *raw, char *pat);*/
 
 #endif

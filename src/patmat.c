@@ -40,12 +40,15 @@
  */
 
 
+/* standard headers */
 #include <string.h>
 
+/* huskylib: compiler.h */
+#include <compiler.h>
 
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
-#include "huskylib.h"
+#include <huskyext.h>
 
 #define CTLESC '\\'
 
@@ -53,9 +56,9 @@
  * Returns true if the pattern matches the string.
  */
 
-int patmat(char *string, char *pattern)
+HUSKYEXT int patmat( const char *string, const char *pattern )
 {
-	register char *p, *q;
+	register const char *p, *q;
 	register char c;
 
 	p = pattern;
@@ -87,7 +90,7 @@ int patmat(char *string, char *pattern)
 			} while (*q++ != '\0');
 			return 0;
 		case '[': {
-			char *endp;
+			const char *endp;
 			int invert, found;
 			char chr;
 

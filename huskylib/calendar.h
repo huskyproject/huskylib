@@ -28,7 +28,7 @@
 #ifndef __WEEKDAY_H__
 #define __WEEKDAY_H__
 
-#include <huskylib/huskyext.h>
+#include "huskyext.h"  /* compiler see directory of this (calendar.h) file */
 
 HUSKYEXT char _stdc months[][10];
 HUSKYEXT char _stdc weekday[][10];

@@ -23,13 +23,17 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <stdio.h>
 #include <time.h>
 #include <string.h>             /* for memcpy */
 
+/* huskylib headers */
+#include <compiler.h>
 #define DLLEXPORT
-
-#include "huskylib.h"
+#include <huskyext.h>
+#include <calendar.h>
+#include <cvtdate.h>
 
 static int is_dst = -1;
 
@@ -44,7 +48,7 @@ static void near InitCvt(void)
 
 /* Convert a DOS-style bitmapped date into a 'struct tm'-type date. */
 
-struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate)
+HUSKYEXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate)
 {
   if (is_dst == -1)
   {
@@ -78,7 +82,7 @@ struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate
 
 /* Convert a 'struct tm'-type date into an Opus/DOS bitmapped date */
 
-union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate)
+HUSKYEXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate)
 {
   if(tmdate && dosdate){
     dosdate->msg_st.date.da = tmdate->tm_mday;
@@ -102,7 +106,7 @@ static void print02d(char **str, int i)
   }
 }
 
-char *_fast sc_time(union stamp_combo *sc, char *string)
+HUSKYEXT char *_fast sc_time(union stamp_combo *sc, char *string)
 {
   if(sc && string)
   {
@@ -137,7 +141,7 @@ char *_fast sc_time(union stamp_combo *sc, char *string)
   return string;
 }
 
-char *_fast fts_time(char *string, struct tm *tmdate)
+HUSKYEXT char *_fast fts_time(char *string, struct tm *tmdate)
 {
     union stamp_combo dosdate;
     return sc_time(TmDate_to_DosDate(tmdate, &dosdate), string);
@@ -156,7 +160,7 @@ static void near StandardDate(union stamp_combo *d_written)
     d_written->msg_st.time.ss = 0;
 }
 
-void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
+HUSKYEXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
 {
     char temp[80];
 
@@ -265,7 +269,7 @@ void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
     d_written->msg_st.time.ss = ss >> 1;
 }
 
-union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st)
+HUSKYEXT union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st)
 {
     time_t now;
     struct tm *tm;

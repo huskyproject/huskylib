@@ -27,22 +27,23 @@
  * with compilers where this function not implemented in clib.
  */
 
+/* standard headers */
 #include <stdio.h>
 #include <time.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
 
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
-#include "huskylib.h"
+#include <huskyext.h>
 
 
 #ifdef HAS_strftime
 /* Use function instead macro to prevent compiler warning or error.
  * (If file do not content any code some compilers report about error.)
  */
-size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
 { return strftime(string, maxsize, format, current_time); }
 
 #else
@@ -52,7 +53,7 @@ size_t cdecl strftim(char *string, size_t maxsize, const char *format, const str
  * at least in form "SET TZ=XYZ"
  */
 
-size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
+HUSKYEXT size_t cdecl strftim(char *string, size_t maxsize, const char *format, const struct tm *current_time)
 {
     const char *in;
 

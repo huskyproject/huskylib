@@ -23,25 +23,29 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-
+/* huskylib headers */
+#include <compiler.h>
 #define DLLEXPORT
-#include "huskyext.h"
-#include "huskylib.h"
+#include <huskyext.h>
+
+#include <parsenn.h>
+#include <strext.h>
 
 
-static char *colon = ":";
-static char *slash = "/";
+const static char *colon = ":";
+const static char *slash = "/";
 
-void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
+/*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point)
 {
     ParseNN(netnode, zone, net, node, point, FALSE);
-}
+}*/
 
-void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all)
+HUSKYEXT void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all)
 {
     char *p;
 

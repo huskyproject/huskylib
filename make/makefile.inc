@@ -20,17 +20,17 @@ VERMINOR= 9
 VERH	= $(VERMAJOR).$(VERMINOR)
 VER	= $(VERH).0
 
-# Object files
+# Object files (please sort list to easy check by human)
 OBJS1	= calendar$(_OBJ) cvtdate$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) flush$(_OBJ)
 OBJS2	= genmsgid$(_OBJ) locking$(_OBJ) mapfile$(_OBJ) memory$(_OBJ) parsenn$(_OBJ)
 OBJS3	= patmat$(_OBJ) setfsize$(_OBJ) strext$(_OBJ) strftime$(_OBJ) tdelay$(_OBJ)
 OBJS	= $(OBJS1) $(OBJS2) $(OBJS3)
 
-# Header files
-HEADERS1= calendar.h compiler.h cvtdate.h fexist.h ffind.h huskylib.h locking.h
-HEADERS2= parsenn.h patmat.h strext.h unused.h vixie.h huskyext.h
-HEADERS3= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
-HEADERS4= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
+# Header files (please sort list to easy check by human)
+HEADERS1= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
+HEADERS2= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
+HEADERS3= calendar.h compiler.h cvtdate.h fexist.h ffind.h huskyext.h
+HEADERS4= huskylib.h locking.h strext.h unused.h vixie.h
 HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4)
 
 # Binary file(s) to build from sources

@@ -14,14 +14,23 @@
  * standalone msgid generator: print new msgid to stdout
  */
 
+/* standard headers */
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
 
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+/* huskylib headers */
 #define DLLIMPORT
-#include "huskylib.h"
+#include <huskyext.h>
+#include <huskylib.h>
+#include <strext.h>
+
 #include "../cvsdate.h"
+
 
 #define check_stricmp(a, b) (stricmp(a, b) == 0)
 #define str_or_unknown(str) (str? str: "unknown")
@@ -78,30 +87,6 @@ void printusage(void)
     printf("  <num>      - number msgid to generate\n");
 }
 
-char *extract_CVS_keyword(char *str)
-{
-    int l;
-    char *tmp, *r;
-
-    if(!str)
-        return NULL;
-
-    tmp = strchr(str, 0x20);
-
-    if ((!tmp)||(!*(++tmp)))
-        return NULL;
-
-    l = strlen(tmp);
-
-    if (l<3)
-        return NULL;
-
-    r = malloc(l-1);
-    strncpy(r, tmp, l-2);
-    r[l-2] = 0;
-
-    return r;
-}
 
 void printversion(void)
 {

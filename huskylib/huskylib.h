@@ -29,26 +29,11 @@
 #include <stdio.h>
 #include <time.h>
 
-#include <huskylib/compiler.h>
-#include <huskylib/huskyext.h>
-#include <huskylib/calendar.h>
-#include <huskylib/cvtdate.h>
-#include <huskylib/fexist.h>
-#include <huskylib/ffind.h>
-#include <huskylib/locking.h>
-#include <huskylib/parsenn.h>
-#include <huskylib/patmat.h>
-#include <huskylib/strext.h>
-#include <huskylib/unused.h>
-
-
-/*-- flush.c --*/
-#ifdef __DOS__
-/* flushasm.asm for DOS, redefined for known implementations in flush.c */
-void pascal far flush_handle2(int fd);
-#endif
-
-void _fast flush_handle(FILE * fp);
+#include "compiler.h"  /* compiler see directory of this .h file */
+#include "huskyext.h"
+#include "cvtdate.h"
+#include "fexist.h"
+#include "ffind.h"
 
 
 /*-- tdelay.c --*/
@@ -107,5 +92,9 @@ HUSKYEXT int _fast setfsize(int fd, long size);
 /* mapfile.c */
 /* Mapping file to memory implementation for several OS. */
 HUSKYEXT void* MapFile(char* fname);
+
+/* patmat.c */
+HUSKYEXT int patmat( const char *raw, const char *pat );
+
 
 #endif /*__HUSKYLIB_H__ */

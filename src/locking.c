@@ -25,15 +25,15 @@
  * Written by Tobias Ernst @ 2:2476/418, released to the public domain.
  *
  */
+/* standard headers */
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 
-#define DLLEXPORT
-#include "huskyext.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-#include "huskylib.h"
-
+/* standard headers */
 #ifdef HAS_DIRECT_H
 #  include <direct.h>
 #endif
@@ -50,9 +50,29 @@
 #  include <dos.h>
 #endif
 
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+#include <huskylib.h>
+
+
+/* Test for locking functions avaiable in OS
+ */
+HUSKYEXT int lock(int handle, long ofs, long length);
+HUSKYEXT int unlock(int handle, long ofs, long length);
+HUSKYEXT int waitlock(int handle, long ofs, long length);
+HUSKYEXT int waitlock2(int handle, long ofs, long length, long t);
+#ifndef HAS_sopen
+HUSKYEXT int sopen(const char *name, int oflag, int ishared, int mode);
+#endif
+
+/* implementations */
+
 #ifdef __DJGPP__
 #include <dpmi.h>
 
+/* Test for locking functions (SHARE.EXE) avaiable in OS
+ */
 sword far pascal shareloaded(void)
 {
     __dpmi_regs r;

@@ -26,11 +26,21 @@
 #ifndef __STREXT_H__
 #define __STREXT_H__
 
-#include <huskylib/huskyext.h>
+#include "huskyext.h"  /* compiler see directory of this .h file */
 
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip);
 HUSKYEXT char *_fast Add_Trailing(char *str, char add);
-HUSKYEXT char *_fast strocpy(char *d, char *s);
-char* _fast firstchar(char *strng, char *delim, int findword);
+
+/* Copy src to dst; return src
+ */
+HUSKYEXT char *_fast strocpy(char *dst, const char *src);
+
+/* Return pointer to 1st char of specified word in string (by word number)
+ */
+HUSKYEXT char* _fast firstchar(const char *strng, const char *delim, int findword);
+
+/* Extract RCS/CVS keyword value from "$Keyword: value$"
+ */
+HUSKYEXT char *extract_CVS_keyword(char *str);
 
 #endif

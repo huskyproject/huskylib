@@ -28,8 +28,8 @@
 
 #include <stdio.h>
 
-#include <huskylib/compiler.h>
-#include <huskylib/huskyext.h>
+#include "compiler.h"  /* compiler see directory of this (ffind.h) file */
+#include "huskyext.h"
 
 
 #ifdef HAS_DOS_H

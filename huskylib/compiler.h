@@ -252,6 +252,15 @@
    sparc __sparc __sparc__
    __svr4__ __SVR4
    ===================================================================
+   GNU C on Linux (Intel platform)
+   -------------------------------------------------------------------
+   linux __linux __linux__ unix __unix __unix__
+   i386 __i386__ __i386   (on 386, 486, ...)
+   i686 __i686 __i686__   (on Pentium pro, Pentium 2, ...)
+   pentiumpro __pentiumpro __pentiumpro__ (on Pentium pro, Pentium 2, ...)
+   __GNUC__ __GNUC_MINOR__
+   __ELF__
+   ===================================================================
    GNU C on BeOS 5
    -------------------------------------------------------------------
    __BEOS__ __i386__ _X86_ __i386 i386  __ELF__ __INTEL__ __PIC__ __pic__

@@ -23,10 +23,11 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* huskylib: compiler.h */
+#include <compiler.h>
 
 #define DLLEXPORT
-#include "huskyext.h"
-#include "huskylib.h"
+#include <huskyext.h>
 
 #ifndef __LITTLE_ENDIAN__
 /*
@@ -36,7 +37,7 @@
  *  system architecture.
  */
 
-void put_dword(byte *ptr, dword value)
+HUSKYEXT void put_dword(byte *ptr, dword value)
 {
     ptr[0] = (value & 0xFF);
     ptr[1] = (value >> 8) & 0xFF;
@@ -51,7 +52,7 @@ void put_dword(byte *ptr, dword value)
  *  system architecture.
  */
 
-void put_word(byte *ptr, word value)
+HUSKYEXT void put_word(byte *ptr, word value)
 {
     ptr[0] = (value & 0xFF);
     ptr[1] = (value >> 8) & 0xFF;

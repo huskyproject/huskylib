@@ -12,7 +12,7 @@
  *            modifier set.
  */
 
-#include "compiler.h"
+#include "compiler.h"  /* compiler see directory of this .h file */
 
 #if defined(DLLEXPORT) && defined(DLLIMPORT)
 # error "DLLEXPORT and DLLIMPORT can't be defined simultaneously!"

@@ -21,16 +21,19 @@
  *                                                                         *
  ***************************************************************************/
 
-/* name=Function to dynamically change the size of a file
+/* Function to dynamically change the size of a file
 */
 
+/* standard headers */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 
-#include "compiler.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
+/* standard headers */
 #ifdef HAS_DOS_H
 #include <dos.h>
 #endif
@@ -43,8 +46,9 @@
   #include <unistd.h>
 #endif
 
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
+#include <huskyext.h>
 
 HUSKYEXT int _fast setfsize(int fd, long size);
 

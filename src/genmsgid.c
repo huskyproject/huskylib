@@ -23,6 +23,7 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -32,14 +33,20 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define DLLEXPORT
-#include "huskyext.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-#include "huskylib.h"
-
+/* standard headers */
 #ifdef HAS_IO_H
 #   include <io.h>
 #endif
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
+#include <huskylib.h>
+
 
 #define MAX_OUTRUN	(3ul*365*24*60*60) /* 3 year */
 

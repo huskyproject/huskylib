@@ -23,12 +23,14 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../huskylib/compiler.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-
+/* standard headers */
 #if defined(HAS_IO_H)
 #include <io.h>
 #endif
@@ -40,6 +42,12 @@
 #if defined(HAS_DOS_H)
 #include <dos.h>
 #endif
+
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
 
 #ifdef __OS2__
 
@@ -135,7 +143,7 @@ void pascal far flush_handle2(int fh)
 #elif defined (__DOS__)
 
 /* refer to MS-DOS flush_handle2 code in FLUSHASM.ASM */
-void pascal far flush_handle2(int fd);
+HUSKYEXT void pascal far flush_handle2(int fd);
 
 #else
 
@@ -148,7 +156,7 @@ void pascal far flush_handle2(int fd);
  *  for this tip in his _Advanced MS-DOS_ book.
  */
 
-void _fast flush_handle(FILE * fp)
+HUSKYEXT void _fast flush_handle(FILE * fp)
 {
     fflush(fp);
 

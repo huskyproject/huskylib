@@ -27,15 +27,19 @@
  * See also http://www.gnu.org, license may be found here.
 */
 
+/* standard headers */
 #include <sys/types.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "compiler.h"
 
+/* huskylib: compiler.h */
+#include <compiler.h>
+
+/* huskylib headers */
 #define DLLEXPORT
-#include "huskyext.h"
+#include <huskyext.h>
 
 
 

@@ -27,20 +27,17 @@
    S_ISREG and S_ISDIR macros. The problem is that while stat() is POSIX, those
    macros are not. For compilers that do not provide these macros, we revert to
    the old "ffind" method. */
-/* Moved to compiler.h
-#if defined(__UNIX__) || defined(__MINGW32__) || defined(__EMX__) || defined(__RSXNT__) || defined(__DJGPP__) || defined(_MSC_VER)
-#define USE_STAT_MACROS
-#endif
-*/
 
+/* standard headers */
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define DLLEXPORT
 
-#include "huskylib.h"
+/* huskylib: compiler.h */
+#include <compiler.h>
 
+/* standard headers */
 #ifdef HAS_UNISTD_H
 #  include <unistd.h>
 #endif
@@ -62,13 +59,17 @@
 #  include <sys/stat.h>
 #endif
 
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+
 
 #ifdef USE_STAT_MACROS
 
 /* This is the nice code that works on UNIX and every other decent platform.
    It has been contributed by Alex S. Aganichev */
 
-int _fast fexist(const char *filename)
+HUSKYEXT int _fast fexist(const char *filename)
 {
     struct stat s;
 
@@ -77,7 +78,7 @@ int _fast fexist(const char *filename)
     return S_ISREG(s.st_mode);
 }
 
-long _fast fsize(const char *filename)
+HUSKYEXT long _fast fsize(const char *filename)
 {
     struct stat s;
 
@@ -86,7 +87,7 @@ long _fast fsize(const char *filename)
     return s.st_size;
 }
 
-int _fast direxist(const char *directory)
+HUSKYEXT int _fast direxist(const char *directory)
 {
     struct stat s;
     int rc;
@@ -135,7 +136,7 @@ int _fast direxist(const char *directory)
 
 /* Here comes the ugly platform specific and sometimes even slow code. */
 
-int _fast fexist(const char *filename)
+HUSKYEXT int _fast fexist(const char *filename)
 {
     FFIND *ff;
 
@@ -152,7 +153,7 @@ int _fast fexist(const char *filename)
     }
 }
 
-long _fast fsize(const char *filename)
+HUSKYEXT long _fast fsize(const char *filename)
 {
     FFIND *ff;
     FILE  *fp;
@@ -179,7 +180,7 @@ long _fast fsize(const char *filename)
 
 #if defined(__DOS__) || defined(__DPMI__)
 
-int _fast direxist(const char *directory)
+HUSKYEXT int _fast direxist(const char *directory)
 {
     FFIND *ff;
     char *tempstr;
@@ -234,7 +235,7 @@ int _fast direxist(const char *directory)
 #include <windows.h>
 #endif
 
-int _fast direxist(const char *directory)
+HUSKYEXT int _fast direxist(const char *directory)
 {
     char *tempstr, *p;
     size_t l;
@@ -297,7 +298,7 @@ int _fast direxist(const char *directory)
 
 #elif defined(__UNIX__)
 
-int _fast direxist(const char *directory)
+HUSKYEXT int _fast direxist(const char *directory)
 {
     FILE *fp;
 
@@ -318,7 +319,7 @@ int _fast direxist(const char *directory)
 
 #endif
 
-int _createDirectoryTree(const char *pathName) {
+HUSKYEXT int _createDirectoryTree(const char *pathName) {
 
    char *start, *slash;
    char limiter=PATH_DELIM;

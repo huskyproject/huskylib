@@ -23,15 +23,16 @@
  * See also http://www.gnu.org, license may be found here.
  */
 
+/* standard headers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 
-#define DLLEXPORT
+/* huskylib: compiler.h */
+#include <compiler.h>
 
-#include "huskylib.h"
-
+/* standard headers */
 #if defined(HAS_DIR_H)
 #  include <dir.h>
 #endif
@@ -39,6 +40,13 @@
 #if defined(HAS_DOS_H)
 #  include <dos.h>
 #endif
+
+/* huskylib headers */
+#define DLLEXPORT
+#include <huskyext.h>
+#include <ffind.h>
+
+
 
 #ifdef __OS2__
 #  define INCL_NOPM
