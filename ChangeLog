@@ -1,3 +1,12 @@
+2003-06-18 Wednesday 03:37  andr_lukyanov
+
+	* make/makefile.emx (1.5): Fixed compilation.
+
+2003-06-18 Wednesday 03:34  andr_lukyanov
+
+	* huskylib/: EMX.h (1.10), ffind.h (1.8): Fixed declaration for
+	EMX.
+
 2003-05-25 Sunday 12:33  lmike
 
 	* huskylib/: UNIX.h (1.13), compiler.h (1.18): Added more QNX
