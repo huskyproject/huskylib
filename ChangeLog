@@ -1,3 +1,9 @@
+2004-06-06 Sunday 16:16  andrew_ladutsko
+
+	* huskylib/huskyext.h (1.5), make/makefile.mgw (1.6),
+	src/genverst.c (1.6): fixed building of dll version using mingw
+	(tested with gcc 3.3.1)
+
 2004-05-14 Friday 18:48  andrew_ladutsko
 
 	* src/log.c (1.8): gcc 2.95.2 doesn't know about
