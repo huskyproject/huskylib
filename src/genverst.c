@@ -111,16 +111,17 @@ HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
 /* IBM C/Set++ for OS/2 */
    platform = "/os2-ibmc";
 
-#elif defined(__NT__)
-#  if defined(__MSVC__)
+#elif defined(__MSVC__)
 #    if defined(_MAKE_DLL_MVC_)
      platform = "/w32-mvcdll";
 #    else
      platform = "/w32-mvc";
 #    endif
-#  elif defined(__MINGW32__)
+#elif defined(__MINGW32__)
    platform = "/w32-mgw";
-#  elif defined(__TURBOC__) /* Borland C/C++ for Win32 */
+#elif defined(__WIN32__)
+
+#  if defined(__TURBOC__) /* Borland C/C++ for Win32 */
    platform = "/w32-bc";
 #  elif defined(__WATCOMC__)
    platform = "/w32-wc";
@@ -137,13 +138,17 @@ HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
    platform = "/win";
 #  endif
 
-#  elif defined(__EMX__)    /* EMX for 32-bit OS/2 or RSX for Windows NT */
-   platform = "/emx-rsx";
+#  elif defined(__EMX__)    /* EMX for 32-bit OS/2 */
+   platform = "/emx";
 
+#elif defined(__DJGPP__)
+   platform = "/dpmi-djgpp";
 
-#elif defined(MSDOS) ||  defined(DOS) || defined(__DOS__) || defined(__MSDOS__)
+#elif defined(__DOS__)
 #  ifdef __DJGPP__
    platform = "/dpmi-djgpp";
+#  elif defined(__WATCOMC__) && defined(__DOS4G__)
+   platform = "/dos4g-wc";
 #  elif defined(__WATCOMC__) && defined(__FLAT__)
    platform = "/dpmi-wc";
 #  elif defined(__WATCOMC__) && !defined(__FLAT__)
