@@ -452,14 +452,14 @@ HUSKYEXT void _fast FFindClose(FFIND * ff)
 }
 
 /*
- *  FindInfo: This function was added because it is SIGNIFICANTLY faster
+ *  FFindInfo: This function was added because it is SIGNIFICANTLY faster
  *  under OS/2 to call DosQPathInfo() rather than DosFindFirst() if all
  *  you are interested in is getting a specific file's date/time/size.
  *
  *  PLF Thu  10-17-1991  18:12:37
  */
 
-HUSKYEXT FFIND *_fast FindInfo(const char *filespec)
+HUSKYEXT FFIND *_fast FFindInfo(const char *filespec)
 {
 #if !defined(__OS2__)
     return FFindOpen(filespec, 0);
