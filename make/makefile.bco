@@ -1,14 +1,14 @@
-# Makefile for building a OS/2 SMAPI librarywith Borland C++ 2.0 for OS/2
+# Makefile for building a OS/2 HUSKY library with Borland C++ 2.0 for OS/2
 # No support for the Husky build environment
 
 CC=	bcc
 CFLAGS=	-w
-CDEFS=	-DOS2
+CDEFS=
 COPT=	-O2
 LIB=	tlib
 OBJ=	.obj
 
-TARGET=	smapibco.lib
+TARGET=	huskybco.lib
 
 include makefile.inc
 
