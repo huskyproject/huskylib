@@ -114,6 +114,7 @@ $(TARGETLIB):	$(OBJS)
 
 dll:
 	@!$(MAKE) -f makefile.mvc CFLAGS="$(CFLAGS) $(DLCFLAGS)" $(OBJS)
+	@echo Create $(TARGETDLL)...
 	@$(LINK) $(LINKFLAGS) $(LIBNAMEOPT)$(TARGETDLL) $(DLLS) $(OBJS)
 
 clean:
