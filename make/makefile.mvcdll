@@ -6,7 +6,7 @@ CFLAGS= -nologo -MD -Zp1
 CDEFS=  -I..\huskylib -I.. -D_CONSOLE -D_MAKE_DLL -D_HUSKYEXT
 COPT=   -Ob2
 LFLAGS=	/link /opt:nowin98
-LINK=	link 
+LINK=	link
 LINKOPTS= msvcrt.lib Kernel32.lib /nologo /opt:nowin98 /dll /nodefaultlib
 _EXE=	.exe
 _OBJ=	.obj
@@ -23,12 +23,12 @@ include makefile.inc
 
 
 all: $(TARGETDLL) $(PROGRAMS)
-        
+
 $(TARGETDLL): $(OBJS)
 	$(LINK) $(LINKOPTS) /out:$@ /implib:$(TARGETLIB) $(OBJS)
 
 $(PROGRAMS): $(TARGETDLL)
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@$(_EXE) $(SRC_DIR)$@.c \
+	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$*$(_EXE) $(SRC_DIR)$*.c \
 	    $(TARGETLIB) $(LFLAGS)
 
 
