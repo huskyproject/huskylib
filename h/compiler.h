@@ -50,7 +50,7 @@
    *
    * _loadds  - (used for x86 16 bit only) 'load data segment' code modifyer
    *
-   * SMAPI_EXT - external variables & external functions call modifier
+   * HUSKYEXT - external variables & external functions call modifier
    *             (usualy 'extern' for static linkage)
    *
    * _XPENTRY  - system procedures calling (conversion) modifyer
@@ -1008,11 +1008,11 @@ int qq(void)
 #ifdef __MSVC__  /* MS Visual C/C++ *****************************************/
 #  ifdef _MAKE_DLL
 #    define _MAKE_DLL_MVC_
-#    ifndef _SMAPI_EXT
-#      define SMAPI_EXT __declspec(dllimport)
+#    ifndef _HUSKYEXT
+#      define HUSKYEXT __declspec(dllimport)
 #    else
-#      define SMAPI_EXT __declspec(dllexport)
-#    endif /* _SMAPI_EXT */
+#      define HUSKYEXT __declspec(dllexport)
+#    endif /* _HUSKYEXT */
 /*   must be included before function redefenition like '#define fileno _fileno' */
 #    include <sys/stat.h>
 #    include <stdio.h>
@@ -1047,7 +1047,7 @@ int qq(void)
 #    define isatty       _isatty
 
 #  else  /* ifdef _MAKE_DLL */
-#    define SMAPI_EXT    extern
+#    define HUSKYEXT    extern
 #  endif /* ifdef _MAKE_DLL */
 
 #   include <limits.h>
@@ -1156,8 +1156,8 @@ int qq(void)
 #  define HAS_DIRECT_H     /* #include <direct.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
-   SMAPI_EXT int unlock(int handle, long ofs, long length);
-   SMAPI_EXT int lock(int handle, long ofs, long length);
+   HUSKYEXT int unlock(int handle, long ofs, long length);
+   HUSKYEXT int lock(int handle, long ofs, long length);
 
 
 /* End: MS Visual C/C++ ******************************************************/
@@ -1217,7 +1217,7 @@ int qq(void)
 #elif defined(__WATCOMC__)
 
 #  define mode_t int
-#  define SMAPI_EXT extern
+#  define HUSKYEXT extern
 
 #  define strcasecmp  stricmp
 #  define strncasecmp strnicmp
@@ -1392,7 +1392,7 @@ int qq(void)
 #  undef  far
 #  define far
 #  define _XPENTRY
-#  define SMAPI_EXT extern
+#  define HUSKYEXT extern
 
 #  define farread _read
 #  define farwrite _write
@@ -1524,7 +1524,7 @@ int qq(void)
 /*#  undef  far*/
 #  define far
 #  define _XPENTRY
-#  define SMAPI_EXT extern
+#  define HUSKYEXT extern
 
 #  define farread read
 #  define farwrite write
@@ -1687,7 +1687,7 @@ int qq(void)
 #elif defined(__BEOS__)    /* BeOS (Unix clone, GNU C) */
 
 #  define _XPENTRY
-#  define SMAPI_EXT extern
+#  define HUSKYEXT extern
 #  define _intr
 #  define _intcast
 #  define _veccast
@@ -1760,7 +1760,7 @@ int qq(void)
 #elif defined(__UNIX__) && !defined(__BEOS__)
 /* Unix clones: Linux, FreeBSD, SUNOS (Solaris), MacOS etc. */
 
-#  define SMAPI_EXT extern
+#  define HUSKYEXT extern
 #  define _stdc
 #  define _intr
 #  define _intcast
@@ -2009,13 +2009,13 @@ int qq(void)
 #   define mysleep(x)
 #endif
 
-#ifndef SMAPI_EXT
+#ifndef HUSKYEXT
 #   ifdef __GNUC__
-#       warning Please set SMAPI_EXT to extern or proprietary token
+#       warning Please set HUSKYEXT to extern or proprietary token
 #   else
-#       pragma message("Please set SMAPI_EXT to extern or proprietary token")
+#       pragma message("Please set HUSKYEXT to extern or proprietary token")
 #   endif
-#   define SMAPI_EXT extern
+#   define HUSKYEXT extern
 #endif
 
 #ifndef _XPENTRY

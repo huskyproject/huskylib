@@ -67,11 +67,11 @@ union stamp_combo
 
 typedef union stamp_combo SCOMBO;
 
-SMAPI_EXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
+HUSKYEXT void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
 union stamp_combo *_fast Get_Dos_Date(union stamp_combo *st);
-SMAPI_EXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
-SMAPI_EXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
-SMAPI_EXT char *_fast sc_time(union stamp_combo *sc, char *string);
-SMAPI_EXT char *_fast fts_time(char *string, struct tm *tmdate);
+HUSKYEXT struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
+HUSKYEXT union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
+HUSKYEXT char *_fast sc_time(union stamp_combo *sc, char *string);
+HUSKYEXT char *_fast fts_time(char *string, struct tm *tmdate);
 
 #endif

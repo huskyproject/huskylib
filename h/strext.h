@@ -22,9 +22,9 @@
 
 #include "compiler.h"
 
-SMAPI_EXT char *_fast Strip_Trailing(char *str, char strip);
-SMAPI_EXT char *_fast Add_Trailing(char *str, char add);
-SMAPI_EXT char *_fast strocpy(char *d, char *s);
+HUSKYEXT char *_fast Strip_Trailing(char *str, char strip);
+HUSKYEXT char *_fast Add_Trailing(char *str, char add);
+HUSKYEXT char *_fast strocpy(char *d, char *s);
 char* _fast firstchar(char *strng, char *delim, int findword);
 
 #endif

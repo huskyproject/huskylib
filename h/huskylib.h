@@ -28,15 +28,15 @@
 
 #ifdef __DOS__
 /* flushasm.asm for DOS, redefined for known implementations in flush.c */
-void pascal far flush_handle2(int fd);  
+void pascal far flush_handle2(int fd);
 #endif
 
 void _fast flush_handle(FILE * fp);
-SMAPI_EXT int _fast fexist(const char *filename);
-SMAPI_EXT long _fast fsize(const char *filename);
-SMAPI_EXT int _fast direxist(const char *directory);
+HUSKYEXT int _fast fexist(const char *filename);
+HUSKYEXT long _fast fsize(const char *filename);
+HUSKYEXT int _fast direxist(const char *directory);
 void _fast tdelay(int);
-SMAPI_EXT int _fast setfsize(int fd, long size);
+HUSKYEXT int _fast setfsize(int fd, long size);
 #ifdef __LITTLE_ENDIAN__
 
 #define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
@@ -46,8 +46,8 @@ SMAPI_EXT int _fast setfsize(int fd, long size);
 
 #else
 
-SMAPI_EXT void put_word(byte *ptr, word value);      /* memory.c */
-SMAPI_EXT void put_dword(byte *ptr, dword value);    /* memory.c */
+HUSKYEXT void put_word(byte *ptr, word value);      /* memory.c */
+HUSKYEXT void put_dword(byte *ptr, dword value);    /* memory.c */
 /*
  *  get_dword
  *
@@ -76,7 +76,7 @@ SMAPI_EXT void put_dword(byte *ptr, dword value);    /* memory.c */
 
 #endif /* __LITTLE_ENDIAN__ */
 
-SMAPI_EXT int  _createDirectoryTree(const char *pathName);
+HUSKYEXT int  _createDirectoryTree(const char *pathName);
 /*DOC
   Input:  a pointer to a \0 terminated string
   Output: 0 if successfull, 1 else
