@@ -47,7 +47,9 @@
 #if defined(__NT__) /* WIN32 version */
 
 #ifndef __MINGW32__
-#  define STRICT
+#   ifndef STRICT
+#       define STRICT 1
+#   endif
 #endif
 #include <windows.h>
 
