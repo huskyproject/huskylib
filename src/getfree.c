@@ -173,7 +173,7 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
     }
     return freeSpace;
 }
-#elif defined(__OS2__)
+#elif defined(__OS2__) && !defined(__EMX__)
 
 #ifdef __WATCOMC__
 #define __IBMC__ 0
@@ -213,7 +213,7 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
   }
 }
 
-#elif defined(__UNIX__)
+#elif defined(__UNIX__) || defined(__EMX__)
 /*
    This was taken from ifmail, and modified a bit for binkd -- mff, 1997
 

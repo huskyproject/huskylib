@@ -301,7 +301,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
       errno=fh;
       return -1;
     }
-#if defined(__UNIX__) /* && !defined(__EMX__) /* EMX is not unix but macro __UNIX__ is predefined */
+#if defined(__UNIX__)
 /*     flock(to,O_EXLOCK); */
     w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     /* try to save file ownership if it is possible */

@@ -74,6 +74,10 @@ void _fast tdelay(int);
 
 #include <os2.h>
 
+#if defined(__EMX__)
+#include <sys/time.h>
+#endif
+
 void _fast tdelay(int msecs)
 {
     DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
@@ -88,7 +92,6 @@ void _fast tdelay(int msecs)
 }
 
 #elif defined(__WIN32__) || (__MINGW32__)
-/* win32/nt not mingw (MS VC, cygwin -mno-cygwin, Borland C/win32, Watcom C)*/
 
 #include <windows.h>
 /*# if defined(__TURBOC__)
@@ -110,7 +113,7 @@ void _fast tdelay(int msecs)
     snooze(msecs*1000l);
 }
 
-#elif defined(__UNIX__) || defined(__DPMI__)
+#elif defined(__UNIX__) || (__DPMI__)
 #include <sys/time.h>
 #include <unistd.h>
 
@@ -118,6 +121,7 @@ void _fast tdelay(int msecs)
 {
     usleep(msecs*1000l);
 }
+
 #elif defined(__WATCOMC__)
 void _fast tdelay(int msecs)
 {
@@ -129,7 +133,6 @@ void _fast tdelay(int msecs)
 #endif
 
 #if defined(__WIN32__) || (__MINGW32__)
-/* win32/nt not mingw (MS VC, cygwin -mno-cygwin, Borland C/win32, Watcom C)*/
 
 void husky_SetTimer(hs_time *timer_ctx)
 {
