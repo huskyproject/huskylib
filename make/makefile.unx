@@ -241,5 +241,7 @@ package: pkg-dir pkg-h pkg-man pkg-readme pkg-bin
 	$(ARCHIVER) $(ARCFLAGS) $(PACKAGENAME) $(PACKAGEBASE)
 
 pkgclean:
-	-$(RM) $(RMOPT) $(PACKAGENAME)
 	-$(RMDIR) $(RMDIROPT) $(PACKAGEBASE)
+
+pkgdistclean: pkgclean
+	-$(RM) $(RMOPT) $(PACKAGENAME)
