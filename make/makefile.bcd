@@ -8,7 +8,7 @@
 ## programs ##
 
 CC=	bcc
-LIBR=	tlib
+AR=	tlib
 ASM=	tasm
 RM=	del
 
@@ -28,14 +28,16 @@ DLLOPT  =
 NAMEOPT	= -e
 # options for $(AR) program
 ARFLAGS	= r
+# options for $(RM) program
+RMFLAGS	=
 
 ## file suffixes ##
 
-C=	.c
-OBJ=	.obj
-LIB=	.lib
-EXE=	.exe
-DLL=
+_C=	.c
+_OBJ=	.obj
+_LIB=	.lib
+_EXE=	.exe
+_DLL=
 
 # Prefix to construct static library name
 LIBPREFIX=
@@ -48,11 +50,7 @@ DLLSUFFIX=
 
 !include makefile.inc
 
-#OBJS1	= calendar$(OBJ) cvtdate$(OBJ) fexist$(OBJ) ffind$(OBJ) genmsgid$(OBJ)
-#OBJS2	= memory$(OBJ) parsenn$(OBJ) patmat$(OBJ) setfsize$(OBJ) strext$(OBJ)
-#OBJS3	= strftime$(OBJ) tdelay$(OBJ)
-
-#TARGETLIB=	huskylib$(LIBSUFFIX)$(LIB)
+#TARGETLIB=	husky$(LIBSUFFIX)$(LIB)
 
 SRCDIR=..\src\
 
@@ -60,11 +58,11 @@ CFLAGS+=-I..\h
 
 # Thunderbirds are go!
 
-{$(SRCDIR)}.c$(OBJ):
+{$(SRCDIR)}$(_C)$(_OBJ):
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) $<
 	$(AR) $(ARFLAGS) $(TARGETLIB) -+$@
 
-{$(SRCDIR)}.asm.obj:
+{$(SRCDIR)}.asm$(_OBJ):
 	$(ASM) $(AFLAGS) $<
 	$(AR) $(ARFLAGS) $(TARGETLIB) -+$@
 
@@ -73,7 +71,7 @@ CFLAGS+=-I..\h
 $(TARGETLIB): $(OBJS)
 
 clean:
-	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean:
 	-$(RM) $(RMOPT) $(TARGETLIB)

@@ -24,11 +24,11 @@ RM	= rm
 
 ## file suffixes ##
 
-C	= .c
-OBJ	= .o
-LIB	= .a
-EXE	= .exe
-DLL	= .dll
+_C	= .c
+_OBJ	= .o
+_LIB	= .a
+_EXE	= .exe
+_DLL	= .dll
 
 ## program options ##
 
@@ -46,6 +46,8 @@ DLLOPT  = -shared
 NAMEOPT	= -o
 # options for $(AR) program
 ARFLAGS	= rs
+# options for $(RM) program
+RMFLAGS	= -f
 
 # Prefix to construct static library name
 LIBPREFIX=lib
@@ -59,8 +61,8 @@ DLLSUFFIX=
 .PHONY:	distclean clean all static dll programs default
 
 default:
-	@echo Run 'make dll' to build dll version \($(DLLTARGET), $(PROGRAMS)\)
-	@echo Run 'make static' to build static version \($(TARGET), $(PROGRAMS)\)
+	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
+	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
 	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
 	@echo Run 'make all' to build all above
 
@@ -89,10 +91,10 @@ static:	$(TARGETLIB)
 dll:	$(TARGETDLL)
 programs:  $(PROGRAMS)
 
-%$(EXE): $(SRC_DIR)%$(C) $(TARGETLIB)
+%$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
 	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
 
-%$(OBJ): $(SRC_DIR)%$(C)
+%$(_OBJ): $(SRC_DIR)%$(_C)
 	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
 
 $(TARGETLIB):	$(OBJS)
@@ -104,7 +106,7 @@ $(TARGETDLL):	$(OBJS)
 
 
 clean:
-	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) *$(_OBJ)
 
 distclean:
 	-$(RM) $(RMOPT) $(TARGETDLL) $(TARGETLIB) $(PROGRAMS)

@@ -23,14 +23,15 @@
 CC=	cc
 AR=	ar
 RANLIB= ranlib
+RM=	rm
 
 ## file suffixes ##
 
-C=	.c
-OBJ=	.o
-LIB=	.a
-DLL=
-EXE=
+_C=	.c
+_OBJ=	.o
+_LIB=	.a
+_DLL=
+_EXE=
 
 ## program options ##
 
@@ -48,6 +49,8 @@ DLLOPT  =
 NAMEOPT	= -o
 # options for $(AR) program
 ARFLAGS	= r
+# options for $(RM) program
+RMFLAGS	= -f
 
 # Prefix to construct static library name
 LIBPREFIX=lib
@@ -65,10 +68,10 @@ CFLAGS	+= -I$(H_DIR) $(DEBUG)
 
 all: $(TARGETLIB)
 
-#%$(EXE): %$(C) $(TARGETLIB)
+#%$(_EXE): %$(_C) $(TARGETLIB)
 #	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
 
-%$(OBJ): $(SRC_DIR)%$(C)
+%$(_OBJ): $(SRC_DIR)%$(_C)
 	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
 
 $(TARGETLIB): $(OBJS)
@@ -76,7 +79,7 @@ $(TARGETLIB): $(OBJS)
 	$(RANLIB) $@
 
 clean:
-	-$(RM) *$(OBJ)
+	-$(RM) $(RMFLAGS) *$(_OBJ)
 
 distclean:
-	-$(RM) $(TARGETLIB)
+	-$(RM) $(RMFLAGS) $(TARGETLIB)
