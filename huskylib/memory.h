@@ -30,8 +30,13 @@
 #ifndef HUSKY_MEMORY_H__
 #define HUSKY_MEMORY_H__
 
+/* huskylib: compiler.h */
+#include "compiler.h"
+
+/* huskylib headers */
 #include "huskyext.h"
 
+/***  Declarations & defines  ***********************************************/
 
 /* Safety free malloc'ed memory chunk */
 #define nfree(a) { if (a != NULL) { free(a); a = NULL; } }

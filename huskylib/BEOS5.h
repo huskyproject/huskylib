@@ -1,4 +1,5 @@
 /* $Id$
+ *  GNU C for BeOS compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_BEOS5_H
 #define HUSKY_BEOS5_H
+
+#ifndef __GNUC__
+  #error This file may be used only with GNU C !
+#endif
+
+#ifndef __BEOS__
+  #error This file may be used only with GNU C on BeOS
+#endif
+
 
 #  define _XPENTRY
 #  define _intr

@@ -59,7 +59,9 @@
 /* huskylib headers */
 #include <log.h>
 #include <temp.h>
-
+#include <memory.h>
+#include <xstr.h>
+#include <strext.h>
 
 /***  Declarations & defines  ***********************************************/
 

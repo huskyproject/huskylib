@@ -1,4 +1,5 @@
 /* $Id$
+ *  Watcom C for Win32 (NT) compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,14 @@
 
 #ifndef HUSKY_WCW_H
 #define HUSKY_WCW_H
+
+#ifndef __WATCOMC__
+  #error This file may be used only with Watcom C !
+#endif
+#if !defined(__WIN32__) && !defined(__NT__)
+  #error This file may be used only with Watcom C Win32/NT target !
+#endif
+
 
 #    define _stdc
 #    define _intr

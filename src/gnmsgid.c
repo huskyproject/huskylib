@@ -1,5 +1,5 @@
 /* $Id$
- *  standalone msgid generator: print new msgid to stdout
+ *  Standalone msgid generator: print new msgid to stdout
  *
  *  Copyright 2003 by Alexander Reznikov, 2:4600/220@fidonet,
  *                                        homebrewer@yandex.ru

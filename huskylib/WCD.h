@@ -1,4 +1,5 @@
 /* $Id$
+ *  Watcom C for DOS compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_WCD_H
 #define HUSKY_WCD_H
+
+#ifndef __WATCOMC__
+  #error This file may be used only with Watcom C !
+#endif
+
+#ifndef __DOS__
+  #error This file may be used only with Watcom C 16 bit DOS target !
+#endif
+
 
 #  define _stdc      cdecl
 #  define _intr      interrupt far

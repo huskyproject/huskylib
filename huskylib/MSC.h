@@ -1,4 +1,5 @@
 /* $Id$
+ *  Microsoft C compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,10 @@
 
 #ifndef HUSKY_MSC_H
 #define HUSKY_MSC_H
+
+#ifndef _MSC_VER
+#  error This file used only with Microsoft C or Microsoft QuickC for MS-DOS or OS/2 !
+#endif
 
 #  ifndef __LITTLE_ENDIAN__
 #    define __LITTLE_ENDIAN__

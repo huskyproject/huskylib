@@ -1,10 +1,4 @@
-/*
- * HUSKYLIB: common defines, types and functions for HUSKY
- *
- * This is part of The HUSKY Fidonet Software project:
- * see http://husky.sourceforge.net for details
- *
- * $Id$
+/* $Id$
  *  Provides functions to pattern matching. Taken from sh sources
  *
  * Copyright (c) 1999-2003

@@ -1,4 +1,5 @@
 /* $Id$
+ *  Turbo C and Borland C for Windows95/NT compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_BCW_H
 #define HUSKY_BCW_H
+
+
+#ifndef __TURBOC__
+  #error This file may be used only with Turbo C and Borland C !
+#endif
+
+#ifndef __WIN32__
+  #error This file may be used only with Windows-32bit version of Turbo C or Borland C !
+#endif
 
 #  define _stdc cdecl
 #  define _intr

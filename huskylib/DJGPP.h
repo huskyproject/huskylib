@@ -1,4 +1,5 @@
 /* $Id$
+ *  DJGPP version of GNU C on DOS compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_DJGPP_H
 #define HUSKY_DJGPP_H
+
+#ifndef __GNUC__
+  #error This file may be used only with GNU C !
+#endif
+
+#ifndef __DJGPP__
+  #error This file may be used only with DJGPP version of GNU C on DOS !
+#endif
+
 
 #ifndef __LITTLE_ENDIAN__
 #  define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */

@@ -1,4 +1,5 @@
 /* $Id$
+ *  Watcom C compiler-specific declarations for any platform
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,11 @@
 
 #ifndef HUSKY_WATCOMC_H
 #define HUSKY_WATCOMC_H
+
+#ifndef __WATCOMC__
+  #error This file may be used only with Watcom C !
+#endif
+
 
 #  define mode_t int
 

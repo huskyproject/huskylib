@@ -1,4 +1,5 @@
 /* $Id$
+ * Mingw32 and cygwin in mingw-mode compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -33,6 +34,15 @@
 
 #ifndef HUSKY_MINGW32_H
 #define HUSKY_MINGW32_H
+
+#ifndef __GNUC__
+  #error This file may be used only with GNU C !
+#endif
+
+#ifndef __MINGW32__
+  #error This file may be used only with MSys/MinGW (GNU C) on unix-like OS or Cygwin (GNU C) on Win32 !
+#endif
+
 
 #ifndef __LITTLE_ENDIAN__
 #  define __LITTLE_ENDIAN__

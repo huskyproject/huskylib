@@ -1,4 +1,5 @@
 /* $Id$
+ *  GNU C on many unix-like OS : compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_UNIX_H
 #define HUSKY_UNIX_H
+
+#ifndef __GNUC__
+  #error This file may be used only with GNU C !
+#endif
+
+#ifndef __UNIX__
+  #error This file may be used only with GNU C on unix-like OS !
+#endif
+
 
 #  define _stdc
 #  define _intr

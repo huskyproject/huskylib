@@ -1,4 +1,5 @@
 /* $Id$
+ *  Turbo C and Borland C for DOS compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,14 @@
 
 #ifndef HUSKY_BCD_H
 #define HUSKY_BCD_H
+
+#ifndef __TURBOC__
+  #error This file may be used only with Turbo C and Borland C !
+#endif
+
+#ifndef __DOS__
+  #error This file may be used only with DOS version of Turbo C or Borland C !
+#endif
 
    /* for BC++ 3.1 */
 #  define strcasecmp stricmp

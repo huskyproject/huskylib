@@ -1,4 +1,5 @@
 /* $Id$
+ *  SAS C for AmigaDOS compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -26,6 +27,11 @@
 /* SAS C for AmigaDOS defines ************************************/
 #ifndef HUSKY_SASC_H
 #define HUSKY_SASC_H
+
+#ifndef __SASC__
+  #error This file may be used only with SAS C for AmigaDOS !
+#endif
+
 
 #define _stdc
 #define _intr

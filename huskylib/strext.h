@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provide extra set of functions to operate with strings.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -26,6 +27,10 @@
 #ifndef HUSKY_STREXT_H__
 #define HUSKY_STREXT_H__
 
+/* huskylib: compiler.h */
+#include "compiler.h"
+
+/* huskylib headers */
 #include "huskyext.h"  /* compiler see directory of this .h file */
 
 #ifdef __cplusplus

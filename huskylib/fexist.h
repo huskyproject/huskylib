@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides functions to file and directory existence check
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -26,6 +27,7 @@
 #ifndef HUSKY_FEXIST_H__
 #define HUSKY_FEXIST_H__
 
+#include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this .h file */
 
 HUSKYEXT int _fast fexist(const char *filename);

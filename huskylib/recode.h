@@ -1,7 +1,5 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * recode.h : charsets translating routines declarations
+/* $Id$
+ *  Provides declarations to charsets translating routines
  *
  * Compiled from hpt/recode
  * by Stas Degteff <g@grumbler.org>, 2:5080/102@fidonet
@@ -16,41 +14,65 @@
  *                        Fido:     2:5000/117
  *                        Internet: sackett@mail.ru
  *
- * This file is part of FIDOCONFIG library (part of the Husky FIDOnet
- * software project)
+ *  Latest version may be foind on http://husky.sourceforge.net
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2, or (at your option)
- * any later version.
  *
- * FIDOCONFIG library is distributed in the hope that it will be useful,
+ * HUSKYLIB: common defines, types and functions for HUSKY
+ *
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with FIDOCONFIG library; see the file COPYING.  If not, write
- * to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org
- *****************************************************************************
- * $Id$
+ * See also http://www.gnu.org, license may be found here.
  */
 
 #ifndef HUSKY_RECODE_H
 #define HUSKY_RECODE_H
 
+/* huskylib: compiler.h */
+#include "compiler.h"
+
+/* huskylib headers */
+#include "huskyext.h"
+
+/***  Declarations & defines  ***********************************************/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "huskyext.h"
-
+/* Allocate and initialise charset tables
+ */
 HUSKYEXT VOID initCharsets(VOID);
+
+/* Release memory, allocated by initCharsets()
+ */
 HUSKYEXT VOID doneCharsets(VOID);
+
+/* Translate using "intab" table
+ */
 HUSKYEXT VOID recodeToInternalCharset( CHAR *string);
+
+/* Translate using "outtab" table
+ */
 HUSKYEXT VOID recodeToTransportCharset( CHAR *string);
+
+/* Read specified translate table from file
+ */
 HUSKYEXT void getctab(CHAR *dest,  UCHAR *charMapFileName);
 
 HUSKYEXT CHAR *intab;

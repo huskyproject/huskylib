@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides compiler-independent functions like DOS findfirst() and findnext()
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

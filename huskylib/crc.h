@@ -1,36 +1,39 @@
-/******************************************************************************
- * FIDOCONFIG --- library for fidonet configs
- ******************************************************************************
- * crc.h : crc calculation routines (declarations)
+/* $Id$
+ *  Provides crc calculation routines
+ *  Collected & written by Stas Degteff <g@grumbler.org> 2:5080/102
+ *  (c) Stas Degteff
+ *  (c) HUSKY Developers Team
  *
- * Collected by Stas Degteff <g@grumbler.org> 2:5080/102
+ * Latest version may be foind on http://husky.sourceforge.net
  *
- * This file is part of FIDOCONFIG library (part of the Husky FIDOnet
- * software project)
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2, or (at your option)
- * any later version.
+ * HUSKYLIB: common defines, types and functions for HUSKY
  *
- * FIDOCONFIG library is distributed in the hope that it will be useful,
+ * This is part of The HUSKY Fidonet Software project:
+ * see http://husky.sourceforge.net for details
+ *
+ *
+ * HUSKYLIB is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * HUSKYLIB is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with FIDOCONFIG library; see the file COPYING.  If not, write
- * to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; see file COPYING. If not, write to the
+ * Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * See also http://www.gnu.org
- *****************************************************************************
- * $Id$
+ * See also http://www.gnu.org, license may be found here.
  */
 
 #ifndef HUSKY_CRC_H
 #define HUSKY_CRC_H
 
-#include "typesize.h"
+#include "compiler.h"
 #include "huskyext.h"
 
 #ifdef __cplusplus

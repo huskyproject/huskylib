@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides date format converters to and from FTN usable.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

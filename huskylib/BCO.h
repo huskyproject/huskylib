@@ -1,4 +1,5 @@
 /* $Id$
+ *  Turbo C and Borland C for OS/2 compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,16 @@
 
 #ifndef HUSKY_BCO_H
 #define HUSKY_BCO_H
+
+
+#ifndef __TURBOC__
+  #error This file may be used only with Turbo C and Borland C !
+#endif
+
+#ifndef __OS2__
+  #error This file may be used only with OS/2 version of Turbo C or Borland C !
+#endif
+
 
 #  define _stdc cdecl
 #  define _intr

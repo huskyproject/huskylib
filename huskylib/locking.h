@@ -1,4 +1,6 @@
 /* $Id$
+ *  Provides declarations for compiler- and platform-independent
+ *  file and record locking.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -26,6 +28,7 @@
 #ifndef HUSKY_LOCKING_H__
 # define HUSKY_LOCKING_H__
 
+#include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this .h file */
 
 /* file locking implementation

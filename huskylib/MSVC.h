@@ -1,4 +1,5 @@
 /* $Id$
+ *  Microsoft Visual C/C++ compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

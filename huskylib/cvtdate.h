@@ -1,4 +1,5 @@
 /* $Id$
+ *  Provides date format converters to and from FTN usable.
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -26,7 +27,8 @@
 #ifndef HUSKY_CVTDATE_H__
 #define HUSKY_CVTDATE_H__
 
-#include "huskyext.h"  /* compiler see directory of this .h file */
+#include "compiler.h"
+#include "huskyext.h"  /* compiler see directory of this (cvtdate.h) file */
 
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
 /*typedef unsigned short bits;*/

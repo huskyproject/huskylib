@@ -1,4 +1,5 @@
 /* $Id$
+ *  Compiler-specific declarations for all known platforms and compilers
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *

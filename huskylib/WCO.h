@@ -1,4 +1,5 @@
 /* $Id$
+ *  Watcom C for OS/2 compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,14 @@
 
 #ifndef HUSKY_WCO_H
 #define HUSKY_WCO_H
+
+#ifndef __WATCOMC__
+  #error This file may be used only with Watcom C !
+#endif
+#if !defined(__OS2__) && !defined(__OS2V2__)
+  #error This file may be used only with Watcom C OS/2 target !
+#endif
+
 
 #    define _stdc
 #    define _intr

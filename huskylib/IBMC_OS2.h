@@ -1,4 +1,5 @@
 /* $Id$
+ *  IBM C/Set++ for OS/2 compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,10 @@
 
 #ifndef HUSKY_IBMC_OS2_H
 #define HUSKY_IBMC_OS2_H
+
+#ifndef __IBMC__
+  #error This file may be used only with IBM C/Set++ and IBM VisualAge C/C++ for OS/2 !
+#endif
 
 #  define _stdc
 #  define _intr

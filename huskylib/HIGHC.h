@@ -1,4 +1,5 @@
 /* $Id$
+ *  MetaWare High C/C++ for OS/2 compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -28,8 +29,12 @@
 #ifndef HUSKY_HIGHC_H
 #define HUSKY_HIGHC_H
 
+#ifndef __HIGHC__
+  #  error This file may be used only with MetaWare High C/C++ for OS/2 !
+#endif
+
 #ifndef __LITTLE_ENDIAN__   
-#warning High C exists for i386 only? I don't known.
+#warning High C exists for i386 only? I don't known. (Stas Degteff)
 #  define __LITTLE_ENDIAN__ /* High C exists for i386 only? */
 #endif
 

@@ -1,4 +1,5 @@
 /* $Id$
+ * EMX (GNU C on OS/2) compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,15 @@
 
 #ifndef HUSKY_EMX_H
 #define HUSKY_EMX_H
+
+#ifndef __GNUC__
+  #error This file may be used only with GNU C !
+#endif
+
+#ifndef __EMX__
+  #error This file may be used only with EMX (GNU C) on OS/2 !
+#endif
+
 
 #ifndef __LITTLE_ENDIAN__
 #  define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */

@@ -1,4 +1,5 @@
 /* $Id$
+ *  Turbo C and Borland C compiler-specific declarations for any platform
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,10 @@
 
 #ifndef HUSKY_BORLANDC_H
 #define HUSKY_BORLANDC_H
+
+#ifndef __TURBOC__
+  #error This file may be used only with Turbo C and Borland C !
+#endif
 
 #  define HAS_MALLOC_H 1      /* use "#include <malloc.h>" for malloc() etc. */
 #  define HAS_DIR_H    1      /* use "#include <dir.h>" for findfirst() etc. */

@@ -1,4 +1,5 @@
 /* $Id$
+ *  Watcom C for DOS-DPMI (DOS4G) compiler-specific declarations
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
@@ -27,6 +28,14 @@
 
 #ifndef HUSKY_WCX_H
 #define HUSKY_WCX_H
+
+#ifndef __WATCOMC__
+  #error This file may be used only with Watcom C !
+#endif
+#if defined(__DOS4G__)
+  #error This file may be used only with Watcom C DOS4G target !
+#endif
+
 
 #  define _stdc      cdecl
 #  define _intr      interrupt far

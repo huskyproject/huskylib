@@ -1,7 +1,7 @@
-/* vixie.h - include file to define general vixie-type things
- * v1.0 vix 21jun86 [broken out of as.h]
+/* $Id$
+ *  include file to define general vixie-type things
+ *  v1.0 vix 21jun86 [broken out of as.h]
  *
- * $Id$
  *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
