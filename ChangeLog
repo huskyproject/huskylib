@@ -1,3 +1,7 @@
+2003-03-29 Saturday 20:32  d_sergienko
+
+	* src/strftime.c (1.8): use strUpper() instead of strupr()
+
 2003-03-28 Friday 11:08  stas_degteff
 
 	* src/ioutil.c (1.5): Fix return code value for cmdcall(): divide
