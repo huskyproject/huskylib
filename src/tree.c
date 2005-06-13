@@ -44,18 +44,21 @@
 #define DLLEXPORT
 #include <huskyext.h>
 
-/* huskylib headers */
-#include <vixie.h>
-#include <tree.h>
-#include <memory.h>
-
 /***  Declarations & defines  ***********************************************/
 
-#if defined(DEBUG) /*|| defined(_DEBUG)*/
+/* DEBUG */
+#if DEBUG_TREE==1
+#define MAIN
+#define DVIXIE "tree.c"
 #define		PRMSG(msg)	printf("DEBUG: '%s'\n", msg);
 #else
 #define		PRMSG(msg)
 #endif
+
+/* huskylib headers */
+#include <vixie.h>
+#include <tree.h>
+#include <memory.h>
 
 static unsigned long tr_count;
 

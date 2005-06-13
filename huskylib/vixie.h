@@ -31,7 +31,7 @@
 There are two macros you can define before including this file which can
 change the things defined by this file.
 
-DEBUG:  if defined, will cause enter/exit messages to be printed by the
+DVIXIE: if defined, will cause enter/exit messages to be printed by the
         ENTER/EXIT/EXITV macros.  If not defined, causes ENTER to do nothing,
         and EXIT/EXITV to generate 'return' without any messages.
 
@@ -52,26 +52,26 @@ MAIN:   Should be defined for a program containing a main() function which
                                                 /*--- debugging stuff ---*/
 #define MAXPROC 256
 
-#ifdef DEBUG
+#ifdef DVIXIE
 #define ENTER(proc) { \
                         APC_PROCS[I_PROC] = proc; \
                         printf("ENTER(%d:%s.%s)\n", \
-                                I_PROC, DEBUG, APC_PROCS[I_PROC]); \
+                                I_PROC, DVIXIE, APC_PROCS[I_PROC]); \
                         I_PROC++; \
                 }
 #define EXIT(value) { \
                         I_PROC--; \
                         printf("EXIT(%d:%s.%s)\n", \
-                                I_PROC, DEBUG, \
+                                I_PROC, DVIXIE, \
                                 APC_PROCS[I_PROC]); \
                         return value; \
                 }
 #define EXITV { \
                         I_PROC--; \
                         printf("EXITV(%d:%s.%s)\n", \
-                                I_PROC, DEBUG, \
+                                I_PROC, DVIXIE, \
                                 APC_PROCS[I_PROC]); \
-                        return value; \
+                        return; \
                 }
 #else
 #define ENTER(proc)
