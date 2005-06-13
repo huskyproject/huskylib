@@ -441,7 +441,7 @@ add_to_cache:
         adaptcase_cache_position = l;
 
 #ifdef TRACECACHE
-        fprintf  (ftrc, "Sucessfully added cache entry.\n");
+        fprintf  (ftrc, "Successfully added cache entry.\n");
 #endif
         goto start_over;
 
