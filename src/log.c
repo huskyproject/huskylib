@@ -72,6 +72,7 @@ static char *logFileDir = NULL;
 static int   logEchoToScreen;
 static char *logLevels = NULL;
 static char *screenLogLevels = NULL;
+static char *logDateFormat = NULL;
 
 /***  Implementation  *******************************************************/
 
@@ -83,6 +84,10 @@ void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels,
     logLevels = ext_logLevels;
     screenLogLevels = ext_screenLogLevels;
     return;
+}
+
+void setLogDateFormat(char *_logDateFormat) {
+	logDateFormat = _logDateFormat;
 }
 
 s_log *openLog(char *fileName, char *appN)
@@ -138,7 +143,20 @@ s_log *openLog(char *fileName, char *appN)
    /* make first line of log */
    currentTime = time(NULL);
    locTime = localtime(&currentTime);
+#if 1
+   if (logDateFormat) {
+     char logDate[64];
+     int  i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
+     for (i = 0; i < logDateLen; i++) logDate[i] = '-';
+     logDate[i] = '\0';
+     fputs("--", husky_log->logFile);
+     fputs(logDate, husky_log->logFile);
+     fputs(" ", husky_log->logFile);
+   }
+   else fputs("----------  ", husky_log->logFile);
+#else
    fprintf(husky_log->logFile, "----------  ");
+#endif
    fprintf( husky_log->logFile, "%3s %02u %3s %02u, %s\n",
             weekday_ab[locTime->tm_wday], locTime->tm_mday,
             months_ab[locTime->tm_mon], locTime->tm_year%100, husky_log->appName);
@@ -175,12 +193,21 @@ void w_log(char key, char *logString, ...)
 	}else screen=1;
 
 	if (log || screen) {
+		char logDate[64];
+		int logDateLen;
 		currentTime = time(NULL);
+#if 1
 		locTime = localtime(&currentTime);
-
+   		logDateLen = strftime(logDate, 63, logDateFormat ? logDateFormat : "%H:%M:%S ", locTime);
+   		logDate[logDateLen] = '\0';
+#endif
 		if (log) {
+#if 1
+			fprintf(husky_log->logFile, "%c %s ", key, logDate);
+#else
             fprintf(husky_log->logFile, "%c %02u:%02u:%02u  ",
 					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
+#endif
 			va_start(ap, logString);
 			vfprintf(husky_log->logFile, logString, ap);
 			va_end(ap);
@@ -189,8 +216,12 @@ void w_log(char key, char *logString, ...)
 		}
 
 		if (screen) {
+#if 1
+			printf("%c %s  ", key, logDate);
+#else
             printf("%c %02u:%02u:%02u  ",
 					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
+#endif
 			va_start(ap, logString);
 			vprintf(logString, ap);
 			va_end(ap);

@@ -174,6 +174,13 @@ HUSKYEXT void initLog(char *fc_logFileDir, int fc_logEchoToScreen, char *fc_logL
   FZ: copy fidoconfig values into log processing
 */
 
+HUSKYEXT void setLogDateFormat(char *_logDateFormat);
+/*DOC
+  Input: log date format as strftime() third argument
+  Output: none;
+  FZ: copy fidoconfig value logDateFormat into log processing
+*/
+
 HUSKYEXT s_log *openLog(char *fileName, char *appN);
 /*DOC
   Input:  fileName is a valid name for a file.
