@@ -236,7 +236,7 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 {
     char *ErrorMsg;
 
-    // avoid recursive call of the exception filter
+    /* avoid recursive call of the exception filter */
     SetUnhandledExceptionFilter(UnhandledExceptionFilter);
 
     switch (ExceptionInfo->ExceptionRecord->ExceptionCode)
