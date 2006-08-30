@@ -270,7 +270,7 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
         ErrorMsg,
         ExceptionInfo->ExceptionRecord->ExceptionAddress);
     exit(1);
-    return 0; // compiler paranoia
+    return 0; /* compiler paranoia */
 }
 
 #endif
