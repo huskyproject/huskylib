@@ -214,7 +214,7 @@ dword filecrc32(const char *filename)
   if (buffer == NULL) return 0L;
 
   crc = 0xFFFFFFFFUL;
-  while (1)
+  for (;;)
   {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
@@ -275,7 +275,7 @@ word filecrc16(const char *filename)
   if (buffer == NULL) return 0;
 
   crc = 0x0000;
-  while (1)
+  for (;;)
   {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
@@ -335,7 +335,7 @@ word filesum16(const char *filename)
 
   buffer = smalloc(CRC_BUFFER_SIZE);
 
-  while (1)
+  for (;;)
   {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
