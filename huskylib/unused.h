@@ -37,7 +37,9 @@
 /***  Declarations & defines  ***********************************************/
 
 #ifndef unused
-#if defined(PACIFIC) || defined(_MSC_VER) || defined(__GNUC__)
+#if defined(_MSC_VER)
+#define unused(x) x
+#elif defined(PACIFIC) || defined(__GNUC__)
 #define unused(x)
 #elif defined(__HIGHC__)
 #define unused(x) ((x) = (x))

@@ -38,6 +38,7 @@
 
 /* huskylib: compiler.h */
 #include <compiler.h>
+#include <unused.h>
 
 
 /* huskylib headers */
@@ -547,6 +548,9 @@ void tree_mung(tree **ppr_tree, int (*pfi_uar)(char *))
 
 static int countEach(char *pc_data)
 {
+
+   unused(pc_data);
+
    ENTER("count")
    tr_count++;
    EXIT(TRUE)
