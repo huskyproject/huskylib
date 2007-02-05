@@ -64,6 +64,7 @@
 #define LL_LINKING      '3'      /* Link messagebase */
 #define LL_SCANNING 	'4'      /* Scan messagebase */
 #define LL_POSTING      '5'      /* Post message */
+#define LL_CARBON       '5'      /* Carbon operations */
 #define LL_EXEC  	'6'      /* system() & exec() */
 #define LL_BUNDLE	'7'      /* Bundle operations */
 #define LL_OUTBOUND     '7'      /* Outbound operations */
