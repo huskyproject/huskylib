@@ -94,6 +94,8 @@
 
 #include <windows.h>
 
+/* Return value is free space in kiB */
+/* Note: if function can't get actual value of free space is assumes maximum possible value */
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
     FARPROC pGetDiskFreeSpaceEx = NULL;
@@ -115,6 +117,7 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
             w_log (LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
         } else {
+            i64FreeBytesToCaller.QuadPart /= 1024;
             if( i64FreeBytesToCaller.QuadPart < unsigned_long_max )
                freeSpace = (unsigned long)i64FreeBytesToCaller.QuadPart;
             /*  Process GetDiskFreeSpaceEx results. */
@@ -164,8 +167,9 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
             w_log (LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
         } else {
-            /* return (unsigned long) (BPS * SPC * FC); */
+            /* return (unsigned long) (BPS * SPC * FC / 1024); */
             if (BPS * SPC >= 1024)
+				/* Note: 4 TiB barrier */
                 freeSpace = ((BPS * SPC / 1024l) * FC);
             else
                 freeSpace = (FC / (1024 / (BPS * SPC)));
