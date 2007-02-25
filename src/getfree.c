@@ -292,7 +292,10 @@ printf("df.avail_clusters=%x\n", df.avail_clusters);
 printf("df.sectors_per_cluster=%x\n",   df.sectors_per_cluster);
 printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
 #endif
-  return df.avail_clusters * df.sectors_per_cluster * df.bytes_per_sector;
+  if (df.sectors_per_cluster * df.bytes_per_sector >= 1024)
+    return ((df.sectors_per_cluster * df.bytes_per_sector / 1024l) * df.avail_clusters);
+  else
+    return (df.avail_clusters / (1024l / (df.sectors_per_cluster * df.bytes_per_sector)));
 }
 
 #elif defined(__DJGPP__) /* without DOS Fn's error ckeck */
@@ -314,7 +317,10 @@ printf("df.df_avail=%x\n", df.df_avail);
 printf("df.df_sclus=%x\n",   df.df_sclus);
 printf("df.df_bsec=%x\n",  df.df_bsec);
 #endif
-  return df.df_avail * df.df_bsec * df.df_sclus;
+  if (df.df_bsec * df.df_sclus >= 1024)
+    return ((df.df_bsec * df.df_sclus / 1024l) * df.df_avail);
+  else
+    return (df.df_avail / (1024l / (df.df_bsec * df.df_sclus)));
 }
 
 #elif defined(__DOS__) /* call int 0x21 DOS Fn 0x36 */
@@ -364,7 +370,7 @@ printf("out.x.cx=%x bytes per sector\n",out.x.cx);
 #endif
    if((out.x.ax & 0xffff) == 0xffff )
      return 0; /* bad drive number in DL */
-   return (out.x.ax & 0xffff) * out.x.bx * out.x.cx; /* OK */
+   return (out.x.ax & 0xffff) * out.x.bx * out.x.cx / 1024; /* OK */
   #endif
 
 }
