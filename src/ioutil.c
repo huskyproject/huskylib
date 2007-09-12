@@ -80,9 +80,9 @@ int fputUINT16(FILE *out, word data)
 {
   unsigned char dummy;
 
-  dummy = data % 256;        /*  write high Byte */
+  dummy = (unsigned char)(data % 256);        /*  write high Byte */
   fputc(dummy, out);
-  dummy = data / 256;        /*  write low Byte */
+  dummy = (unsigned char)(data / 256);        /*  write low Byte */
   return fputc(dummy, out);
 }
 
@@ -439,7 +439,7 @@ int cmdcall(const char *cmd)
   int signal;
   char **list;
 
-  if( (list = mk_lst(cmd)) ) {
+  if( (list = mk_lst(cmd)) != NULL ) {
     w_log(LL_DEBUGV, "spawnvp(P_WAIT, %s, ...)", list[0] );
 #if defined(__WATCOMC__) /*|| defined(__MINGW32__)*/
     cmdexit = spawnvp(P_WAIT, list[0], (const char * const *)list);
@@ -450,7 +450,7 @@ int cmdcall(const char *cmd)
     nfree(list);
   }
 
-  if( (signal=(cmdexit & 0xff)) ) /* system error! */
+  if( (signal=(cmdexit & 0xff)) != 0 ) /* system error! */
     w_log(LL_ERROR, "Command execute error (spawnwp()): signal %i (Run command '%s')", signal, cmd);
   return (cmdexit & 0xFF00)>>8;   /* return code */
 }
@@ -552,10 +552,10 @@ char *OS_independed_basename(const char *pathname)
 { register char *fname=NULL, *pname=(char*)pathname;
 
   /* Process Unix-style, result to pathname */
-  if( (fname = strrchr(pname,'/')) ) pname = ++fname;
+  if( (fname = strrchr(pname,'/')) != NULL ) pname = ++fname;
 
   /* Process DOS-style */
-  if( (fname = strrchr(pname,'\\')) ) ++fname;
+  if( (fname = strrchr(pname,'\\')) != NULL ) ++fname;
   else fname = pname;
 
   return fname;
@@ -568,7 +568,7 @@ char *OS_independed_basename(const char *pathname)
 char    *GetDirnameFromPathname(const char* pathname)
 {
   char *sp=NULL, *rp=NULL;
-  register unsigned short lll;
+  register int lll;
 
   sp = strrchr(pathname,PATH_DELIM);
   if( sp ){

@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>             /* for memcpy */
+#include <assert.h>
 
 /* huskylib headers */
 #include <compiler.h>
@@ -128,10 +129,23 @@ union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo 
 
 static void print02d(char **str, int i)
 {
-  if(str && *str)
+  if(!(str && *str))
   {
-    *(*str)++=i/10+'0';
-    *(*str)++=i%10+'0';
+    assert(0); /* for debug version */
+    return;
+  }
+
+  if(i >= 100 || i < 0)
+  {
+    assert(0); /* for debug version */
+    /* for release version */
+    *(*str)++='X';
+    *(*str)++='X';
+  } 
+  else
+  {
+    *(*str)++=(char)(i/10+'0');
+    *(*str)++=(char)(i%10+'0');
   }
 }
 

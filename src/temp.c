@@ -88,13 +88,13 @@ int MKSTEMPS( char *tempfilename )
            break;
          *pp = '.';
          fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
-     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename) || 1) );
+     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
    }else{
      do{
          if( !mktemp(ttt) )
            break;
          fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
-     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename) || 1) );
+     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
    }
    if(fd!=-1) strcpy(tempfilename,ttt);
    nfree(ttt);
