@@ -38,7 +38,7 @@
 
 #ifndef unused
 #if defined(_MSC_VER)
-#define unused(x) x
+#define unused(x) ((void)(x))
 #elif defined(PACIFIC) || defined(__GNUC__)
 #define unused(x)
 #elif defined(__HIGHC__)
