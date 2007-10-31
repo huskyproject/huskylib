@@ -39,10 +39,10 @@
 /*#include "dirlayer.h" Don't include this file to prevent conflicts, please!!! */
 #include "fexist.h"
 #include "ffind.h"
+#include "ftnaddr.h"
 #include "locking.h"
 #include "log.h"
 #include "memory.h"
-#include "parsenn.h"
 #include "recode.h"
 #include "strext.h"
 #include "temp.h"
