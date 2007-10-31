@@ -26,10 +26,10 @@ VER	= $(VERH).$(VERPATCH)
 OBJS1	= adcase$(_OBJ) calendar$(_OBJ) cmpfname$(_OBJ) crc$(_OBJ) cvtdate$(_OBJ)
 OBJS2	= dirlayer$(_OBJ) fexist$(_OBJ) ffind$(_OBJ) genmsgid$(_OBJ)
 OBJS3	= genverst$(_OBJ) getfree$(_OBJ) ioutil$(_OBJ) log$(_OBJ) locking$(_OBJ)
-OBJS4	= mapfile$(_OBJ) memory$(_OBJ) qksort$(_OBJ) parsenn$(_OBJ)
+OBJS4	= mapfile$(_OBJ) memory$(_OBJ) qksort$(_OBJ)
 OBJS5   = patmat$(_OBJ) recode$(_OBJ) setfsize$(_OBJ) strext$(_OBJ)
 OBJS6   = strftime$(_OBJ) temp$(_OBJ) tdelay$(_OBJ) tree$(_OBJ) version$(_OBJ)
-OBJS7   = xstr$(_OBJ)
+OBJS7   = xstr$(_OBJ) ftnaddr$(_OBJ)
 
 OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
 
@@ -37,9 +37,9 @@ OBJS	= $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
 
 HEADERS1= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
 HEADERS2= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
-HEADERS3= calendar.h compiler.h crc.h cvtdate.h dirlayer.h
+HEADERS3= calendar.h compiler.h crc.h cvtdate.h dirlayer.h  ftnaddr.h
 HEADERS4= fexist.h ffind.h huskyext.h huskylib.h log.h locking.h memory.h
-HEADERS5= parsenn.h recode.h strext.h temp.h tree.h typesize.h
+HEADERS5= recode.h strext.h temp.h tree.h typesize.h
 HEADERS6= unused.h vixie.h xstr.h
 
 HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4) $(HEADERS5) $(HEADERS6)
