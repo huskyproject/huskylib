@@ -34,7 +34,7 @@ all: $(TARGETLIB) $(PROGRAMS)
 endif
 
 _SRC_DIR = src/
-_H_DIR   = huskylib/
+_H_DIR   = huskylib
 
 %$(_OBJ): $(_SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(CDEFS) $(_SRC_DIR)$*.c
@@ -94,7 +94,7 @@ install-h-dir: FORCE
 	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(_H_DIR)
 
 %.h: FORCE
-	-$(INSTALL) $(IIOPT) $(_H_DIR)$@ $(INCDIR)$(DIRSEP)$(_H_DIR)
+	-$(INSTALL) $(IIOPT) $(_H_DIR)$(DIRSEP)$@ $(INCDIR)$(DIRSEP)$(_H_DIR)
 
 install-h: install-h-dir $(HEADERS)
 

@@ -110,6 +110,10 @@
 #    endif
 #  endif
 
+#  ifndef LONG_MAX
+#    include <limits.h>
+#  endif
+
 #  include <fcntl.h>
 #  ifndef O_BINARY
 #   define O_BINARY 0 /* O_BINARY flag has no effect under UNIX */
