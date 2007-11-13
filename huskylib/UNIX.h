@@ -189,7 +189,7 @@ typedef signed char sbyte;
 typedef unsigned short word;
 typedef signed short sword;
 
-#ifdef __ALPHA__    /* add other 64 bit systems here */
+#if defined(__ALPHA__) || defined(__x86_64__)    /* add other 64 bit systems here */
 typedef unsigned int dword;
 typedef signed   int sdword;
 #else             /* 32 and 16 bit machines */
@@ -214,7 +214,7 @@ typedef   signed int        hINT32;              /*  4 bytes */
 typedef   signed int       hSINT32;              /*  4 bytes */
 typedef unsigned int       hUINT32;              /*  4 bytes */
 
-#ifdef __ALPHA__    /* add other 64 bit systems here */
+#if defined(__ALPHA__) || defined(__x86_64__)      /* add other 64 bit systems here */
   typedef   signed long       hINT64;              /*  4 bytes */
   typedef   signed long      hSINT64;              /*  4 bytes */
   typedef unsigned long      hUINT64;              /*  4 bytes */
