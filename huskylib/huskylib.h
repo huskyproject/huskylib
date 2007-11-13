@@ -28,11 +28,16 @@
 
 /* standard headers */
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 /* huskylib headers */
 #include "compiler.h"
 #include "huskyext.h"
+
+#ifdef __MSVC__
+#include <crtdbg.h>
+#endif
 #include "calendar.h"
 #include "crc.h"
 #include "cvtdate.h"
