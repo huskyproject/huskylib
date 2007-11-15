@@ -104,7 +104,7 @@ typedef          void       VOID;
 #endif
 #endif                                          /*  #if defined(__EMX__) */
 
-#if (defined(__linux__) && !(defined(__alpha) || defined(__x86_64__))) || defined(__FreeBSD__) || defined(__NetBSD__)|| defined(__DJGPP__) || defined(__BEOS__) || defined(__OpenBSD__) || defined(__CYGWIN__) || defined(__QNXNTO__)
+#if (defined(__linux__) && !(defined(__alpha) || defined(__X86_64__))) || defined(__FreeBSD__) || defined(__NetBSD__)|| defined(__DJGPP__) || defined(__BEOS__) || defined(__OpenBSD__) || defined(__CYGWIN__) || defined(__QNXNTO__)
 typedef   signed char       CHAR;               /*  1 byte */
 typedef unsigned char      UCHAR;               /*  1 byte */
 typedef   signed int        INT32;              /*  4 byte */
@@ -121,7 +121,7 @@ typedef unsigned short     UINT16;              /*  2 byte */
 
 /* Alpha AXP running Digital Unix (and possibly also Linux/Alpha?)
    This is a 64 bit architecture (AMD64, EM64T) */
-#if defined(__alpha) || defined(__x86_64__)
+#if defined(__alpha) || defined(__X86_64__)
 typedef   signed char       CHAR;               /*  1 byte */
 typedef unsigned char      UCHAR;               /*  1 byte */
 typedef   signed short      INT16;              /*  2 byte */

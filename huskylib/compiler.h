@@ -205,6 +205,7 @@
    * __AMIGA__ - AmigaOS
    * __ALPHA__ - The Alpha CPU
    * __X86__   - Intel's x86 series CPU
+   * __X86_64__- Intel's EM64T series CPU & AMD64
    * __PPC__   - The PowerPC CPU
    * __MPPC__  - The PowerPC CPU on Apple Macintosh
    *
@@ -826,6 +827,13 @@ int qq(void)
 #  ifndef __ALPHA__
 #    define __ALPHA__
 #  endif
+#endif
+
+#if defined(__x86_64__)
+#  ifndef __X86_64__
+#    define __X86_64__
+#  endif
+   #warning "64-Bit target not complete yet!"
 #endif
 
 #if defined(_M_IX86)  /* MS Visual C predefined */

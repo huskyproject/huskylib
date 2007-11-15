@@ -189,7 +189,7 @@ typedef signed char sbyte;
 typedef unsigned short word;
 typedef signed short sword;
 
-#if defined(__ALPHA__) || defined(__x86_64__)    /* add other 64 bit systems here */
+#if defined(__ALPHA__) || defined(__X86_64__)    /* add other 64 bit systems here */
 typedef unsigned int dword;
 typedef signed   int sdword;
 #else             /* 32 and 16 bit machines */
@@ -214,26 +214,29 @@ typedef   signed int        hINT32;              /*  4 bytes */
 typedef   signed int       hSINT32;              /*  4 bytes */
 typedef unsigned int       hUINT32;              /*  4 bytes */
 
-#if defined(__ALPHA__) || defined(__x86_64__)      /* add other 64 bit systems here */
-  typedef   signed long       hINT64;              /*  4 bytes */
-  typedef   signed long      hSINT64;              /*  4 bytes */
-  typedef unsigned long      hUINT64;              /*  4 bytes */
-  #define HAS_INT64
-#elif defined(__GNUC__)
-  #if __GNUC__>2 || (__GNUC__==2 && __GNUC_MINOR__>=8)
-    /* Test please GNU C before 2.8 ! (Stas Degteff) */
-    typedef   signed long long  hINT64;              /*  8 bytes */
-    typedef   signed long long hSINT64;              /*  8 bytes */
-    typedef unsigned long long hUINT64;              /*  8 bytes */
-    #define HAS_INT64
-  #endif
+#if defined(__ALPHA__)      /* add other 64 bit systems here */
+  typedef   signed long     hINT64;              /*  4 bytes */
+  typedef   signed long    hSINT64;              /*  4 bytes */
+  typedef unsigned long    hUINT64;              /*  4 bytes */
+# define HAS_INT64
 #else
-  /* Not all compilers support this, test please (Stas Degteff) */
-  typedef   signed long long  hINT64;              /*  8 bytes */
-  typedef   signed long long hSINT64;              /*  8 bytes */
-  typedef unsigned long long hUINT64;              /*  8 bytes */
-  #define HAS_INT64
+# if __WORDSIZE == 64
+    typedef long int        hINT64;              /*  8 bytes */
+    typedef long int       hSINT64;              /*  8 bytes */
+    typedef unsigned long int hUINT64;           /*  8 bytes */
+#   define HAS_INT64
+# elif __GLIBC_HAVE_LONG_LONG
+    typedef long long int   hINT64;              /*  8 bytes */
+    typedef long long int  hSINT64;              /*  8 bytes */
+    typedef unsigned long long int hUINT64;      /*  8 bytes */
+#   define HAS_INT64
+# elif __GNUC__>2 || (__GNUC__==2 && __GNUC_MINOR__>=8)
+    /* Test please GNU C before 2.8 ! (Stas Degteff) */
+    typedef   signed long long  hINT64;          /*  8 bytes */
+    typedef   signed long long hSINT64;          /*  8 bytes */
+    typedef unsigned long long hUINT64;          /*  8 bytes */
+#   define HAS_INT64
+# endif
 #endif
-
 
 #endif
