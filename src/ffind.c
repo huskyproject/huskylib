@@ -148,6 +148,8 @@ FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute)
         int fin = 0;
         struct dirent *de;
 
+        unused(attribute);
+
         p = strrchr(filespec, '/');
         if (p == NULL)
         {

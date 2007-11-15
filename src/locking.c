@@ -488,6 +488,7 @@ int unlock(int handle, long ofs, long length)
 #ifndef HAS_sopen
 int sopen(const char *name, int oflag, int ishared, int mode)
 {
+    unused(ishared);
     int fd = open(name, oflag, mode);
 
     /*
