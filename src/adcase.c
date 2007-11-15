@@ -179,8 +179,8 @@ void adaptcase_refresh_dir(const char *directory)
 
 void adaptcase(char *pathname)
 {
-    int i,j,k,l,n,nmax, found=1, addresult=0;
-    size_t *m; size_t raw_high, rawmax;
+    int i,j,k,l,n, found=1, addresult=0;
+    size_t *m; size_t raw_high, rawmax, nmax;
     char buf[FILENAME_MAX + 1];
     DIR *dirp = NULL;
     struct dirent *dp;
@@ -344,7 +344,7 @@ cache_failure:
                 {
                     /* file exists, take over it's name */
 
-                    assert(i - j == DIRENTLEN(dp));
+                    assert((i - j) == (int)DIRENTLEN(dp));
                     memcpy(buf + j, dp->d_name, DIRENTLEN(dp) + 1);
                     closedir(dirp);
                     dirp = NULL;
