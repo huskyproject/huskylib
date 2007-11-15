@@ -81,7 +81,7 @@ int parseFtnAddrZ(const char *str, hs_addr *netAddr, int mask, const char **end)
 {
 const char *ptr, *tmp;
 int result = 0;
-int sym = 0;
+size_t sym = 0;
 long i = 0, imax = LONG_MAX/10;
 unsigned digit, lastdigmax=LONG_MAX%10;
 
