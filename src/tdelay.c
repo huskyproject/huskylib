@@ -65,74 +65,17 @@
 #include <huskylib.h>
 
 
-/***  Declarations & defines  ***********************************************/
-
-void _fast tdelay(int);
-
-/***  Implementation  *******************************************************/
-
-#if defined(__OS2__)
-#define INCL_NOPM
-#define INCL_DOS
-
-#include <os2.h>
-
+#if defined(HAS_sleep)
 void _fast tdelay(int msecs)
 {
-    DosSleep((ULONG)msecs);   /*ULONG defined in os2.h*/
+    mysleep(msecs);
 }
-
-#elif defined(__DOS__) && !defined(__DPMI__)
-void _fast tdelay(int msecs)
-{
-    clock_t ctEnd;
-    ctEnd = clock() + (long)msecs * (long)CLK_TCK / 1000L;
-    while (clock() < ctEnd);
-}
-
-#elif defined(__WIN32__) || defined(__MINGW32__)
-
-#include <windows.h>
-/*# if defined(__TURBOC__)
-extern void __stdcall Sleep(dword ms);
-# else
-extern void Sleep(dword ms);
-# endif*/
-void _fast tdelay(int msecs)
-{
-    Sleep((dword)msecs);
-}
-
-#elif defined(__BEOS__)
-
-#include <be/kernel/scheduler.h>
-
-void _fast tdelay(int msecs)
-{
-    snooze(msecs*1000l);
-}
-
-#elif defined(__UNIX__) || defined(__DPMI__)
-#include <sys/time.h>
-#include <unistd.h>
-
-void _fast tdelay(int msecs)
-{
-    usleep(msecs*1000l);
-}
-
-#elif defined(__WATCOMC__)
-void _fast tdelay(int msecs)
-{
-    sleep(msecs);
-}
-
 #else
-#error Unknown OS (tdelay)
+# error "'sleep' not defined!"
 #endif
 
-#if defined(__WIN32__) || defined(__MINGW32__)
 
+#if defined(__WIN32__) || defined(__MINGW32__)
 void husky_SetTimer(hs_time *timer_ctx)
 {
     dword now;
@@ -169,5 +112,5 @@ dword husky_GetTimer(hs_time *timer_ctx)
 }
 
 #else
-#error Unknown OS (husky_*Timer)
+# error Unknown OS (husky_*Timer)
 #endif
