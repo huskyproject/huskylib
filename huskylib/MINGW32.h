@@ -71,14 +71,18 @@
 #  define write _write
 #  define read _read
 
-#  define sleep(sec) _sleep((sec)*1000l)
-#  define mysleep(sec) _sleep((sec)*1000l)
+#  define sleep(sec) Sleep((sec)*1000l)
+#  define mysleep(sec) Sleep((sec)*1000l)
 #  define HAS_sleep     1
 
 #  define mymkdir mkdir
 
 /*#  define strcasecmp  stricmp*/
 /*#  define strncasecmp strnicmp*/
+
+#  ifndef LONG_MAX
+#    include <limits.h>
+#  endif
 
 /* older mingw headers are too lazy ... */
 #  include <share.h>
