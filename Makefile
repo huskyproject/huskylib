@@ -54,7 +54,7 @@ $(TARGETDLL).$(VER): $(OBJS)
 	$(CC) -shared -Wl,-soname,$(TARGETDLL).$(VERH) \
           -o $(TARGETDLL).$(VER) $(OBJS)
   endif
-	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH)
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 
 install-dynlib: $(TARGETLIB) $(TARGETDLL).$(VER)
@@ -64,8 +64,8 @@ install-dynlib: $(TARGETLIB) $(TARGETDLL).$(VER)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
 # Changed the symlinks from symlinks with full path to just symlinks.
 # Better so :)
-	cd $(LIBDIR) ;\
-	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
+	cd $(LIBDIR)
+	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH)
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 ifneq (~$(LDCONFIG)~, ~~)
 	$(LDCONFIG)
@@ -121,11 +121,11 @@ install: install-dynlib install-lib install-programs install-h
 
 
 uninstall:
-	-cd $(INCDIR)$(DIRSEP)$(_H_DIR) ;\
+	-cd $(INCDIR)$(DIRSEP)$(_H_DIR)
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
-	-cd $(BINDIR) ;\
+	-cd $(BINDIR)
 	$(RM) $(RMOPT) $(PROGRAMS)
 
 clean:
