@@ -48,6 +48,7 @@
 #    include <stdio.h>
 #    include <io.h>
 #    include <direct.h> 
+#    include <process.h>
 /* system functions substitutions for DLL build */
 #    define fileno       _fileno
 #    define read         _read
