@@ -172,15 +172,15 @@ void adaptcase_refresh_dir(const char *directory)
                 }
             }
 
-            l = (l == 0) ? adaptcase_cachesize - 1 : l - 1;
+            l = (l == 0) ? (adaptcase_cachesize - 1) : (l - 1);
         } while (l != adaptcase_cache_position);
     }
 }
 
 void adaptcase(char *pathname)
 {
-    int i,j,k,l,n, found=1, addresult=0;
-    size_t *m; size_t raw_high, rawmax, nmax;
+    int l, found=1, addresult=0;
+    size_t i, j, k, n, *m, raw_high, rawmax, nmax;
     char buf[FILENAME_MAX + 1];
     DIR *dirp = NULL;
     struct dirent *dp;
@@ -209,7 +209,7 @@ void adaptcase(char *pathname)
 
     if (k > 2)
     {
-        for (k = k - 2; k>0 && pathname[k] != '/'; k--);
+        for (k = k - 2; k>0 && pathname[k] != '/'; k--) {};
     }
     else
     {
@@ -344,7 +344,7 @@ cache_failure:
                 {
                     /* file exists, take over it's name */
 
-                    assert((i - j) == (int)DIRENTLEN(dp));
+                    assert((i - j) == DIRENTLEN(dp));
                     memcpy(buf + j, dp->d_name, DIRENTLEN(dp) + 1);
                     closedir(dirp);
                     dirp = NULL;
