@@ -78,12 +78,12 @@ char *_fast Add_Trailing(char *str, char add)
     return str;
 }
 
-char *_fast strocpy(char *d, const char *s)
+char *_fast strocpy(char *dst, const char *src)
 {
     const char *orig;
-    if(!(s&&d))return (char*)s;
-    orig = s;
-    memmove(d, s, strlen(s) + 1);
+    if(!(src&&dst))return (char*)src;
+    orig = src;
+    memmove(dst, src, strlen(src) + 1);
     return (char*)orig;
 }
 
@@ -350,25 +350,25 @@ char *strnzcat (char *dst, const char *src, size_t len)
   return strnzcpy (dst + x, src, len);
 }
 
-char *strseparate(char **pp, const char *delim)
+char *strseparate(char **stringp, const char *delim)
 {
   char *p, *q;
 
-  if (!(pp&&delim)) return NULL;
+  if (!(stringp&&delim)) return NULL;
 
-  if ((p = *pp) == '\0')
+  if ((p = *stringp) == '\0')
     return NULL;
 
   if (!*p) return NULL;
 
   if ((q = strpbrk (p, delim)) != NULL)
     {
-      *pp = q + 1;
+      *stringp = q + 1;
       *q = '\0';
-      while (**pp && strchr(delim, **pp)) (*pp)++;
+      while (**stringp && strchr(delim, **stringp)) (*stringp)++;
     }
   else
-    *pp = NULL;
+    *stringp = NULL;
   return p;
 }
 
