@@ -205,6 +205,7 @@
                        if( minor & 1 ){
                          fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for release branch must be even!\n", __LINE__);
                        }
+                       break;
   }
 
   if(branch==BRANCH_RELEASE)

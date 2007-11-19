@@ -188,6 +188,7 @@ static int sprout(tree **ppr, char *pc_data, int *pi_balance,
 				} /*else*/
 				(*ppr)->tree_b = 0;
 				*pi_balance = FALSE;
+				break;
 			} /*switch*/
 		} /*if*/
 		EXIT(nRet)
@@ -244,6 +245,7 @@ static int sprout(tree **ppr, char *pc_data, int *pi_balance,
 				} /*else*/
 				(*ppr)->tree_b = 0;
 				*pi_balance = FALSE;
+				break;
 			} /*switch*/
 		} /*if*/
 		EXIT(nRet)
@@ -336,6 +338,7 @@ static void balanceR(tree **ppr_p, int *pi_balance)
 			*ppr_p = p2;
 			p2->tree_b = 0;
 		}
+		break;
 	}
 	EXITV
 }
@@ -421,6 +424,7 @@ static void balanceL(tree **ppr_p, int *pi_balance)
 			*ppr_p = p2;
 			p2->tree_b = 0;
 		}
+		break;
 	}
 	EXITV
 }
