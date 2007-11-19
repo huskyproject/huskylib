@@ -168,7 +168,7 @@ struct _log {
 
 typedef struct _log s_log;
 
-HUSKYEXT void initLog(char *fc_logFileDir, int fc_logEchoToScreen, char *fc_logLevels, char *fc_screenLogLevels);
+HUSKYEXT void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels);
 /*DOC
   Input: fidoconfig variables
   Output: none;
