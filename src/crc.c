@@ -211,7 +211,11 @@ dword filecrc32(const char *filename)
     return 0UL;
 
   buffer = smalloc(CRC_BUFFER_SIZE);
-  if (buffer == NULL) return 0L;
+  if (buffer == NULL)
+  {
+    fclose(fd);
+    return 0L;
+  }
 
   crc = 0xFFFFFFFFUL;
   for (;;)
@@ -272,7 +276,11 @@ word filecrc16(const char *filename)
     return 0UL;
 
   buffer = smalloc(CRC_BUFFER_SIZE);
-  if (buffer == NULL) return 0;
+  if (buffer == NULL)
+  {
+    fclose(fd);
+    return 0L;
+  }
 
   crc = 0x0000;
   for (;;)

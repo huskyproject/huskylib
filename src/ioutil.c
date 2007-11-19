@@ -283,7 +283,11 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     if (buffer == NULL)	return -1;
 
     memset(&st, 0, sizeof(st));
-    if (stat(from, &st)) return -1; /* file does not exist */
+    if (stat(from, &st))
+    {
+      nfree(buffer);
+      return -1; /* file does not exist */
+    }
 
 #ifdef DEBUG
     w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
@@ -298,6 +302,7 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     if( fh<0 ){
       fh=errno;
       fclose(fin);
+      nfree(buffer);
       errno=fh;
       return -1;
     }
