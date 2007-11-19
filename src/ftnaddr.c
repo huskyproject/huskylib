@@ -76,9 +76,9 @@ int  result = 0;
 return result;
 }
 
-static const char s[] = {'\0', ':', '/', '.', '@', '\0'};
 int parseFtnAddrZ(const char *str, hs_addr *netAddr, int mask, const char **end)
 {
+const char s[] = {'\0', ':', '/', '.', '@', '\0'};
 const char *ptr, *tmp;
 int result = 0;
 size_t sym = 0;
