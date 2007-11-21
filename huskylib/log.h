@@ -205,6 +205,13 @@ HUSKYEXT void w_log(char key, char *logString, ...);
   FZ:     if the key is in keysAllowed the logString will be written to the log.
 */
 
+#ifdef DEBUG
+# define w_dbglog w_log
+#else
+# define w_dbglog(exp, ...) ((void)0)
+/* if your compiler doesn't support variadic macros try to define w_dbglog(exp) */
+#endif
+
 #ifdef __NT__ 
 #include <windows.h>
 #include <winbase.h>
