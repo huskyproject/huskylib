@@ -79,8 +79,8 @@ int MKSTEMPS( char *tempfilename )
    int fd=-1;
    char *pp;
 
-   if (!tempfilename)
-     return 1;
+   if (tempfilename == NULL)
+     return -1;
 
    ttt = sstrdup(tempfilename);
    pp = strrchr(ttt, '.');
