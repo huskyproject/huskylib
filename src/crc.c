@@ -218,14 +218,12 @@ dword filecrc32(const char *filename)
   }
 
   crc = 0xFFFFFFFFUL;
-  for (;;)
-  {
+  do {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
       crc = memcrc32((char*)buffer, got, crc);
-    if (got != CRC_BUFFER_SIZE)
-      break;
-  }
+  } while (got == CRC_BUFFER_SIZE);
+
   nfree(buffer);
   fclose(fd);
   return crc ^ 0xFFFFFFFFUL;
@@ -283,14 +281,11 @@ word filecrc16(const char *filename)
   }
 
   crc = 0x0000;
-  for (;;)
-  {
+  do {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
       crc = memcrc16((char*)buffer, got, crc);
-    if (got != CRC_BUFFER_SIZE)
-      break;
-  }
+  } while (got == CRC_BUFFER_SIZE);
   nfree(buffer);
   fclose(fd);
   return crc;
@@ -343,14 +338,11 @@ word filesum16(const char *filename)
 
   buffer = smalloc(CRC_BUFFER_SIZE);
 
-  for (;;)
-  {
+  do {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
     if( got )
       crc = memsum16((char*)buffer, got);
-    if (got != CRC_BUFFER_SIZE)
-      break;
-  }
+  } while (got == CRC_BUFFER_SIZE);
   nfree(buffer);
   fclose(fd);
   return crc;
