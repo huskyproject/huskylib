@@ -471,7 +471,7 @@ int waitlock2(int handle, long ofs, long length, long t)
 	int rc;
 	struct flock fl;
 	
-	alarm(t);
+	alarm((unsigned int)t);
 	rc = fcntl(handle, F_SETLKW, file_lock(F_WRLCK, ofs, length, &fl));
 	alarm(0);
 	
