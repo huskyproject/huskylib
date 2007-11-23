@@ -72,7 +72,8 @@ int xpatmat(const char *string, const char *pattern, const int ncase)
 	p = pattern;
 	q = string;
 	for (;;) {
-		switch (c = *p++) {
+		c = *p++;
+		switch (c) {
 		case '\0':
 			goto breakloop;
 		case CTLESC:

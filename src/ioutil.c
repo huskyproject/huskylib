@@ -467,7 +467,8 @@ int lockFile(const char *lockfile, int advisoryLock)
     if (advisoryLock > 0) {
         while(advisoryLock > 0)
         {
-            if ((fh=open(lockfile,O_CREAT|O_RDWR,S_IREAD|S_IWRITE))<0) {
+            fh=open(lockfile,O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
+            if (fh<0) {
 /*                fprintf(stderr,"cannot open/create lock file: %s wait %d seconds\n",lockfile, advisoryLock);*/
                 advisoryLock--;
             } else {
@@ -548,10 +549,12 @@ char *OS_independed_basename(const char *pathname)
 { register char *fname=NULL, *pname=(char*)pathname;
 
   /* Process Unix-style, result to pathname */
-  if( (fname = strrchr(pname,'/')) != NULL ) pname = ++fname;
+  fname = strrchr(pname,'/');
+  if( fname != NULL ) pname = ++fname;
 
   /* Process DOS-style */
-  if( (fname = strrchr(pname,'\\')) != NULL ) ++fname;
+  fname = strrchr(pname,'\\');
+  if( fname != NULL ) ++fname;
   else fname = pname;
 
   return fname;

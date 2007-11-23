@@ -131,7 +131,8 @@ FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name
 
   w_log(LL_FILENAME, "Temp. file mask: %s", tempfilename);
 
-  if( (tempfh = MKSTEMPS( tempfilename )) == -1 )
+  tempfh = MKSTEMPS(tempfilename);
+  if( tempfh == -1 )
   { w_log( LL_ERR, "Cannot create temp. file (Mask %s): %s", tempfilename, strerror(errno) );
     w_log( LL_FUNC, "createTempFileIn() rc=NULL" );
     return NULL;

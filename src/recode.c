@@ -139,7 +139,8 @@ static int getctab(char *dest, char *charMapFileName )
 
 	if( !intab || !outtab ) initCharsets();
 
-	if ((fp=fopen((char *)charMapFileName,"r")) == NULL)
+	fp=fopen((char *)charMapFileName,"r");
+	if (fp == NULL)
 	 {
 		fprintf(stderr,"getctab: cannot open mapchan file \"%s\"\n", charMapFileName);
 		return 1;

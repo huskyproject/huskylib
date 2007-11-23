@@ -196,7 +196,8 @@ char *fc_stristr(const char *str, const char *find)
     if(str&&find)
     {
         find++;
-        if ((ch = *(find-1)) != 0) {
+        ch = *(find-1);
+        if (ch != 0) {
             do {
                 do {
                     str++;
@@ -356,12 +357,12 @@ char *strseparate(char **stringp, const char *delim)
 
   if (!(stringp&&delim)) return NULL;
 
-  if ((p = *stringp) == '\0')
+  p = *stringp;
+  if (p == NULL || *p == '\0')
     return NULL;
 
-  if (!*p) return NULL;
-
-  if ((q = strpbrk (p, delim)) != NULL)
+  q = strpbrk (p, delim);
+  if (q != NULL)
     {
       *stringp = q + 1;
       *q = '\0';
@@ -391,6 +392,9 @@ char *extract_CVS_keyword(char *str)
         return NULL;
 
     r = malloc(l-1);
+    if (!r)
+        return NULL;
+
     strncpy(r, tmp, l-2);
     r[l-2] = 0;
 
