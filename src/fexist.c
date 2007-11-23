@@ -368,6 +368,9 @@ int _createDirectoryTree(const char *pathName) {
       return 1;
 
    start = (char *) malloc(strlen(pathName)+2);
+   if (!start)
+      return 1;
+
    strcpy(start, pathName);
    i = strlen(start)-1;
    if (start[i] != limiter) {
