@@ -430,14 +430,14 @@ static void balanceL(tree **ppr_p, int *pi_balance)
 }
 
 
-static int delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *),
+static int _delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_user, int (*pfi_uar)(char *),
 		  int *pi_balance, int *pi_uar_called)
 {
 /*	void	del(), balanceL(), balanceR(); */
 	tree	*pr_q;
 	int	i_comp, i_ret;
 
-	ENTER("delete")
+	ENTER("_delete")
 
 	if (*ppr_p == NULL) {
 		PRMSG("key not in tree")
@@ -447,14 +447,14 @@ static int delete(tree **ppr_p, int (*pfi_compare)(char *, char *), char *pc_use
 	i_comp = (*pfi_compare)((*ppr_p)->tree_p, pc_user);
 	if (i_comp > 0) {
 		PRMSG("too high - scan left")
-		i_ret = delete(&(*ppr_p)->tree_l, pfi_compare, pc_user, pfi_uar,
+		i_ret = _delete(&(*ppr_p)->tree_l, pfi_compare, pc_user, pfi_uar,
 						pi_balance, pi_uar_called);
 		if (*pi_balance)
 			balanceL(ppr_p, pi_balance);
 	}
 	else if (i_comp < 0) {
 		PRMSG("too low - scan right")
-		i_ret = delete(&(*ppr_p)->tree_r, pfi_compare, pc_user, pfi_uar,
+		i_ret = _delete(&(*ppr_p)->tree_r, pfi_compare, pc_user, pfi_uar,
 						pi_balance, pi_uar_called);
 		if (*pi_balance)
 			balanceR(ppr_p, pi_balance);
@@ -493,7 +493,7 @@ static int tree_delete_real(tree **ppr_p, int (*pfi_compare)(char *, char *), ch
 	int	i_balance = FALSE, i_uar_called = FALSE;
 
 	ENTER("tree_delete");
-	EXIT(delete(ppr_p, pfi_compare, pc_user, pfi_uar,
+	EXIT(_delete(ppr_p, pfi_compare, pc_user, pfi_uar,
 				&i_balance, &i_uar_called))
 }
 

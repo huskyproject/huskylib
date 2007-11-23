@@ -74,7 +74,7 @@ dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGen
 	dword seq, n, curtime;
 	FFIND *ff;
 	char *seqpath, max_fname[13], *new_fname, *pname, *p;
-	int  h, try;
+	int  h, n_try;
 
 	if (altGenMsgId == NULL)
 		altGenMsgId = oldGenMsgId;
@@ -111,7 +111,7 @@ dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGen
 		}
 		else max_outrun = MAX_OUTRUN;
 	}
-	for (try=0;;try++) {
+	for (n_try=0;;n_try++) {
 		curtime = (dword)time(NULL);
 		seq = 0;
 		max_fname[0] = '\0';
@@ -119,7 +119,7 @@ dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun, dword (*altGen
 		ff = FFindInfo(seqpath);
 		if (ff == NULL) { /* file not found */
 			*pname = '\0';
-			if (try == 0) {
+			if (n_try == 0) {
 				if (direxist(seqpath))
 					goto emptydir; /* directory exist & empty */
 				else if (_createDirectoryTree(seqpath) == 0)
@@ -183,7 +183,7 @@ emptydir:
 			return seq;
 		}
 		if (errno == ENOENT || errno == EEXIST ||
-		    ((errno == EPERM || errno == EACCES) && try < 16))
+		    ((errno == EPERM || errno == EACCES) && n_try < 16))
 			continue;
 		free(seqpath);
 		free(new_fname);
