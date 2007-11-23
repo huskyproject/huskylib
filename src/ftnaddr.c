@@ -57,10 +57,11 @@ int  result = 0;
 	assert(str);
 	assert(netAddr);
 
-
 	allocated = (char*)malloc(len + 1);
 	if (!allocated)
 	{
+		if(end != NULL)
+			*end = str;
 		return FTNADDR_ERROR;
 	}
 
