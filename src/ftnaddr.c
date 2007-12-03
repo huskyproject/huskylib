@@ -1,5 +1,8 @@
 /* $Id$
  *
+ * Routines for parsing ftn address.
+ * Initial code by Nick Voronin (2:5030/1554)
+ *
  * HUSKYLIB: common defines, types and functions for HUSKY
  *
  * This is part of The HUSKY Fidonet Software project:
@@ -38,6 +41,38 @@
 
 #include <ftnaddr.h>
 
+long read_ftn_long(const char *str, const char **end)
+{
+long i = 0, imax = LONG_MAX/10;
+unsigned digit, lastdigmax=LONG_MAX%10;
+	assert(str != NULL);
+	assert(end != NULL);
+
+	*end = str;
+	if(*str != '-')
+	{
+		while( (digit = (unsigned)(*str - '0')) <= 9)
+		{
+			if(i < imax || (i == imax && digit <= lastdigmax))
+				i = i * 10 + digit;
+			else
+				goto Fail; /* overflow */
+			++str;
+		}
+	}
+	else
+	{
+		++str;
+		if(*str != '1')
+			goto Fail;
+		++str;
+		i = -1;
+	}
+	*end = str;
+return i;
+Fail:
+return LONG_MAX;
+}
 
 /*
  *	Function parse fidonet frl-1002.001 address.
@@ -79,88 +114,64 @@ return result;
 
 int parseFtnAddrZ(const char *str, hs_addr *netAddr, int mask, const char **end)
 {
-const char s[] = {'\0', ':', '/', '.', '@', '\0'};
+/*                  0    1    2    3    4     5    6     7     8     9  */
+const char s[] = {'\0', ':', '/', '.', '@', '\0', ' ', '\t', '\r', '\n'};
 const char *ptr, *tmp;
 int result = 0;
 size_t sym = 0;
-long i = 0, imax = LONG_MAX/10;
-unsigned digit, lastdigmax=LONG_MAX%10;
+long i = 0;
+hs_addr netAddrOld = *netAddr;
 
 	assert(str);
 	assert(netAddr);
 
 	tmp = str;
 
-/*	while (*tmp && isspace(*tmp)) ++tmp;*/ 
-	/* isspace may be too much, it skips cr&lf which may be objectionable */
+	/* skip leading spaces and tabs 
+	 * isspace may be too much, it skips cr&lf which may be objectionable */
 	while (*tmp && (*tmp == ' ' || *tmp == '\t')) ++tmp;
 
 	ptr = tmp;
 
-	if(*tmp != '-')
-	{
-		while( (digit = (unsigned)(*tmp - '0')) <= 9)
-		{
-			if(i < imax || (i == imax && digit <= lastdigmax))
-				i = i * 10 + digit;
-			else
-				goto Fail; /* overflow */
-			++tmp;
-		}
-	}
-	else
-	{
-		++tmp;
-		if(*tmp != '1')
-			goto Fail;
-		++tmp;
-		i = -1;
-	}
+	i = read_ftn_long(tmp, &tmp);
+	if(i == LONG_MAX)
+		goto Fail;
 
+	/* find first key symbol */
 	while(++sym < sizeof(s) && *tmp != s[sym]);
 
+	/* there was a number in the beginning of string */
 	if(ptr != tmp)
 	{
-		if(sym < 4)
-			--sym; /* found next symbol, assume omitted symbol */
-		else if(sym < sizeof(s) || isspace(*tmp))
-			sym = 2; /* single number or number followed by '@' is node number */
+		if(sym < 4) /* < @ */
+			/* found symbol is next to the number,
+			 * assume omitted symbol */
+			--sym;
+		else if(sym < sizeof(s))
+			/* single number or number followed by '@' 
+			 * is assumed to be node number */
+			sym = 2;
 		else
 			goto Fail;
 
+		/* go directly inside the loop since number is already read */
 		goto Sw;
 	}
 
+	/* now sym is a key symbol which should be before number in examination (\0 for zone) */
 	while(sym < 4)
 	{
+		/* skip key symbol */
 		ptr = ++tmp;
 		i = 0;
 
-		if(*tmp != '-')
-		{
-			while( (digit = (unsigned)(*tmp - '0')) <= 9)
-			{
-				if(i < imax || (i == imax && digit <= lastdigmax))
-					i = i * 10 + digit;
-				else
-					goto Fail; /* overflow */
-				++tmp;
-			}
-			if(ptr == tmp)
-				goto Fail;
-		}
-		else
-		{
-			++tmp;
-			if(*tmp != '1')
-				goto Fail;
-			++tmp;
-			i = -1;
-		}
+		i = read_ftn_long(tmp, &tmp);
+		if(i == LONG_MAX || ptr == tmp)
+			goto Fail;
 Sw:
 		switch(sym)
 		{
-			case 0:
+			case 0: /* zone */
 				if(i > 0 && i <= 32767)
 				{
 					netAddr->zone = (sword)i;
@@ -169,7 +180,7 @@ Sw:
 				else
 					goto Fail;
 				break;
-			case 1:
+			case 1: /* net */
 				if(i > 0 && i <= 32767)
 				{
 					netAddr->net = (sword)i;
@@ -178,7 +189,7 @@ Sw:
 				else
 					goto Fail;
 				break;
-			case 2:
+			case 2: /* node */
 				if(i >= -1 && i <= 32767)
 				{
 					netAddr->node = (sword)i;
@@ -187,8 +198,8 @@ Sw:
 				else
 					goto Fail;
 				break;
-			case 3:
-				if(i >= 0 && i <= 32767)
+			case 3: /* point */
+				if(i >= -1 && i <= 32767)
 				{
 					netAddr->point = (sword)i;
 					result |= FTNADDR_POINT;
@@ -200,13 +211,15 @@ Sw:
 
 		if(*tmp != s[++sym])
 		{
-			while(++sym <= sizeof(s) && *tmp != s[sym]);
-			if(sym < 4)
+			while(++sym < sizeof(s) && *tmp != s[sym]) ;
+			/* we can skip anything, but then next symbol should be 
+			 * either '@' or whitespace or '\0' */
+			if(sym < 4) 
 				goto Fail;
 		}
 	}
 
-	if(sym == 4)
+	if(sym == 4) /* @ */
 	{
 		ptr = ++tmp;
 		i = 0;
@@ -219,14 +232,10 @@ Sw:
 		netAddr->domain[i] = 0;
 		result |= FTNADDR_DOMAIN;
 	}
-#if 0
-/* Lets be loose for now, if we parsed enough from string then
- * it's ok and we don't really care which character stops scan. */	
-	else if(sym >= sizeof(s) && !isspace(*tmp) && 
-			/* any symbols that can rightfully terminate address */
-			!(*tmp == ',' || *tmp == ')')) 
-		goto Fail;
-#endif
+/* If we parsed enough from string then it's ok 
+ * and we don't really care which character stops scan. */	
+/*	else if(sym >= sizeof(s) && ...) goto Fail; */
+
 	if(~result & mask)
 		goto Fail;
 
@@ -234,7 +243,10 @@ Sw:
 		*end = tmp;
 return result;
 Fail:
+	/* in case of error *end points on the beginning of string */
 	if(end != NULL)
-		*end = str; /* in case of error *end points on the beginning of string */
+		*end = str;
+
+	*netAddr = netAddrOld;
 return FTNADDR_ERROR | result;
 }
