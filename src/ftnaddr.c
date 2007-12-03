@@ -76,11 +76,22 @@ return LONG_MAX;
 
 /*
  *	Function parse fidonet frl-1002.001 address.
- *	*netAddr must be initialized by zero or default values.
- *	mask gives mandatory values in address string.
- *	Returns mask of explicitly given values, or'ed with
- *	FTNADDR_ERROR if can't parse or if not all mandatory values are given
- *  *end -- pointer to character that stops scan
+ * IN:
+ *  str : string with possible leading spaces or tabs
+ *	netAddr : must be initialized by zero or default values.
+ *	mask : mandatory values in address string.
+ *	end : valid address to store pointer or NULL.
+ * OUT:
+ *	Returns mask of explicitly given values in str, or'ed with FTNADDR_ERROR
+ *	        if error occured or if not all mandatory values are given
+ *	*end : pointer to character that stops scan or pointer 
+ *         to str if error occured.
+ *  netAddr : values parsed from str or old values if error occured.
+ * NOTE:
+ *  parts of address not explicitly given in str stays intact in netAddr
+ *  structure.
+ *  in case when FTNADDR_ERROR is returned netAddr is unmodified even 
+ *  if returned mask indicated some sucessfully parsed address' parts.
  */
 
 int parseFtnAddr(const char *str, hs_addr *netAddr, int len, int mask, const char **end)
