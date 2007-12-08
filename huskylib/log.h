@@ -208,8 +208,16 @@ HUSKYEXT void w_log(char key, char *logString, ...);
 #ifdef DEBUG
 # define w_dbglog w_log
 #else
-# define w_dbglog(exp, ...) ((void)0)
-/* if your compiler doesn't support variadic macros try to define w_dbglog(exp) */
+/* if your compiler supports variadic macros add its recognition here */
+/*    vs2005 */
+# if (_MSC_VER >= 1400)
+#  define w_dbglog(...) ((void)0)
+# elif (__GNUC__ >= 2)
+#  define w_dbglog(args...) ((void)0)
+# else
+#  define w_dbglog(exp) ((void)0)
+# endif
+
 #endif
 
 #ifdef __NT__ 
