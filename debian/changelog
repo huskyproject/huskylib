@@ -1,3 +1,10 @@
+huskylib (1.9-20070915-1) unstable; urgency=low
+
+  * New CVS version
+  * Corrected a typo in libhusky1.shlibs
+
+ -- Stanislav Maslovski <stanislav.maslovski@gmail.com>  Sat, 15 Sep 2007 19:43:53 +0400
+
 huskylib (1.9-20030317-1) unstable; urgency=low
 
   * New cvs version
