@@ -48,9 +48,6 @@ HUSKYEXT char *_fast strocpy(char *dst, const char *src);
  */
 HUSKYEXT char* _fast firstchar(const char *strng, const char *delim, int findword);
 
-/* Extract RCS/CVS keyword value from "$Keyword: value$"
- */
-HUSKYEXT char *extract_CVS_keyword(char *str);
 
 HUSKYEXT char *strrstr(const char *HAYSTACK, const char *NEEDLE);
 
