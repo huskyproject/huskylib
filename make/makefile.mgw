@@ -100,7 +100,8 @@ default: all
 include makefile.inc
 
 # libraries need to build binary file
-LIBS	+=
+#LIBS	+= -lhusky
+LIBS	+= ../../huskylib/make/husky$(_DLL) 
 
 ## other, usualy not modify below ##
 
@@ -116,7 +117,7 @@ dll:	$(TARGETDLL)
 programs: $(TARGETLIB) $(PROGRAMS)
 dllprograms: $(TARGETDLL) $(PROGRAMS)
 
-%$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
+%$(_EXE): $(SRC_DIR)%$(_C) # $(TARGETLIB)
 	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
 
 %$(_OBJ): $(SRC_DIR)%$(_C)
