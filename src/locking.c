@@ -271,16 +271,21 @@ int unlock(int handle, long ofs, long length)
 
 int waitlock(int handle, long ofs, long length)
 {
+    int result, error = 0;
     long offset = tell(handle);
 
     if (offset == -1)
         return -1;
 
     lseek(handle, ofs, SEEK_SET);
-    _locking(handle, 1, length);
+    result = _locking(handle, 1, length);
+#ifdef DEBUG
+    if(result != 0) /* locking failed */
+        _get_errno(&error);
+#endif
     lseek(handle, offset, SEEK_SET);
 
-    return 0;
+    return result;
 }
 
 /*
