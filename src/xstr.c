@@ -81,6 +81,8 @@
 
  char *xstrcat(char **s, const char *add)
 {
+	if(add == NULL)
+		return *s;
     return strcat(xstralloc(s, strlen(add)), add);
 }
 
