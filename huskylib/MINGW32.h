@@ -113,6 +113,10 @@
 #  define HAS_SYS_UTIME_H  /* #include <sys/utime.h> in alternate to <utime.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
+/* Latest version has sys/param.h for sure, though its equivalence 
+ * with unix sys/param.h is questionable. Added for MAXPATHLEN definition */
+#  define HAS_SYS_PARAM_H /* may use "#include <sys/param.h> */
+
 #  define USE_STAT_MACROS
 
 typedef unsigned bit;
