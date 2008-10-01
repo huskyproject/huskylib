@@ -7,13 +7,16 @@
 # include Husky Makefile Config
 ifeq ($(DEBIAN), 1)
 include /usr/share/husky/huskymak.cfg
+else ifdef RPM_BUILD_ROOT
+# For RPM build is require all files in one directory branch
+include ../huskymak.cfg
 else
 include ../../huskymak.cfg
 endif
 
 MAN1PAGES = gnmsgid.1
 
-MAN1DIR = $(MANDIR)/man1
+MAN1DIR = $(DESTDIR)$(MANDIR)/man1
 
 all:
 

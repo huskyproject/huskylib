@@ -4,6 +4,9 @@
 ifeq ($(DEBIAN), 1)
 # Every Debian-Source-Paket has one included.
 include /usr/share/husky/huskymak.cfg
+else ifdef RPM_BUILD_ROOT
+# For RPM build is require all files in one directory branch
+include huskymak.cfg
 else
 include ../huskymak.cfg
 endif
@@ -58,13 +61,13 @@ $(TARGETDLL).$(VER): $(OBJS)
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 
 install-dynlib: $(TARGETLIB) $(TARGETDLL).$(VER)
-	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
-	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(LIBDIR)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
-	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)
+	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(LIBDIR)
+	$(INSTALL) $(ILOPT) $(TARGETDLL).$(VER) $(DESTDIR)$(LIBDIR)
+	-$(RM) $(RMOPT) $(DESTDIR)$(LIBDIR)$(DIRSEP)$(TARGETDLL).$(VERH)
+	-$(RM) $(RMOPT) $(DESTDIR)$(LIBDIR)$(DIRSEP)$(TARGETDLL)
 # Changed the symlinks from symlinks with full path to just symlinks.
 # Better so :)
-	cd $(LIBDIR) ;\
+	cd $(DESTDIR)$(LIBDIR) ;\
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL).$(VERH) ;\
 	$(LN) $(LNOPT) $(TARGETDLL).$(VER) $(TARGETDLL)
 ifneq (~$(LDCONFIG)~, ~~)
@@ -91,29 +94,29 @@ $(PROGRAMS): $(TARGETLIB)
 FORCE:
 
 install-h-dir: FORCE
-	-$(MKDIR) $(MKDIROPT) $(INCDIR)$(DIRSEP)$(_H_DIR)
+	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(INCDIR)$(DIRSEP)$(_H_DIR)
 
 %.h: FORCE
-	-$(INSTALL) $(IIOPT) $(_H_DIR)$(DIRSEP)$@ $(INCDIR)$(DIRSEP)$(_H_DIR)
+	-$(INSTALL) $(IIOPT) $(_H_DIR)$(DIRSEP)$@ $(DESTDIR)$(INCDIR)$(DIRSEP)$(_H_DIR)
 
 install-h: install-h-dir $(HEADERS)
 
 install-bindir:
-	-$(MKDIR) $(MKDIROPT) $(BINDIR)
+	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(BINDIR)
 
 install-programs: $(PROGRAMS) install-bindir
-	$(INSTALL) $(IBOPT) $< $(BINDIR)
+	$(INSTALL) $(IBOPT) $< $(DESTDIR)$(BINDIR)
 
 install-lib: $(TARGETLIB)
-	-$(MKDIR) $(MKDIROPT) $(LIBDIR)
-	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(LIBDIR)
+	-$(MKDIR) $(MKDIROPT) $(DESTDIR)$(LIBDIR)
+	$(INSTALL) $(ISLOPT) $(TARGETLIB) $(DESTDIR)$(LIBDIR)
 
 install-man:
 	(cd man && $(MAKE) install)
 
 install: install-dynlib install-lib install-programs install-h
 #	@list='$(PROGRAMS)'; for p in $$list; do \
-#	    $(INSTALL) $(IBOPT) $$p $(BINDIR); \
+#	    $(INSTALL) $(IBOPT) $$p $(DESTDIR)$(BINDIR); \
 #	done
 	@echo
 	@echo "*** For install man pages run 'gmake install-man' (unixes only)"
@@ -121,11 +124,11 @@ install: install-dynlib install-lib install-programs install-h
 
 
 uninstall:
-	-cd $(INCDIR)$(DIRSEP)$(_H_DIR) ;\
+	-cd $(DESTDIR)$(INCDIR)$(DIRSEP)$(_H_DIR) ;\
 	$(RM) $(RMOPT) $(HEADERS)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETLIB)
 	-$(RM) $(RMOPT) $(LIBDIR)$(DIRSEP)$(TARGETDLL)*
-	-cd $(BINDIR) ;\
+	-cd $(DESTDIR)$(BINDIR) ;\
 	$(RM) $(RMOPT) $(PROGRAMS)
 
 clean:
