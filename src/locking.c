@@ -271,7 +271,10 @@ int unlock(int handle, long ofs, long length)
 
 int waitlock(int handle, long ofs, long length)
 {
-    int result, error = 0;
+    int result;
+#ifdef DEBUG
+    int error = 0;
+#endif
     long offset = tell(handle);
 
     if (offset == -1)
