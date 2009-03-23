@@ -19,10 +19,10 @@ endif
 include make/makefile.inc
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=$(WARNFLAGS) $(DEBCFLAGS)
+  CFLAGS+=$(WARNFLAGS) $(DEBCFLAGS)
   LFLAGS=$(DEBLFLAGS)
 else
-  CFLAGS=$(WARNFLAGS) $(OPTCFLAGS)
+  CFLAGS+=$(WARNFLAGS) $(OPTCFLAGS)
   LFLAGS=$(OPTLFLAGS)
 endif
 
