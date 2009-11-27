@@ -37,7 +37,12 @@
 extern "C" {
 #endif
 
+/* Replace last char with '\0' if last char is strip-char
+ */
 HUSKYEXT char *_fast Strip_Trailing(char *str, char strip);
+
+/* Add add-char to end of string (size of the str is not checked!!!)
+ */
 HUSKYEXT char *_fast Add_Trailing(char *str, char add);
 
 /* Copy src to dst; return src
