@@ -325,7 +325,7 @@ int sstrnicmp(const char *str1, const char *str2, size_t length)
 char *strnzcpy (char *dst, const char *src, size_t len)
 {
   if (!dst) return NULL;
-  if (!src) {
+  if (!src || len==1) {
      dst[0]='\0';
      return dst;
   }
