@@ -333,8 +333,6 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     fclose(fin);
     if (fclose(fout))
     {   fh=errno;
-	fclose(fout);
-	fclose(fin);
         remove(to);
         errno=fh;
         w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
