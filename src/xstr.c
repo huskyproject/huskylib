@@ -100,9 +100,11 @@
     int	ncat;
     for (va_start(ap, s), ncat = 0; (p = va_arg(ap, char *)) != NULL; )
 	    ncat += strlen(p);
+	va_end(ap);
     p = xstralloc(s, ncat);
     for (va_start(ap, s); (q = va_arg(ap, char *)) != NULL; )
 	    p = strcat(p, q);
+	va_end(ap);
     return p;
 }
 
