@@ -172,6 +172,11 @@
 #    define HAS_strupr 1 /* <string.h> from libc (newlib) */
 #  endif
 
+#  if defined(__LINUX__) || defined(__BSD__)
+#    define HAS_SYSLOG_H     1
+#    define HAS_SYS_SYSLOG_H 1
+#  endif
+
 #  if defined(__QNXNTO__)
 #    define HAS_sopen 1     /* <fcntl.h> */
 #    define HAS_STRINGS_H 1
