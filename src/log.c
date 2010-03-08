@@ -62,7 +62,7 @@
 
 /* huskylib headers */
 #include <huskylib.h>
-
+#include <syslogp.h>
 
 /***  Declarations & defines  ***********************************************/
 
@@ -73,9 +73,26 @@ static int   logEchoToScreen;
 static char *logLevels = NULL;
 static char *screenLogLevels = NULL;
 static char *logDateFormat = NULL;
+static int   syslogFacility = 0;
 
 /***  Implementation  *******************************************************/
 
+void initLogSyslog(char *ext_program, char *ext_logFileDir, int ext_syslogFacility,
+                int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
+{
+#ifdef HAVE_SYSLOG
+  if(ext_program && ext_syslogFacility)
+  {
+    syslogFacility  = ext_syslogFacility;
+    logLevels       = ext_logLevels;
+    screenLogLevels = ext_screenLogLevels;
+    logEchoToScreen = ext_logEchoToScreen;
+    openlog(ext_program, LOG_PID | LOG_ODELAY | (ext_logEchoToScreen?LOG_PERROR:0) , syslogFacility);
+  }
+#endif
+  if(ext_logFileDir)
+    initLog(ext_logFileDir, ext_logEchoToScreen, ext_logLevels, ext_screenLogLevels)
+}
 
 void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
 {
@@ -177,6 +194,9 @@ void closeLog()
       nfree(husky_log->keysPrinted);
       nfree(husky_log);
    }
+#ifdef HAVE_SYSLOG
+   closelog();
+#endif
 }
 
 void w_log(char key, char *logString, ...)

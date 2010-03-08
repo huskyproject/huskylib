@@ -66,6 +66,9 @@ CODE facilitynames[] = {
 };
 #  endif
 
+#  ifndef LOG_PERROR
+#   define LOG_PERROR 0
+#  endif
 # endif/* HAVE_SYSLOG */
 
 #endif /* not defined __HUSKYLIB_SYSLOGP_H */
