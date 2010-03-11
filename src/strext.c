@@ -28,7 +28,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-
+#include <assert.h>
 
 /* huskylib: compiler.h */
 #include <compiler.h>
@@ -326,7 +326,7 @@ char *strnzcpy (char *dst, const char *src, size_t len)
 {
   assert(len>0);
   if (!dst) return NULL;
-  if (!src || len=1) {
+  if (!src || len==1) {
      dst[0]='\0';
      return dst;
   }
