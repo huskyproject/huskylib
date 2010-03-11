@@ -4,10 +4,10 @@
 # No support for the Husky build environment.
 
 # Uncomment this for compile info for gdb and display more compiler warnings
-DEBUG	= -g -pedantic
+DEBUG	+= -g -pedantic
 
 # Uncomment this for strip all simbols from binaries to reduce file sizes
-#STRIP	= -s
+#STRIP	+= -s
 
 
 ## programs ##
@@ -44,7 +44,7 @@ _DLL	= .dll
 # compiler defines
 CDEFS	=
 # common compiler options
-CFLAGS	= -Wno-long-long -Wall -O3
+CFLAGS	= -O3 -I$(H_DIR) -WAll -Wno-long-long
 # linker options
 LFLAGS	=
 # options for compile only (link is off)
