@@ -91,7 +91,7 @@ void initLogSyslog(char *ext_program, char *ext_logFileDir, int ext_syslogFacili
   }
 #endif
   if(ext_logFileDir)
-    initLog(ext_logFileDir, ext_logEchoToScreen, ext_logLevels, ext_screenLogLevels)
+    initLog(ext_logFileDir, ext_logEchoToScreen, ext_logLevels, ext_screenLogLevels);
 }
 
 void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
