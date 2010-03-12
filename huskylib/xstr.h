@@ -55,10 +55,11 @@ HUSKYEXT char *xstrcat(char **s, const char *add);
  * Appends "add" to variable "s", reallocating it when it needs
  */
 
+#define NULLP ((void*)0)
 HUSKYEXT char *xstrscat(char **s, ...);
 /*
  * Appends a list of strings to "s", reallocating it when it needs
- * list is terminated with NULL value
+ * list is terminated with NULLP value
  */
 
 HUSKYEXT char *xstrcpy(char **s, const char *add);
