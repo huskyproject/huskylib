@@ -123,7 +123,7 @@ s_log *openLog(char *fileName, char *appN)
    else
      /* filename without path, construct full pathname  */
      if ( logFileDir && logFileDir[0] ) {
-        xstrscat( &pathname, logFileDir, fileName, NULL );
+        xstrscat( &pathname, logFileDir, fileName, NULLP );
      } else {
         fprintf( stderr, "LogFileDir not defined, log into screen instead\n" );
         return NULL;
