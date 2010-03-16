@@ -182,6 +182,40 @@ HUSKYEXT int copyString(char *str, char **pmem);
  */
 HUSKYEXT int copyStringUntilSep(char *str, char *seps, char **dest);
 
+/* Structures for compact storage of array of NUL-terminated strings of
+ * various length. 
+ * s_str_array is just one memory allocation and contains no pointers, 
+ * so it can be freed by single free() and copied with memcpy()
+ * Use for nonmutable collections of (short) strings.
+ */
+typedef union str_mess {
+	int offsets[1];   /* offsets in bytes from start of union, used as index for strings[] */
+	char strings[1];  /* NUL-terminated strings */
+} u_str_mess;
+
+typedef struct str_array {
+	int count;        /* Number of entries in data.offset array */
+	u_str_mess data;
+} s_str_array;
+
+/* Get an address of n-th string in s_str_array *a */
+#define STR_N(a,n) &((a)->data.strings[(a)->data.offsets[n]])
+
+/* Calculate used memory size for s_str_array *a */
+#define STR_A_SIZE(a) (offsetof(s_str_array, data) + \
+                      a->data.offsets[a->count-1] + \
+                      strlen(STR_N(a, a->count-1)) + 1)
+
+/* Get an index of 'find' in ss
+ * Case insensitive full match is used
+ * -1 if no match */
+HUSKYEXT int findInStrArray(s_str_array const *ss, char const *find);
+
+HUSKYEXT s_str_array *copyStrArray(s_str_array *ss);
+
+/* Parse strings like "token1, token2,token3 token4" into s_str_array */
+HUSKYEXT s_str_array *makeStrArray(char *token);
+
 #ifdef __cplusplus
 }
 #endif
