@@ -833,7 +833,6 @@ int qq(void)
 #  ifndef __X86_64__
 #    define __X86_64__
 #  endif
-   #warning "64-Bit target not complete yet!"
 #endif
 
 #if defined(_M_IX86)  /* MS Visual C predefined */
