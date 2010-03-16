@@ -39,7 +39,7 @@ HEADERS1= BCD.h BCO.h BCW.h BEOS5.h BORLANDC.h DJGPP.h EMX.h HIGHC.h IBMC_OS2.h
 HEADERS2= MINGW32.h MSC.h MSVC.h SASC.h UNIX.h WATCOMC.h WCD.h WCO.h WCW.h WCX.h
 HEADERS3= calendar.h compiler.h crc.h cvtdate.h dirlayer.h  ftnaddr.h
 HEADERS4= fexist.h ffind.h huskyext.h huskylib.h log.h locking.h memory.h
-HEADERS5= recode.h strext.h temp.h tree.h typesize.h
+HEADERS5= pstdint.h recode.h strext.h syslogp.h temp.h tree.h typesize.h
 HEADERS6= unused.h vixie.h xstr.h
 
 HEADERS	= $(HEADERS1) $(HEADERS2) $(HEADERS3) $(HEADERS4) $(HEADERS5) $(HEADERS6)
