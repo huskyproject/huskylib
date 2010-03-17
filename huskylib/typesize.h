@@ -76,35 +76,10 @@
 extern "C" {
 #endif
 
-/* Put detection of platforms not handled by pstdint.h here and add typedefs for them */
-#if 0  /* shady platform 1 */
-
-#elseif 0 /* shady platform 2, etc */
-
-#else /* everything else is going to be handled by pstdint.h/stdint.h */
-
-/* Compile with --std=c99 if you can or define _STDINT_H if you have one in your system */
-#include "pstdint.h"
-typedef   int8_t            CHAR;               /*  1 byte */
-typedef  uint8_t           UCHAR;               /*  1 byte */
-typedef   int16_t           INT16;              /*  2 byte */
-typedef  uint16_t          UINT16;              /*  2 byte */
-#ifndef __NT__ /* these are overlapped with windows' types */
-typedef   int32_t           INT32;              /*  4 byte */
-typedef  uint32_t          UINT32;              /*  4 byte */
-/*  -------------------------------------------------------------------------- */
-typedef   signed int         INT;               /*  4 byte */
-typedef unsigned int        UINT;               /*  4 byte */
-typedef   signed long       LONG;               /*  4 byte */
-typedef unsigned long      ULONG;               /*  4 byte */
-typedef          void       VOID;
-#endif
-#endif
-
-/* Obsolete. Check this if you are on unsupported platform. 
- * If there are definitions for your system then move them upwards 
- * with proper conditions in #if */
-#if 0
+#if !defined(USE_PSTDINT_H) && !defined(HAS_STDINT_H)
+/* Fall back to legacy code */
+/* Obsolete. Check if your platform can benefit from using stdint.h/pstdint.h
+ * and correct compiler.h accordingly */
 
 #if defined(__NT__)
 typedef   signed short      INT16;              /*  2 byte */
@@ -325,7 +300,26 @@ typedef unsigned long       ULONG;              /*  4 byte */
 typedef void                 VOID;
 #endif
 
-#endif /* Obsolete */
+#else /* pstdint.h/stdint.h work for this platform */
+/* Compile with --std=gnu99 if you can or 
+ * define HAS_STDINT_H if you have one in your system or
+ * define USE_PSTDINT_H if it works as replacement */
+#include "pstdint.h"
+typedef   int8_t            CHAR;               /*  1 byte */
+typedef  uint8_t           UCHAR;               /*  1 byte */
+typedef   int16_t           INT16;              /*  2 byte */
+typedef  uint16_t          UINT16;              /*  2 byte */
+#ifndef __NT__ /* these are overlapped with windows' types */
+typedef   int32_t           INT32;              /*  4 byte */
+typedef  uint32_t          UINT32;              /*  4 byte */
+/*  -------------------------------------------------------------------------- */
+typedef   signed int         INT;               /*  4 byte */
+typedef unsigned int        UINT;               /*  4 byte */
+typedef   signed long       LONG;               /*  4 byte */
+typedef unsigned long      ULONG;               /*  4 byte */
+typedef          void       VOID;
+#endif
+#endif
 
 #ifdef __cplusplus
 }
