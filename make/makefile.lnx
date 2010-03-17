@@ -44,7 +44,7 @@ _DLL	= .dll
 # compiler defines
 CDEFS	=
 # common compiler options
-CFLAGS	= -O3 -I$(H_DIR) -WAll -Wno-long-long
+CFLAGS	= -O3 -I$(H_DIR) -Wall -Wno-long-long
 # linker options
 LFLAGS	=
 # options for compile only (link is off)
