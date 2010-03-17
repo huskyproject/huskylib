@@ -99,6 +99,7 @@
    * HAS_GRP_H           - may be used "#include <grp.h>"
    * HAS_UTIME_H         - may be used "#include <utime.h>"
    * HAS_STRINGS_H       - may be used "#include <strings.h>"
+   * HAS_STDINT_H        - may be used "#include <stdint.h>"
    * HAS_SYSLOG_H        - may be used "#include <syslog.h>"
    * HAS_SYS_SYSLOG_H    - may be used "#include <sys/syslog.h>"
    * HAS_SYS_UTIME_H     - #include <sys/utime.h> in alternate to <utime.h>
@@ -503,6 +504,12 @@ int qq(void)
   #endif
 #endif
 
+#if defined(__STDC__) && __STDC__ && __STDC_VERSION__ >= 199901L
+ #ifndef HAS_STDINT_H
+  #define HAS_STDINT_H 1
+ #endif
+#endif
+
 /**** Compiler defines ****/
 
 #if defined(__DJGPP__) /* DJGPP for MS-DOS (DPMI)*/
@@ -549,6 +556,7 @@ int qq(void)
 
 #if defined(_MSC_VER)
 #  if (_MSC_VER >= 1000) /* MS Visual C/C++ */
+#    define USE_PSTDINT_H 1
 #    define __MSVC__
 #    ifndef __WIN32__
 #      define __WIN32__
