@@ -10,8 +10,6 @@
 
 # if defined (__UNIX__) && !defined(__BEOS__)
 
-#  define SYSLOG_NAMES
-
 #  ifdef HAS_SYSLOG_H
 #   include <syslog.h>
 #   ifndef HAVE_SYSLOG
@@ -48,11 +46,11 @@ typedef struct _code
 /* we only define ones which we think are present on all crazy unix systems
    and useful for fido apps. i.e. we leave out obscurities like "security" etc
 */
-
 CODE facilitynames[] = {
   {"daemon", LOG_DAEMON,},
   {"mail", LOG_MAIL,},
   {"news", LOG_NEWS,},
+  {"syslog", LOG_SYSLOG},
   {"user", LOG_USER,},
   {"uucp", LOG_UUCP,},
   {"local0", LOG_LOCAL0,},
@@ -63,6 +61,7 @@ CODE facilitynames[] = {
   {"local5", LOG_LOCAL5,},
   {"local6", LOG_LOCAL6,},
   {"local7", LOG_LOCAL7,}
+  { NULL, -1 }
 };
 #  endif
 
