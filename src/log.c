@@ -62,6 +62,7 @@
 
 /* huskylib headers */
 #include <huskylib.h>
+#define SYSLOG_NAMES
 #include <syslogp.h>
 
 /***  Declarations & defines  ***********************************************/
