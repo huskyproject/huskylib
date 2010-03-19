@@ -241,10 +241,13 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 {
 #if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
   struct statvfs sfs;
+  /* f_bavail is in f_frsize units in statvfs */
+#define B_SIZE f_frsize
 
   if (statvfs (path, &sfs) != 0)
 #else
   struct statfs sfs;
+#define B_SIZE f_bsize
 
   if (statfs (path, &sfs) != 0)
 #endif
@@ -254,12 +257,10 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
   }
   else
   {
-    /* return (sfs.f_bsize * sfs.f_bfree); */
-    /* return (sfs.f_bsize * sfs.f_bavail); */
-    if (sfs.f_bsize >= 1024)
-      return ((sfs.f_bsize / 1024l) * sfs.f_bavail);
+    if (sfs.B_SIZE >= 1024)
+      return ((sfs.B_SIZE / 1024l) * sfs.f_bavail);
     else
-      return (sfs.f_bavail / (1024l / sfs.f_bsize));
+      return (sfs.f_bavail / (1024l / sfs.B_SIZE));
   }
 }
 
