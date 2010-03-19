@@ -85,8 +85,8 @@
 #  define HAS_SYS_MOUNT_H
 #  endif
 
-/* FreeBSD 5.x */
-#  if (defined(__FreeBSD__) && (__FreeBSD__ == 5))
+/* FreeBSD >=5.x */
+#  if (defined(__FreeBSD__) && (__FreeBSD__ >= 5))
 #  define HAS_SYS_STATVFS_H
 #  endif
 
