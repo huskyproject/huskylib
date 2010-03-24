@@ -508,3 +508,22 @@ s_str_array *copyStrArray(s_str_array *ss)
 	return nss;
 }
 
+char *StrArray2String(s_str_array *ss)
+{
+	int ii;
+	int size;
+	char *string;
+	assert(ss != NULL);
+
+	if(ss->count == 0)
+		return NULL;
+
+	size = STR_A_SSIZE(ss);
+	string = smalloc(size);
+	memcpy(string, STR_N(ss, 0), size);
+	/* \0 -> ' ' */
+	for(ii = 1; ii < ss->count; ++ii)
+		string[ss->data.offsets[ii] - 1 - ss->data.offsets[0]] = ' ';
+
+	return string;
+}
