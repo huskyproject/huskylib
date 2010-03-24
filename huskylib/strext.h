@@ -201,10 +201,17 @@ typedef struct str_array {
 /* Get an address of n-th string in s_str_array *a */
 #define STR_N(a,n) &((a)->data.strings[(a)->data.offsets[n]])
 
+/* Offset of a byte just after last allocated byte (after last '\0') */
+#define STR_A_OFFSET_END(a) (a->data.offsets[a->count-1] + \
+                          strlen(STR_N(a, a->count-1)) + 1)
+
 /* Calculate used memory size for s_str_array *a */
 #define STR_A_SIZE(a) (offsetof(s_str_array, data) + \
-                      a->data.offsets[a->count-1] + \
-                      strlen(STR_N(a, a->count-1)) + 1)
+                      STR_A_OFFSET_END(a))
+
+/* Calculate memory size used for strings in s_str_array->data.strings[] */
+#define STR_A_SSIZE(a) (STR_A_OFFSET_END(a) - \
+		               a->data.offsets[0])
 
 /* Get an index of 'find' in ss
  * Case insensitive full match is used
@@ -215,6 +222,8 @@ HUSKYEXT s_str_array *copyStrArray(s_str_array *ss);
 
 /* Parse strings like "token1, token2,token3 token4" into s_str_array */
 HUSKYEXT s_str_array *makeStrArray(char *token);
+
+HUSKYEXT char *StrArray2String(s_str_array *ss);
 
 #ifdef __cplusplus
 }
