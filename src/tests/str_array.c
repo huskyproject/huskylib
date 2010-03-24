@@ -19,6 +19,7 @@ int main(void)
 s_str_array *ss, *ssc;
 char *test_string = " \tt1   t3, ,,t3\t,t4\tt5,t6\t ttt7   , "; /* that's right, 2xt3 */
 int ii;
+char *converted;
 	printf("test string = \"%s\"\n", test_string);
 	ss = makeStrArray(test_string);
 	printStrArrayInfo(ss);
@@ -46,6 +47,11 @@ int ii;
 	ii = findInStrArray(ss, "t7");
 	if(ii != -1)
 		printf("ERROR! found nonexistent string at #%d\n", ii);
+
+	converted = StrArray2String(ss);
+	if(converted == NULL)
+		printf("ERROR! something unexpected happened in StrArray2String\n");
+	printf("StrArray2String returned this string:\n \"%s\"\n", converted);
 	
 return 0;
 }
