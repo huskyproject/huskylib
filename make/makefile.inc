@@ -10,6 +10,7 @@
 # LIBSUFFIX  library filename suffix (compiler ID, three characters, somewhere empty)
 # DLLPREFIX  dinamic linking library prefix (usually empty)
 # DLLSUFFIX  dinamic linking library suffix (compiler ID or empty)
+# O, B, L, H prefixes to use with names of objects, binaries, libraries and headers respectively
 
 # Library name
 LIBNAME	= husky
@@ -25,14 +26,6 @@ VER	= $(VERH).$(VERPATCH)
 SRC_DIR	=../src/
 # Headers directory
 H_DIR	=../huskylib/
-# Object directory
-O=$(OBJOUT)
-# Binary directory
-B=$(BINOUT)
-# Library directory
-L=$(LIBOUT)
-# Prefix for headers. Do not use H_DIR for this.
-H=$(H_PFX)
 
 # Header files (please sort list to easy check by human)
 HEADERS1= $(H)BCD.h $(H)BCO.h $(H)BCW.h $(H)BEOS5.h $(H)BORLANDC.h $(H)DJGPP.h
