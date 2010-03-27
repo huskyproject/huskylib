@@ -75,7 +75,7 @@ $(OBJS)
 
 $(PROGRAMS): $(O)$(@B)$(_OBJ)
 	@echo Create $@...
-	@$(LINK) $(LINKNAMEOPT)$@ $** $(LFLAGS) $(LIBSL) $(LINKPDBOPT)$(O)
+	@$(LINK) $(LINKNAMEOPT)$@ $** $(LFLAGS) $(LIBSL) $(LINKPDBOPT)$(B)
 
 clean:
 	-$(RM) $(RMOPT) $(OBJS:/=\)
