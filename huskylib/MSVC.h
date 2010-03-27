@@ -43,6 +43,7 @@
 
 #  ifdef _MAKE_DLL
 #    define _MAKE_DLL_MVC_
+#  endif /* ifdef _MAKE_DLL */
 /*   must be included before function redefenition like '#define fileno _fileno' */
 #    include <sys/stat.h>
 #    include <stdio.h>
@@ -78,7 +79,6 @@
 #    define chdir        _chdir
 #    define getcwd       _getcwd
 #    define isatty       _isatty
-#  endif /* ifdef _MAKE_DLL */
 
 #   include <limits.h>
 #   ifndef MAXPATHLEN
