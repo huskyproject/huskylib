@@ -73,6 +73,7 @@
 #    define open         _open
 #    define access       _access
 #    define spawnvp      _spawnvp
+#    define spawnl       _spawnl
 #    define dup          _dup
 #    define mktemp       _mktemp
 #    define fdopen       _fdopen
