@@ -108,6 +108,12 @@
 
 #  define USE_STAT_MACROS
 
+#  define HAS_SYS_PARAM_H /* may use "#include <sys/param.h> */
+
+#  ifndef LONG_MAX
+#    include <limits.h>
+#  endif
+
 typedef unsigned bit;
 
 typedef unsigned char byte;
