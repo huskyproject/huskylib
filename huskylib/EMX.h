@@ -92,6 +92,10 @@
 
 #  define USE_STAT_MACROS
 
+#  ifndef LONG_MAX
+#    include <limits.h>
+#  endif
+
 
 typedef unsigned bit;
 
@@ -105,7 +109,7 @@ typedef unsigned long dword;
 typedef signed long sdword;
 
 typedef signed short sshort;
-typedef unsigned short ushort;
+//typedef unsigned short ushort;
 
 typedef signed long slong;
 typedef unsigned long ulong;
