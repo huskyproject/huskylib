@@ -2,134 +2,60 @@
 # Makefile to build HUSKYLIB with cross-compiler Mingw32 on unix
 # No support for the Husky build environment.
 
-# Uncomment this for compile info for gdb and display more compiler warnings
-DEBUG	= -g -pedantic
+## include common makefiles part ##
+include ../../huskybse/huskymak.mgw
+include makefile.inc
 
-# Uncomment this for strip all simbols from binaries to reduce file sizes
-#STRIP	= -s
-
-
-## programs ##
-
-# compiler
-CC	= gcc
-# library tool
-AR	= ar
-# library indexer
-RANLIB	= ranlib
-# linker program
-LINK	= ld
-# archiver program
-ARCHIVER= zip
-# file removing command
-#   Note from Alexander Reznikov <homebrewer@yandex.ru>:
-#   We can't use 'TERM' enviroment variable: if use msys from rxvt terminal
-#   then TERM==msys, but if use msys from console then TERM==cygwin.
-ifeq ($(OSTYPE),msys)
-RM	= rm
-else
-RM	= del
-endif
-
-## file suffixes ##
-
-_C	= .c
-_OBJ	= .o
-_LIB	= .a
-_EXE	= .exe
-_DLL	= .dll
-
-## program options ##
-
-# compiler defines
-CDEFS	=
-# common compiler options
-CFLAGS	= -Wno-long-long -Wall -O3
 # additional compiler options to build DLL
 DLCFLAGS= -D_MAKE_DLL
-# linker options
-LFLAGS	=
-# options for compile only (link is off)
-OBJOPT	= -c
-# options for build static library
-LIBOPT	= -static
-# options for build dll
-DLLOPT  = -shared -Wl,--out-implib,$(TARGETLIB)
-# option for specify output file name
-NAMEOPT	= -o
-# options for $(AR) program
-ARFLAGS	= r
-# options for $(RM) program
-ifeq ($(RM),rm)
-RMFLAGS	= -f
-else
-RMFLAGS	=
-endif
-# options for archiver
-ARCFLAGS= -9 -j
-
-## Library filename elements ##
-
-# Prefix to construct static library name
-LIBPREFIX=lib
-# Prefix to construct dll name
-DLLPREFIX=
-# Suffix to construct library name
-LIBSUFFIX=mgw
-# Suffix to construct dll name
-DLLSUFFIX=
 
 ## Binary package name ##
 PACKAGENAME=$(LIBNAME)$(LIBSUFFIX)
 
 ## make directives ##
 
-.PHONY:	distclean clean all static dll programs default doc package
+.PHONY: distclean clean all static dll programs default doc package
 
 ## Default make rule ##
 
-default: all
-#	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
-#	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
-#	@echo Run 'make dllprograms' to build dll version of programs \($(PROGRAMS)\)
-#	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
-#	@echo Run 'make all' to build all above
-
-## include common makefiles part ##
-
-include makefile.inc
+default:
+	@echo Run 'make dll' to build dll version \($(TARGETDLL), $(PROGRAMS)\)
+	@echo Run 'make static' to build static version \($(TARGETLIB), $(PROGRAMS)\)
+	@echo (Recommended) Run 'make dllprograms' to build dll version of programs \($(PROGRAMS)\)
+	@echo Run 'make programs' to build static version of programs \($(PROGRAMS)\)
+	@echo Run 'make all' to build all above
 
 # libraries need to build binary file
-#LIBS	+= -lhusky
-LIBS	+= ../../huskylib/make/husky$(_DLL) 
+LIBS	+= ../../huskylib/make/$(LIBPREFIX)husky$(LIBSUFFIX)$(_LIB)
 
 ## other, usualy not modify below ##
 
 ## Additions (add into end of strings) ##
-CFLAGS	+= -I$(H_DIR) $(DEBUG)
+CFLAGS	+= -I$(H_DIR)
 
 ## make rules ##
 
-all:	static programs
+all:	static dll programs dllprograms
 
-static:	$(TARGETLIB)
+static: $(TARGETLIB)
 dll:	$(TARGETDLL)
 programs: $(TARGETLIB) $(PROGRAMS)
 dllprograms: $(TARGETDLL) $(PROGRAMS)
 
-%$(_EXE): $(SRC_DIR)%$(_C) # $(TARGETLIB)
-	$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(NAMEOPT)$@ $^ $(LIBS)
+%$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
+	@$(CC) $(CFLAGS) $(CDEFS) $(EXENAMEFLAG)$@ $^
 
 %$(_OBJ): $(SRC_DIR)%$(_C)
-	$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(OBJOPT) $<
 
 $(TARGETLIB):	$(OBJS)
-	$(AR) $(ARFLAGS) $@ $?
-	$(RANLIB) $@
-	
+	@$(AR) $(ARFLAGS) $@ $?
+	@$(RANLIB) $@
+
 $(TARGETDLL):
-	$(MAKE) -f makefile.mgw CFLAGS="$(CFLAGS) $(DLCFLAGS)" $(OBJS)
-	$(CC) $(DLLOPT) $(CFLAGS) $(NAMEOPT)$@ $(OBJS)
+	@$(MAKE) -f makefile.mgw CFLAGS="$(CFLAGS) $(DLCFLAGS)" $(OBJS)
+	@$(CC) $(DLLOPT) $(CFLAGS) $(EXENAMEFLAG)$@ $(OBJS)
 
 
 clean:
