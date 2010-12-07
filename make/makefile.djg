@@ -28,8 +28,7 @@ programs: $(TARGETLIB) $(PROGRAMS)
 
 %$(_EXE): $(SRC_DIR)%$(_C) $(TARGETLIB)
 	@echo Create $(PROGRAMS)
-	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG)$@ $^
-	@strip$(_EXE) $@
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG)$@ $^
 
 %$(_OBJ): $(SRC_DIR)%$(_C)
 	@echo Compiling $<
