@@ -113,6 +113,7 @@ s_log *openLog(char *fileName, char *appN)
    time_t     currentTime;
    struct tm  *locTime;
    char *pathname=NULL;
+   int error=0;
 
    if (!fileName || !fileName[0]) {
       fprintf( stderr, "Logfile not defined, log into screen instead\n" );
@@ -167,18 +168,31 @@ s_log *openLog(char *fileName, char *appN)
      int  i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
      for (i = 0; i < logDateLen; i++) logDate[i] = '-';
      logDate[i] = '\0';
-     fputs("--", husky_log->logFile);
-     fputs(logDate, husky_log->logFile);
-     fputs(" ", husky_log->logFile);
+     error = ( fputs("--", husky_log->logFile) == EOF );
+     if( !error )
+     {
+       error = ( fputs(logDate, husky_log->logFile) == EOF );
+       if( !error )
+         error = ( fputs(" ", husky_log->logFile) == EOF );
+     }
    }
-   else fputs("----------  ", husky_log->logFile);
-#else
-   fprintf(husky_log->logFile, "----------  ");
+   else
 #endif
-   fprintf( husky_log->logFile, "%3s %02u %3s %02u, %s\n",
-            weekday_ab[locTime->tm_wday], locTime->tm_mday,
-            months_ab[locTime->tm_mon], locTime->tm_year%100, husky_log->appName);
+     error = ( fputs("----------  ", husky_log->logFile) == EOF );
 
+   if( !error )
+   {
+     error = ( fprintf( husky_log->logFile, "%3s %02u %3s %02u, %s\n",
+                        weekday_ab[locTime->tm_wday], locTime->tm_mday,
+                        months_ab[locTime->tm_mon], locTime->tm_year%100,
+                        husky_log->appName
+                      )
+                == EOF
+             );
+   }
+
+   if( error )
+     fprintf( stderr, "Can't write to log file \"%s\": %s", pathname, strerror(errno) );
    if( pathname != fileName ) nfree(pathname);
    return husky_log;
 }
@@ -222,19 +236,29 @@ void w_log(char key, char *logString, ...)
    		logDateLen = strftime(logDate, 63, logDateFormat ? logDateFormat : "%H:%M:%S ", locTime);
    		logDate[logDateLen] = '\0';
 #endif
-		if (log) {
+          if (log) {
+            register int error=0;
 #if 1
-			fprintf(husky_log->logFile, "%c %s ", key, logDate);
+            error = ( EOF == fprintf(husky_log->logFile, "%c %s ", key, logDate) );
 #else
-            fprintf(husky_log->logFile, "%c %02u:%02u:%02u  ",
-					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
+            error = ( EOF == fprintf(husky_log->logFile, "%c %02u:%02u:%02u  ",
+					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec)
+                    );
 #endif
-			va_start(ap, logString);
-			vfprintf(husky_log->logFile, logString, ap);
-			va_end(ap);
-			putc('\n', husky_log->logFile);
-			fflush(husky_log->logFile);
-		}
+            if( !error )
+            {
+              va_start(ap, logString);
+              error = ( 0>= vfprintf(husky_log->logFile, logString, ap) );
+              va_end(ap);
+              if( !error ) error = ( EOF == putc('\n', husky_log->logFile) );
+              if( !error ) error = ( EOF == fflush(husky_log->logFile) );
+            }
+            if( error )
+            {
+              fprintf( stderr, "!!! Log writing attempt has caused an error: %s", strerror(errno) );
+              screen = 1;
+            }
+          }
 
 		if (screen) {
 #if 1
