@@ -209,6 +209,7 @@
    * __X86_64__- Intel's EM64T series CPU & AMD64
    * __PPC__   - The PowerPC CPU
    * __MPPC__  - The PowerPC CPU on Apple Macintosh
+   * __ARM__   - The ARM CPU compatibility platforms
    *
    *--------------------------------------------------------------------------
    * CPU
@@ -220,6 +221,8 @@
    * __586__   - Intel Pentium CPU
    * __686__   - Intel Pentium Pro CPU
    * __786__   - Intel Pentium II CPU
+   *
+   * __ARM_ARCH_V7__ - ARM v7
    *
    */
 
@@ -826,6 +829,18 @@ int qq(void)
 #endif
 
 /***** Platforms *************************************************************/
+
+#if defined(arm) || defined(_arm) || defined(__arm) || defined(__arm__) || defined(__ARMEL__) || defined(__ARM_EABI__)
+#  if !defined(__ARM__)
+#    define __ARM__
+#  endif
+#  if !defined(__BIG_ENDIAN__) && !defined(__LITTLE_ENDIAN__) 
+#    define __LITTLE_ENDIAN__
+#  endif
+#  ifndef __FLAT__
+#    define __FLAT__
+#  endif
+#endif
 
 #if defined(SASC) && !defined(__AMIGA__) /* SAS C for AmigaDOS ***************/
 #  define __AMIGA__
