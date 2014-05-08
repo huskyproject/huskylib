@@ -59,7 +59,7 @@
 				PrecompiledHeaderThrough=""
 				PrecompiledHeaderFile=""
 				AssemblerListingLocation=""
-				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				ProgramDataBaseFileName="$(IntDir)\vc90.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
