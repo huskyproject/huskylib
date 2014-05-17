@@ -112,7 +112,11 @@
    platform = "/os2-ibmc";
 
 #elif defined(__MSVC__)
-#    if defined(_MAKE_DLL_MVC_)
+#    if !defined(_MAKE_DLL_MVC_) && defined(_WIN64)
+     platform = "/w64-mvc";
+#    elif defined(_MAKE_DLL_MVC_) && defined(_WIN64)
+     platform = "/w64-mvcdll";
+#    elif defined(_MAKE_DLL_MVC_) && !defined(_WIN64)
      platform = "/w32-mvcdll";
 #    else
      platform = "/w32-mvc";
