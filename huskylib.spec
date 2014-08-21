@@ -36,4 +36,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%{_prefix}/*
+%{_bindir}/*
+%{_includedir}/%{name}/*
+%{_libdir}/*
