@@ -1284,6 +1284,7 @@ int qq(void)
 
 #include <sys/types.h> /* required for sys/stat.h in EMX */
 #include <sys/stat.h>
+#include <unistd.h>
 #if !defined(S_IFMT) && defined(_S_IFMT)
 #  define S_IFMT      _S_IFMT
 #endif
