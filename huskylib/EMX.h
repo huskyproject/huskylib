@@ -73,7 +73,7 @@
 #  define HAS_vsnprintf 1
 #  define HAS_strlwr    1  /* strlwr() in string.h */
 #  define HAS_strupr    1  /* strupr() in string.h */
-#  define HAS_getpid    1  /* getpid() in process.h, unistd.h */
+//#  define HAS_getpid    1  /* getpid() in process.h, unistd.h */
 #  define HAS_spawnvp   1  /* spawnvp() in process.h */
 #  define HAS_strftime  1  /* strftime() in time.h  */
 #  define HAS_mktime    1  /* mktime() in time.h */
