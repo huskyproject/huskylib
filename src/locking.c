@@ -120,10 +120,10 @@ sword pascal far shareloaded(void)
 #if defined(__DPMI__) && !defined(__DJGPP__)
  in.x.eax=0x1000;
 
- int386(0x21, &in, &out);
+ int386(0x2f, &in, &out);
 #else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
  in.x.ax=0x1000;
- int86(0x21,&in,&out);
+ int86(0x2f,&in,&out);
 #endif
 
  return (out.h.al == 0xff);
