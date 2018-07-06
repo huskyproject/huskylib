@@ -19,4 +19,4 @@ build_script:
       xcopy /i /q /s C:\projects\huskylib C:\msys64\home\appveyor\huskylib &&
       C:\msys64\usr\bin\bash -e -l -c "cd huskylib && mkdir build && cd build && cmake .. -G \"Unix Makefiles\" && cmake --build ." )
   - cmd: if "%TARGET%"=="MSVC2017" (
-      mkdir build && cd build && cmake --version &&  cmake .. -G "Visual Studio 15 2017" && cmake --build . )
+      mkdir build && cd build && cmake --version &&  cmake .. -G "Visual Studio 15 2017" && cmake --build . -- /P:Configuration=Release)
