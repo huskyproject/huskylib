@@ -6,17 +6,5 @@ image:
   - Visual Studio 2017
 platform:
   - Win32
-environment:
-  matrix:
-    - TARGET: MSYS
-    - TARGET: MSVC2017
-install:
-  - cmd: git submodule init
-  - cmd: git submodule update
-  - cmd: if "%TARGET%"=="MSYS" C:\msys64\usr\bin\pacman -S --noconfirm --needed zlib-devel mingw-w64-x86_64-pkg-config cmake
 build_script:
-  - cmd: if "%TARGET%"=="MSYS" (
-      xcopy /i /q /s C:\projects\huskylib C:\msys64\home\appveyor\huskylib &&
-      C:\msys64\usr\bin\bash -e -l -c "cd huskylib && mkdir build && cd build && cmake .. -G \"Unix Makefiles\" && cmake --build ." )
-  - cmd: if "%TARGET%"=="MSVC2017" (
-      mkdir build && cd build && cmake --version &&  cmake .. -G "Visual Studio 15 2017" && cmake --build . -- /P:Configuration=Release)
+  - cmd: mkdir build && cd build && cmake --version &&  cmake .. -G "Visual Studio 15 2017" && cmake --build . -- /P:Configuration=Release
