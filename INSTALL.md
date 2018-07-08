@@ -1,13 +1,22 @@
+# Instruction to build huskylib
 
 Please read the files (especially README.Makefiles) in the
 husky-common (huskybse) package FIRST!
 
-Instruction to build huskylib
------------------------------
+## Table of Contents
+- [Prebuild](#prebuild)
+- [Build](#build)
+  - [Compiling and installing with the standard Makefile and huskymak.cfg](#compiling-and-installing-with-the-standard-makefile-and-huskymakcfg)
+  - [Compiling with the Legacy Makefiles](#compiling-with-the-legacy-makefiles)
+  - [Compiling and installing using Cmake](#compiling-and-installing-using-cmake)
+- [Afterbuild actions](#afterbuild-actions)
 
-1. Put the huskylib package in the directory where the other packages of fido
-   husky reside:
-   1. unix, beos, possible cygwin:
+## Prebuild
+
+- Put the huskylib package in the directory where the other packages of fido
+  husky reside:
+   
+  - unix, beos, possible cygwin:
       ```text
       /usr/src/packages/        -> huskybse/
                                 -> huskylib/
@@ -17,7 +26,7 @@ Instruction to build huskylib
                                 -> htick/
                                 ...some other
       ```
-   1. windows, dos, os/2 & etc:
+   - windows, dos, os/2 & etc:
       ```text
          d:\husky\              -> huskylib\
                                 -> smapi\
@@ -26,41 +35,51 @@ Instruction to build huskylib
                                 -> htick\
                                 ...some other
       ```
-1. Building 
-   1. Compiling and installing with the standard Makefile and huskymak.cfg
+## Build 
 
-      require huskymak.cfg (see huskybse), unixes only:
-      ```sh
-        $ make
-        $ make install
-      ```
-   1. Compiling with the Legacy Makefiles
+### Compiling and installing with the standard Makefile and huskymak.cfg
 
-      unix:
-      ```sh
-	    $ make -f makefile.lnx
-	    $ make -f makefile.lnx install
-      ```
-      dos:
-      ```sh
-        d:\husky\huskylib>make -f makefile.djg
-      ```
-   1. Compiling and installing using Cmake
-      ```
-        $ mkdir build`
-        $ cd build
-        $ cmake ..
-        $ cmake --build .
-        $ make install
-      ```
-      make distrib rpm, deb, tgz:
-      ```sh
-         $ cpack -G RPM
-         $ cpack -G DEB
-         $ cpack -G TGZ
-      ```
-1. (For UNIXes only) Ensure /usr/local/lib/ is in /etc/ld.so.conf
-1. (For UNIXes only) Execute ldconfig as root
+require huskymak.cfg (see huskybse), unixes only:
+```sh
+   $ make
+   $ make install
+```
+### Compiling with the Legacy Makefiles
+
+unix:
+```sh
+   $ make -f makefile.lnx
+   $ make -f makefile.lnx install
+```
+dos:
+```sh
+   d:\husky\huskylib>make -f makefile.djg
+```
+ ### Compiling and installing using Cmake
+ 
+- Run CMake to configure the build tree.
+   ```sh
+      $ cmake -H. -Bbuild
+   ```
+- Afterwards, generated files can be used to compile the project.
+   ```sh
+      $ cmake --build build
+   ```
+- Make distrib rpm, deb,tgz (optional)
+   ```sh
+      $ cpack -G RPM --config build/CPackConfig.cmake
+      $ cpack -G DEB --config build/CPackConfig.cmake
+      $ cpack -G TGZ --config build/CPackConfig.cmake
+   ```
+
+- Install the built files (optional).
+   ```sh
+      $ cmake --build build --target install
+   ```
+## Afterbuild actions
+
+- (For UNIXes only) Ensure /usr/local/lib/ is in /etc/ld.so.conf
+- (For UNIXes only) Execute ldconfig as root
 
 You're ready. Now you can install software which uses huskylib.
 
