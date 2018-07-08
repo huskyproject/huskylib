@@ -38,12 +38,12 @@ Instruction to build huskylib
 
       unix:
       ```sh
-	  $ make -f makefile.lnx
-	  $ make -f makefile.lnx install
+	    $ make -f makefile.lnx
+	    $ make -f makefile.lnx install
       ```
       dos:
-      ```
-          d:\husky\huskylib>make -f makefile.djg
+      ```sh
+        d:\husky\huskylib>make -f makefile.djg
       ```
    1. Compiling and installing using Cmake
       ```
@@ -53,12 +53,14 @@ Instruction to build huskylib
         $ cmake --build .
         $ make install
       ```
-      make distrib rpm,deb,tgz:
-      ```
-        cpack -G RPM, cpack -G DEB, cpack -G TGZ
+      make distrib rpm, deb, tgz:
+      ```sh
+         $ cpack -G RPM
+         $ cpack -G DEB
+         $ cpack -G TGZ
       ```
 1. (For UNIXes only) Ensure /usr/local/lib/ is in /etc/ld.so.conf
-1. \(For UNIXes only\) Execute ldconfig as root
+1. (For UNIXes only) Execute ldconfig as root
 
 You're ready. Now you can install software which uses huskylib.
 
