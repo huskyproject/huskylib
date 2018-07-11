@@ -4,7 +4,9 @@ branches:
     - master
 image:
   - Visual Studio 2017
-platform:
-  - Win32
+environment:
+  matrix:
+    - generator: Visual Studio 15 2017
+    - generator: Visual Studio 15 2017 Win64
 build_script:
-  - cmd: mkdir build && cd build && cmake --version &&  cmake .. -G "Visual Studio 15 2017" && cmake --build . -- /P:Configuration=Release
+  - cmd: mkdir build && cd build && cmake --version &&  cmake .. -G "%GENERATOR%" && cmake --build . -- /P:Configuration=Release
