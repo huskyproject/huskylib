@@ -41,5 +41,5 @@ script:
   - mkdir build
   - cd build
   - cmake ..
-  - cmake --build . $CF
+  - cmake --build . "$CF"
   - cpack
