@@ -59,7 +59,7 @@ dos:
  
 - Run CMake to configure the build tree.
    ```sh
-      $ cmake -H. -Bbuild
+      $ cmake -H. -Bbuild -DBUILD_SHARED_LIBS=OFF
    ```
 - Afterwards, generated files can be used to compile the project.
    ```sh
