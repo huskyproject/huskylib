@@ -15,7 +15,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-      env: ['MATRIX_EVAL="CC=gcc-7 && CF=-DBUILD_SHARED_LIBS=OFF"']
+      env:
+        - MATRIX_EVAL="CC=gcc-7" CF=-DBUILD_SHARED_LIBS=OFF
     - os: linux
       sudo: false
       language: c
@@ -25,11 +26,13 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-      env: ['MATRIX_EVAL="CC=gcc-7 && CF=-DBUILD_SHARED_LIBS=ON"']
+      env:
+        - MATRIX_EVAL="CC=gcc-7" CF=-DBUILD_SHARED_LIBS=ON
     - os: linux
       sudo: false
       language: c
-      env: ['MATRIX_EVAL="CC=clang && CF=-DBUILD_SHARED_LIBS=ON"']
+      env:
+        - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
     - os: osx
       sudo: false
       language: c
@@ -41,6 +44,6 @@ script:
   - eval "${MATRIX_EVAL}"
   - mkdir build
   - cd build
-  - cmake ..
-  - cmake --build . "$CF"
+  - cmake .. "$CF"
+  - cmake --build .
   - cpack
