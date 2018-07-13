@@ -28,21 +28,11 @@ matrix:
             - gcc-8
       env:
         - MATRIX_EVAL="CC=gcc-8" CF=-DBUILD_SHARED_LIBS=ON
-    - os: linux
-      sudo: false
-      language: c
-      env:
-        - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
     - os: osx
       sudo: false
       language: c
       env:
         - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
-    - os: osx
-      sudo: false
-      language: c
-      env:
-        - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=OFF
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y rpm; fi
 script:
