@@ -3,12 +3,6 @@ language: c
 branches:
   only:
     - master
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-7
 matrix:
   fast_finish: true
   include:
@@ -47,5 +41,5 @@ script:
   - mkdir build
   - cd build
   - cmake ..
-  - cmake --build . "${CF}"
+  - cmake --build . $CF
   - cpack
