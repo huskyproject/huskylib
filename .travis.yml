@@ -3,6 +3,12 @@ language: c
 branches:
   only:
     - master
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-7
 matrix:
   fast_finish: true
   include:
