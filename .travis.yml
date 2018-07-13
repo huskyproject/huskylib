@@ -44,6 +44,6 @@ script:
   - eval "${MATRIX_EVAL}"
   - mkdir build
   - cd build
-  - cmake .. "$CF"
+  - cmake .. "${CF}"
   - cmake --build .
   - cpack
