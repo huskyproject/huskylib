@@ -14,7 +14,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-7
+            - gcc-7
       env:
         - MATRIX_EVAL="CC=gcc-7" CF=-DBUILD_SHARED_LIBS=OFF
     - os: linux
@@ -25,7 +25,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-7
+            - gcc-7
       env:
         - MATRIX_EVAL="CC=gcc-7" CF=-DBUILD_SHARED_LIBS=ON
     - os: linux
@@ -38,6 +38,11 @@ matrix:
       language: c
       env:
         - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=ON
+    - os: osx
+      sudo: false
+      language: c
+      env:
+        - MATRIX_EVAL="CC=clang" CF=-DBUILD_SHARED_LIBS=OFF
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y rpm; fi
 script:
