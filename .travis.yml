@@ -10,19 +10,21 @@ matrix:
       sudo: false
       language: c
       addons:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - g++-7
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
       env: ['MATRIX_EVAL="CC=gcc-7 && CF=-DBUILD_SHARED_LIBS=OFF"']
     - os: linux
       sudo: false
       language: c
       addons:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - g++-7
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
       env: ['MATRIX_EVAL="CC=gcc-7 && CF=-DBUILD_SHARED_LIBS=ON"']
     - os: linux
       sudo: false
