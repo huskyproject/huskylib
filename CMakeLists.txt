@@ -59,7 +59,7 @@ SET(husky_SOURCES
   src/strftime.c
   src/tdelay.c
   src/temp.c
-  src/tlog.c
+#  src/tlog.c
   src/tree.c
   src/version.c
   src/xstr.c
