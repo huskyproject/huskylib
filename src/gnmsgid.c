@@ -209,13 +209,14 @@ int main(int argc, char *argv[])
             break;
         }
         s = argv[i];
-        for(j=strlen(argv[i]); j>0; j--, s++)
+        for(j=strlen(argv[i]); j>0; j--, s++) {
             if (!isdigit((int)(*s)))
             {
                 fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
                 perr = 1;
                 break;
             }
+        }
             if (perr!=0)
                 break;
 

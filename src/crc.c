@@ -398,10 +398,11 @@ dword filesum32( const char *filename, unsigned long *plen )
   while (!feof(fd) && !ferror(fd))
   {
     got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
-    if( got>0 )
+    if( got>0 ) {
       len+=got;
       for (str=buffer; got; str++, got--)
             crc += *str;
+    }
   }
   fclose(fd);
 
