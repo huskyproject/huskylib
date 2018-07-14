@@ -3,18 +3,23 @@ PROJECT(husky C)
 set(husky_VERSION 1.9.0)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-  if(CMAKE_BUILD_TYPE MATCHES Debug)
-    ADD_DEFINITIONS(-g -DDEBUG -D_DEBUG)
-    set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "My multi config types" FORCE)
-  else(CMAKE_BUILD_TYPE MATCHES Debug)
-    ADD_DEFINITIONS(-DNDEBUG)
-    set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "My multi config types" FORCE)
-  endif(CMAKE_BUILD_TYPE MATCHES Debug)
+option(BUILD_SHARED_LIBS "Build shared libs" ON)
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+  ADD_DEFINITIONS(-g -DDEBUG -D_DEBUG)
+  set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "My multi config types" FORCE)
+else(CMAKE_BUILD_TYPE MATCHES Debug)
+  ADD_DEFINITIONS(-DNDEBUG)
+  set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "My multi config types" FORCE)
+endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 if (MSVC)
+  if (BUILD_SHARED_LIBS)
+    ADD_DEFINITIONS(-D_DLL -D_MAKE_DLL)
+  endif()
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../out/lib")
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../out/bin")
-  ADD_DEFINITIONS(-DWIN32 -D_WINDOWS -D_DLL -D_CONSOLE -D_MAKE_DLL -D_CRT_SECURE_NO_WARNINGS)
+  ADD_DEFINITIONS(-DWIN32 -D_WINDOWS -D_CONSOLE -D_CRT_SECURE_NO_WARNINGS)
 else ()
   ADD_DEFINITIONS(-Wall -DUNIX)
 endif (MSVC)
@@ -23,6 +28,7 @@ message("-------------------------")
 message("System            : ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}")
 message("Compiler          : ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}")
 message("Prefix            : ${CMAKE_INSTALL_PREFIX} (run \"cmake . -DCMAKE_INSTALL_PREFIX:PATH=/other\" for other prefix)")
+message("Build shared      : ${BUILD_SHARED_LIBS}")
 message("Build type        : ${CMAKE_CONFIGURATION_TYPES}")
 message("-------------------------")
 
@@ -54,7 +60,7 @@ SET(husky_SOURCES
   src/strftime.c
   src/tdelay.c
   src/temp.c
-  src/tlog.c
+#  src/tlog.c
   src/tree.c
   src/version.c
   src/xstr.c
@@ -106,7 +112,7 @@ SET(husky_HEADERS
 )
 
 include_directories(huskylib)
-ADD_LIBRARY(husky SHARED ${husky_SOURCES} ${husky_HEADERS})
+ADD_LIBRARY(husky ${husky_SOURCES} ${husky_HEADERS})
 set_target_properties(husky PROPERTIES VERSION ${husky_VERSION})
 set_target_properties(husky PROPERTIES PUBLIC_HEADER "${husky_HEADERS}")
 ADD_EXECUTABLE(gnmsgid src/gnmsgid.c)
@@ -116,6 +122,7 @@ if (NOT MSVC)
   INSTALL(TARGETS husky gnmsgid
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
     PUBLIC_HEADER DESTINATION include/huskylib
   )
   set(CPACK_GENERATOR ${CPACK_GENERATOR} TGZ)
