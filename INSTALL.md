@@ -8,7 +8,6 @@ husky-common (huskybse) package FIRST!
 - [Build](#build)
   - [Compiling and installing with the standard Makefile and huskymak.cfg](#compiling-and-installing-with-the-standard-makefile-and-huskymakcfg)
   - [Compiling with the Legacy Makefiles](#compiling-with-the-legacy-makefiles)
-  - [Producing rpm packages](#producing-rpm-packages)
   - [Compiling and installing using Cmake](#compiling-and-installing-using-cmake)
 - [Afterbuild actions](#afterbuild-actions)
 
@@ -56,32 +55,7 @@ dos:
 ```sh
    d:\husky\huskylib>make -f makefile.djg
 ```
-### Producing rpm packages
-
-It is not necessary to prepare a special huskymak.cfg since it is
-already prepared and placed in the root directory.
-
-To compile and build an rpm file first download tarball (*.tar.gz)
-with the source code from 
-
-https://github.com/huskyproject/huskylib/releases/latest
-
-and then run the command
-
-    rpmbuild -ta name.tar.gz
-
-where *name* is the name of the downloaded tarball. The resulting
-packages are in the ~/rpmbuild/RPMS/*arch* directory. Here *arch*
-is your platform architecture, for example, x86_64.
-
-On default static library is made. There are two build options for the
-rpmbuild command: '--without static' and '--with debug'. If you want
-to build dynamic library you use '--without static' and if you want to
-debug the program you use '--with debug'.
-
-    rpmbuild -ta name.tar.gz --without static
-
-### Compiling and installing using Cmake
+ ### Compiling and installing using Cmake
  
 - Run CMake to configure the build tree.
    ```sh
