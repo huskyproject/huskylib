@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{dbc87918-773a-451c-abdb-24ff7de7d90e}</UniqueIdentifier>
+      <Extensions>*.c</Extensions>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{5aa3601b-a046-4635-a0fb-7c09b5d70b91}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\huskylib\calendar.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\compiler.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\crc.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\cvtdate.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\dirlayer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\fexist.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\ffind.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\huskyext.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\huskylib.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\locking.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\log.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\memory.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\MSVC.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\parsenn.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\recode.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\strext.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\temp.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\tree.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\typesize.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\unused.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\vixie.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\huskylib\xstr.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\adcase.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calendar.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cmpfname.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\crc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cvtdate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dirlayer.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fexist.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ffind.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\flush.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ftnaddr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\genmsgid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\genverst.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\getfree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gnmsgid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ioutil.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\locking.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\log.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mapfile.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\memory.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parsenn.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\patmat.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\qksort.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\recode.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\setfsize.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\strext.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\strftime.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tdelay.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\temp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\version.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\xstr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
