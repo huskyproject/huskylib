@@ -82,9 +82,14 @@ Provides: %name-devel-libs = %version-%release
 date '+char cvs_date[]="%%F";' > cvsdate.h
 
 %build
+# parallel build appears to be broken at least in CentOS
+%if %_vendor == "redhat"
+make DYNLIBS=1
+make
+%else
 %make DYNLIBS=1
 %make
-
+%endif
 
 %install
 rm -rf -- %buildroot
