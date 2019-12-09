@@ -3,6 +3,8 @@ PROJECT(husky C)
 set(husky_VERSION 1.9.0)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+include(GNUInstallDirs)
+
 option(BUILD_SHARED_LIBS "Build shared libs" ON)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
