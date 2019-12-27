@@ -48,9 +48,9 @@ int cmpfnames(const char *file1, const char *file2)
 {
     struct stat st1, st2;
     if (stat(file1, &st1) || stat(file2, &st2))
-	return 1;
+        return 1;
     if (st1.st_dev!=st2.st_dev || st1.st_ino!=st2.st_ino)
-	return 1;
+        return 1;
     return 0;
 }
 
@@ -62,10 +62,10 @@ int cmpfnames(const char *file1, const char *file2)
 
     if (sstricmp(file1, file2) == 0) return 0;
     if (!GetShortPathName(file1, buf, sizeof(buf)))
-	sstrncpy(buf, file1, sizeof(buf));
+        sstrncpy(buf, file1, sizeof(buf));
     if (!GetFullPathName(buf, sizeof(path1), path1, &p)) return 1;
     if (!GetShortPathName(file2, buf, sizeof(buf)))
-	sstrncpy(buf, file2, sizeof(buf));
+        sstrncpy(buf, file2, sizeof(buf));
     if (!GetFullPathName(buf, sizeof(path2), path2, &p)) return 1;
 
     return sstricmp(path1, path2);
@@ -74,18 +74,18 @@ int cmpfnames(const char *file1, const char *file2)
 #elif defined (__OS2__)
 int cmpfnames(const char *file1, const char *file2)
 {
-  char path1[256], path2[256];
+    char path1[256], path2[256];
 
-/* DosQueryPathInfo declaration in os2emx.h:
-  ULONG DosQueryPathInfo (PCSZ pszPathName, ULONG ulInfoLevel, PVOID pInfoBuffer, ULONG ulInfoLength);
-  (PCSZ defined as const char* or unsigned const char* for different conditions)
-*/
-  if(  DosQueryPathInfo( (PCSZ)file1, FIL_QUERYFULLNAME, path1, sizeof(path1) )
-    || DosQueryPathInfo( (PCSZ)file2, FIL_QUERYFULLNAME, path2, sizeof(path2) )
-    )
-    return 1;
+    /* DosQueryPathInfo declaration in os2emx.h:
+      ULONG DosQueryPathInfo (PCSZ pszPathName, ULONG ulInfoLevel, PVOID pInfoBuffer, ULONG ulInfoLength);
+      (PCSZ defined as const char* or unsigned const char* for different conditions)
+    */
+    if(  DosQueryPathInfo( (PCSZ)file1, FIL_QUERYFULLNAME, path1, sizeof(path1) )
+            || DosQueryPathInfo( (PCSZ)file2, FIL_QUERYFULLNAME, path2, sizeof(path2) )
+      )
+        return 1;
 
-  return sstricmp(path1, path2);
+    return sstricmp(path1, path2);
 }
 #elif defined (__DJGPP__)
 int cmpfnames(const char *file1, const char *file2)
@@ -93,18 +93,18 @@ int cmpfnames(const char *file1, const char *file2)
     char *path1 = NULL, *path2 = NULL;
     int result;
 
-  /* _truename() call DOS FN 0x60 (undocumented: return real file name)
-     and store string into 2nd parameter (if NULL - malloc).
-     Return value is pointer to this string or NULL.
-     See c:\djgpp\src\libc\dos\dos\truename.c for details */
+    /* _truename() call DOS FN 0x60 (undocumented: return real file name)
+       and store string into 2nd parameter (if NULL - malloc).
+       Return value is pointer to this string or NULL.
+       See c:\djgpp\src\libc\dos\dos\truename.c for details */
 
     result = sstricmp(file1, file2);  /* sstricmp() compare NULL strings also */
     if( result==0 || file1==NULL || file2==NULL )
-      return result;
+        return result;
     path1 = _truename( file1, NULL );
     path2 = _truename( file2, NULL );
     if( path1 && path2 ) /* if _truename() error: use result of compare original filenames */
-      result = sstricmp(path1, path2);  /* else compare pathnames */
+        result = sstricmp(path1, path2);  /* else compare pathnames */
     nfree(path1);
     nfree(path2);
     return result;

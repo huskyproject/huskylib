@@ -43,23 +43,23 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
-#   include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #ifdef HAS_IO_H
-#   include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAS_DIRENT_H
-#  include <dirent.h>
+    #include <dirent.h>
 #endif
 
 #ifdef HAS_SYS_PARAMS_H
-#   include <sys/params.h>
+    #include <sys/params.h>
 #endif
 
 #ifdef HAS_STRINGS_H
-#   include <strings.h>
+    #include <strings.h>
 #endif
 
 /* huskylib headers */
@@ -131,7 +131,7 @@ static char *current_cache;
 static int cache_sort_cmp(const void *a, const void *b)
 {
     return strcasecmp(current_cache+(*((const size_t *)a)),
-                   current_cache+(*((const size_t *)b)));
+                      current_cache+(*((const size_t *)b)));
 }
 
 static int cache_find_cmp(const void *a, const void *b)
@@ -142,9 +142,9 @@ static int cache_find_cmp(const void *a, const void *b)
 /* #define TRACECACHE */
 
 #ifdef __BSD__
-#define DIRENTLEN(x) ((x)->d_namlen)
+    #define DIRENTLEN(x) ((x)->d_namlen)
 #else
-#define DIRENTLEN(x) (strlen((x)->d_name))
+    #define DIRENTLEN(x) (strlen((x)->d_name))
 #endif
 
 void adaptcase_refresh_dir(const char *directory)
@@ -164,7 +164,7 @@ void adaptcase_refresh_dir(const char *directory)
             if (adaptcase_cache[l].query != NULL)
             {
                 if ((!memcmp(adaptcase_cache[l].query,directory,k)) &&
-                    (adaptcase_cache[l].query[k] == '\0'))
+                        (adaptcase_cache[l].query[k] == '\0'))
                 {
                     nfree(adaptcase_cache[l].query);
                     nfree(adaptcase_cache[l].result);
@@ -173,7 +173,8 @@ void adaptcase_refresh_dir(const char *directory)
             }
 
             l = (l == 0) ? (adaptcase_cachesize - 1) : (l - 1);
-        } while (l != adaptcase_cache_position);
+        }
+        while (l != adaptcase_cache_position);
     }
 }
 
@@ -216,7 +217,8 @@ void adaptcase(char *pathname)
         k = 0;
     }
 
-    j = 0; i = 0;
+    j = 0;
+    i = 0;
 
 
 start_over:
@@ -229,7 +231,7 @@ start_over:
             if (adaptcase_cache[l].query != NULL)
             {
                 if ((!memcmp(adaptcase_cache[l].query,pathname,k)) &&
-                    (adaptcase_cache[l].query[k] == '\0'))
+                        (adaptcase_cache[l].query[k] == '\0'))
                 {
                     /* cache hit for the directory */
 #ifdef TRACECACHE
@@ -286,7 +288,8 @@ start_over:
                 }
             }
             l = (l == 0) ? adaptcase_cachesize - 1 : l - 1;
-        } while (l != adaptcase_cache_position);
+        }
+        while (l != adaptcase_cache_position);
 
 #ifdef TRACECACHE
         fprintf (ftrc, "Cache miss for directory.\n");
@@ -382,9 +385,9 @@ add_to_cache:
         nfree(adaptcase_cache[l].raw_cache);
 
         if ( (adaptcase_cache[l].query = malloc(k + 1)) == NULL ||
-             (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
-             (adaptcase_cache[l].raw_cache =  malloc(rawmax = rawcache_stepsize)) == NULL ||
-             (adaptcase_cache[l].cache_index = malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) == NULL )
+                (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
+                (adaptcase_cache[l].raw_cache =  malloc(rawmax = rawcache_stepsize)) == NULL ||
+                (adaptcase_cache[l].cache_index = malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) == NULL )
         {
             goto cache_error;
         }
@@ -392,7 +395,8 @@ add_to_cache:
         adaptcase_cache[l].n = 0;
         raw_high = 0;
 
-        c = buf[k]; buf[k] = '\0';
+        c = buf[k];
+        buf[k] = '\0';
         if ((dirp = opendir(buf)) == NULL)
         {
             buf[k] = c;
@@ -405,8 +409,8 @@ add_to_cache:
             if (raw_high + DIRENTLEN(dp) + 1 > rawmax)
             {
                 if ((adaptcase_cache[l].raw_cache =
-                     realloc(adaptcase_cache[l].raw_cache,
-                             rawmax+=rawcache_stepsize)) == NULL)
+                            realloc(adaptcase_cache[l].raw_cache,
+                                    rawmax+=rawcache_stepsize)) == NULL)
                 {
                     goto cache_error;
                 }
@@ -415,9 +419,9 @@ add_to_cache:
             if (adaptcase_cache[l].n == nmax - 1)
             {
                 if ((adaptcase_cache[l].cache_index =
-                     realloc(adaptcase_cache[l].cache_index,
-                             (nmax+=cacheindex_stepsize) *
-                             sizeof(size_t))) == NULL)
+                            realloc(adaptcase_cache[l].cache_index,
+                                    (nmax+=cacheindex_stepsize) *
+                                    sizeof(size_t))) == NULL)
                 {
                     goto cache_error;
                 }
@@ -445,14 +449,14 @@ add_to_cache:
 #endif
         goto start_over;
 
-    cache_error:
+cache_error:
 
         nfree(adaptcase_cache[l].query);
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
         nfree(adaptcase_cache[l].cache_index);
 
-            if (dirp != NULL)
+        if (dirp != NULL)
         {
             closedir(dirp);
         }
@@ -497,7 +501,8 @@ int main(int argc, char **argv)
 
     do
     {
-        printf ("(L)ookup, (I)nvalidate, (Q)uit? "); fflush(stdout);
+        printf ("(L)ookup, (I)nvalidate, (Q)uit? ");
+        fflush(stdout);
         gets(cmdbuf);
         switch (*cmdbuf)
         {
@@ -516,7 +521,8 @@ int main(int argc, char **argv)
             printf ("%s\n", fnbuf);
             break;
         }
-    } while (1);
+    }
+    while (1);
 }
 #endif
 

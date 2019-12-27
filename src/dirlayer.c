@@ -50,19 +50,19 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_IO_H
-#include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAS_DIR_H
-#include <dir.h>
+    #include <dir.h>
 #endif
 
 #ifdef HAS_DIRENT_H
-#include <dirent.h>
+    #include <dirent.h>
 #endif
 
 #ifdef HAS_DIRECT_H
-#include <direct.h>
+    #include <direct.h>
 #endif
 
 
@@ -75,7 +75,7 @@
 #include <memory.h>
 #include <strext.h>
 #ifndef HAS_DIRENT_H
-#include <ffind.h>
+    #include <ffind.h>
 #endif
 #include <fexist.h>
 
@@ -85,155 +85,167 @@
 /* use compiler or system library: opendir/readdir/closedir */
 
 husky_DIR* husky_opendir(const char* mask)
-{ husky_DIR dir;
+{
+    husky_DIR dir;
 
-  if(!mask) return NULL;
-  memset(&dir,0,sizeof(dir));
+    if(!mask) return NULL;
+    memset(&dir,0,sizeof(dir));
 
-  strncpy( dir.d_mask, mask, sizeof(dir.d_mask)-3 ); /* preserve two chars for "\\*"
+    strncpy( dir.d_mask, mask, sizeof(dir.d_mask)-3 ); /* preserve two chars for "\\*"
                                                 d_mask filled by zero in previous source line */
 #if 0
-  {
-    char *ch, *ch2;
-    ch = strrchr(d_mask,'/');
-    ch2 = strrchr(d_mask,'\\');
-    ch = max(ch,ch2);
-    if (ch && ch[1]=='\0') strcat(dir->d_mask,"*");
-                          else strcat(dir->d_mask,"\\*");
-  }
+    {
+        char *ch, *ch2;
+        ch = strrchr(d_mask,'/');
+        ch2 = strrchr(d_mask,'\\');
+        ch = max(ch,ch2);
+        if (ch && ch[1]=='\0') strcat(dir->d_mask,"*");
+        else strcat(dir->d_mask,"\\*");
+    }
 #endif
-  dir.internal_DIR = opendir(mask);
-  if(!dir.internal_DIR) return NULL;
+    dir.internal_DIR = opendir(mask);
+    if(!dir.internal_DIR) return NULL;
 
-  return memdup(&dir,sizeof(dir));
+    return memdup(&dir,sizeof(dir));
 }
 
 char* husky_readdir(husky_DIR* dir)
-{ struct dirent *de;
-  if(!dir || !dir->internal_DIR) return 0;
+{
+    struct dirent *de;
+    if(!dir || !dir->internal_DIR) return 0;
 
-  do{
-    de = readdir(dir->internal_DIR);
-    if(!de || !de->d_name) return NULL;
-  }while( strcmp(de->d_name,".")==0 || strcmp(de->d_name,"..")==0 );
-  strnzcpy(dir->d_name, de->d_name, sizeof(dir->d_name));
-  dir->d_attr = 0;       /* Use stat() for this! */
-  dir->d_size = -1;
+    do
+    {
+        de = readdir(dir->internal_DIR);
+        if(!de || !de->d_name) return NULL;
+    }
+    while( strcmp(de->d_name,".")==0 || strcmp(de->d_name,"..")==0 );
+    strnzcpy(dir->d_name, de->d_name, sizeof(dir->d_name));
+    dir->d_attr = 0;       /* Use stat() for this! */
+    dir->d_size = -1;
 
-  return dir->d_name;
+    return dir->d_name;
 }
 
 int  husky_closedir(husky_DIR* dir)
-{ int rc;
+{
+    int rc;
 
-  if(!dir || !dir->internal_DIR) return 0;
+    if(!dir || !dir->internal_DIR) return 0;
 
-  rc = closedir(dir->internal_DIR);
-  if(!rc){
-    free(dir);
-  }
+    rc = closedir(dir->internal_DIR);
+    if(!rc)
+    {
+        free(dir);
+    }
 
-  return rc;
+    return rc;
 }
 
 void  husky_rewinddir(husky_DIR* dir)
 {
-  if(!dir || !dir->internal_DIR) return;
+    if(!dir || !dir->internal_DIR) return;
 
-  rewinddir(dir->internal_DIR);
-  dir->d_name[0] = '\0';
+    rewinddir(dir->internal_DIR);
+    dir->d_name[0] = '\0';
 }
 
 #else  /* Use ffind.c */
 
 husky_DIR* husky_opendir(const char* mask)
-{ husky_DIR dir;
+{
+    husky_DIR dir;
 
-  if(!mask) return NULL;
+    if(!mask) return NULL;
 
-  if(!direxist(mask)){
-    errno = ENOENT;
-    return NULL;
-  }
-  memset(&dir,0,sizeof(dir));
+    if(!direxist(mask))
+    {
+        errno = ENOENT;
+        return NULL;
+    }
+    memset(&dir,0,sizeof(dir));
 
-  strncpy( dir.d_mask, mask, sizeof(dir.d_mask)-3 ); /* preserve two chars for "\\*"
+    strncpy( dir.d_mask, mask, sizeof(dir.d_mask)-3 ); /* preserve two chars for "\\*"
                                                 d_mask filled by zero in previous source line */
-  {
-    char *ch, *ch2;
-    ch = strrchr(dir.d_mask,'/');
-    ch2 = strrchr(dir.d_mask,'\\');
-    ch = max(ch,ch2);
-    if (ch && ch[1]=='\0') strcat(dir.d_mask,"*");
-                          else strcat(dir.d_mask,"\\*");
-  }
-  dir.d_first++;
-  return memdup(&dir,sizeof(dir));
+    {
+        char *ch, *ch2;
+        ch = strrchr(dir.d_mask,'/');
+        ch2 = strrchr(dir.d_mask,'\\');
+        ch = max(ch,ch2);
+        if (ch && ch[1]=='\0') strcat(dir.d_mask,"*");
+        else strcat(dir.d_mask,"\\*");
+    }
+    dir.d_first++;
+    return memdup(&dir,sizeof(dir));
 }
 
 /* Note: FFindInfo/FFindNext skips "." and ".." entries */
 char* husky_readdir(husky_DIR* dir)
 {
-  if(!dir) return 0;
+    if(!dir) return 0;
 
-  dir->d_name[0] = '\0';
-  dir->d_attr = 0;
-  dir->d_size = 0;
+    dir->d_name[0] = '\0';
+    dir->d_attr = 0;
+    dir->d_size = 0;
 
-  if(dir->d_first){
-    dir->ff = FFindInfo(dir->d_mask);
-    if((dir->ff)==NULL) return NULL;
-    dir->d_first=0;
-  }else{
-    if(FFindNext(dir->ff)) return NULL;
-  }
+    if(dir->d_first)
+    {
+        dir->ff = FFindInfo(dir->d_mask);
+        if((dir->ff)==NULL) return NULL;
+        dir->d_first=0;
+    }
+    else
+    {
+        if(FFindNext(dir->ff)) return NULL;
+    }
 
-  strnzcpy(dir->d_name, dir->ff->ff_name, sizeof(dir->d_name));
-  dir->d_attr = dir->ff->ff_attrib;
-  dir->d_size = dir->ff->ff_fsize;
+    strnzcpy(dir->d_name, dir->ff->ff_name, sizeof(dir->d_name));
+    dir->d_attr = dir->ff->ff_attrib;
+    dir->d_size = dir->ff->ff_fsize;
 
-  return dir->d_name;
+    return dir->d_name;
 }
 
 
 int  husky_closedir(husky_DIR* dir)
 {
-  if(!dir) return -1;
+    if(!dir) return -1;
 
-  FFindClose(dir->ff);
-  free(dir);
+    FFindClose(dir->ff);
+    free(dir);
 
-  return 0;
+    return 0;
 }
 
 
 void  husky_rewinddir(husky_DIR* dir)
 {
-  if(!dir) return;
+    if(!dir) return;
 
-  if(dir->ff) FFindClose(dir->ff);
-  dir->ff = NULL;
-  dir->d_first = 1;
-  dir->d_name[0] = '\0';
-  dir->d_attr = 0;
-  dir->d_size = 0;
+    if(dir->ff) FFindClose(dir->ff);
+    dir->ff = NULL;
+    dir->d_first = 1;
+    dir->d_name[0] = '\0';
+    dir->d_attr = 0;
+    dir->d_size = 0;
 }
 
 #endif
 
 #ifdef TEST
 
-int main(int argc, char **argv){
-  husky_DIR *dd;
-  char *name=".";
+int main(int argc, char **argv)
+{
+    husky_DIR *dd;
+    char *name=".";
 
-  if(argc>1) name = argv[1];
+    if(argc>1) name = argv[1];
 
-  dd=husky_opendir(name);
-  while( (name=husky_readdir(dd)) )
-    printf("%s\n",name);
+    dd=husky_opendir(name);
+    while( (name=husky_readdir(dd)) )
+        printf("%s\n",name);
 
-  husky_closedir(dd);
-  return 0;
+    husky_closedir(dd);
+    return 0;
 }
 #endif

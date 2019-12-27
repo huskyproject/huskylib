@@ -47,7 +47,7 @@
  * (re)define it in your program source if want other.
  */
 #ifndef TEMPFILESUFFIX
-#define TEMPFILESUFFIX "tmp"
+    #define TEMPFILESUFFIX "tmp"
 #endif
 
 

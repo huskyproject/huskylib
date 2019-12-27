@@ -157,13 +157,14 @@
 extern "C" {
 #endif
 
-struct _log {
-   char *keysAllowed;    /*  only log-data with one of these keys will be stored */
-   char *keysPrinted;    /*  only log-data with these keys will be printed to screen */
-   char *appName;        /*  name of the application which has created this log entry */
-   FILE *logFile;        /*  in this logFile */
-   unsigned char isopen; /*  is the log-file open? */
-   unsigned int logEcho; /*  echo log to screen? */
+struct _log
+{
+    char *keysAllowed;    /*  only log-data with one of these keys will be stored */
+    char *keysPrinted;    /*  only log-data with these keys will be printed to screen */
+    char *appName;        /*  name of the application which has created this log entry */
+    FILE *logFile;        /*  in this logFile */
+    unsigned char isopen; /*  is the log-file open? */
+    unsigned int logEcho; /*  echo log to screen? */
 };
 
 typedef struct _log s_log;
@@ -220,7 +221,7 @@ HUSKYEXT void w_log(char key, char *logString, ...);
 
 #endif
 
-#ifdef __NT__ 
+#ifdef __NT__
 #include <windows.h>
 #include <winbase.h>
 HUSKYEXT LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo);

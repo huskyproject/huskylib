@@ -1,5 +1,5 @@
 /* $Id$
- *  Provides macro to suppress warning about unused parameter.  
+ *  Provides macro to suppress warning about unused parameter.
  *
  *  Written by Paul Edwards.  Modified by Andrew Clarke.
  *
@@ -37,13 +37,13 @@
 /***  Declarations & defines  ***********************************************/
 
 #ifndef unused
-#if defined(_MSC_VER)
-#define unused(x) ((void)(x))
-#elif defined(PACIFIC) || defined(__GNUC__)
-#define unused(x) while(0){if(x){};}
-#elif defined(__HIGHC__)
-#define unused(x) ((x) = (x))
-#else
-#define unused(x) ((void)(x))
-#endif
+    #if defined(_MSC_VER)
+        #define unused(x) ((void)(x))
+    #elif defined(PACIFIC) || defined(__GNUC__)
+        #define unused(x) while(0){if(x){};}
+    #elif defined(__HIGHC__)
+        #define unused(x) ((x) = (x))
+    #else
+        #define unused(x) ((void)(x))
+    #endif
 #endif

@@ -30,16 +30,16 @@
 #define HUSKY_EMX_H
 
 #ifndef __GNUC__
-  #error This file may be used only with GNU C !
+    #error This file may be used only with GNU C !
 #endif
 
 #ifndef __EMX__
-  #error This file may be used only with EMX (GNU C) on OS/2 !
+    #error This file may be used only with EMX (GNU C) on OS/2 !
 #endif
 
 
 #ifndef __LITTLE_ENDIAN__
-#  define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */
+    #define __LITTLE_ENDIAN__  /* using to select functions/macroses for read & write binary values */
 #endif
 
 #undef __UNIX__
@@ -52,13 +52,13 @@
 #  define _loadds
 #  define cdecl
 #  define pascal
-#  if defined(__32BIT__)
-#    define near
-#    undef  far
-#    define far
-#    define farread(a,b,c)  read(a,b,c)
-#    define farwrite(a,b,c) write(a,b,c)
-#  endif
+#if defined(__32BIT__)
+    #define near
+    #undef  far
+    #define far
+    #define farread(a,b,c)  read(a,b,c)
+    #define farwrite(a,b,c) write(a,b,c)
+#endif
 
 #  define mymkdir(a) mkdir((a), 0)
 
@@ -92,9 +92,9 @@
 
 #  define USE_STAT_MACROS
 
-#  ifndef LONG_MAX
-#    include <limits.h>
-#  endif
+#ifndef LONG_MAX
+    #include <limits.h>
+#endif
 
 
 typedef unsigned bit;

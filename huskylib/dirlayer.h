@@ -53,7 +53,7 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_DIRENT_H
-#include <dirent.h>
+    #include <dirent.h>
 #endif
 
 
@@ -66,46 +66,47 @@
 
 
 #ifdef __MSVC__
-#define NAME_MAX        _MAX_PATH
+    #define NAME_MAX        _MAX_PATH
 
 #endif
 
 #if defined(__IBMC__) && !defined(__UNIX__)   /* only define it for IBM VisualAge C++ */
 
-#define INCL_DOSERRORS
-#define INCL_DOSFILEMGR
-#include <os2.h>
+    #define INCL_DOSERRORS
+    #define INCL_DOSFILEMGR
+    #include <os2.h>
 
-#define NAME_MAX        255             /* maximum filename */
+    #define NAME_MAX        255             /* maximum filename */
 
-/* File attribute constants for d_attr field */
+    /* File attribute constants for d_attr field */
 
-#define _A_NORMAL       0x00    /* Normal file - read/write permitted */
-#define _A_RDONLY       0x01    /* Read-only file */
-#define _A_HIDDEN       0x02    /* Hidden file */
-#define _A_SYSTEM       0x04    /* System file */
-#define _A_VOLID        0x08    /* Volume-ID entry */
-#define _A_SUBDIR       0x10    /* Subdirectory */
-#define _A_ARCH         0x20    /* Archive file */
+    #define _A_NORMAL       0x00    /* Normal file - read/write permitted */
+    #define _A_RDONLY       0x01    /* Read-only file */
+    #define _A_HIDDEN       0x02    /* Hidden file */
+    #define _A_SYSTEM       0x04    /* System file */
+    #define _A_VOLID        0x08    /* Volume-ID entry */
+    #define _A_SUBDIR       0x10    /* Subdirectory */
+    #define _A_ARCH         0x20    /* Archive file */
 
 #endif
 
 #ifndef NAME_MAX
-#define NAME_MAX        128     /* maximum filename */
+    #define NAME_MAX        128     /* maximum filename */
 #endif
 
-typedef struct husky_dirent {
-   char   d_attr;          /* file's attribute (DOS-based OS) */
-   /*  unsigned short int d_time;     */     /* file's time */
-   /*  unsigned short int d_date;     */     /* file's date */
-   long   d_size;              /* file's size */
-   char   d_name[NAME_MAX+1];  /* file's name */
-   char   d_mask[NAME_MAX+1];  /* file's search mask */
+typedef struct husky_dirent
+{
+    char   d_attr;          /* file's attribute (DOS-based OS) */
+    /*  unsigned short int d_time;     */     /* file's time */
+    /*  unsigned short int d_date;     */     /* file's date */
+    long   d_size;              /* file's size */
+    char   d_name[NAME_MAX+1];  /* file's name */
+    char   d_mask[NAME_MAX+1];  /* file's search mask */
 #ifdef HAS_DIRENT_H
-   DIR   *internal_DIR;       /* system/compiler DIR structure */
+    DIR   *internal_DIR;       /* system/compiler DIR structure */
 #else
-   FFIND *ff;       /* for FFindOpen()/FFindInfo()/FFindNext()/FFindClose() */
-   int    d_first;  /* flag for 1st time (set by husky_opendir(), reset by husky_readdir() */
+    FFIND *ff;       /* for FFindOpen()/FFindInfo()/FFindNext()/FFindClose() */
+    int    d_first;  /* flag for 1st time (set by husky_opendir(), reset by husky_readdir() */
 #endif
 } husky_DIR;
 

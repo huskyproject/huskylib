@@ -33,15 +33,15 @@
 
 /* standard headers */
 #if defined(HAS_IO_H)
-#include <io.h>
+    #include <io.h>
 #endif
 
 #if defined(HAS_UNISTD_H)
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #if defined(HAS_DOS_H)
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 
@@ -52,25 +52,25 @@
 
 #ifdef __OS2__
 
-#  define INCL_NOPM
-#  include <os2.h>
+    #define INCL_NOPM
+    #include <os2.h>
 
-#  if defined(__WATCOMC__)
-#    ifndef DosBufReset
-#      define DosBufReset DosResetBuffer
-#    endif
-#  elif defined(__EMX__) || defined(__FLAT__)
-#    undef DosBufReset
-#    define DosBufReset DosResetBuffer
-#  endif
+    #if defined(__WATCOMC__)
+        #ifndef DosBufReset
+            #define DosBufReset DosResetBuffer
+        #endif
+    #elif defined(__EMX__) || defined(__FLAT__)
+        #undef DosBufReset
+        #define DosBufReset DosResetBuffer
+    #endif
 #endif
 
 #if defined(__NT__) || defined(__MINGW32__)
-#  define WIN32_LEAN_AND_MEAN
-#  define NOGDI
-#  define NOUSER
-#  define NOMSG
-#  include <windows.h>
+    #define WIN32_LEAN_AND_MEAN
+    #define NOGDI
+    #define NOUSER
+    #define NOMSG
+    #include <windows.h>
 #endif
 
 #if defined(__DJGPP__)
@@ -104,17 +104,17 @@ void pascal far flush_handle2(int fh)
 #elif defined(__WIN32__)
 
 #ifdef __RSXNT__
-#  include <emx/syscalls.h>
+    #include <emx/syscalls.h>
 
-#  ifndef F_GETOSFD
-#    define F_GETOSFD 6
-#  endif
+    #ifndef F_GETOSFD
+        #define F_GETOSFD 6
+    #endif
 
-#  define flush_handle2(fh)  FlushFileBuffers((HANDLE) __fcntl((fh), F_GETOSFD, 0))
+    #define flush_handle2(fh)  FlushFileBuffers((HANDLE) __fcntl((fh), F_GETOSFD, 0))
 
 #else
 
-#  define flush_handle2(fh)  FlushFileBuffers((HANDLE) (fh))
+    #define flush_handle2(fh)  FlushFileBuffers((HANDLE) (fh))
 
 #endif
 
@@ -145,26 +145,26 @@ void pascal far flush_handle2(int fh)
 
 void pascal far flush_handle2(int fd)
 {
- union REGS in, out;
+    union REGS in, out;
 
- in.h.ah=0x45;
+    in.h.ah=0x45;
 #if defined(__DPMI__) && !defined(__DJGPP__)
- in.x.ebx=fd;
- int386(0x21, &in, &out);
+    in.x.ebx=fd;
+    int386(0x21, &in, &out);
 #else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
- in.x.bx=fd;
- int86(0x21,&in,&out);
+    in.x.bx=fd;
+    int86(0x21,&in,&out);
 #endif
 
- if(out.h.cflag) return;
+    if(out.h.cflag) return;
 
- in.h.ah=0x3e;
+    in.h.ah=0x3e;
 #if defined(__DPMI__) && !defined(__DJGPP__)
- in.x.ebx=out.x.eax;
- int386(0x21, &in, &out);
+    in.x.ebx=out.x.eax;
+    int386(0x21, &in, &out);
 #else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
- in.x.bx=out.x.ax;
- int86(0x21,&in,&out);
+    in.x.bx=out.x.ax;
+    int86(0x21,&in,&out);
 #endif
 }
 

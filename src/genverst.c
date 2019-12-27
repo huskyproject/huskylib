@@ -43,182 +43,190 @@
  * "program/FreeBSD 1.3.0-current 01-10-2002"
  * Return malloc'ed pointer
  */
- char *GenVersionStr( const char *programname, unsigned major,
-   unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate )
+char *GenVersionStr( const char *programname, unsigned major,
+                     unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate )
 {
-  char *_version_str=NULL; /* compose to this var */
-  char *platform;
-  char *cbranch=NULL;      /* branch string */
+    char *_version_str=NULL; /* compose to this var */
+    char *platform;
+    char *cbranch=NULL;      /* branch string */
 
 #ifdef UNAME                          /* Use '-DUNAME' compiler parameter */
-   platform = "/" UNAME;
+    platform = "/" UNAME;
 
 #elif defined(__linux__)              /*  gcc on Linux                    */
-   platform = "/lnx";
+    platform = "/lnx";
 
 #elif defined(__FreeBSD__)            /*  gcc on FreeBSD                  */
-   platform = "/fbsd";
+    platform = "/fbsd";
 
 #elif defined(__NetBSD__)             /*  gcc on NetBSD                   */
-   platform = "/nbsd";
+    platform = "/nbsd";
 
 #elif defined(__OpenBSD__)            /*  gcc on OpenBSD                  */
-   platform = "/obsd";
+    platform = "/obsd";
 
 #elif defined(__BSD__)                /*  gcc on other BSD clone          */
-   platform = "/bsd";
+    platform = "/bsd";
 
 #elif defined(__SUN__)                /*  SunOS (Solaris)                 */
 #  if defined(__GNUC__)
-   platform = "/sun-gcc";
+    platform = "/sun-gcc";
 #  else
-   platform = "/sun";
+    platform = "/sun";
 #  endif
 
 #elif defined(__APPLE__) && defined(__MACH__)
-   platform = "/mac";
+    platform = "/mac";
 
 #elif defined(_AIX)
-   platform = "/aix";
+    platform = "/aix";
 
 #elif defined(__osf__)
-   platform = "/osf";
+    platform = "/osf";
 
 #elif defined(__hpux)
-   platform = "/hpux";
+    platform = "/hpux";
 
 #elif defined(__OS2__) || defined(OS2)
 #  if defined(__TURBOC__) /* Borland C/C++ for OS/2 */
-   platform = "/os2-bc";
+    platform = "/os2-bc";
 #  elif defined(_MSC_VER) /* Microsoft C or Microsoft QuickC for OS/2 */
-   platform = "/os2-msc";
+    platform = "/os2-msc";
 #  elif defined(__WATCOMC__)
-   platform = "/os2-wc";
+    platform = "/os2-wc";
 #  elif defined(__IBMC__) /* IBM C/Set++ for OS/2 */
-   platform = "/os2-ibmc";
+    platform = "/os2-ibmc";
 #  elif defined(__HIGHC__)/* MetaWare High C/C++ for OS/2 */
-   platform = "/os2-hc";
+    platform = "/os2-hc";
 #  elif defined(__EMX__)  /* EMX for 32-bit OS/2 */
-   platform = "/os2-emx";
+    platform = "/os2-emx";
 #  else
-   platform = "/os2";
+    platform = "/os2";
 #  endif
 
 #elif defined(__HIGHC__) /* MetaWare High C/C++ for OS/2 */
-   platform = "/os2-hc";
+    platform = "/os2-hc";
 
 #elif defined(__IBMC__) && !defined(UNIX)
-/* IBM C/Set++ for OS/2 */
-   platform = "/os2-ibmc";
+    /* IBM C/Set++ for OS/2 */
+    platform = "/os2-ibmc";
 
 #elif defined(__MSVC__)
 #    if !defined(_MAKE_DLL_MVC_) && defined(_WIN64)
-     platform = "/w64-mvc";
+    platform = "/w64-mvc";
 #    elif defined(_MAKE_DLL_MVC_) && defined(_WIN64)
-     platform = "/w64-mvcdll";
+    platform = "/w64-mvcdll";
 #    elif defined(_MAKE_DLL_MVC_) && !defined(_WIN64)
-     platform = "/w32-mvcdll";
+    platform = "/w32-mvcdll";
 #    else
-     platform = "/w32-mvc";
+    platform = "/w32-mvc";
 #    endif
 #elif defined(__MINGW32__)
 #    if defined(_MAKE_DLL)
-     platform = "/w32-mgwdll";
+    platform = "/w32-mgwdll";
 #    else
-     platform = "/w32-mgw";
+    platform = "/w32-mgw";
 #    endif
 #elif defined(__WIN32__)
 
 #  if defined(__TURBOC__) /* Borland C/C++ for Win32 */
-   platform = "/w32-bc";
+    platform = "/w32-bc";
 #  elif defined(__WATCOMC__)
-   platform = "/w32-wc";
+    platform = "/w32-wc";
 #  elif defined(__EMX__)    /* RSX for Windows NT */
-   platform = "/w32-rsx";
+    platform = "/w32-rsx";
 #  else
-   platform = "/w32";
+    platform = "/w32";
 #  endif
 
 #elif defined(_WINDOWS)
 #  if defined(__WATCOMC__)
-   platform = "/win-wc";
+    platform = "/win-wc";
 #  else
-   platform = "/win";
+    platform = "/win";
 #  endif
 
 #  elif defined(__EMX__)    /* EMX for 32-bit OS/2 */
-   platform = "/emx";
+    platform = "/emx";
 
 #elif defined(__DJGPP__)
-   platform = "/dpmi-djgpp";
+    platform = "/dpmi-djgpp";
 
 #elif defined(__DOS__)
 #  ifdef __DJGPP__
-   platform = "/dpmi-djgpp";
+    platform = "/dpmi-djgpp";
 #  elif defined(__WATCOMC__) && defined(__DOS4G__)
-   platform = "/dos4g-wc";
+    platform = "/dos4g-wc";
 #  elif defined(__WATCOMC__) && defined(__FLAT__)
-   platform = "/dpmi-wc";
+    platform = "/dpmi-wc";
 #  elif defined(__WATCOMC__) && !defined(__FLAT__)
-   platform = "/dos-wc";
+    platform = "/dos-wc";
 #  elif defined(__TURBOC__)
-   platform = "/dos-bc";
+    platform = "/dos-bc";
 #  elif defined(__MSC__) /* Microsoft C or Microsoft QuickC for MS-DOS */
-   platform = "/dos-msc";
+    platform = "/dos-msc";
 #  elif defined(__FLAT__)
-   platform = "/dpmi";
+    platform = "/dpmi";
 #  else
-   platform = "/dos";
+    platform = "/dos";
 #  endif
 
 #elif defined(__BEOS__)
-   platform = "/beos";
+    platform = "/beos";
 
 #elif defined(SASC)                          /* SAS C for AmigaDOS */
-   platform = "/amiga-sasc";
+    platform = "/amiga-sasc";
 
 #elif defined(__UNIX__)
-   platform = "/unix";
+    platform = "/unix";
 
 #else
-   platform = "";
-  #ifdef __GNUC__
-    #warning Unknown platform and compiler!
-  #else
-    #pragma message("Unknown platform and compiler!")
-  #endif
+    platform = "";
+#ifdef __GNUC__
+#warning Unknown platform and compiler!
+#else
+#pragma message("Unknown platform and compiler!")
+#endif
 #endif
 
 
-  switch(branch){
-  case BRANCH_CURRENT: cbranch = "-cur";
-                       if( !(minor & 1) ){
-                         fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for current branch must be odd!\n", __LINE__);
-                       }
-                       if( patchlevel ){
-                         fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): patchlevel value for current branch must be zero!\n", __LINE__);
-/*                         pathlevel = 0;*/
-                       }
-                       break;
-  case BRANCH_STABLE:  cbranch = "-sta";
-                       if( minor & 1 ){
-                         fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for stable branch must be even!\n", __LINE__);
-                       }
-                       break;
-  case BRANCH_RELEASE: cbranch = "-rel";
-                       if( minor & 1 ){
-                         fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for release branch must be even!\n", __LINE__);
-                       }
-                       break;
-  }
+    switch(branch)
+    {
+    case BRANCH_CURRENT:
+        cbranch = "-cur";
+        if( !(minor & 1) )
+        {
+            fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for current branch must be odd!\n", __LINE__);
+        }
+        if( patchlevel )
+        {
+            fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): patchlevel value for current branch must be zero!\n", __LINE__);
+            /*                         pathlevel = 0;*/
+        }
+        break;
+    case BRANCH_STABLE:
+        cbranch = "-sta";
+        if( minor & 1 )
+        {
+            fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for stable branch must be even!\n", __LINE__);
+        }
+        break;
+    case BRANCH_RELEASE:
+        cbranch = "-rel";
+        if( minor & 1 )
+        {
+            fprintf(stderr, __FILE__ ":%u: illegal usage of GenVersionStr(): minor value for release branch must be even!\n", __LINE__);
+        }
+        break;
+    }
 
-  if(branch==BRANCH_RELEASE)
-    /* Release date are known always */
-    xscatprintf( &_version_str, "%s%s %u.%u.%u%s",
+    if(branch==BRANCH_RELEASE)
+        /* Release date are known always */
+        xscatprintf( &_version_str, "%s%s %u.%u.%u%s",
                      programname, platform, major, minor, patchlevel, cbranch);
-  else
-    xscatprintf( &_version_str, "%s%s %u.%u.%u%s %s",
-            programname, platform, major, minor, patchlevel, cbranch, cvsdate);
+    else
+        xscatprintf( &_version_str, "%s%s %u.%u.%u%s %s",
+                     programname, platform, major, minor, patchlevel, cbranch, cvsdate);
 
-  return _version_str;
+    return _version_str;
 }

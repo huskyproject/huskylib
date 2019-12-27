@@ -41,7 +41,7 @@
 #include <compiler.h>
 
 #ifdef HAS_STRINGS_H
-#   include <strings.h>
+    #include <strings.h>
 #endif
 
 /* huskylib headers */
@@ -78,20 +78,28 @@ int outrunparse(char *line, unsigned long *seqoutrun)
     p = line;
     while (isdigit((int)(*p))) p++;
     if (*p == '\0') return 0;
-    if (p[1]) {
+    if (p[1])
+    {
         fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
         return 1;
     }
-    switch (tolower(*p)) {
-    case 'y':	*seqoutrun *= 365;
-    case 'd':	*seqoutrun *= 24;
-    case 'h':	*seqoutrun *= 60*60;
+    switch (tolower(*p))
+    {
+    case 'y':
+        *seqoutrun *= 365;
+    case 'd':
+        *seqoutrun *= 24;
+    case 'h':
+        *seqoutrun *= 60*60;
         break;
-    case 'w':	*seqoutrun *= 7l*24*60*60;
+    case 'w':
+        *seqoutrun *= 7l*24*60*60;
         break;
-    case 'm':	*seqoutrun *= 31l*24*60*60;
+    case 'm':
+        *seqoutrun *= 31l*24*60*60;
         break;
-    default:	fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
+    default:
+        fprintf(stderr, "Bad SeqOutrun value '%s'!\n", line);
         return 1;
     }
     return 0;
@@ -113,7 +121,7 @@ void printusage(void)
 
 void printversion(void)
 {
-/*    char *rev, *date, *gen_rev, *gen_date; */
+    /*    char *rev, *date, *gen_rev, *gen_date; */
     char *rev, *date;
 
     rev = extract_CVS_keyword(gnmsgid_rev);
@@ -209,7 +217,8 @@ int main(int argc, char *argv[])
             break;
         }
         s = argv[i];
-        for(j=strlen(argv[i]); j>0; j--, s++) {
+        for(j=strlen(argv[i]); j>0; j--, s++)
+        {
             if (!isdigit((int)(*s)))
             {
                 fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
@@ -217,17 +226,17 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-            if (perr!=0)
-                break;
-
-            num = atoi(argv[i]);
-
-            if (num<1)
-            {
-                fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
-                perr = 1;
-            }
+        if (perr!=0)
             break;
+
+        num = atoi(argv[i]);
+
+        if (num<1)
+        {
+            fprintf(stderr, "Invalid <num> parameter ('%s')!\n", argv[i]);
+            perr = 1;
+        }
+        break;
     }
 
     if (perr==0)
@@ -248,7 +257,7 @@ int main(int argc, char *argv[])
         {
             msgid = GenMsgIdEx(seqdir, seqoutrun, NULL, &msgiderr);
             if (msgiderr)
-            fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorythm\n", i, msgiderr);
+                fprintf(stderr, "warning (id #%i): %s, fall to ugly old algorythm\n", i, msgiderr);
             printf("%08lx\n", (ULONG)msgid);
         }
     }

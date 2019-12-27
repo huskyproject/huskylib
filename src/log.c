@@ -79,20 +79,20 @@ static int   syslogFacility = 0;
 /***  Implementation  *******************************************************/
 
 void initLogSyslog(char *ext_program, char *ext_logFileDir, int ext_syslogFacility,
-                int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
+                   int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
 {
 #ifdef HAVE_SYSLOG
-  if(ext_program && ext_syslogFacility)
-  {
-    syslogFacility  = ext_syslogFacility;
-    logLevels       = ext_logLevels;
-    screenLogLevels = ext_screenLogLevels;
-    logEchoToScreen = ext_logEchoToScreen;
-    openlog(ext_program, LOG_PID | LOG_ODELAY | (ext_logEchoToScreen?LOG_PERROR:0) , syslogFacility);
-  }
+    if(ext_program && ext_syslogFacility)
+    {
+        syslogFacility  = ext_syslogFacility;
+        logLevels       = ext_logLevels;
+        screenLogLevels = ext_screenLogLevels;
+        logEchoToScreen = ext_logEchoToScreen;
+        openlog(ext_program, LOG_PID | LOG_ODELAY | (ext_logEchoToScreen?LOG_PERROR:0), syslogFacility);
+    }
 #endif
-  if(ext_logFileDir)
-    initLog(ext_logFileDir, ext_logEchoToScreen, ext_logLevels, ext_screenLogLevels);
+    if(ext_logFileDir)
+        initLog(ext_logFileDir, ext_logEchoToScreen, ext_logLevels, ext_screenLogLevels);
 }
 
 void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels, char *ext_screenLogLevels)
@@ -104,178 +104,193 @@ void initLog(char *ext_logFileDir, int ext_logEchoToScreen, char *ext_logLevels,
     return;
 }
 
-void setLogDateFormat(char *_logDateFormat) {
-	logDateFormat = _logDateFormat;
+void setLogDateFormat(char *_logDateFormat)
+{
+    logDateFormat = _logDateFormat;
 }
 
 s_log *openLog(char *fileName, char *appN)
 {
-   time_t     currentTime;
-   struct tm  *locTime;
-   char *pathname=NULL;
-   int error=0;
+    time_t     currentTime;
+    struct tm  *locTime;
+    char *pathname=NULL;
+    int error=0;
 
-   if (!fileName || !fileName[0]) {
-      fprintf( stderr, "Logfile not defined, log into screen instead\n" );
-      return NULL;
-   }
-
-   if( strchr( fileName, '\\' ) || strchr( fileName, '/' ) )
-     pathname = fileName;
-   else
-     /* filename without path, construct full pathname  */
-     if ( logFileDir && logFileDir[0] ) {
-        xstrscat( &pathname, logFileDir, fileName, NULLP );
-     } else {
-        fprintf( stderr, "LogFileDir not defined, log into screen instead\n" );
+    if (!fileName || !fileName[0])
+    {
+        fprintf( stderr, "Logfile not defined, log into screen instead\n" );
         return NULL;
-     }
-   husky_log = (s_log *) smalloc(sizeof(s_log));
-   memset(husky_log, '\0', sizeof(s_log));
-   husky_log->logFile = fopen(pathname, "a");
-   if (NULL == husky_log->logFile) {
-      fprintf(stderr, "Cannot open log '%s': %s\n", fileName,  strerror(errno) );
-      nfree(husky_log);
-      if( pathname != fileName ) nfree(pathname);
-      return NULL;
-   } /* endif */
+    }
 
-   husky_log->isopen = 1;
+    if( strchr( fileName, '\\' ) || strchr( fileName, '/' ) )
+        pathname = fileName;
+    else
+        /* filename without path, construct full pathname  */
+        if ( logFileDir && logFileDir[0] )
+        {
+            xstrscat( &pathname, logFileDir, fileName, NULLP );
+        }
+        else
+        {
+            fprintf( stderr, "LogFileDir not defined, log into screen instead\n" );
+            return NULL;
+        }
+    husky_log = (s_log *) smalloc(sizeof(s_log));
+    memset(husky_log, '\0', sizeof(s_log));
+    husky_log->logFile = fopen(pathname, "a");
+    if (NULL == husky_log->logFile)
+    {
+        fprintf(stderr, "Cannot open log '%s': %s\n", fileName,  strerror(errno) );
+        nfree(husky_log);
+        if( pathname != fileName ) nfree(pathname);
+        return NULL;
+    } /* endif */
 
-   /* copy all informations */
-   xstrcat(&husky_log->appName, appN);
+    husky_log->isopen = 1;
 
-   if (logLevels != NULL)
-	   xstrcat(&husky_log->keysAllowed, logLevels);
-   else
-	   xstrcat(&husky_log->keysAllowed, DefaultLogLevels);
+    /* copy all informations */
+    xstrcat(&husky_log->appName, appN);
 
-   if( logEchoToScreen )
-   { if (screenLogLevels != NULL)
-	   xstrcat(&husky_log->keysPrinted, screenLogLevels);
-     else
-	   xstrcat(&husky_log->keysPrinted, DefaultScreenLogLevels);
-   } /* else: quiet mode, keysPrinted is empty */
+    if (logLevels != NULL)
+        xstrcat(&husky_log->keysAllowed, logLevels);
+    else
+        xstrcat(&husky_log->keysAllowed, DefaultLogLevels);
 
-   husky_log->logEcho = logEchoToScreen;
+    if( logEchoToScreen )
+    {
+        if (screenLogLevels != NULL)
+            xstrcat(&husky_log->keysPrinted, screenLogLevels);
+        else
+            xstrcat(&husky_log->keysPrinted, DefaultScreenLogLevels);
+    } /* else: quiet mode, keysPrinted is empty */
 
-   /* make first line of log */
-   currentTime = time(NULL);
-   locTime = localtime(&currentTime);
+    husky_log->logEcho = logEchoToScreen;
+
+    /* make first line of log */
+    currentTime = time(NULL);
+    locTime = localtime(&currentTime);
 #if 1
-   if (logDateFormat) {
-     char logDate[64];
-     int  i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
-     for (i = 0; i < logDateLen; i++) logDate[i] = '-';
-     logDate[i] = '\0';
-     error = ( fputs("--", husky_log->logFile) == EOF );
-     if( !error )
-     {
-       error = ( fputs(logDate, husky_log->logFile) == EOF );
-       if( !error )
-         error = ( fputs(" ", husky_log->logFile) == EOF );
-     }
-   }
-   else
+    if (logDateFormat)
+    {
+        char logDate[64];
+        int  i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
+        for (i = 0; i < logDateLen; i++) logDate[i] = '-';
+        logDate[i] = '\0';
+        error = ( fputs("--", husky_log->logFile) == EOF );
+        if( !error )
+        {
+            error = ( fputs(logDate, husky_log->logFile) == EOF );
+            if( !error )
+                error = ( fputs(" ", husky_log->logFile) == EOF );
+        }
+    }
+    else
 #endif
-     error = ( fputs("----------  ", husky_log->logFile) == EOF );
+        error = ( fputs("----------  ", husky_log->logFile) == EOF );
 
-   if( !error )
-   {
-     error = ( fprintf( husky_log->logFile, "%3s %02u %3s %02u, %s\n",
-                        weekday_ab[locTime->tm_wday], locTime->tm_mday,
-                        months_ab[locTime->tm_mon], locTime->tm_year%100,
-                        husky_log->appName
-                      )
-                == EOF
-             );
-   }
+    if( !error )
+    {
+        error = ( fprintf( husky_log->logFile, "%3s %02u %3s %02u, %s\n",
+                           weekday_ab[locTime->tm_wday], locTime->tm_mday,
+                           months_ab[locTime->tm_mon], locTime->tm_year%100,
+                           husky_log->appName
+                         )
+                  == EOF
+                );
+    }
 
-   if( error )
-     fprintf( stderr, "Can't write to log file \"%s\": %s", pathname, strerror(errno) );
-   if( pathname != fileName ) nfree(pathname);
-   return husky_log;
+    if( error )
+        fprintf( stderr, "Can't write to log file \"%s\": %s", pathname, strerror(errno) );
+    if( pathname != fileName ) nfree(pathname);
+    return husky_log;
 }
 
 void closeLog()
 {
-   if (husky_log != NULL) {
-      if (husky_log->isopen) {
-        fprintf(husky_log->logFile, "\n");
-        fclose(husky_log->logFile);
-      } /* endif */
-      nfree(husky_log->appName);
-      nfree(husky_log->keysAllowed);
-      nfree(husky_log->keysPrinted);
-      nfree(husky_log);
-   }
+    if (husky_log != NULL)
+    {
+        if (husky_log->isopen)
+        {
+            fprintf(husky_log->logFile, "\n");
+            fclose(husky_log->logFile);
+        } /* endif */
+        nfree(husky_log->appName);
+        nfree(husky_log->keysAllowed);
+        nfree(husky_log->keysPrinted);
+        nfree(husky_log);
+    }
 #ifdef HAVE_SYSLOG
-   closelog();
+    closelog();
 #endif
 }
 
 void w_log(char key, char *logString, ...)
 {
-	time_t     currentTime;
-	struct tm  *locTime;
-	va_list	   ap;
-	register char log=0, screen=0;
+    time_t     currentTime;
+    struct tm  *locTime;
+    va_list	   ap;
+    register char log=0, screen=0;
 
-	if (husky_log) {
-		if (husky_log->isopen && strchr(husky_log->keysAllowed, key)) log=1;
-		if (husky_log->logEcho && strchr(husky_log->keysPrinted, key)) screen=1;
-		if (!husky_log->isopen && key==LL_CRIT) screen=1; /* Critical error to stderr if not logged */
-	}else screen=1;
+    if (husky_log)
+    {
+        if (husky_log->isopen && strchr(husky_log->keysAllowed, key)) log=1;
+        if (husky_log->logEcho && strchr(husky_log->keysPrinted, key)) screen=1;
+        if (!husky_log->isopen && key==LL_CRIT) screen=1; /* Critical error to stderr if not logged */
+    }
+    else screen=1;
 
-	if (log || screen) {
-		char logDate[64];
-		int logDateLen;
-		currentTime = time(NULL);
+    if (log || screen)
+    {
+        char logDate[64];
+        int logDateLen;
+        currentTime = time(NULL);
 #if 1
-		locTime = localtime(&currentTime);
-   		logDateLen = strftime(logDate, 63, logDateFormat ? logDateFormat : "%H:%M:%S ", locTime);
-   		logDate[logDateLen] = '\0';
+        locTime = localtime(&currentTime);
+        logDateLen = strftime(logDate, 63, logDateFormat ? logDateFormat : "%H:%M:%S ", locTime);
+        logDate[logDateLen] = '\0';
 #endif
-          if (log) {
+        if (log)
+        {
             register int error=0;
 #if 1
             error = ( EOF == fprintf(husky_log->logFile, "%c %s ", key, logDate) );
 #else
             error = ( EOF == fprintf(husky_log->logFile, "%c %02u:%02u:%02u  ",
-					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec)
+                                     key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec)
                     );
 #endif
             if( !error )
             {
-              va_start(ap, logString);
-              error = ( 0>= vfprintf(husky_log->logFile, logString, ap) );
-              va_end(ap);
-              if( !error ) error = ( EOF == putc('\n', husky_log->logFile) );
-              if( !error ) error = ( EOF == fflush(husky_log->logFile) );
+                va_start(ap, logString);
+                error = ( 0>= vfprintf(husky_log->logFile, logString, ap) );
+                va_end(ap);
+                if( !error ) error = ( EOF == putc('\n', husky_log->logFile) );
+                if( !error ) error = ( EOF == fflush(husky_log->logFile) );
             }
             if( error )
             {
-              fprintf( stderr, "!!! Log writing attempt has caused an error: %s", strerror(errno) );
-              screen = 1;
+                fprintf( stderr, "!!! Log writing attempt has caused an error: %s", strerror(errno) );
+                screen = 1;
             }
-          }
+        }
 
-		if (screen) {
+        if (screen)
+        {
 #if 1
-			printf("%c %s  ", key, logDate);
+            printf("%c %s  ", key, logDate);
 #else
             printf("%c %02u:%02u:%02u  ",
-					key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
+                   key, locTime->tm_hour, locTime->tm_min, locTime->tm_sec);
 #endif
-			va_start(ap, logString);
-			vprintf(logString, ap);
-			va_end(ap);
-			putchar('\n');
-		}
-	}
+            va_start(ap, logString);
+            vprintf(logString, ap);
+            va_end(ap);
+            putchar('\n');
+        }
+    }
 }
 
-#ifdef __NT__ 
+#ifdef __NT__
 
 LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 {
@@ -286,34 +301,73 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 
     switch (ExceptionInfo->ExceptionRecord->ExceptionCode)
     {
-    case EXCEPTION_ACCESS_VIOLATION         : ErrorMsg = "Access violation"; break;
-    case EXCEPTION_DATATYPE_MISALIGNMENT    : ErrorMsg = "Datatype misalignment"; break;
-    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED    : ErrorMsg = "Array bound exceeded"; break;
-    case EXCEPTION_FLT_DENORMAL_OPERAND     : ErrorMsg = "Float: denormal operand"; break;
-    case EXCEPTION_FLT_DIVIDE_BY_ZERO       : ErrorMsg = "Float: divide by zero"; break;
-    case EXCEPTION_FLT_INEXACT_RESULT       : ErrorMsg = "Float: inexact result"; break;
-    case EXCEPTION_FLT_INVALID_OPERATION    : ErrorMsg = "Float: invalid operation"; break;
-    case EXCEPTION_FLT_OVERFLOW             : ErrorMsg = "Float: overflow"; break;
-    case EXCEPTION_FLT_STACK_CHECK          : ErrorMsg = "Float: stack check"; break;
-    case EXCEPTION_FLT_UNDERFLOW            : ErrorMsg = "Float: underflow"; break;
-    case EXCEPTION_INT_DIVIDE_BY_ZERO       : ErrorMsg = "Divide by zero"; break;
-    case EXCEPTION_INT_OVERFLOW             : ErrorMsg = "Overflow"; break;
-    case EXCEPTION_PRIV_INSTRUCTION         : ErrorMsg = "Priveleged instruction"; break;
-    case EXCEPTION_IN_PAGE_ERROR            : ErrorMsg = "Page error"; break;
-    case EXCEPTION_ILLEGAL_INSTRUCTION      : ErrorMsg = "Illegal instruction"; break;
-    case EXCEPTION_STACK_OVERFLOW           : ErrorMsg = "Stack overflow"; break;
-    case EXCEPTION_INVALID_DISPOSITION      : ErrorMsg = "Invalid disposition"; break;
-    case EXCEPTION_GUARD_PAGE               : ErrorMsg = "Guard page"; break;
-/* gcc 2.95.2 in Mingw32 knows nothing about this */
+    case EXCEPTION_ACCESS_VIOLATION         :
+        ErrorMsg = "Access violation";
+        break;
+    case EXCEPTION_DATATYPE_MISALIGNMENT    :
+        ErrorMsg = "Datatype misalignment";
+        break;
+    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED    :
+        ErrorMsg = "Array bound exceeded";
+        break;
+    case EXCEPTION_FLT_DENORMAL_OPERAND     :
+        ErrorMsg = "Float: denormal operand";
+        break;
+    case EXCEPTION_FLT_DIVIDE_BY_ZERO       :
+        ErrorMsg = "Float: divide by zero";
+        break;
+    case EXCEPTION_FLT_INEXACT_RESULT       :
+        ErrorMsg = "Float: inexact result";
+        break;
+    case EXCEPTION_FLT_INVALID_OPERATION    :
+        ErrorMsg = "Float: invalid operation";
+        break;
+    case EXCEPTION_FLT_OVERFLOW             :
+        ErrorMsg = "Float: overflow";
+        break;
+    case EXCEPTION_FLT_STACK_CHECK          :
+        ErrorMsg = "Float: stack check";
+        break;
+    case EXCEPTION_FLT_UNDERFLOW            :
+        ErrorMsg = "Float: underflow";
+        break;
+    case EXCEPTION_INT_DIVIDE_BY_ZERO       :
+        ErrorMsg = "Divide by zero";
+        break;
+    case EXCEPTION_INT_OVERFLOW             :
+        ErrorMsg = "Overflow";
+        break;
+    case EXCEPTION_PRIV_INSTRUCTION         :
+        ErrorMsg = "Priveleged instruction";
+        break;
+    case EXCEPTION_IN_PAGE_ERROR            :
+        ErrorMsg = "Page error";
+        break;
+    case EXCEPTION_ILLEGAL_INSTRUCTION      :
+        ErrorMsg = "Illegal instruction";
+        break;
+    case EXCEPTION_STACK_OVERFLOW           :
+        ErrorMsg = "Stack overflow";
+        break;
+    case EXCEPTION_INVALID_DISPOSITION      :
+        ErrorMsg = "Invalid disposition";
+        break;
+    case EXCEPTION_GUARD_PAGE               :
+        ErrorMsg = "Guard page";
+        break;
+        /* gcc 2.95.2 in Mingw32 knows nothing about this */
 #ifndef __MINGW32__
-    case EXCEPTION_INVALID_HANDLE           : ErrorMsg = "Invalid handle"; break;
+    case EXCEPTION_INVALID_HANDLE           :
+        ErrorMsg = "Invalid handle";
+        break;
 #endif
-    default : ErrorMsg = "Unknown error";
+    default :
+        ErrorMsg = "Unknown error";
     }
     w_log(LL_CRIT, "Exception 0x%08x (%s) at address 0x%08x",
-        ExceptionInfo->ExceptionRecord->ExceptionCode,
-        ErrorMsg,
-        ExceptionInfo->ExceptionRecord->ExceptionAddress);
+          ExceptionInfo->ExceptionRecord->ExceptionCode,
+          ErrorMsg,
+          ExceptionInfo->ExceptionRecord->ExceptionAddress);
     exit(1);
     return 0; /* compiler paranoia */
 }

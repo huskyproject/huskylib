@@ -37,7 +37,7 @@
 #include "huskyext.h"
 
 #ifdef __MSVC__
-#include <crtdbg.h>
+    #include <crtdbg.h>
 #endif
 #include "calendar.h"
 #include "crc.h"
@@ -57,29 +57,30 @@
 #include "xstr.h"
 
 #ifndef HUSKYLIB_VER_MAJOR
-#define HUSKYLIB_VER_MAJOR  1
+    #define HUSKYLIB_VER_MAJOR  1
 #endif
 #ifndef HUSKYLIB_VER_MINOR
-#define HUSKYLIB_VER_MINOR  9
+    #define HUSKYLIB_VER_MINOR  9
 #endif
 #ifndef HUSKYLIB_VER_PATCH
-#define HUSKYLIB_VER_PATCH  0
+    #define HUSKYLIB_VER_PATCH  0
 #endif
 #ifndef HUSKYLIB_VER_BRANCH
-#define HUSKYLIB_VER_BRANCH BRANCH_CURRENT
+    #define HUSKYLIB_VER_BRANCH BRANCH_CURRENT
 #endif
 
 /* values for 5th parameter of GenVersionStr() */
-typedef enum {
-        BRANCH_CURRENT=1, BRANCH_STABLE=2, BRANCH_RELEASE=3
-}branch_t;
+typedef enum
+{
+    BRANCH_CURRENT=1, BRANCH_STABLE=2, BRANCH_RELEASE=3
+} branch_t;
 
 /*-- flush.c --*/
 
 /* fflush() analog with file hanle as argument */
 #ifdef __DOS__
-/* flushasm.asm for DOS, redefined for known implementations in flush.c */
-HUSKYEXT void pascal far flush_handle2(int fh);
+    /* flushasm.asm for DOS, redefined for known implementations in flush.c */
+    HUSKYEXT void pascal far flush_handle2(int fh);
 #endif
 
 /* Compiler-independent fflush() implementation */
@@ -103,7 +104,8 @@ HUSKYEXT void adaptcase(char *);
 /* Compiler-independent sleep() implementation with precisious to milliseconds */
 HUSKYEXT void _fast tdelay(int);
 
-typedef struct {
+typedef struct
+{
     unsigned long sec;   /* seconds */
     unsigned long msec;  /* milliseconds */
 } hs_time;
@@ -118,7 +120,7 @@ HUSKYEXT dword husky_GetTimer(hs_time *timer_ctx);
 /*-- genmsgid.c --*/
 HUSKYEXT dword _XPENTRY GenMsgId(char *seqdir, unsigned long max_outrun);
 HUSKYEXT dword _XPENTRY GenMsgIdEx(char *seqdir, unsigned long max_outrun,
-			    dword (*altGenMsgId)(void), char **errstr);
+                                   dword (*altGenMsgId)(void), char **errstr);
 
 /*-- setfsize.c --*/
 HUSKYEXT int _fast setfsize(int fd, long size);
@@ -191,9 +193,9 @@ HUSKYEXT int copy_file(const char *from, const char *to, const int force_rewrite
  * Return exit code of the executed command.
  */
 #if defined(HAS_spawnvp) && ( defined(__DOS__) || defined(__WIN32__) )
-HUSKYEXT int cmdcall(const char *cmd);
+    HUSKYEXT int cmdcall(const char *cmd);
 #else
-#  define cmdcall(cmd) system(cmd)
+    #define cmdcall(cmd) system(cmd)
 #endif
 
 /* Converts decimal value to octal [useful for chmod()] */
@@ -205,7 +207,7 @@ HUSKYEXT unsigned int dec2oct(unsigned int decimal);
 HUSKYEXT int lockFile(const char *lockfile, int advisoryLock);
 
 #ifndef createLockFile
-#define createLockFile(x) lockFile(x, 0)
+    #define createLockFile(x) lockFile(x, 0)
 #endif
 
 /* close and remove lockfile */
@@ -275,7 +277,7 @@ HUSKYEXT int cmpfnames(const char *file1, const char *file2);
  */
 
 HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
-   unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate );
+                              unsigned minor, unsigned patchlevel, unsigned branch, const char *cvsdate );
 
 
 /*-- version.c --*/
@@ -285,6 +287,6 @@ HUSKYEXT char *GenVersionStr( const char *programname, unsigned major,
  * test cvs need for DLL version only, using #include <fidoconf/cvsdate.h>
  */
 HUSKYEXT int CheckHuskylibVersion( int need_major, int need_minor,
-                      int need_patch, branch_t need_branch, const char *cvs );
+                                   int need_patch, branch_t need_branch, const char *cvs );
 
 #endif /*__HUSKYLIB_H__ */

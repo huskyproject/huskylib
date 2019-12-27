@@ -44,11 +44,11 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
-#   include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #ifdef HAS_IO_H
-#   include <io.h>
+    #include <io.h>
 #endif
 
 
@@ -75,33 +75,41 @@
  *  "XXXXX" replaced with random char sequence
  */
 int MKSTEMPS( char *tempfilename )
-{  char *ttt;
-   int fd=-1;
-   char *pp;
+{
+    char *ttt;
+    int fd=-1;
+    char *pp;
 
-   if (tempfilename == NULL)
-     return -1;
+    if (tempfilename == NULL)
+        return -1;
 
-   ttt = sstrdup(tempfilename);
-   pp = strrchr(ttt, '.');
-   if( ttt[strlen(ttt)-1]!='X' && pp && (pp>ttt && *(pp-1)=='X') ){ /* suffix presents */
-     do{
-         *pp = 0;
-         if( !mktemp(ttt) )
-           break;
-         *pp = '.';
-         fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
-     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
-   }else{
-     do{
-         if( !mktemp(ttt) )
-           break;
-         fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
-     }while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
-   }
-   if(fd!=-1) strcpy(tempfilename,ttt);
-   nfree(ttt);
-   return fd;
+    ttt = sstrdup(tempfilename);
+    pp = strrchr(ttt, '.');
+    if( ttt[strlen(ttt)-1]!='X' && pp && (pp>ttt && *(pp-1)=='X') )  /* suffix presents */
+    {
+        do
+        {
+            *pp = 0;
+            if( !mktemp(ttt) )
+                break;
+            *pp = '.';
+            fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
+        }
+        while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
+    }
+    else
+    {
+        do
+        {
+            if( !mktemp(ttt) )
+                break;
+            fd = open( ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE );
+        }
+        while( fd==-1 && errno == EEXIST && (strcpy(ttt,tempfilename), 1) );
+    }
+    if(fd!=-1) strcpy(tempfilename,ttt);
+    nfree(ttt);
+    return fd;
 }
 
 /* Create new file with random name & specified suffix in specified directory.
@@ -114,46 +122,53 @@ int MKSTEMPS( char *tempfilename )
  */
 
 FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name)
-{ int tempfh=-1; FILE *tempfd=NULL; char *tempfilename=NULL;
-  char *ii=0;
+{
+    int tempfh=-1;
+    FILE *tempfd=NULL;
+    char *tempfilename=NULL;
+    char *ii=0;
 
-  if( !path || !path[0] ){
-    w_log(LL_ERR, "temp::createTempFileIn(): pathname is empty!");
-    return NULL;
-  }
-  w_log( LL_FUNC, "createtempfileIn() start" );
+    if( !path || !path[0] )
+    {
+        w_log(LL_ERR, "temp::createTempFileIn(): pathname is empty!");
+        return NULL;
+    }
+    w_log( LL_FUNC, "createtempfileIn() start" );
 
-  xstrcat( &tempfilename, (char *)path );
-  ii = tempfilename + strlen(tempfilename) -1;
-  if( *ii == PATH_DELIM ) *ii=0; /* strip trailing slash */
+    xstrcat( &tempfilename, (char *)path );
+    ii = tempfilename + strlen(tempfilename) -1;
+    if( *ii == PATH_DELIM ) *ii=0; /* strip trailing slash */
 
-  xscatprintf( &tempfilename, "%cXXXXXX.%s", PATH_DELIM, ext);
+    xscatprintf( &tempfilename, "%cXXXXXX.%s", PATH_DELIM, ext);
 
-  w_log(LL_FILENAME, "Temp. file mask: %s", tempfilename);
+    w_log(LL_FILENAME, "Temp. file mask: %s", tempfilename);
 
-  tempfh = MKSTEMPS(tempfilename);
-  if( tempfh == -1 )
-  { w_log( LL_ERR, "Cannot create temp. file (Mask %s): %s", tempfilename, strerror(errno) );
-    w_log( LL_FUNC, "createTempFileIn() rc=NULL" );
-    return NULL;
-  }
-  if( mode == 't' )
-     tempfd = fdopen(tempfh,"wt");
-  else if( mode == 'b' )
-     tempfd = fdopen(tempfh,"wb");
-  else
-     tempfd = fdopen(tempfh,"w");
-  if( !tempfd )
-  { w_log( LL_CRIT, "Cannot reopen file '%s': %s", tempfilename, strerror(errno) );
-    return NULL;
-  }
-  w_log( LL_FILE, "Created temp file %s", tempfilename );
-  if( name!= NULL )
-  { nfree(*name);
-   *name = sstrdup(tempfilename);
-  }
-  w_log( LL_FUNC, "createTempFileIn() OK fd=%p", tempfd );
-  return tempfd;
+    tempfh = MKSTEMPS(tempfilename);
+    if( tempfh == -1 )
+    {
+        w_log( LL_ERR, "Cannot create temp. file (Mask %s): %s", tempfilename, strerror(errno) );
+        w_log( LL_FUNC, "createTempFileIn() rc=NULL" );
+        return NULL;
+    }
+    if( mode == 't' )
+        tempfd = fdopen(tempfh,"wt");
+    else if( mode == 'b' )
+        tempfd = fdopen(tempfh,"wb");
+    else
+        tempfd = fdopen(tempfh,"w");
+    if( !tempfd )
+    {
+        w_log( LL_CRIT, "Cannot reopen file '%s': %s", tempfilename, strerror(errno) );
+        return NULL;
+    }
+    w_log( LL_FILE, "Created temp file %s", tempfilename );
+    if( name!= NULL )
+    {
+        nfree(*name);
+        *name = sstrdup(tempfilename);
+    }
+    w_log( LL_FUNC, "createTempFileIn() OK fd=%p", tempfd );
+    return tempfd;
 }
 
 
@@ -165,12 +180,14 @@ FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name
  * Return file descriptor or NULL
  */
 FILE *createTempTextFile(char *tempDir, char **name)
-{ if(tempDir)
-    return createTempFileIn(tempDir, TEMPFILESUFFIX, 't', name);
-  else{
-    w_log(LL_ERR, "tempDir not defined in config, temp. file can't created");
-    return NULL;
-  }
+{
+    if(tempDir)
+        return createTempFileIn(tempDir, TEMPFILESUFFIX, 't', name);
+    else
+    {
+        w_log(LL_ERR, "tempDir not defined in config, temp. file can't created");
+        return NULL;
+    }
 }
 
 /* Create new file with random name & specified suffix (binary mode).
@@ -181,12 +198,14 @@ FILE *createTempTextFile(char *tempDir, char **name)
  * Return file descriptor or NULL
  */
 FILE *createTempBinFile(char *tempDir, char **name)
-{ if(tempDir)
-    return createTempFileIn(tempDir, TEMPFILESUFFIX, 'b', name);
-  else{
-    w_log(LL_ERR, "tempDir not defined in config, temp. file can't created");
-    return NULL;
-  }
+{
+    if(tempDir)
+        return createTempFileIn(tempDir, TEMPFILESUFFIX, 'b', name);
+    else
+    {
+        w_log(LL_ERR, "tempDir not defined in config, temp. file can't created");
+        return NULL;
+    }
 }
 
 
@@ -198,19 +217,21 @@ FILE *createTempBinFile(char *tempDir, char **name)
 
 /*  Test */
 void main()
-{ FILE *fd;
-  s_fidoconfig *config;
-  char *name=NULL;
+{
+    FILE *fd;
+    s_fidoconfig *config;
+    char *name=NULL;
 
-  config = readConfig("../test.cfg");
-  fd = createTempBinFile(config, &name);
-  if( !fd )
-    printf("error creating %s: %s\n", name, strerror(errno) );
-  else
-  {  printf("created: %s\n", name);
-     fclose (fd);
-     unlink(name);
-  }
-  disposeConfig(config);
+    config = readConfig("../test.cfg");
+    fd = createTempBinFile(config, &name);
+    if( !fd )
+        printf("error creating %s: %s\n", name, strerror(errno) );
+    else
+    {
+        printf("created: %s\n", name);
+        fclose (fd);
+        unlink(name);
+    }
+    disposeConfig(config);
 }
 #endif
