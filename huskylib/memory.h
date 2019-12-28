@@ -45,7 +45,7 @@ HUSKYEXT void *memdup(void *p, size_t size);
 /*DOC
  * Input:  a chunk of memory, with size bytes
  * Output: a copy of it, malloc'ed
- */	
+ */
 
 /*
    safe malloc, realloc, calloc

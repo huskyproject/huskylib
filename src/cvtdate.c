@@ -38,7 +38,7 @@
 #include <cvtdate.h>
 
 #ifdef HAS_STRINGS_H
-#   include <strings.h>
+    #include <strings.h>
 #endif
 
 /***  Implementation  *******************************************************/
@@ -49,22 +49,23 @@ static int is_dst = -1;
 
 int _fast gettz(void)
 {
-   static int tz = 0xBAD;
+    static int tz = 0xBAD;
 
-   if (tz == 0xBAD) {
-     struct tm *tm;
-     time_t t, gt;
+    if (tz == 0xBAD)
+    {
+        struct tm *tm;
+        time_t t, gt;
 
-     t = time(NULL);
-     tzset();
-     tm = gmtime (&t);
-     tm->tm_isdst = 0;
-     gt = mktime(tm);
-     tm = localtime (&t);
-     tm->tm_isdst = 0;
-     tz = (int)(((long)mktime(tm)-(long)gt));
-   }
-   return tz;
+        t = time(NULL);
+        tzset();
+        tm = gmtime (&t);
+        tm->tm_isdst = 0;
+        gt = mktime(tm);
+        tm = localtime (&t);
+        tm->tm_isdst = 0;
+        tz = (int)(((long)mktime(tm)-(long)gt));
+    }
+    return tz;
 }
 
 /* Find out the current status of daylight savings time */
@@ -80,108 +81,110 @@ static void near InitCvt(void)
 
 struct tm *_fast DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate)
 {
-  if (is_dst == -1)
-  {
-      InitCvt();
-  }
-  if (dosdate)
-  {
-    if (dosdate->ldate == 0)
-    {	time_t t=0;
-	struct tm *tm;
-	tm = gmtime(&t);
-	memcpy(tmdate, tm, sizeof(*tm));
-	return tmdate;
-    }
-
-    if (tmdate)
+    if (is_dst == -1)
     {
-      tmdate->tm_mday = dosdate->msg_st.date.da;
-      tmdate->tm_mon = dosdate->msg_st.date.mo - 1;
-      tmdate->tm_year = dosdate->msg_st.date.yr + 80;
-
-      tmdate->tm_hour = dosdate->msg_st.time.hh;
-      tmdate->tm_min = dosdate->msg_st.time.mm;
-      tmdate->tm_sec = dosdate->msg_st.time.ss << 1;
-
-      tmdate->tm_isdst = is_dst;
+        InitCvt();
     }
-  }
-  return tmdate;
+    if (dosdate)
+    {
+        if (dosdate->ldate == 0)
+        {
+            time_t t=0;
+            struct tm *tm;
+            tm = gmtime(&t);
+            memcpy(tmdate, tm, sizeof(*tm));
+            return tmdate;
+        }
+
+        if (tmdate)
+        {
+            tmdate->tm_mday = dosdate->msg_st.date.da;
+            tmdate->tm_mon = dosdate->msg_st.date.mo - 1;
+            tmdate->tm_year = dosdate->msg_st.date.yr + 80;
+
+            tmdate->tm_hour = dosdate->msg_st.time.hh;
+            tmdate->tm_min = dosdate->msg_st.time.mm;
+            tmdate->tm_sec = dosdate->msg_st.time.ss << 1;
+
+            tmdate->tm_isdst = is_dst;
+        }
+    }
+    return tmdate;
 }
 
 /* Convert a 'struct tm'-type date into an Opus/DOS bitmapped date */
 
 union stamp_combo *_fast TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate)
 {
-  if(tmdate && dosdate){
-    dosdate->msg_st.date.da = tmdate->tm_mday;
-    dosdate->msg_st.date.mo = tmdate->tm_mon + 1;
-    dosdate->msg_st.date.yr = tmdate->tm_year - 80;
+    if(tmdate && dosdate)
+    {
+        dosdate->msg_st.date.da = tmdate->tm_mday;
+        dosdate->msg_st.date.mo = tmdate->tm_mon + 1;
+        dosdate->msg_st.date.yr = tmdate->tm_year - 80;
 
-    dosdate->msg_st.time.hh = tmdate->tm_hour;
-    dosdate->msg_st.time.mm = tmdate->tm_min;
-    dosdate->msg_st.time.ss = tmdate->tm_sec >> 1;
-  }
+        dosdate->msg_st.time.hh = tmdate->tm_hour;
+        dosdate->msg_st.time.mm = tmdate->tm_min;
+        dosdate->msg_st.time.ss = tmdate->tm_sec >> 1;
+    }
 
-  return dosdate;
+    return dosdate;
 }
 
 static void print02d(char **str, int i)
 {
-  if(!(str && *str))
-  {
-    assert(0); /* for debug version */
-    return;
-  }
+    if(!(str && *str))
+    {
+        assert(0); /* for debug version */
+        return;
+    }
 
-  if(i >= 100 || i < 0)
-  {
-    assert(0); /* for debug version */
-    /* for release version */
-    *(*str)++='X';
-    *(*str)++='X';
-  } 
-  else
-  {
-    *(*str)++=(char)(i/10+'0');
-    *(*str)++=(char)(i%10+'0');
-  }
+    if(i >= 100 || i < 0)
+    {
+        assert(0); /* for debug version */
+        /* for release version */
+        *(*str)++='X';
+        *(*str)++='X';
+    }
+    else
+    {
+        *(*str)++=(char)(i/10+'0');
+        *(*str)++=(char)(i%10+'0');
+    }
 }
 
 char *_fast sc_time(union stamp_combo *sc, char *string)
 {
-  if(sc && string)
-  {
-    if (sc->msg_st.date.yr == 0)
+    if(sc && string)
     {
-        *string = '\0';
-    }
-    else
-    {
+        if (sc->msg_st.date.yr == 0)
+        {
+            *string = '\0';
+        }
+        else
+        {
 #if 0
-        sprintf(string, "%02d %s %02d  %02d:%02d:%02d", sc->msg_st.date.da,
-          months_ab[sc->msg_st.date.mo - 1], (sc->msg_st.date.yr + 80) % 100,
-          sc->msg_st.time.hh, sc->msg_st.time.mm, sc->msg_st.time.ss << 1);
+            sprintf(string, "%02d %s %02d  %02d:%02d:%02d", sc->msg_st.date.da,
+                    months_ab[sc->msg_st.date.mo - 1], (sc->msg_st.date.yr + 80) % 100,
+                    sc->msg_st.time.hh, sc->msg_st.time.mm, sc->msg_st.time.ss << 1);
 #else
-        print02d(&string, sc->msg_st.date.da);
-        *string++=' ';
-        strcpy(string, months_ab[sc->msg_st.date.mo - 1]);
-        string += strlen(string);
-        *string++=' ';
-        print02d(&string, (sc->msg_st.date.yr + 80) % 100);
-        *string++=' ';
-        *string++=' ';
-        print02d(&string, sc->msg_st.time.hh);
-        *string++=':';
-        print02d(&string, sc->msg_st.time.mm);
-        *string++=':';
-        print02d(&string, sc->msg_st.time.ss << 1);
-        *string = '\0';
+            print02d(&string, sc->msg_st.date.da);
+            *string++=' ';
+            strcpy(string, months_ab[sc->msg_st.date.mo - 1]);
+            string += strlen(string);
+            *string++=' ';
+            print02d(&string, (sc->msg_st.date.yr + 80) % 100);
+            *string++=' ';
+            *string++=' ';
+            print02d(&string, sc->msg_st.time.hh);
+            *string++=':';
+            print02d(&string, sc->msg_st.time.mm);
+            *string++=':';
+            print02d(&string, sc->msg_st.time.ss << 1);
+            *string = '\0';
 #endif
+        }
     }
-  }
-  return string;
+    return string;
 }
 
 char *_fast fts_time(char *string, struct tm *tmdate)
@@ -215,41 +218,41 @@ void _fast ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written)
     timeval = time(NULL);
     tim = localtime(&timeval);
 
-  if (*msgdate=='\0') /* If no date... */
-  {
-    /* OG: localtime must only generated, if msgadate == '' & yr = 1980
-           A little bit more speed !
-    */
-    /* max: and why you leave generation upper *msgdate=='\0' ?
-            but you can't remove, because it needed at the end of function
-	    think you must remove localtime generation below */
-
-    if (d_written->msg_st.date.yr == 0)
+    if (*msgdate=='\0') /* If no date... */
     {
-      timeval=time(NULL);
-      tim=localtime(&timeval);
+        /* OG: localtime must only generated, if msgadate == '' & yr = 1980
+               A little bit more speed !
+        */
+        /* max: and why you leave generation upper *msgdate=='\0' ?
+                but you can't remove, because it needed at the end of function
+            think you must remove localtime generation below */
 
-      /* Insert today's date */
-      fts_time(msgdate, tim);
+        if (d_written->msg_st.date.yr == 0)
+        {
+            timeval=time(NULL);
+            tim=localtime(&timeval);
 
-      StandardDate(d_written);
+            /* Insert today's date */
+            fts_time(msgdate, tim);
+
+            StandardDate(d_written);
+        }
+        else /* If msgdate = '' & yr > 1980, date_written seems to be ok ! */
+        {
+            if (d_written->msg_st.date.mo == 0 ||
+                    d_written->msg_st.date.mo > 12)
+                d_written->msg_st.date.mo = 1;
+            sprintf(msgdate,
+                    "%02d %s %02d  %02d:%02d:%02d",
+                    d_written->msg_st.date.da,
+                    months_ab[d_written->msg_st.date.mo-1],
+                    (d_written->msg_st.date.yr+80) % 100,
+                    d_written->msg_st.time.hh,
+                    d_written->msg_st.time.mm,
+                    d_written->msg_st.time.ss);
+        }
+        return;
     }
-    else /* If msgdate = '' & yr > 1980, date_written seems to be ok ! */
-    {
-      if (d_written->msg_st.date.mo == 0 ||
-          d_written->msg_st.date.mo > 12)
-        d_written->msg_st.date.mo = 1;
-      sprintf(msgdate,
-             "%02d %s %02d  %02d:%02d:%02d",
-             d_written->msg_st.date.da,
-             months_ab[d_written->msg_st.date.mo-1],
-             (d_written->msg_st.date.yr+80) % 100,
-             d_written->msg_st.time.hh,
-             d_written->msg_st.time.mm,
-             d_written->msg_st.time.ss);
-    }
-    return;
-  }
 
     if (sscanf(msgdate, "%d %s %d %d:%d:%d", &dd, temp, &yy, &hh, &mm, &ss) == 6)
     {

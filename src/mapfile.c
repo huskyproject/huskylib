@@ -47,18 +47,19 @@
 #if defined(__NT__) /* WIN32 version */
 
 #ifndef __MINGW32__
-#   ifndef STRICT
-#       define STRICT 1
-#   endif
+    #ifndef STRICT
+        #define STRICT 1
+    #endif
 #endif
 #include <windows.h>
 
 void*MapFile(char*fname)
-{   long len;
+{
+    long len;
     HANDLE h, hm;
 
     h = CreateFile( fname, GENERIC_READ, FILE_SHARE_READ, NULL,
-                           OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+                    OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
     if (h==INVALID_HANDLE_VALUE) return NULL;
 
     len = GetFileSize( h, NULL );
@@ -71,7 +72,7 @@ void*MapFile(char*fname)
 /* tested on linux-glibc2, freebsd 4.2 */
 #include <sys/mman.h>
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 void* MapFile( char* fname )
@@ -88,10 +89,10 @@ void* MapFile( char* fname )
 /* No file mapping. Just read file to memory
    please check include file names/dirs for your OS */
 #ifdef HAS_IO_H
-#include <io.h>
+    #include <io.h>
 #endif
 #ifdef HAS_UNISTD_H
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 void* MapFile(char* fname)
@@ -106,11 +107,13 @@ void* MapFile(char* fname)
     len = lseek(fd,0,SEEK_END);
     lseek(fd,0,SEEK_SET);
     data = malloc(len);
-    if(!data){
+    if(!data)
+    {
         close(fd);
         return NULL;
     }
-    if(read(fd,data,len)!=len){
+    if(read(fd,data,len)!=len)
+    {
         free(data);
         close(fd);
         return NULL;

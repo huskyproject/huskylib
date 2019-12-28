@@ -30,14 +30,14 @@
 #define HUSKY_BCD_H
 
 #ifndef __TURBOC__
-  #error This file may be used only with Turbo C and Borland C !
+    #error This file may be used only with Turbo C and Borland C !
 #endif
 
 #ifndef __DOS__
-  #error This file may be used only with DOS version of Turbo C or Borland C !
+    #error This file may be used only with DOS version of Turbo C or Borland C !
 #endif
 
-   /* for BC++ 3.1 */
+/* for BC++ 3.1 */
 #  define strcasecmp stricmp
 #  define strncasecmp strncmpi
 
@@ -48,14 +48,14 @@
 #  define _fast _fastcall
 #  define _loadds
 
-   /* #include <conio.h> */
+/* #include <conio.h> */
 #  define mysleep(x) delay(x);
 #  define sleep(x) delay(x);
 #  define HAS_sleep     1
 
-#  ifndef _XPENTRY
-#    define _XPENTRY
-#  endif
+#ifndef _XPENTRY
+    #define _XPENTRY
+#endif
 
 #  define mode_t int
 

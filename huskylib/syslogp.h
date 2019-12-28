@@ -8,23 +8,23 @@
 
 /* ===== part 1: include system syslog header or provide our own prototypes */
 
-# if defined (__UNIX__) && !defined(__BEOS__)
+#if defined (__UNIX__) && !defined(__BEOS__)
 
-#  ifdef HAS_SYSLOG_H
-#   include <syslog.h>
-#   ifndef HAVE_SYSLOG
-#    define HAVE_SYSLOG         /* indicate that this platform can do syslog */
-#   endif
-#  else
-#   ifdef HAS_SYS_SYSLOG_H
-#    include <sys/syslog.h>
-#    ifndef HAVE_SYSLOG
-#     define HAVE_SYSLOG        /* indicate that this platform can do syslog */
-#    endif
-#   endif         /* HAS_SYS_SYSLOG_H */
-#  endif          /* HAS_SYSLOG_H */
+    #ifdef HAS_SYSLOG_H
+        #include <syslog.h>
+        #ifndef HAVE_SYSLOG
+            #define HAVE_SYSLOG         /* indicate that this platform can do syslog */
+        #endif
+    #else
+        #ifdef HAS_SYS_SYSLOG_H
+            #include <sys/syslog.h>
+            #ifndef HAVE_SYSLOG
+                #define HAVE_SYSLOG        /* indicate that this platform can do syslog */
+            #endif
+        #endif         /* HAS_SYS_SYSLOG_H */
+    #endif          /* HAS_SYSLOG_H */
 
-# endif
+#endif
 
 /* we may add support for os/2 here in the
    future  */
@@ -39,35 +39,36 @@
 
 typedef struct _code
 {
-  char *c_name;
-  int c_val;
+    char *c_name;
+    int c_val;
 } CODE;
 
 /* we only define ones which we think are present on all crazy unix systems
    and useful for fido apps. i.e. we leave out obscurities like "security" etc
 */
-CODE facilitynames[] = {
-  {"daemon", LOG_DAEMON,},
-  {"mail", LOG_MAIL,},
-  {"news", LOG_NEWS,},
-  {"syslog", LOG_SYSLOG},
-  {"user", LOG_USER,},
-  {"uucp", LOG_UUCP,},
-  {"local0", LOG_LOCAL0,},
-  {"local1", LOG_LOCAL1,},
-  {"local2", LOG_LOCAL2,},
-  {"local3", LOG_LOCAL3,},
-  {"local4", LOG_LOCAL4,},
-  {"local5", LOG_LOCAL5,},
-  {"local6", LOG_LOCAL6,},
-  {"local7", LOG_LOCAL7,}
-  { NULL, -1 }
+CODE facilitynames[] =
+{
+    {"daemon", LOG_DAEMON,},
+    {"mail", LOG_MAIL,},
+    {"news", LOG_NEWS,},
+    {"syslog", LOG_SYSLOG},
+    {"user", LOG_USER,},
+    {"uucp", LOG_UUCP,},
+    {"local0", LOG_LOCAL0,},
+    {"local1", LOG_LOCAL1,},
+    {"local2", LOG_LOCAL2,},
+    {"local3", LOG_LOCAL3,},
+    {"local4", LOG_LOCAL4,},
+    {"local5", LOG_LOCAL5,},
+    {"local6", LOG_LOCAL6,},
+    {"local7", LOG_LOCAL7,}
+    { NULL, -1 }
 };
 #  endif
 
-#  ifndef LOG_PERROR
-#   define LOG_PERROR 0
-#  endif
+#ifndef LOG_PERROR
+    #define LOG_PERROR 0
+#endif
 # endif/* HAVE_SYSLOG */
 
 #endif /* not defined __HUSKYLIB_SYSLOGP_H */

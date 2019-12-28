@@ -15,20 +15,20 @@
 #include "compiler.h"  /* compiler see directory of this .h file */
 
 #if defined(DLLEXPORT) && defined(DLLIMPORT)
-# error "DLLEXPORT and DLLIMPORT can't be defined simultaneously!"
+    # error "DLLEXPORT and DLLIMPORT can't be defined simultaneously!"
 #endif
 
 #undef HUSKYEXT
 #ifdef _MAKE_DLL
-#  if defined(__MSVC__) || defined(__MINGW32__)
-#    if defined(DLLEXPORT) && !defined(DLLIMPORT)
-#        define HUSKYEXT __declspec(dllexport)
-#    else
-#        define HUSKYEXT __declspec(dllimport)
-#    endif /* DLLEXPORT */
-#  else
-#      define HUSKYEXT extern
-#  endif
+    #if defined(__MSVC__) || defined(__MINGW32__)
+        #if defined(DLLEXPORT) && !defined(DLLIMPORT)
+            #define HUSKYEXT __declspec(dllexport)
+        #else
+            #define HUSKYEXT __declspec(dllimport)
+        #endif /* DLLEXPORT */
+    #else
+        #define HUSKYEXT extern
+    #endif
 #else
-#  define HUSKYEXT extern
+    #define HUSKYEXT extern
 #endif

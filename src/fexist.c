@@ -40,24 +40,24 @@
 
 /* standard headers */
 #ifdef HAS_UNISTD_H
-#  include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #ifdef HAS_DIRECT_H
-#  include <direct.h>
+    #include <direct.h>
 #endif
 
 #ifdef HAS_DOS_H
-#  include <dos.h>
+    #include <dos.h>
 #endif
 
 #ifdef USE_STAT_MACROS
-/* These are compilers that have both a working stat() and (important!) the
-   S_ISREG and S_ISDIR macros. The problem is that while stat() is POSIX, those
-   macros are not. For compilers that do not provide these macros, we revert to
-   the old "ffind" method. */
-#  include <sys/types.h>
-#  include <sys/stat.h>
+    /* These are compilers that have both a working stat() and (important!) the
+    S_ISREG and S_ISDIR macros. The problem is that while stat() is POSIX, those
+    macros are not. For compilers that do not provide these macros, we revert to
+    the old "ffind" method. */
+    #include <sys/types.h>
+    #include <sys/stat.h>
 #endif
 
 /* huskylib headers */
@@ -108,14 +108,16 @@ int _fast direxist(const char *directory)
     char *tempstr, *p;
     size_t l;
     tempstr = strdup(directory);
-    if (tempstr == NULL) {
+    if (tempstr == NULL)
+    {
         return FALSE;
     }
 
     /* Root directory of any drive always exists! */
 
     if ((isalpha((int)tempstr[0]) && tempstr[1] == ':' && (tempstr[2] == '\\' || tempstr[2] == '/') &&
-      !tempstr[3]) || (strcmp(tempstr, "\\")==0) ) {
+            !tempstr[3]) || (strcmp(tempstr, "\\")==0) )
+    {
         free(tempstr);
         return TRUE;
     }
@@ -130,7 +132,7 @@ int _fast direxist(const char *directory)
     for (p=tempstr; *p; p++)
     {
         if (*p == '/')
-          *p='\\';
+            *p='\\';
     }
 
     rc = stat (tempstr, &s);
@@ -174,14 +176,15 @@ long _fast fsize(const char *filename)
     if (ff)
     {
 #ifndef __UNIX__
-	ret = ff->ff_fsize;
-	if (ret == -1L)
+        ret = ff->ff_fsize;
+        if (ret == -1L)
 #endif
-	{   fp = fopen(filename, "rb");
-	    fseek(fp, 0, SEEK_END);
-	    ret = ftell(fp);
-	    fclose(fp);
-	}
+        {
+            fp = fopen(filename, "rb");
+            fseek(fp, 0, SEEK_END);
+            ret = ftell(fp);
+            fclose(fp);
+        }
         FFindClose(ff);
     }
 
@@ -201,14 +204,14 @@ time_t _fast fmtime(const char *filename)
 
     if (ff)
     {
-    	struct tm t;
-    	t.tm_sec  = ff->ff_ftime & 0x1f;
-    	t.tm_min  = (ff->ff_ftime >> 5) & 0x3f;
-    	t.tm_hour = (ff->ff_ftime >> 11) & 0x1f;
-    	t.tm_mday = ff->ff_fdate & 0x1f;
-    	t.tm_mon  = ((ff->ff_fdate >> 5) & 0x0f) - 1;
-    	t.tm_year = ((ff->ff_fdate >> 9) & 0x07f) + 1980 - 1900;
-    	t.tm_isdst = -1;
+        struct tm t;
+        t.tm_sec  = ff->ff_ftime & 0x1f;
+        t.tm_min  = (ff->ff_ftime >> 5) & 0x3f;
+        t.tm_hour = (ff->ff_ftime >> 11) & 0x1f;
+        t.tm_mday = ff->ff_fdate & 0x1f;
+        t.tm_mon  = ((ff->ff_fdate >> 5) & 0x0f) - 1;
+        t.tm_year = ((ff->ff_fdate >> 9) & 0x07f) + 1980 - 1900;
+        t.tm_isdst = -1;
         FFindClose(ff);
         return mktime(&t);
     }
@@ -238,7 +241,7 @@ int _fast direxist(const char *directory)
     /* Root directory of any drive always exists! */
 
     if ((isalpha(tempstr[0]) && tempstr[1] == ':' && ((tempstr[2] == '\0') || ((tempstr[2] == '\\' ||
-      tempstr[2] == '/') && tempstr[3] == '\0'))) || (stricmp(tempstr, "\\")==0) )
+            tempstr[2] == '/') && tempstr[3] == '\0'))) || (stricmp(tempstr, "\\")==0) )
     {
         ret = TRUE;
     }
@@ -264,14 +267,14 @@ int _fast direxist(const char *directory)
 #elif defined(__OS2__) || defined(__NT__)
 
 #ifdef __OS2__
-#define INCL_DOSFILEMGR
-#include <os2.h>
+    #define INCL_DOSFILEMGR
+    #include <os2.h>
 #else
-#define WIN32_LEAN_AND_MEAN
-#define NOGDI
-#define NOUSER
-#define NOMSG
-#include <windows.h>
+    #define WIN32_LEAN_AND_MEAN
+    #define NOGDI
+    #define NOUSER
+    #define NOMSG
+    #include <windows.h>
 #endif
 
 int _fast direxist(const char *directory)
@@ -294,7 +297,7 @@ int _fast direxist(const char *directory)
     /* Root directory of any drive always exists! */
 
     if ((isalpha((int)tempstr[0]) && tempstr[1] == ':' && (tempstr[2] == '\\' || tempstr[2] == '/') &&
-      !tempstr[3]) || (strcmp(tempstr, "\\")==0) )
+            !tempstr[3]) || (strcmp(tempstr, "\\")==0) )
     {
         free(tempstr);
         return TRUE;
@@ -310,18 +313,18 @@ int _fast direxist(const char *directory)
     for (p=tempstr; *p; p++)
     {
         if (*p == '/')
-          *p='\\';
+            *p='\\';
     }
 
 #ifdef __OS2__
     if (DosQueryPathInfo((PSZ)tempstr, FIL_STANDARD,
                          (PVOID)&s, sizeof(s)) == 0)
     {
-       free (tempstr);
-       if (s.attrFile & FILE_DIRECTORY)
-          return TRUE;
-       else
-          return FALSE;
+        free (tempstr);
+        if (s.attrFile & FILE_DIRECTORY)
+            return TRUE;
+        else
+            return FALSE;
     }
     free (tempstr);
     return FALSE;
@@ -329,9 +332,9 @@ int _fast direxist(const char *directory)
     attr = GetFileAttributes(tempstr);
     free(tempstr);
     if ((attr != 0xFFFFFFFF) && (attr & FILE_ATTRIBUTE_DIRECTORY))
-       return TRUE;
+        return TRUE;
     else
-       return FALSE;
+        return FALSE;
 #endif
 }
 
@@ -358,57 +361,65 @@ int _fast direxist(const char *directory)
 
 #endif
 
-int _createDirectoryTree(const char *pathName) {
+int _createDirectoryTree(const char *pathName)
+{
 
-   char *start, *slash;
-   char limiter=PATH_DELIM;
-   int i;
+    char *start, *slash;
+    char limiter=PATH_DELIM;
+    int i;
 
-   if (!pathName)
-      return 1;
+    if (!pathName)
+        return 1;
 
-   start = (char *) malloc(strlen(pathName)+2);
-   if (!start)
-      return 1;
+    start = (char *) malloc(strlen(pathName)+2);
+    if (!start)
+        return 1;
 
-   strcpy(start, pathName);
-   i = strlen(start)-1;
-   if (start[i] != limiter) {
-      start[i+1] = limiter;
-      start[i+2] = '\0';
-   }
-   slash = start;
+    strcpy(start, pathName);
+    i = strlen(start)-1;
+    if (start[i] != limiter)
+    {
+        start[i+1] = limiter;
+        start[i+2] = '\0';
+    }
+    slash = start;
 
 #ifndef __UNIX__
-   /*  if there is a drivename, jump over it */
-   if (slash[1] == ':') slash += 2;
+    /*  if there is a drivename, jump over it */
+    if (slash[1] == ':') slash += 2;
 #endif
 
-   /*  jump over first limiter */
-   slash++;
+    /*  jump over first limiter */
+    slash++;
 
-   while ((slash = strchr(slash, limiter)) != NULL) {
-      *slash = '\0';
+    while ((slash = strchr(slash, limiter)) != NULL)
+    {
+        *slash = '\0';
 
-      if (!direxist(start)) {
-         if (!fexist(start)) {
-            /*  this part of the path does not exist, create it */
-            if (mymkdir(start) != 0) {
-               free(start);
-               return 1;
+        if (!direxist(start))
+        {
+            if (!fexist(start))
+            {
+                /*  this part of the path does not exist, create it */
+                if (mymkdir(start) != 0)
+                {
+                    free(start);
+                    return 1;
+                }
             }
-         } else {
-            free(start);
-            return 1;
-         }
-      }
+            else
+            {
+                free(start);
+                return 1;
+            }
+        }
 
-      *slash++ = limiter;
-   }
+        *slash++ = limiter;
+    }
 
-   free(start);
+    free(start);
 
-   return 0;
+    return 0;
 }
 
 

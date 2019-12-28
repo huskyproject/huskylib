@@ -29,7 +29,7 @@
 #define HUSKY_SASC_H
 
 #ifndef __SASC__
-  #error This file may be used only with SAS C for AmigaDOS !
+    #error This file may be used only with SAS C for AmigaDOS !
 #endif
 
 
@@ -54,7 +54,7 @@
 
 #include <fcntlh.>
 #ifndef O_BINARY
-# define O_BINARY 0 /* O_BINARY flag has no effect under UNIX */
+    #define O_BINARY 0 /* O_BINARY flag has no effect under UNIX */
 #endif
 
 #define _XPENTRY

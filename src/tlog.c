@@ -23,7 +23,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with HPT; see the file COPYING.  If not, write to the Free
  * Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -34,15 +34,19 @@
 
 int main()
 {
-   s_log *hpt_log = NULL;
+    s_log *hpt_log = NULL;
 
-   initLog("./", 1, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-   hpt_log = openLog("tlog.log", "tlog v0.0.7");
-   if (NULL == hpt_log) { printf( "asdf\n" ); return 1; }
+    initLog("./", 1, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+    hpt_log = openLog("tlog.log", "tlog v0.0.7");
+    if (NULL == hpt_log)
+    {
+        printf( "asdf\n" );
+        return 1;
+    }
 
-   w_log(LL_START, "this goes into the log (level 1)");
-   w_log(' ', "and this not");
+    w_log(LL_START, "this goes into the log (level 1)");
+    w_log(' ', "and this not");
 
-   closeLog();
-   return 0;
+    closeLog();
+    return 0;
 }

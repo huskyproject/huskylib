@@ -61,19 +61,19 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_DIRECT_H
-#  include <direct.h>
+    #include <direct.h>
 #endif
 
 #ifdef HAS_UNISTD_H
-#  include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #ifdef HAS_IO_H
-#  include <io.h>
+    #include <io.h>
 #endif
 
 #ifdef HAS_DOS_H
-#  include <dos.h>
+    #include <dos.h>
 #endif
 
 
@@ -95,7 +95,7 @@ int unlock(int handle, long ofs, long length);
 int waitlock(int handle, long ofs, long length);
 int waitlock2(int handle, long ofs, long length, long t);
 #ifndef HAS_sopen
-int sopen(const char *name, int oflag, int ishared, int mode);
+    int sopen(const char *name, int oflag, int ishared, int mode);
 #endif
 
 /***  Implementation  *******************************************************/
@@ -115,18 +115,18 @@ sword far pascal shareloaded(void)
 #elif defined(__DOS__)
 sword pascal far shareloaded(void)
 {
- union REGS in, out;
- 
-#if defined(__DPMI__) && !defined(__DJGPP__)
- in.x.eax=0x1000;
+    union REGS in, out;
 
- int386(0x2f, &in, &out);
+#if defined(__DPMI__) && !defined(__DJGPP__)
+    in.x.eax=0x1000;
+
+    int386(0x2f, &in, &out);
 #else  /* #elif defined(__DOS16__) || defined(__DJGPP__) */
- in.x.ax=0x1000;
- int86(0x2f,&in,&out);
+    in.x.ax=0x1000;
+    int86(0x2f,&in,&out);
 #endif
 
- return (out.h.al == 0xff);
+    return (out.h.al == 0xff);
 }
 
 #endif
@@ -201,7 +201,7 @@ int waitlock2(int handle, long ofs, long length, long t)
 #include <emx/syscalls.h>
 
 #ifndef F_GETOSFD
-#define F_GETOSFD 6
+    #define F_GETOSFD 6
 #endif
 
 int waitlock(int handle, long ofs, long length)
@@ -230,7 +230,7 @@ int waitlock2(int handle, long ofs, long length, long t)
     int rc;
 
     if (t==0)
-      forever = 1;
+        forever = 1;
 
     t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
@@ -247,7 +247,7 @@ int lock(int handle, long ofs, long length)
     int nt_handle = __fcntl(handle, F_GETOSFD, 0);
 
     if (nt_handle < 0 ||
-        LockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length, 0L) == FALSE)
+            LockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length, 0L) == FALSE)
     {
         return -1;
     }
@@ -259,8 +259,8 @@ int unlock(int handle, long ofs, long length)
     int nt_handle = __fcntl(handle, F_GETOSFD, 0);
 
     if (nt_handle < 0 ||
-        UnlockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length,
-                   0L) == FALSE)
+            UnlockFile((DWORD)nt_handle, (DWORD)ofs, 0L, (DWORD)length,
+                       0L) == FALSE)
     {
         return -1;
     }
@@ -300,7 +300,7 @@ int waitlock2(int handle, long ofs, long length, long t)
     int rc;
 
     if (t==0)
-      forever = 1;
+        forever = 1;
 
     t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
@@ -327,7 +327,7 @@ int lock(int handle, long ofs, long length)
     lseek(handle, offset, SEEK_SET);
 
     if  (r)
-       return -1;
+        return -1;
 
     return 0;
 }
@@ -367,7 +367,7 @@ int waitlock2(int handle, long ofs, long length, long t)
     int rc;
 
     if (t==0)
-      forever = 1;
+        forever = 1;
 
     t *= 10;
     while ((rc = lock(handle, ofs, length)) == -1 && (t > 0 || forever))
@@ -392,7 +392,7 @@ int lock(int handle, long ofs, long length)
     lseek(handle, offset, SEEK_SET);
 
     if  (r)
-       return -1;
+        return -1;
 
     return 0;
 }
@@ -420,22 +420,22 @@ int unlock(int handle, long ofs, long length)
 
 int lock(int handle, long ofs, long length)
 {
-	return 0;
+    return 0;
 }
 
 int waitlock(int handle, long ofs, long length)
 {
-	return 0;
+    return 0;
 }
 
 int waitlock2(int handle, long ofs, long length, long t)
 {
-	return 0;
+    return 0;
 }
 
 int unlock(int handle, long ofs, long length)
 {
-	return 0;
+    return 0;
 }
 
 #ifndef HAS_sopen
@@ -476,14 +476,14 @@ int waitlock(int handle, long ofs, long length)
 
 int waitlock2(int handle, long ofs, long length, long t)
 {
-	int rc;
-	struct flock fl;
-	
-	alarm((unsigned int)t);
-	rc = fcntl(handle, F_SETLKW, file_lock(F_WRLCK, ofs, length, &fl));
-	alarm(0);
-	
-	return rc;
+    int rc;
+    struct flock fl;
+
+    alarm((unsigned int)t);
+    rc = fcntl(handle, F_SETLKW, file_lock(F_WRLCK, ofs, length, &fl));
+    alarm(0);
+
+    return rc;
 }
 
 
@@ -502,18 +502,18 @@ int sopen(const char *name, int oflag, int ishared, int mode)
     /*
      * I removed this code, 'cause there is no more need for it (i hope so)
      */
-/*
+    /*
 #ifndef NO_LOCKING
-    struct flock fl;
-    if (fd != -1 && fcntl(fd, F_SETLK,
-            file_lock((ishared == SH_DENYNONE) ? F_RDLCK : F_WRLCK, 0, 0, &fl)))
+        struct flock fl;
+        if (fd != -1 && fcntl(fd, F_SETLK,
+                file_lock((ishared == SH_DENYNONE) ? F_RDLCK : F_WRLCK, 0, 0, &fl)))
 
-    {
-        close(fd);
-        return -1;
-    }
+        {
+            close(fd);
+            return -1;
+        }
 #endif
-*/
+    */
     return fd;
 }
 #endif
@@ -521,8 +521,8 @@ int sopen(const char *name, int oflag, int ishared, int mode)
 #else
 
 #ifdef __OS2__
-#define INCL_DOSDATETIME
-#include <os2.h>
+    #define INCL_DOSDATETIME
+    #include <os2.h>
 #endif
 
 int waitlock(int handle, long ofs, long length)
@@ -540,7 +540,7 @@ int waitlock2(int handle, long ofs, long length, long t)
     int rc;
 
     if (t==0)
-      forever = 1;
+        forever = 1;
 
     t *= 10;
 

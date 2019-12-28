@@ -41,13 +41,13 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_PWD_H
-#include <pwd.h>
+    #include <pwd.h>
 #endif
 
 #ifdef HAS_SYS_UTIME_H
-#  include <sys/utime.h>
+    #include <sys/utime.h>
 #elif defined(HAS_UTIME_H)
-#  include <utime.h>
+    #include <utime.h>
 #endif
 
 
@@ -65,56 +65,61 @@
 
 
 #ifdef __TURBOC__
-#pragma warn -sig
+    #pragma warn -sig
 #endif
 
 word getUINT16(FILE *in)
 {
-   unsigned char dummy;
+    unsigned char dummy;
 
-   dummy = (unsigned char) getc(in);
-   return (dummy + (unsigned char) getc(in) * 256);
+    dummy = (unsigned char) getc(in);
+    return (dummy + (unsigned char) getc(in) * 256);
 }
 
 int fputUINT16(FILE *out, word data)
 {
-  unsigned char dummy;
+    unsigned char dummy;
 
-  dummy = (unsigned char)(data % 256);        /*  write high Byte */
-  fputc(dummy, out);
-  dummy = (unsigned char)(data / 256);        /*  write low Byte */
-  return fputc(dummy, out);
+    dummy = (unsigned char)(data % 256);        /*  write high Byte */
+    fputc(dummy, out);
+    dummy = (unsigned char)(data / 256);        /*  write low Byte */
+    return fputc(dummy, out);
 }
 
 #ifdef __TURBOC__
-#pragma warn +sig
+    #pragma warn +sig
 #endif
 
 
 signed int fgetsUntil0(unsigned char *str, size_t n, FILE *f, char *filter)
 {
-   size_t i;
+    size_t i;
 
-   for (i=0;i<n-1 ;i++ ) {
-	
-	  do {
-		  str[i] = (unsigned char)getc(f);
-	  } while (filter && *filter && str[i] && strchr(filter, str[i]) != NULL);
+    for (i=0; i<n-1 ; i++ )
+    {
 
-      /*  if end of file */
-      if (feof(f)) {
-         str[i] = 0;
-         return i+1;
-      } /* endif */
+        do
+        {
+            str[i] = (unsigned char)getc(f);
+        }
+        while (filter && *filter && str[i] && strchr(filter, str[i]) != NULL);
 
-      if (0 == str[i]) {
-         return i+1;
-      } /* endif */
+        /*  if end of file */
+        if (feof(f))
+        {
+            str[i] = 0;
+            return i+1;
+        } /* endif */
 
-   } /* endfor */
+        if (0 == str[i])
+        {
+            return i+1;
+        } /* endif */
 
-   str[n-1] = 0;
-   return n;
+    } /* endfor */
+
+    str[n-1] = 0;
+    return n;
 }
 
 char *shell_expand(char *str)
@@ -135,9 +140,9 @@ char *shell_expand(char *str)
     }
     for (slash = str; *slash != '/' && *slash != '\0'
 #ifndef __UNIX__
-                     && *slash != '\\'
+            && *slash != '\\'
 #endif
-         ; slash++);
+            ; slash++);
     c = *slash;
     *slash = 0;
 
@@ -180,31 +185,31 @@ char *shell_expand(char *str)
 }
 
 #if defined(__DOS__) && !defined(__FLAT__) || defined(__WIN16__)
-/* _WINDOWS : 16-bit windows */
-#define MOVE_FILE_BUFFER_SIZE 16384
+    /* _WINDOWS : 16-bit windows */
+    #define MOVE_FILE_BUFFER_SIZE 16384
 #else
-#define MOVE_FILE_BUFFER_SIZE 128000
+    #define MOVE_FILE_BUFFER_SIZE 128000
 #endif
 
 #if defined(__NT__)
 /* This function helps in dealing with files opened elsewhere with a flag FILE_SHARE_DELETE.
  * remove() on them will result in state when the file is going to be deleted, it but won't be
  * actually out of the way until whoever has it opened closes it.
- * Here is alternative -- 
+ * Here is alternative --
  * rename file first (which will have effect immediately), remove afterwards. */
 void fix_pending_delete(const char *to)
 {
-	int size;
-	char *oldfile;
-	size = strlen(to);
-	oldfile = (char*) smalloc(size + 1 +1 + 6);
-	memcpy(oldfile, to, size);
-	memcpy(oldfile + size, ".XXXXXX", 8);
-	if(mktemp(oldfile) == oldfile && !rename(to, oldfile))
-		remove(oldfile); /* worked just fine, now try remove it */
-	else /* something went wrong, let's just remove it */
-		remove(to);
-	nfree(oldfile);
+    int size;
+    char *oldfile;
+    size = strlen(to);
+    oldfile = (char*) smalloc(size + 1 +1 + 6);
+    memcpy(oldfile, to, size);
+    memcpy(oldfile + size, ".XXXXXX", 8);
+    if(mktemp(oldfile) == oldfile && !rename(to, oldfile))
+        remove(oldfile); /* worked just fine, now try remove it */
+    else /* something went wrong, let's just remove it */
+        remove(to);
+    nfree(oldfile);
 }
 #endif
 
@@ -221,23 +226,25 @@ int move_file(const char *from, const char *to, const int force_rewrite)
     w_dbglog( LL_DEBUGZ, __FILE__ ":%u:move_file(%s,%s,%d)", __LINE__, from, to, force_rewrite );
     if(force_rewrite)
     {
-      if(fexist(to))
-      {
+        if(fexist(to))
+        {
 #if defined(__NT__)
-        fix_pending_delete(to);
+            fix_pending_delete(to);
 #else
-        remove(to);
+            remove(to);
 #endif
-      }
+        }
     }
-    else if(fexist(to)){
-      errno=EEXIST;
-      return -1;
+    else if(fexist(to))
+    {
+        errno=EEXIST;
+        return -1;
     }
 
     w_dbglog( LL_DEBUGZ, __FILE__ ":%u:move_file()", __LINE__ );
     rc = rename(from, to);
-    if (!rc) {               /* rename succeeded. fine! */
+    if (!rc)                 /* rename succeeded. fine! */
+    {
 #elif defined(__NT__) && defined(USE_SYSTEM_COPY)
     int rc;
 
@@ -248,17 +255,19 @@ int move_file(const char *from, const char *to, const int force_rewrite)
 
     if(force_rewrite)
     {
-      if(fexist(to))
-      {
-        fix_pending_delete(to);
-      }
+        if(fexist(to))
+        {
+            fix_pending_delete(to);
+        }
     }
-    else if(fexist(to)){
-      errno=EEXIST;
-      return -1;
+    else if(fexist(to))
+    {
+        errno=EEXIST;
+        return -1;
     }
     rc = MoveFile(from, to);
-    if (rc == TRUE) {
+    if (rc == TRUE)
+    {
 #elif defined(__OS2__) && defined(USE_SYSTEM_COPY)
     USHORT rc;
 
@@ -268,15 +277,17 @@ int move_file(const char *from, const char *to, const int force_rewrite)
 #endif
 
     if(force_rewrite)
-      remove(to);
-    else if(fexist(to)){
-      errno=EEXIST;
-      return -1;
+        remove(to);
+    else if(fexist(to))
+    {
+        errno=EEXIST;
+        return -1;
     }
     rc = DosMove((PSZ)from, (PSZ)to);
-    if (!rc) {
+    if (!rc)
+    {
 #endif
-      return 0;
+        return 0;
     }
 
     /* Rename did not succeed, probably because the move is accross
@@ -285,13 +296,13 @@ int move_file(const char *from, const char *to, const int force_rewrite)
     if (copy_file(from, to, force_rewrite))
     {
         w_log( LL_WARN, "Moving file from '%s' to '%s' failed, copy over failed too. This may result in loss of information and inconsistent state of the system.", from, to );
-		return -1;
+        return -1;
     }
     remove(from);
     return 0;
 }
 
-	
+
 int copy_file(const char *from, const char *to, const int force_rewrite)
 {
 #if !(defined(USE_SYSTEM_COPY) && (defined(__NT__) || defined(OS2)))
@@ -319,25 +330,30 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
     memset(&st, 0, sizeof(st));
     if (stat(from, &st))
     {
-      nfree(buffer);
-      return -1; /* file does not exist */
+        nfree(buffer);
+        return -1; /* file does not exist */
     }
 
     w_dbglog( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fin = fopen(from, "rb");        /* todo: use open( ..., O_CREAT| ..., ...)
                                      * to prevent file overwrite */
-    if (fin == NULL) { nfree(buffer); return -1; }
+    if (fin == NULL)
+    {
+        nfree(buffer);
+        return -1;
+    }
     w_dbglog( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fh = open( to, (force_rewrite ? 0 : O_EXCL) | O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, S_IREAD | S_IWRITE );
-    if( fh<0 ){
-      fh=errno;
-      fclose(fin);
-      nfree(buffer);
-      errno=fh;
-      return -1;
+    if( fh<0 )
+    {
+        fh=errno;
+        fclose(fin);
+        nfree(buffer);
+        errno=fh;
+        return -1;
     }
 #if defined(__UNIX__)
-/*     flock(to,O_EXLOCK); */
+    /*     flock(to,O_EXLOCK); */
     w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     /* try to save file ownership if it is possible */
     if (fchown(fh, st.st_uid, st.st_gid) != 0)
@@ -347,36 +363,49 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 #endif
     w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fout = fdopen(fh, "wb");
-    if (fout == NULL) { fh=errno; nfree(buffer); fclose(fin); errno=fh; return -1; }
+    if (fout == NULL)
+    {
+        fh=errno;
+        nfree(buffer);
+        fclose(fin);
+        errno=fh;
+        return -1;
+    }
 
     while ((read = fread(buffer, 1, MOVE_FILE_BUFFER_SIZE, fin)) > 0)
     {
-	if (fwrite(buffer, 1, read, fout) != read)
-	{   fh=errno;
-	    fclose(fout); fclose(fin); remove(to); nfree(buffer);
+        if (fwrite(buffer, 1, read, fout) != read)
+        {
+            fh=errno;
+            fclose(fout);
+            fclose(fin);
+            remove(to);
+            nfree(buffer);
             errno=fh;
             w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
-	    return -1;
-	}
+            return -1;
+        }
     }
 
     nfree(buffer);
     if (ferror(fout) || ferror(fin))
-    {   fh=errno;
-	fclose(fout);
-	fclose(fin);
+    {
+        fh=errno;
+        fclose(fout);
+        fclose(fin);
         remove(to);
         errno=fh;
         w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
-	return -1;
+        return -1;
     }
     fclose(fin);
     if (fclose(fout))
-    {   fh=errno;
+    {
+        fh=errno;
         remove(to);
         errno=fh;
         w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() failed", __LINE__);
-	return -1;
+        return -1;
     }
     ut.actime = st.st_atime;
     ut.modtime = st.st_mtime;
@@ -392,16 +421,18 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
         return 0;
 
     if(force_rewrite)
-      remove(to);            /* if CopyFile can't work file deleted..... */
-    else if(fexist(to)){
-      errno=EEXIST;
-      return -1;
+        remove(to);            /* if CopyFile can't work file deleted..... */
+    else if(fexist(to))
+    {
+        errno=EEXIST;
+        return -1;
     }
 
     rc = CopyFile(from, to, FALSE);
-    if (rc == FALSE) {
-      remove(to);
-      return -1;
+    if (rc == FALSE)
+    {
+        remove(to);
+        return -1;
     }
 #elif defined (OS2) && defined(USE_SYSTEM_COPY)
     USHORT rc;
@@ -412,16 +443,18 @@ int copy_file(const char *from, const char *to, const int force_rewrite)
 #endif
 
     if(force_rewrite)
-      remove(to);            /* if DosCopy can't work file deleted..... */
-    else if(fexist(to)){
-      errno=EEXIST;
-      return -1;
+        remove(to);            /* if DosCopy can't work file deleted..... */
+    else if(fexist(to))
+    {
+        errno=EEXIST;
+        return -1;
     }
 
     rc = DosCopy((PSZ)from, (PSZ)to, 1);
-    if (rc) {
-      remove(to);
-      return -1;
+    if (rc)
+    {
+        remove(to);
+        return -1;
     }
 #endif
     w_log( LL_DEBUGZ, __FILE__ ":%u:copy_file() OK", __LINE__);
@@ -443,23 +476,26 @@ static char **mk_lst(const char *a)
 {
     char *p, *q, **list=NULL, end=0, num=0;
 
-    if(!a){
-      w_log(LL_ERR, "NULL command line!");
-      return NULL;
+    if(!a)
+    {
+        w_log(LL_ERR, "NULL command line!");
+        return NULL;
     }
     while (*a && isspace(*a)) a++; /* Left spaces trim */
     p=q=sstrdup(a);
-    while (*p && !end) {
-	while (*q && !isspace(*q)) q++;
-	if (*q=='\0') end=1;
-	*q ='\0';
-	list = (char **) srealloc(list, ++num*sizeof(char*));
-	list[num-1]=(char*)p;
-	if (!end) {
-	    p=q+1;
-	    while(isspace(*p)) p++;
-	}
-	q=p;
+    while (*p && !end)
+    {
+        while (*q && !isspace(*q)) q++;
+        if (*q=='\0') end=1;
+        *q ='\0';
+        list = (char **) srealloc(list, ++num*sizeof(char*));
+        list[num-1]=(char*)p;
+        if (!end)
+        {
+            p=q+1;
+            while(isspace(*p)) p++;
+        }
+        q=p;
     }
     list = (char **) srealloc(list, (++num)*sizeof(char*));
     list[num-1]=NULL;
@@ -468,25 +504,27 @@ static char **mk_lst(const char *a)
 }
 
 int cmdcall(const char *cmd)
-{ int cmdexit=-1;
-  int signal;
-  char **list;
+{
+    int cmdexit=-1;
+    int signal;
+    char **list;
 
-  if( (list = mk_lst(cmd)) != NULL ) {
-    w_log(LL_DEBUGV, "spawnvp(P_WAIT, %s, ...)", list[0] );
+    if( (list = mk_lst(cmd)) != NULL )
+    {
+        w_log(LL_DEBUGV, "spawnvp(P_WAIT, %s, ...)", list[0] );
 #if defined(__WATCOMC__) || defined(__MINGW32__)
-    cmdexit = spawnvp(P_WAIT, list[0], (const char * const *)list);
+        cmdexit = spawnvp(P_WAIT, list[0], (const char * const *)list);
 #else
 #pragma message("spawnvp")
-	cmdexit = spawnvp(P_WAIT, list[0], list);
+        cmdexit = spawnvp(P_WAIT, list[0], list);
 #endif
-    nfree(list[0]);
-    nfree(list);
-  }
+        nfree(list[0]);
+        nfree(list);
+    }
 
-  if( (signal=(cmdexit & 0xff)) != 0 ) /* system error! */
-    w_log(LL_ERROR, "Command execute error (spawnwp()): signal %i (Run command '%s')", signal, cmd);
-  return (cmdexit & 0xFF00)>>8;   /* return code */
+    if( (signal=(cmdexit & 0xff)) != 0 ) /* system error! */
+        w_log(LL_ERROR, "Command execute error (spawnwp()): signal %i (Run command '%s')", signal, cmd);
+    return (cmdexit & 0xFF00)>>8;   /* return code */
 }
 #else
 /*
@@ -502,21 +540,28 @@ int lockFile(const char *lockfile, int advisoryLock)
     if(!lockfile)
         return fh;
 
-    if (advisoryLock > 0) {
+    if (advisoryLock > 0)
+    {
         while(advisoryLock > 0)
         {
             fh=open(lockfile,O_CREAT|O_RDWR,S_IREAD|S_IWRITE);
-            if (fh<0) {
-/*                fprintf(stderr,"cannot open/create lock file: %s wait %d seconds\n",lockfile, advisoryLock);*/
+            if (fh<0)
+            {
+                /*                fprintf(stderr,"cannot open/create lock file: %s wait %d seconds\n",lockfile, advisoryLock);*/
                 advisoryLock--;
-            } else {
-                if (write(fh," ", 1)!=1) {
-/*                    fprintf(stderr,"can't write to lock file! wait %d seconds\n", advisoryLock);*/
+            }
+            else
+            {
+                if (write(fh," ", 1)!=1)
+                {
+                    /*                    fprintf(stderr,"can't write to lock file! wait %d seconds\n", advisoryLock);*/
                     close(fh);
                     fh = -1;
                     advisoryLock--;
-                } else if (lock(fh,0,1)<0) {
-/*                    fprintf(stderr,"lock file used by another process! %d seconds\n", advisoryLock);*/
+                }
+                else if (lock(fh,0,1)<0)
+                {
+                    /*                    fprintf(stderr,"lock file used by another process! %d seconds\n", advisoryLock);*/
                     close(fh);
                     fh = -1;
                     advisoryLock--;
@@ -527,23 +572,25 @@ int lockFile(const char *lockfile, int advisoryLock)
             else
                 break;
         }
-    } else { /*  normal locking */
+    }
+    else     /*  normal locking */
+    {
         fh=open(lockfile, O_CREAT|O_RDWR|O_EXCL,S_IREAD|S_IWRITE);
     }
     if(fh < 0)
     {
-		fprintf(stderr,"cannot create new lock file: %s\n",lockfile);
-		fprintf(stderr,"lock file probably used by another process! exit...\n");
-	}
+        fprintf(stderr,"cannot create new lock file: %s\n",lockfile);
+        fprintf(stderr,"lock file probably used by another process! exit...\n");
+    }
     return fh;
 }
 
 int FreelockFile(const char *lockfile, int fh)
 {
     if(fh > 0)
-    	close(fh);
+        close(fh);
     if(lockfile)
-	    remove(lockfile);
+        remove(lockfile);
 
     return 0;
 }
@@ -584,18 +631,19 @@ char    *GetFilenameFromPathname(const char* pathname)
     Returns the file (or directory) name: pointer to part of all original pathname.
 */
 char *OS_independed_basename(const char *pathname)
-{ register char *fname=NULL, *pname=(char*)pathname;
+{
+    register char *fname=NULL, *pname=(char*)pathname;
 
-  /* Process Unix-style, result to pathname */
-  fname = strrchr(pname,'/');
-  if( fname != NULL ) pname = ++fname;
+    /* Process Unix-style, result to pathname */
+    fname = strrchr(pname,'/');
+    if( fname != NULL ) pname = ++fname;
 
-  /* Process DOS-style */
-  fname = strrchr(pname,'\\');
-  if( fname != NULL ) ++fname;
-  else fname = pname;
+    /* Process DOS-style */
+    fname = strrchr(pname,'\\');
+    if( fname != NULL ) ++fname;
+    else fname = pname;
 
-  return fname;
+    return fname;
 }
 
 /* Return directory part of pathname (without filename, '/' or '\\' present at end)
@@ -604,23 +652,25 @@ char *OS_independed_basename(const char *pathname)
  */
 char    *GetDirnameFromPathname(const char* pathname)
 {
-  char *sp=NULL, *rp=NULL;
-  register int lll;
+    char *sp=NULL, *rp=NULL;
+    register int lll;
 
-  sp = strrchr(pathname,PATH_DELIM);
-  if( sp ){
-    sp++;
-    lll = sp-pathname;
-    rp = scalloc(lll+1,sizeof(char));
-    sstrncpy(rp, pathname, lll);
-  }else
+    sp = strrchr(pathname,PATH_DELIM);
+    if( sp )
+    {
+        sp++;
+        lll = sp-pathname;
+        rp = scalloc(lll+1,sizeof(char));
+        sstrncpy(rp, pathname, lll);
+    }
+    else
 #if PATH_DELIM=='/'
-    rp = sstrdup("./");
+        rp = sstrdup("./");
 #else
-    rp = sstrdup(".\\");
+        rp = sstrdup(".\\");
 #endif
 
-  return rp;
+    return rp;
 }
 
 void fillCmdStatement(char *cmd, const char *call, const char *archiv, const char *file, const char *path)
@@ -635,21 +685,31 @@ void fillCmdStatement(char *cmd, const char *call, const char *archiv, const cha
 #ifdef __WIN32__
     GetFullPathName(archiv, sizeof(fullarch), fullarch, &p);
     if(*path)
-    GetFullPathName(path, sizeof(fullpath), fullpath, &p);
+        GetFullPathName(path, sizeof(fullpath), fullpath, &p);
 #else
     strnzcpy(fullpath,path, 255);
     strnzcpy(fullarch,archiv, 255);
 #endif
 
-    *cmd = '\0';  start = NULL;
-    for (tmp = call; (start = strchr(tmp, '$')) != NULL; tmp = start + 2) {
-        switch(*(start + 1)) {
-        case 'a': add = fullarch; break;
-        case 'p': add = fullpath; break;
-        case 'f': add = file; break;
+    *cmd = '\0';
+    start = NULL;
+    for (tmp = call; (start = strchr(tmp, '$')) != NULL; tmp = start + 2)
+    {
+        switch(*(start + 1))
+        {
+        case 'a':
+            add = fullarch;
+            break;
+        case 'p':
+            add = fullpath;
+            break;
+        case 'f':
+            add = file;
+            break;
         default:
             strncat(cmd, tmp, (size_t) (start - tmp + 1));
-            start--; continue;
+            start--;
+            continue;
         };
         strnzcat(cmd, tmp, (size_t) (start - tmp + 1));
         strcat(cmd, add);

@@ -31,16 +31,18 @@
 There are two macros you can define before including this file which can
 change the things defined by this file.
 
-DVIXIE: if defined, will cause enter/exit messages to be printed by the
-        ENTER/EXIT/EXITV macros.  If not defined, causes ENTER to do nothing,
-        and EXIT/EXITV to generate 'return' without any messages.
+DVIXIE:
+if defined, will cause enter/exit messages to be printed by the
+ENTER/EXIT/EXITV macros.  If not defined, causes ENTER to do nothing,
+          and EXIT/EXITV to generate 'return' without any messages.
 
-        If defined, should be set to the name of the including module.
+          If defined, should be set to the name of the including module.
 
-MAIN:   Should be defined for a program containing a main() function which
-        is linked with other modules which include this file.
+      MAIN:
+          Should be defined for a program containing a main() function which
+                  is linked with other modules which include this file.
 
-        Value is not important, only existence/nonexistence matters.
+                  Value is not important, only existence/nonexistence matters.
 
 #endif  /*DOCUMENTATION*/
 
@@ -49,7 +51,7 @@ MAIN:   Should be defined for a program containing a main() function which
 #define HUSKY_VIXIE_H
 
 
-                                                /*--- debugging stuff ---*/
+                  /*--- debugging stuff ---*/
 #define MAXPROC 256
 
 #ifdef DVIXIE
@@ -80,11 +82,11 @@ MAIN:   Should be defined for a program containing a main() function which
 #endif
 
 #ifdef MAIN
-int     I_PROC = 0;
-char    *APC_PROCS[MAXPROC];
+    int     I_PROC = 0;
+    char    *APC_PROCS[MAXPROC];
 #else
-extern  int     I_PROC;
-extern  char    *APC_PROCS[MAXPROC];
+    extern  int     I_PROC;
+    extern  char    *APC_PROCS[MAXPROC];
 #endif
 
 #endif

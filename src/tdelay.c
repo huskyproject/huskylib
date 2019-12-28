@@ -40,7 +40,7 @@
 #include <time.h>
 
 #if !defined(_MSC_VER)
-#include <sys/time.h>
+    #include <sys/time.h>
 #endif
 
 /* huskylib: compiler.h */
@@ -49,11 +49,11 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
-#  include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #if defined(__DOS__) || defined(__DPMI__)
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 

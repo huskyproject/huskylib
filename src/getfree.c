@@ -46,22 +46,22 @@
 
 /* compiler-dependent headers */
 #ifdef HAS_SYS_PARAM_H
-#include <sys/param.h>
+    #include <sys/param.h>
 #endif
 #ifdef HAS_SYS_MOUNT_H
-#include <sys/mount.h>
+    #include <sys/mount.h>
 #endif
 #ifdef HAS_SYS_STATFS_H
-#include <sys/statfs.h>
+    #include <sys/statfs.h>
 #endif
 #ifdef HAS_SYS_STATVFS_H
-#include <sys/statvfs.h>
+    #include <sys/statvfs.h>
 #endif
 #ifdef HAS_SYS_VFS_H
-#include <sys/vfs.h>
+    #include <sys/vfs.h>
 #endif
 #ifdef HAS_DOS_H
-#include <dos.h>
+    #include <dos.h>
 #endif
 
 /* huskylib headers */
@@ -73,19 +73,19 @@
 /***  Declarations & defines  ***********************************************/
 
 #ifdef __WATCOMC__NT__
-#  ifndef MAXPATHLEN
-#    define MAXPATHLEN NAME_MAX
-#  endif
+    #ifndef MAXPATHLEN
+        #define MAXPATHLEN NAME_MAX
+    #endif
 #endif
 
 #ifdef __MSVC__
-#  ifndef MAXPATHLEN
-#    define MAXPATHLEN _MAX_PATH
-#  endif
+    #ifndef MAXPATHLEN
+        #define MAXPATHLEN _MAX_PATH
+    #endif
 #endif
 
 #ifndef MAXPATHLEN
-#   define MAXPATHLEN 255
+    #define MAXPATHLEN 255
 #endif
 
 /***  Implementation  *******************************************************/
@@ -104,22 +104,25 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 
 
     pGetDiskFreeSpaceEx = GetProcAddress( GetModuleHandle("kernel32.dll"),
-        "GetDiskFreeSpaceExA");
+                                          "GetDiskFreeSpaceExA");
 
     if (pGetDiskFreeSpaceEx)
     {
         ULARGE_INTEGER i64FreeBytesToCaller,i64TotalBytes,i64FreeBytes;
         rc = pGetDiskFreeSpaceEx (path,
-            (PULARGE_INTEGER)&i64FreeBytesToCaller,
-            (PULARGE_INTEGER)&i64TotalBytes,
-            (PULARGE_INTEGER)&i64FreeBytes);
-        if (rc != TRUE) {
+                                  (PULARGE_INTEGER)&i64FreeBytesToCaller,
+                                  (PULARGE_INTEGER)&i64TotalBytes,
+                                  (PULARGE_INTEGER)&i64FreeBytes);
+        if (rc != TRUE)
+        {
             w_log (LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
-        } else {
+        }
+        else
+        {
             i64FreeBytesToCaller.QuadPart /= 1024;
             if( i64FreeBytesToCaller.QuadPart < unsigned_long_max )
-               freeSpace = (unsigned long)i64FreeBytesToCaller.QuadPart;
+                freeSpace = (unsigned long)i64FreeBytesToCaller.QuadPart;
             /*  Process GetDiskFreeSpaceEx results. */
         }
     }
@@ -132,30 +135,39 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
         char RPN[MAXPATHLEN];	/*  root path */
         char *pRPN;             /*  Pointer to Root path */
         pRPN = RPN;
-        if (isalpha(path[0]) && path[1] == ':' ) {
+        if (isalpha(path[0]) && path[1] == ':' )
+        {
             /*  Drive letter */
             RPN[0] = path[0];
             RPN[1] = ':';
             RPN[2] = '\\';
             RPN[3] = '\0';
-        } else if (path[0] == '\\' && path[1] == '\\') {
+        }
+        else if (path[0] == '\\' && path[1] == '\\')
+        {
             /*  UNC path */
             int i;
             RPN[0] = '\\';
             RPN[1] = '\\';
             i = 2;
             /*  copy server name.... */
-            do {
+            do
+            {
                 RPN[i] = path[i];
-            } while (path[i++] != '\\');
+            }
+            while (path[i++] != '\\');
             /*  .... and share name */
-            do {
+            do
+            {
                 RPN[i] = path[i];
-            } while (path[i++] != '\\');
+            }
+            while (path[i++] != '\\');
 
             RPN[i] = '\0';
 
-        } else {
+        }
+        else
+        {
             /*  Current Drive */
             pRPN = NULL;
         }
@@ -163,13 +175,16 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 
         rc = GetDiskFreeSpace (pRPN,&SPC,&BPS,&FC,&TNC);
 
-        if (rc != TRUE) {
+        if (rc != TRUE)
+        {
             w_log (LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
-        } else {
+        }
+        else
+        {
             /* return (unsigned long) (BPS * SPC * FC / 1024); */
             if (BPS * SPC >= 1024)
-				/* Note: 4 TiB barrier */
+                /* Note: 4 TiB barrier */
                 freeSpace = ((BPS * SPC / 1024l) * FC);
             else
                 freeSpace = (FC / (1024 / (BPS * SPC)));
@@ -180,8 +195,8 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 #elif defined(__OS2__) && !defined(__EMX__)
 
 #ifdef __WATCOMC__
-#define __IBMC__ 0
-#define __IBMCPP__ 0
+    #define __IBMC__ 0
+    #define __IBMCPP__ 0
 #endif
 
 #define INCL_DOS
@@ -190,31 +205,31 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
-  FSALLOCATE fsa;
-  unsigned long disknum = 0;
-  APIRET rc;
+    FSALLOCATE fsa;
+    unsigned long disknum = 0;
+    APIRET rc;
 
-  if (isalpha (path[0]) && path[1] == ':')
-    disknum = toupper (path[0]) - 'A' + 1;
+    if (isalpha (path[0]) && path[1] == ':')
+        disknum = toupper (path[0]) - 'A' + 1;
 
-  rc = DosQueryFSInfo (disknum, /* Drive number            */
-		       FSIL_ALLOC,	    /* Level 1 allocation info */
-		       (PVOID) & fsa,	/* Buffer                  */
-		       sizeof (fsa));	/* Size of buffer          */
+    rc = DosQueryFSInfo (disknum, /* Drive number            */
+                         FSIL_ALLOC,	    /* Level 1 allocation info */
+                         (PVOID) & fsa,	/* Buffer                  */
+                         sizeof (fsa));	/* Size of buffer          */
 
-  if (rc)
-  {
-    w_log (LL_ERR, "DosQueryFSInfo error: return code = %u", rc);
-    return unsigned_long_max;		    /* Assume enough disk space */
-  }
-  else
-  {
-    /* return fsa.cSectorUnit * fsa.cUnitAvail * fsa.cbSector; */
-    if (fsa.cSectorUnit * fsa.cbSector >= 1024)
-      return fsa.cUnitAvail * (fsa.cSectorUnit * fsa.cbSector / 1024);
+    if (rc)
+    {
+        w_log (LL_ERR, "DosQueryFSInfo error: return code = %u", rc);
+        return unsigned_long_max;		    /* Assume enough disk space */
+    }
     else
-      return fsa.cUnitAvail / (1024 / (fsa.cSectorUnit * fsa.cbSector));
-  }
+    {
+        /* return fsa.cSectorUnit * fsa.cUnitAvail * fsa.cbSector; */
+        if (fsa.cSectorUnit * fsa.cbSector >= 1024)
+            return fsa.cUnitAvail * (fsa.cSectorUnit * fsa.cbSector / 1024);
+        else
+            return fsa.cUnitAvail / (1024 / (fsa.cSectorUnit * fsa.cbSector));
+    }
 }
 
 #elif defined(__UNIX__) || defined(__EMX__)
@@ -240,35 +255,35 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
 #if defined(HAS_SYS_STATVFS_H) || defined(HAS_SYS_VFS_H)
-  struct statvfs sfs;
-  /* f_bavail is in f_frsize units in statvfs */
+    struct statvfs sfs;
+    /* f_bavail is in f_frsize units in statvfs */
 #define B_SIZE f_frsize
 
-  if (statvfs (path, &sfs) != 0)
+    if (statvfs (path, &sfs) != 0)
 #else
-  struct statfs sfs;
+    struct statfs sfs;
 #define B_SIZE f_bsize
 
-  if (statfs (path, &sfs) != 0)
+    if (statfs (path, &sfs) != 0)
 #endif
-  {
-    w_log (LL_ERR, "cannot statfs \"%s\", assume enough space", path);
-    return unsigned_long_max;
-  }
-  else
-  {
-    if (sfs.B_SIZE >= 1024)
-      return ((sfs.B_SIZE / 1024l) * sfs.f_bavail);
+    {
+        w_log (LL_ERR, "cannot statfs \"%s\", assume enough space", path);
+        return unsigned_long_max;
+    }
     else
-      return (sfs.f_bavail / (1024l / sfs.B_SIZE));
-  }
+    {
+        if (sfs.B_SIZE >= 1024)
+            return ((sfs.B_SIZE / 1024l) * sfs.f_bavail);
+        else
+            return (sfs.f_bavail / (1024l / sfs.B_SIZE));
+    }
 }
 
 #else
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
-  w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
-  return unsigned_long_max;
+    w_log (LL_WARN, "warning: free space doesn't checked in %s",path);
+    return unsigned_long_max;
 }
 
 #endif
@@ -278,101 +293,101 @@ unsigned long husky_GetDiskFreeSpace (const char *path)
 
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
-  int diskno;
-  struct _diskfree_t df;
+    int diskno;
+    struct _diskfree_t df;
 
-  if(!path || !*path) return 0l;
+    if(!path || !*path) return 0l;
 
-  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
-  if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
-  if(_dos_getdiskfree(diskno, &df)) return 0; /* invalid disk */
+    diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+    if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
+    if(_dos_getdiskfree(diskno, &df)) return 0; /* invalid disk */
 
 #ifdef TEST
-printf("diskno=%i\n",diskno);
-printf("df.avail_clusters=%x\n", df.avail_clusters);
-printf("df.sectors_per_cluster=%x\n",   df.sectors_per_cluster);
-printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
+    printf("diskno=%i\n",diskno);
+    printf("df.avail_clusters=%x\n", df.avail_clusters);
+    printf("df.sectors_per_cluster=%x\n",   df.sectors_per_cluster);
+    printf("df.bytes_per_sector=%x\n",  df.bytes_per_sector);
 #endif
-  if (df.sectors_per_cluster * df.bytes_per_sector >= 1024)
-    return ((df.sectors_per_cluster * df.bytes_per_sector / 1024l) * df.avail_clusters);
-  else
-    return (df.avail_clusters / (1024l / (df.sectors_per_cluster * df.bytes_per_sector)));
+    if (df.sectors_per_cluster * df.bytes_per_sector >= 1024)
+        return ((df.sectors_per_cluster * df.bytes_per_sector / 1024l) * df.avail_clusters);
+    else
+        return (df.avail_clusters / (1024l / (df.sectors_per_cluster * df.bytes_per_sector)));
 }
 
 #elif defined(__DJGPP__) /* without DOS Fn's error ckeck */
 
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
-  int diskno;
-  struct dfree df;
+    int diskno;
+    struct dfree df;
 
-  if(!path || !*path) return 0l;
+    if(!path || !*path) return 0l;
 
-  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
-  if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
-  getdfree(diskno, &df);
+    diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+    if(diskno<0 || diskno >25) return 0;        /* illegal diskno */
+    getdfree(diskno, &df);
 
 #ifdef TEST
-printf("diskno=%i\n",diskno);
-printf("df.df_avail=%x\n", df.df_avail);
-printf("df.df_sclus=%x\n",   df.df_sclus);
-printf("df.df_bsec=%x\n",  df.df_bsec);
+    printf("diskno=%i\n",diskno);
+    printf("df.df_avail=%x\n", df.df_avail);
+    printf("df.df_sclus=%x\n",   df.df_sclus);
+    printf("df.df_bsec=%x\n",  df.df_bsec);
 #endif
-  if (df.df_bsec * df.df_sclus >= 1024)
-    return ((df.df_bsec * df.df_sclus / 1024l) * df.df_avail);
-  else
-    return (df.df_avail / (1024l / (df.df_bsec * df.df_sclus)));
+    if (df.df_bsec * df.df_sclus >= 1024)
+        return ((df.df_bsec * df.df_sclus / 1024l) * df.df_avail);
+    else
+        return (df.df_avail / (1024l / (df.df_bsec * df.df_sclus)));
 }
 
 #elif defined(__DOS__) /* call int 0x21 DOS Fn 0x36 */
 
 unsigned long husky_GetDiskFreeSpace (const char *path)
 {
-  int diskno;
-  union REGS in, out;
+    int diskno;
+    union REGS in, out;
 
-  if(!path || !*path) return 0l;
+    if(!path || !*path) return 0l;
 
-  diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
-  if(diskno<1 || diskno >25) return 0;        /* illegal diskno */
+    diskno = toupper(*path) - '@';     /* 1="A:", 2="B:", 3="C:" ...*/
+    if(diskno<1 || diskno >25) return 0;        /* illegal diskno */
 
-/* [DOS Fn 36H: Get Disk Free Space]
- *  Returns: AX    ffffH   if DL was an invalid drive number
- *                 else    sectors per cluster if no error
- *           BX    available clusters (allocation units)
- *           CX    bytes per sector (usually 512)
- *           DX    total clusters on the disk
- */
+    /* [DOS Fn 36H: Get Disk Free Space]
+     *  Returns: AX    ffffH   if DL was an invalid drive number
+     *                 else    sectors per cluster if no error
+     *           BX    available clusters (allocation units)
+     *           CX    bytes per sector (usually 512)
+     *           DX    total clusters on the disk
+     */
 
-  in.h.ah=0x36;   /* DOS Fn 36H: Get Disk Free Space */
-  in.h.dl=diskno;
-  #if defined(__DPMI__) && !defined(__DJGPP__)
-   int386(0x21, &in, &out);
+    in.h.ah=0x36;   /* DOS Fn 36H: Get Disk Free Space */
+    in.h.dl=diskno;
+#if defined(__DPMI__) && !defined(__DJGPP__)
+    int386(0x21, &in, &out);
 #ifdef TEST
-printf("out.x.eax=%lx available clusters\n",out.x.eax);
-printf("out.x.ebx=%lx sectors per cluster (0xffff = error)\n",out.x.ebx);
-printf("out.x.ecx=%lx bytes per sector\n",out.x.ecx);
+    printf("out.x.eax=%lx available clusters\n",out.x.eax);
+    printf("out.x.ebx=%lx sectors per cluster (0xffff = error)\n",out.x.ebx);
+    printf("out.x.ecx=%lx bytes per sector\n",out.x.ecx);
 #endif
-   if((out.x.eax & 0xffff) == 0xffff )
-     return 0; /* bad drive number in DL */
-   return (out.x.eax & 0xffff) * (out.x.ebx & 0xffff) * (out.x.ecx & 0xffff);
-  #else
-   int86(0x21,&in,&out);
+    if((out.x.eax & 0xffff) == 0xffff )
+        return 0; /* bad drive number in DL */
+    return (out.x.eax & 0xffff) * (out.x.ebx & 0xffff) * (out.x.ecx & 0xffff);
+#else
+    int86(0x21,&in,&out);
 #ifdef TEST
 #ifdef __DJGPP__
-printf("out.x.bx=%lx available clusters\n",out.x.bx);
-printf("out.x.ax=%lx sectors per cluster (0xffff = error)\n",out.x.ax);
-printf("out.x.cx=%lx bytes per sector\n",out.x.cx);
+    printf("out.x.bx=%lx available clusters\n",out.x.bx);
+    printf("out.x.ax=%lx sectors per cluster (0xffff = error)\n",out.x.ax);
+    printf("out.x.cx=%lx bytes per sector\n",out.x.cx);
 #else
-printf("out.x.bx=%x available clusters\n",out.x.bx);
-printf("out.x.ax=%x sectors per cluster (0xffff = error)\n",out.x.ax);
-printf("out.x.cx=%x bytes per sector\n",out.x.cx);
+    printf("out.x.bx=%x available clusters\n",out.x.bx);
+    printf("out.x.ax=%x sectors per cluster (0xffff = error)\n",out.x.ax);
+    printf("out.x.cx=%x bytes per sector\n",out.x.cx);
 #endif
 #endif
-   if((out.x.ax & 0xffff) == 0xffff )
-     return 0; /* bad drive number in DL */
-   return (out.x.ax & 0xffff) * out.x.bx * out.x.cx / 1024; /* OK */
-  #endif
+    if((out.x.ax & 0xffff) == 0xffff )
+        return 0; /* bad drive number in DL */
+    return (out.x.ax & 0xffff) * out.x.bx * out.x.cx / 1024; /* OK */
+#endif
 
 }
 #else
@@ -383,14 +398,16 @@ printf("out.x.cx=%x bytes per sector\n",out.x.cx);
 
 #ifdef TEST
 
-int main(int argc, char**argv){
- unsigned long f; char *sdisk="c:\\";
+int main(int argc, char**argv)
+{
+    unsigned long f;
+    char *sdisk="c:\\";
 
- if(argc>1) *sdisk = argv[1][0];
+    if(argc>1) *sdisk = argv[1][0];
 
- f = husky_GetDiskFreeSpace(sdisk);
- printf("Free space on %s is  %lu\n", sdisk, f);
+    f = husky_GetDiskFreeSpace(sdisk);
+    printf("Free space on %s is  %lu\n", sdisk, f);
 
- return 0;
+    return 0;
 }
 #endif

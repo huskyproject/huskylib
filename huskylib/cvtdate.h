@@ -31,9 +31,9 @@
 #include "huskyext.h"  /* compiler see directory of this (cvtdate.h) file */
 
 #if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
-/*typedef unsigned short bits;*/
+    /*typedef unsigned short bits;*/
 #else
-/*typedef unsigned bits;*/  /* AIX does not allow any modifier after unsigned */
+    /*typedef unsigned bits;*/  /* AIX does not allow any modifier after unsigned */
 #endif
 typedef bit bits;
 
@@ -76,18 +76,18 @@ union stamp_combo
 typedef union stamp_combo SCOMBO;
 
 HUSKYEXT int _fast
-              gettz(void);
+gettz(void);
 HUSKYEXT void _fast
-              ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
+ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
 HUSKYEXT union stamp_combo *_fast
-              Get_Dos_Date(union stamp_combo *st);
+    Get_Dos_Date(union stamp_combo *st);
 HUSKYEXT struct tm *_fast
-              DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
+DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
 HUSKYEXT union stamp_combo *_fast
-              TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
+    TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
 HUSKYEXT char *_fast
-              sc_time(union stamp_combo *sc, char *string);
+sc_time(union stamp_combo *sc, char *string);
 HUSKYEXT char *_fast
-              fts_time(char *string, struct tm *tmdate);
+fts_time(char *string, struct tm *tmdate);
 
 #endif
