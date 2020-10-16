@@ -1,7 +1,7 @@
 %global ver_major 1
 %global ver_minor 9
 %global ver_patch 0
-%global reldate 20201015
+%global reldate 20201016
 %global reltype C
 # may be one of: C (current), R (release), S (stable)
 
@@ -58,7 +58,7 @@ Summary: Common static library for the Husky Project applications
 Summary: Common dynamic library for the Husky Project applications
 %endif
 URL: https://github.com/huskyproject/%main_name/archive/v%ver_major.%ver_minor.%reldate.tar.gz
-License: GPL
+License: LGPLv2
 Source: %main_name-%ver_major.%ver_minor.%reldate.tar.gz
 Provides: %name = %version-%release
 %description
