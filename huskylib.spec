@@ -77,13 +77,13 @@ Requires: %name = %version-%release
 %description devel
 %summary
 
-%package -n %main_name-utils
+%package utils
 %if %_vendor != "redhat"
 Group: %pkg_group
 %endif
 Summary: Utilities for %main_name
-Provides: %main_name-utils = %version-%release
-%description -n %main_name-utils
+Provides: %name-utils = %version-%release
+%description utils
 %summary
 
 
@@ -172,5 +172,5 @@ rm -rf -- %buildroot
     %_libdir/*.so
 %endif
 
-%files -n %main_name-utils
+%files utils
 %_bindir/*
