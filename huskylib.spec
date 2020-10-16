@@ -129,17 +129,6 @@ umask 022
     make DESTDIR=%buildroot DYNLIBS=1 install
 %endif
 chmod -R a+rX,u+w,go-w %buildroot
-# do not package headers for unsupported systems
-rm -f -- \
-  %buildroot%_includedir/%main_name/B*.h \
-  %buildroot%_includedir/%main_name/D*.h \
-  %buildroot%_includedir/%main_name/E*.h \
-  %buildroot%_includedir/%main_name/H*.h \
-  %buildroot%_includedir/%main_name/I*.h \
-  %buildroot%_includedir/%main_name/M*.h \
-  %buildroot%_includedir/%main_name/S*.h \
-  %buildroot%_includedir/%main_name/W*.h \
-  ;
 
 %if %_vendor != "redhat"
 %clean
@@ -160,8 +149,17 @@ rm -rf -- %buildroot
 %endif
 
 
-%files -n %main_name-devel
+%files devel
 %dir %_includedir/%main_name
+# do not package headers for unsupported systems
+%exclude %_includedir/%main_name/B*.h
+%exclude %_includedir/%main_name/D*.h
+%exclude %_includedir/%main_name/E*.h
+%exclude %_includedir/%main_name/H*.h
+%exclude %_includedir/%main_name/I*.h
+%exclude %_includedir/%main_name/M*.h
+%exclude %_includedir/%main_name/S*.h
+%exclude %_includedir/%main_name/W*.h
 %_includedir/%main_name/*
 %if ! %{with static}
     %_libdir/*.so
