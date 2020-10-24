@@ -6,7 +6,7 @@
 # may be one of: C (current), R (release), S (stable)
 
 # release number
-%global relnum 5
+%global relnum 6
 
 # on default static library is made but using 'rpmbuild --without static'
 # produces a dynamic library
@@ -104,12 +104,6 @@ Provides: %name-utils = %version-%release
     %else
         %make_build DYNLIBS:=1
     %endif
-%endif
-echo Install-name1:%_rpmdir/%_arch/%name-%version-%release.%_arch.rpm > /dev/null
-%if %{with static}
-    echo Install-name2:%_rpmdir/noarch/%name-devel-%version-%release.noarch.rpm > /dev/null
-%else
-    echo Install-name2:%_rpmdir/%_arch/%name-devel-%version-%release.%_arch.rpm > /dev/null
 %endif
 
 %if %{with debug}
