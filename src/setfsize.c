@@ -33,18 +33,13 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* standard headers */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-
-
 /* huskylib: compiler.h */
 #include <compiler.h>
-
-
 /* compiler-dependent headers */
 #ifdef HAS_DOS_H
     #include <dos.h>
@@ -57,21 +52,15 @@
 #ifdef HAS_UNISTD_H
     #include <unistd.h>
 #endif
-
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskylib.h>
-
-
 /***  Declarations & defines  ***********************************************/
-
 int _fast setfsize(int fd, long size);
 
 /***  Implementation  *******************************************************/
 
 #ifdef __DOS__
-
 /* Call DOS Fn 40H: Write to File via Handle
  * AH    0x40
  * BX    file handle
@@ -86,45 +75,43 @@ int _fast setfsize(int fd, long size);
 int _fast setfsize(int fd, long size)
 {
     union REGS r;
-    long pos=tell(fd);
+    long pos = tell(fd);
 
     lseek(fd, size, SEEK_SET);
-    memset(&r,0,sizeof(r));
+    memset(&r, 0, sizeof(r));
+    r.h.ah = 0x40;
 
-    r.h.ah=0x40;
-
-#if defined(__DOS16__) || defined(__DJGPP__)
-    r.x.bx=fd;
-
+#if defined (__DOS16__) || defined (__DJGPP__)
+    r.x.bx = fd;
     int86(0x21, &r, &r);
 
-#elif defined(__DPMI__)
-    r.x.ebx=fd;
-
+#elif defined (__DPMI__)
+    r.x.ebx = fd;
     int386(0x21, &r, &r);
 #endif
 
     lseek(fd, pos, SEEK_SET);
-
     return 0;
 }
-#elif defined(__OS2__)
+
+#elif defined (__OS2__)
 
 #define INCL_DOSFILEMGR
 #include <os2.h>
 
 int _fast setfsize(int fd, long size)
 {
-    return ((int)DosSetFileSize((HFILE)fd, (ULONG)size)); /*ULONG & HFILE defined in os2.h*/
+    return (int)DosSetFileSize((HFILE)fd, (ULONG)size); /*ULONG & HFILE defined in os2.h*/
 }
 
-#elif defined(__UNIX__)
+#elif defined (__UNIX__)
 
 int _fast setfsize(int fd, long size)
 {
     return ftruncate(fd, size);
 }
-#elif defined(__WIN32__)
+
+#elif defined (__WIN32__)
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -132,14 +119,16 @@ int _fast setfsize(int fd, long size)
 
 int _fast setfsize(int fd, long size)
 {
-#if defined(__MSVC__) || defined(__MINGW32__)
+#if defined (__MSVC__) || defined (__MINGW32__)
     return chsize(fd, size);
+
 #else
     SetFilePointer((HANDLE)fd, size, NULL, FILE_BEGIN);
-    return (!SetEndOfFile((HANDLE)fd));
+    return !SetEndOfFile((HANDLE)fd);
+
 #endif
 }
-#else
-#error Unknown OS
-#endif
 
+#else  /* ifdef __DOS__ */
+#error Unknown OS
+#endif /* ifdef __DOS__ */

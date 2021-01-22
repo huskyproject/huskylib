@@ -30,10 +30,8 @@
 
 #include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this (calendar.h) file */
-
 HUSKYEXT char _stdc months[][10];
 HUSKYEXT char _stdc weekday[][10];
-
 HUSKYEXT char _stdc months_ab[][4];
 HUSKYEXT char _stdc weekday_ab[][4];
 

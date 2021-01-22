@@ -29,44 +29,41 @@
 
 #ifndef HUSKY_MEMORY_H__
 #define HUSKY_MEMORY_H__
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /* huskylib headers */
 #include "huskyext.h"
-
 /***  Declarations & defines  ***********************************************/
-
 /* Safety free malloc'ed memory chunk */
-#define nfree(a) { if (a != NULL) { free(a); a = NULL; } }
+#define nfree(a) {if(a != NULL) {free(a); a = NULL;}}
 
-HUSKYEXT void *memdup(void *p, size_t size);
+HUSKYEXT void * memdup(void * p, size_t size);
+
 /*DOC
  * Input:  a chunk of memory, with size bytes
  * Output: a copy of it, malloc'ed
  */
-
 /*
    safe malloc, realloc, calloc
    if no memory allocated -- abort()
-*/
-HUSKYEXT void *smalloc(size_t size);
-HUSKYEXT void *srealloc(void *ptr, size_t size);
-HUSKYEXT void *scalloc(size_t nmemb, size_t size);
+ */
+HUSKYEXT void * smalloc(size_t size);
+HUSKYEXT void * srealloc(void * ptr, size_t size);
+HUSKYEXT void * scalloc(size_t nmemb, size_t size);
 
 
 #ifdef __LITTLE_ENDIAN__
 
-#define put_dword(ptr, val)	(*(dword *)(ptr) = (val))
-#define put_word(ptr, val)	(*(word *)(ptr) = (val))
-#define get_dword(ptr)		(*(dword *)(ptr))
-#define get_word(ptr)		(*(word *)(ptr))
+#define put_dword(ptr, val) (*(dword *)(ptr) = (val))
+#define put_word(ptr, val) (*(word *)(ptr) = (val))
+#define get_dword(ptr) (*(dword *)(ptr))
+#define get_word(ptr) (*(word *)(ptr))
 
 #else
 
-HUSKYEXT void put_word(byte *ptr, word value);
-HUSKYEXT void put_dword(byte *ptr, dword value);
+HUSKYEXT void put_word(byte * ptr, word value);
+HUSKYEXT void put_dword(byte * ptr, dword value);
+
 /*
  *  get_dword
  *
@@ -75,11 +72,11 @@ HUSKYEXT void put_dword(byte *ptr, dword value);
  *  independent manner
  */
 
-#define get_dword(ptr)            \
-   ((dword)((unsigned char)(ptr)[0]) |           \
-    (((dword)((unsigned char)(ptr)[1])) << 8)  | \
-    (((dword)((unsigned char)(ptr)[2])) << 16) | \
-    (((dword)((unsigned char)(ptr)[3])) << 24))  \
+#define get_dword(ptr) \
+    ((dword)((unsigned char)(ptr)[0]) | \
+     (((dword)((unsigned char)(ptr)[1])) << 8) | \
+     (((dword)((unsigned char)(ptr)[2])) << 16) | \
+     (((dword)((unsigned char)(ptr)[3])) << 24)) \
 
 /*
  *  get_word
@@ -89,11 +86,11 @@ HUSKYEXT void put_dword(byte *ptr, dword value);
  *  independent manner
  */
 
-#define get_word(ptr)         \
-    ((word)((unsigned char)(ptr)[0]) |         \
-     (((word)((unsigned char)(ptr)[1])) << 8 ))
+#define get_word(ptr) \
+    ((word)((unsigned char)(ptr)[0]) | \
+     (((word)((unsigned char)(ptr)[1])) << 8))
 
 #endif /* __LITTLE_ENDIAN__ */
 
 
-#endif
+#endif // ifndef HUSKY_MEMORY_H__

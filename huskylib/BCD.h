@@ -23,7 +23,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* Turbo C/C++ & Borland C/C++ for MS-DOS */
 
 #ifndef HUSKY_BCD_H
@@ -36,27 +35,25 @@
 #ifndef __DOS__
     #error This file may be used only with DOS version of Turbo C or Borland C !
 #endif
-
 /* for BC++ 3.1 */
 #  define strcasecmp stricmp
 #  define strncasecmp strncmpi
 
 #  define _stdc cdecl
 #  define _intr interrupt far
-#  define _intcast void (_intr *)()
+#  define _intcast void(_intr *)()
 #  define _veccast _intcast
 #  define _fast _fastcall
 #  define _loadds
-
 /* #include <conio.h> */
 #  define mysleep(x) delay(x);
 #  define sleep(x) delay(x);
-#  define HAS_sleep     1
+#  define HAS_sleep 1
 
 #ifndef _XPENTRY
-    #define _XPENTRY
+#define _XPENTRY
 #endif
 
 #  define mode_t int
 
-#endif
+#endif // ifndef HUSKY_BCD_H

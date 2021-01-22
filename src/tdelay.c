@@ -34,83 +34,82 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* standard headers */
 #include <stdlib.h>
 #include <time.h>
 
-#if !defined(_MSC_VER)
+#if !defined (_MSC_VER)
     #include <sys/time.h>
 #endif
-
 /* huskylib: compiler.h */
 #include <compiler.h>
-
-
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
     #include <unistd.h>
 #endif
 
-#if defined(__DOS__) || defined(__DPMI__)
+#if defined (__DOS__) || defined (__DPMI__)
     #include <dos.h>
 #endif
-
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-
 /* huskylib headers */
 #include <huskylib.h>
 
 
-#if defined(HAS_sleep)
+#if defined (HAS_sleep)
 void _fast tdelay(int msecs)
 {
     mysleep(msecs);
 }
+
 #else
 # error "'sleep' not defined!"
 #endif
 
 
-#if defined(__WIN32__) || defined(__MINGW32__)
-void husky_SetTimer(hs_time *timer_ctx)
+#if defined (__WIN32__) || defined (__MINGW32__)
+void husky_SetTimer(hs_time * timer_ctx)
 {
     dword now;
-    now = GetTickCount();
-    timer_ctx->sec = now / 1000;
+
+    now             = GetTickCount();
+    timer_ctx->sec  = now / 1000;
     timer_ctx->msec = now % 1000;
 }
 
-dword husky_GetTimer(hs_time *timer_ctx)
+dword husky_GetTimer(hs_time * timer_ctx)
 {
     dword now;
     dword diff;
-    now = GetTickCount();
-    diff = (((now/1000) - timer_ctx->sec) * 1000) + ((now % 1000) - timer_ctx->msec);
+
+    now  = GetTickCount();
+    diff = (((now / 1000) - timer_ctx->sec) * 1000) + ((now % 1000) - timer_ctx->msec);
     return diff;
 }
 
-#elif defined (__UNIX__) || defined(__BEOS__) || defined(__DJGPP__) || defined(__CYGWIN__) || defined(__EMX__)
-void husky_SetTimer(hs_time *timer_ctx)
+#elif defined (__UNIX__) || defined (__BEOS__) || defined (__DJGPP__) || defined (__CYGWIN__) || \
+    defined (__EMX__)
+void husky_SetTimer(hs_time * timer_ctx)
 {
     struct timeval now;
+
     gettimeofday(&now, NULL);
-    timer_ctx->sec = now.tv_sec;
+    timer_ctx->sec  = now.tv_sec;
     timer_ctx->msec = now.tv_usec / 1000;
 }
 
-dword husky_GetTimer(hs_time *timer_ctx)
+dword husky_GetTimer(hs_time * timer_ctx)
 {
     struct timeval now;
     dword diff;
+
     gettimeofday(&now, NULL);
     diff = ((now.tv_sec - timer_ctx->sec) * 1000) + ((now.tv_usec / 1000) - timer_ctx->msec);
     return diff;
 }
 
-#else
+#else  /* if defined (__WIN32__) || defined (__MINGW32__) */
 # error Unknown OS (husky_*Timer)
-#endif
+#endif /* if defined (__WIN32__) || defined (__MINGW32__) */

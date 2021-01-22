@@ -29,20 +29,20 @@
 
 #include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this .h file */
+HUSKYEXT int _fast fexist(const char * filename);
+HUSKYEXT long _fast fsize(const char * filename);
+HUSKYEXT time_t _fast fmtime(const char * filename);
+HUSKYEXT int _fast direxist(const char * directory);
 
-HUSKYEXT int _fast fexist(const char *filename);
-HUSKYEXT long _fast fsize(const char *filename);
-HUSKYEXT time_t _fast fmtime(const char *filename);
-HUSKYEXT int _fast direxist(const char *directory);
 /*DOC
-  Input:  a pointer to a \0 terminated string
-  Output: 0 if successfull, 1 else
-  FZ:     pathName is a correct directory name
+   Input:  a pointer to a \0 terminated string
+   Output: 0 if successfull, 1 else
+   FZ:     pathName is a correct directory name
           createDirectoryTree creates the directory and all parental directories
           if they do not exist.
 
-  was taken from hpt\fcommon
-*/
-HUSKYEXT int  _createDirectoryTree(const char *pathName);
+   was taken from hpt\fcommon
+ */
+HUSKYEXT int _createDirectoryTree(const char * pathName);
 
 #endif

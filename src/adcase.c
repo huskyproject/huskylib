@@ -25,8 +25,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
-
 /* standard headers */
 #include <ctype.h>
 #include <stdio.h>
@@ -36,11 +34,8 @@
 #include <assert.h>
 #include <ctype.h>
 #include <sys/types.h>
-
-
 /* huskylib: compiler.h */
 #include <compiler.h>
-
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
     #include <unistd.h>
@@ -61,27 +56,22 @@
 #ifdef HAS_STRINGS_H
     #include <strings.h>
 #endif
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskylib.h>
-
-
 /***  Declarations & defines  ***********************************************/
-
 /*  ATTENTION: The adaptcase routine builds an internal cache which never
  *  expires. If you ever add files to or remove files to a subdirectory and
  *  later want to have adaptcase map this particular file name properly,
  *  you must call adaptcase_refresh_dir() with the subdirectory path name
  *  as argument!
  */
-void adaptcase_refresh_dir(const char *directory);
+void adaptcase_refresh_dir(const char * directory);
 void adaptcase(char *);
 
 /***  Implementation  *******************************************************/
 
 #ifdef __UNIX__
-
 /* The adaptcase routine behaves as follows: It assumes that pathname
    is a path name which may contain multiple dashes, and it assumes
    that you run on a case sensitive file system but want / must to
@@ -107,8 +97,7 @@ void adaptcase(char *);
  *  you must call adaptcase_refresh_dir() with the subdirectory path name
  *  as argument!
 
-*/
-
+ */
 /* the cache will take  about 30 * 4192 + 30 * 512 * 4 bytes in this
    configuration, i.e. 180K */
 
@@ -118,53 +107,54 @@ void adaptcase(char *);
 
 struct adaptcase_cache_entry
 {
-    char *query;
-    char *result;
-    char *raw_cache;
-    size_t *cache_index;
-    size_t n;
+    char *   query;
+    char *   result;
+    char *   raw_cache;
+    size_t * cache_index;
+    size_t   n;
 };
+
 static int adaptcase_cache_position = -1;
 static struct adaptcase_cache_entry adaptcase_cache[adaptcase_cachesize];
-
-static char *current_cache;
-static int cache_sort_cmp(const void *a, const void *b)
+static char * current_cache;
+static int cache_sort_cmp(const void * a, const void * b)
 {
-    return strcasecmp(current_cache+(*((const size_t *)a)),
-                      current_cache+(*((const size_t *)b)));
+    return strcasecmp(current_cache + (*((const size_t *)a)),
+                      current_cache + (*((const size_t *)b)));
 }
 
-static int cache_find_cmp(const void *a, const void *b)
+static int cache_find_cmp(const void * a, const void * b)
 {
-    return strcasecmp((const char *)a, current_cache+(*((const size_t *)b)));
+    return strcasecmp((const char *)a, current_cache + (*((const size_t *)b)));
 }
 
 /* #define TRACECACHE */
 
 #ifdef __BSD__
-    #define DIRENTLEN(x) ((x)->d_namlen)
+#define DIRENTLEN(x) ((x)->d_namlen)
 #else
-    #define DIRENTLEN(x) (strlen((x)->d_name))
+#define DIRENTLEN(x) (strlen((x)->d_name))
 #endif
 
-void adaptcase_refresh_dir(const char *directory)
+void adaptcase_refresh_dir(const char * directory)
 {
     int k = strlen(directory), l;
 
-    if (k && directory[k-1] == '/')
+    if(k && directory[k - 1] == '/')
     {
         k--;
     }
 
-    if (k != 0)
+    if(k != 0)
     {
         l = adaptcase_cache_position;
+
         do
         {
-            if (adaptcase_cache[l].query != NULL)
+            if(adaptcase_cache[l].query != NULL)
             {
-                if ((!memcmp(adaptcase_cache[l].query,directory,k)) &&
-                        (adaptcase_cache[l].query[k] == '\0'))
+                if((!memcmp(adaptcase_cache[l].query, directory,
+                            k)) && (adaptcase_cache[l].query[k] == '\0'))
                 {
                     nfree(adaptcase_cache[l].query);
                     nfree(adaptcase_cache[l].result);
@@ -174,43 +164,46 @@ void adaptcase_refresh_dir(const char *directory)
 
             l = (l == 0) ? (adaptcase_cachesize - 1) : (l - 1);
         }
-        while (l != adaptcase_cache_position);
+        while(l != adaptcase_cache_position);
     }
-}
+} /* adaptcase_refresh_dir */
 
-void adaptcase(char *pathname)
+void adaptcase(char * pathname)
 {
-    int l, found=1, addresult=0;
-    size_t i, j, k, n, *m, raw_high, rawmax, nmax;
+    int l, found = 1, addresult = 0;
+    size_t i, j, k, n, * m, raw_high, rawmax, nmax;
     char buf[FILENAME_MAX + 1];
-    DIR *dirp = NULL;
-    struct dirent *dp;
+    DIR * dirp = NULL;
+    struct dirent * dp;
     char c;
 
 #ifdef TRACECACHE
-    FILE *ftrc;
+    FILE * ftrc;
 #endif
 
-    if (!*pathname)
+    if(!*pathname)
+    {
         return;
+    }
+
 #ifdef TRACECACHE
-    ftrc = fopen ("trace.log", "a");
+    ftrc = fopen("trace.log", "a");
     fprintf(ftrc, "--Query: %s\n", pathname);
 #endif
 
-    if (adaptcase_cache_position == -1)
+    if(adaptcase_cache_position == -1)
     {
         /* initialise the cache */
-        memset(adaptcase_cache, 0, adaptcase_cachesize *
-               sizeof(struct adaptcase_cache_entry));
+        memset(adaptcase_cache, 0, adaptcase_cachesize * sizeof(struct adaptcase_cache_entry));
         adaptcase_cache_position = 0;
     }
 
     k = strlen(pathname);
 
-    if (k > 2)
+    if(k > 2)
     {
-        for (k = k - 2; k>0 && pathname[k] != '/'; k--) {};
+        for(k = k - 2; k > 0 && pathname[k] != '/'; k--)
+        {}
     }
     else
     {
@@ -219,45 +212,44 @@ void adaptcase(char *pathname)
 
     j = 0;
     i = 0;
-
-
 start_over:
 
-    if (k != 0)
+    if(k != 0)
     {
         l = adaptcase_cache_position;
+
         do
         {
-            if (adaptcase_cache[l].query != NULL)
+            if(adaptcase_cache[l].query != NULL)
             {
-                if ((!memcmp(adaptcase_cache[l].query,pathname,k)) &&
-                        (adaptcase_cache[l].query[k] == '\0'))
+                if((!memcmp(adaptcase_cache[l].query, pathname,
+                            k)) && (adaptcase_cache[l].query[k] == '\0'))
                 {
                     /* cache hit for the directory */
 #ifdef TRACECACHE
-                    fprintf (ftrc, "Cache hit for Dir: %s\n",
-                             adaptcase_cache[l].result);
+                    fprintf(ftrc, "Cache hit for Dir: %s\n", adaptcase_cache[l].result);
 #endif
                     memcpy(buf, adaptcase_cache[l].result, k);
-                    buf[k] = '/';
-                    current_cache=adaptcase_cache[l].raw_cache;
-                    m = bsearch(pathname + k + 1,
-                                adaptcase_cache[l].cache_index,
-                                adaptcase_cache[l].n,
-                                sizeof(size_t),
-                                cache_find_cmp);
-                    if (m == 0)
+                    buf[k]        = '/';
+                    current_cache = adaptcase_cache[l].raw_cache;
+                    m             = bsearch(pathname + k + 1,
+                                            adaptcase_cache[l].cache_index,
+                                            adaptcase_cache[l].n,
+                                            sizeof(size_t),
+                                            cache_find_cmp);
+
+                    if(m == 0)
                     {
 #ifdef TRACECACHE
-                        fprintf (ftrc, "Cache miss for file.\n");
+                        fprintf(ftrc, "Cache miss for file.\n");
 #endif
 
                         /* file does not exist - convert to lower c. */
-                        for (n = k + 1; pathname[n-1]; n++)
+                        for(n = k + 1; pathname[n - 1]; n++)
                         {
                             buf[n] = tolower(pathname[n]);
                         }
-                        memcpy(pathname, buf, n-1);
+                        memcpy(pathname, buf, n - 1);
 #ifdef TRACECACHE
                         fprintf(ftrc, "Return: %s\n", pathname);
                         fclose(ftrc);
@@ -267,18 +259,17 @@ start_over:
                     else
                     {
 #ifdef TRACECACHE
-                        fprintf (ftrc, "Cache hit for file: %s\n",
-                                 adaptcase_cache[l].raw_cache+(*m));
+                        fprintf(ftrc, "Cache hit for file: %s\n",
+                                adaptcase_cache[l].raw_cache + (*m));
 #endif
 
                         /* file does exist = cache hit for the file */
-                        for (n = k + 1; pathname[n-1]; n++)
+                        for(n = k + 1; pathname[n - 1]; n++)
                         {
-                            buf[n] =
-                                adaptcase_cache[l].raw_cache[(*m) + n - k - 1];
+                            buf[n] = adaptcase_cache[l].raw_cache[(*m) + n - k - 1];
                         }
-                        assert(buf[n-1] == '\0');
-                        memcpy(pathname, buf, n-1);
+                        assert(buf[n - 1] == '\0');
+                        memcpy(pathname, buf, n - 1);
 #ifdef TRACECACHE
                         fprintf(ftrc, "Return: %s\n", pathname);
                         fclose(ftrc);
@@ -287,181 +278,186 @@ start_over:
                     }
                 }
             }
+
             l = (l == 0) ? adaptcase_cachesize - 1 : l - 1;
         }
-        while (l != adaptcase_cache_position);
+        while(l != adaptcase_cache_position);
 
 #ifdef TRACECACHE
-        fprintf (ftrc, "Cache miss for directory.\n");
+        fprintf(ftrc, "Cache miss for directory.\n");
 #endif
-
-
         /* no hit for the directory */
         addresult = 1;
     }
 
-
-    while (pathname[i])
+    while(pathname[i])
     {
-        if (pathname[i] == '/')
+        if(pathname[i] == '/')
         {
             buf[i] = pathname[i];
-            if (addresult && i == k)
+
+            if(addresult && i == k)
             {
                 goto add_to_cache;
             }
-cache_failure:
-            i++;
-            buf[i]='\0';
-            dirp = opendir(buf);
+
+        cache_failure: i++;
+            buf[i] = '\0';
+            dirp   = opendir(buf);
 #ifdef TRACECACHE
-            if (dirp == NULL)
+
+            if(dirp == NULL)
             {
-                fprintf (ftrc, "Error opening directory %s\n", buf);
+                fprintf(ftrc, "Error opening directory %s\n", buf);
             }
+
 #endif
         }
         else
         {
-            assert(i==0);
+            assert(i == 0);
             dirp = opendir("./");
 #ifdef TRACECACHE
-            if (dirp == NULL)
+
+            if(dirp == NULL)
             {
-                fprintf (ftrc, "Error opening directory ./\n");
+                fprintf(ftrc, "Error opening directory ./\n");
             }
+
 #endif
         }
 
         j = i;
-        for (; pathname[i] && pathname[i]!='/'; i++)
-            buf[i] = pathname[i];
-        buf[i] = '\0';
-        found = 0;
 
-        if (dirp != NULL)
+        for( ; pathname[i] && pathname[i] != '/'; i++)
         {
-            while ((dp = readdir(dirp)) != NULL)
+            buf[i] = pathname[i];
+        }
+        buf[i] = '\0';
+        found  = 0;
+
+        if(dirp != NULL)
+        {
+            while((dp = readdir(dirp)) != NULL)
             {
-                if (!strcasecmp(dp->d_name, buf + j))
+                if(!strcasecmp(dp->d_name, buf + j))
                 {
                     /* file exists, take over it's name */
-
                     assert((i - j) == DIRENTLEN(dp));
                     memcpy(buf + j, dp->d_name, DIRENTLEN(dp) + 1);
                     closedir(dirp);
-                    dirp = NULL;
+                    dirp  = NULL;
                     found = 1;
                     break;
                 }
             }
         }
-        if (!found)
+
+        if(!found)
         {
             /* file does not exist - so the rest is brand new and
                should be converted to lower case */
-
-            for (i = j; pathname[i]; i++)
+            for(i = j; pathname[i]; i++)
+            {
                 buf[i] = tolower(pathname[i]);
+            }
             buf[i] = '\0';
-            if (dirp != NULL)
+
+            if(dirp != NULL)
             {
                 closedir(dirp);
             }
+
             dirp = NULL;
             break;
         }
     }
     assert(strlen(pathname) == strlen(buf));
-
 add_to_cache:
-    while (addresult)
+
+    while(addresult)
     {
         l = adaptcase_cache_position;
         l = (l == adaptcase_cachesize - 1) ? 0 : l + 1;
-
         nfree(adaptcase_cache[l].query);
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
 
-        if ( (adaptcase_cache[l].query = malloc(k + 1)) == NULL ||
-                (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
-                (adaptcase_cache[l].raw_cache =  malloc(rawmax = rawcache_stepsize)) == NULL ||
-                (adaptcase_cache[l].cache_index = malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) == NULL )
+        if((adaptcase_cache[l].query = malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].raw_cache = malloc(rawmax = rawcache_stepsize)) == NULL ||
+           (adaptcase_cache[l].cache_index =
+                malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) ==
+           NULL)
         {
             goto cache_error;
         }
 
         adaptcase_cache[l].n = 0;
-        raw_high = 0;
-
-        c = buf[k];
+        raw_high             = 0;
+        c      = buf[k];
         buf[k] = '\0';
-        if ((dirp = opendir(buf)) == NULL)
+
+        if((dirp = opendir(buf)) == NULL)
         {
             buf[k] = c;
             goto cache_error;
         }
+
         buf[k] = c;
 
-        while ((dp = readdir(dirp)) != NULL)
+        while((dp = readdir(dirp)) != NULL)
         {
-            if (raw_high + DIRENTLEN(dp) + 1 > rawmax)
+            if(raw_high + DIRENTLEN(dp) + 1 > rawmax)
             {
-                if ((adaptcase_cache[l].raw_cache =
-                            realloc(adaptcase_cache[l].raw_cache,
-                                    rawmax+=rawcache_stepsize)) == NULL)
+                if((adaptcase_cache[l].raw_cache =
+                        realloc(adaptcase_cache[l].raw_cache,
+                                rawmax += rawcache_stepsize)) == NULL)
                 {
                     goto cache_error;
                 }
             }
 
-            if (adaptcase_cache[l].n == nmax - 1)
+            if(adaptcase_cache[l].n == nmax - 1)
             {
-                if ((adaptcase_cache[l].cache_index =
-                            realloc(adaptcase_cache[l].cache_index,
-                                    (nmax+=cacheindex_stepsize) *
-                                    sizeof(size_t))) == NULL)
+                if((adaptcase_cache[l].cache_index =
+                        realloc(adaptcase_cache[l].cache_index,
+                                (nmax += cacheindex_stepsize) * sizeof(size_t))) == NULL)
                 {
                     goto cache_error;
                 }
             }
 
-            memcpy (adaptcase_cache[l].raw_cache + raw_high,
-                    dp->d_name, DIRENTLEN(dp) + 1);
+            memcpy(adaptcase_cache[l].raw_cache + raw_high, dp->d_name, DIRENTLEN(dp) + 1);
             adaptcase_cache[l].cache_index[adaptcase_cache[l].n++] = raw_high;
             raw_high += DIRENTLEN(dp) + 1;
         }
         closedir(dirp);
-        current_cache=adaptcase_cache[l].raw_cache;
-        qsort(adaptcase_cache[l].cache_index, adaptcase_cache[l].n,
-              sizeof(size_t), cache_sort_cmp);
-
+        current_cache = adaptcase_cache[l].raw_cache;
+        qsort(adaptcase_cache[l].cache_index, adaptcase_cache[l].n, sizeof(size_t),
+              cache_sort_cmp);
         memcpy(adaptcase_cache[l].query, pathname, k);
         adaptcase_cache[l].query[k] = '\0';
         memcpy(adaptcase_cache[l].result, buf, k);
         adaptcase_cache[l].result[k] = '\0';
-
-        adaptcase_cache_position = l;
+        adaptcase_cache_position     = l;
 
 #ifdef TRACECACHE
-        fprintf  (ftrc, "Successfully added cache entry.\n");
+        fprintf(ftrc, "Successfully added cache entry.\n");
 #endif
         goto start_over;
-
-cache_error:
-
-        nfree(adaptcase_cache[l].query);
+    cache_error: nfree(adaptcase_cache[l].query);
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
         nfree(adaptcase_cache[l].cache_index);
 
-        if (dirp != NULL)
+        if(dirp != NULL)
         {
             closedir(dirp);
         }
+
 #ifdef TRACECACHE
-        fprintf  (ftrc, "Error in building cache entry.\n");
+        fprintf(ftrc, "Error in building cache entry.\n");
 #endif
         addresult = 0;
         goto cache_failure;
@@ -473,57 +469,57 @@ cache_error:
 #endif
     strcpy(pathname, buf);
     return;
-}
+} /* adaptcase */
 
-
-#else
-
+#else  /* ifdef __UNIX__ */
 /* Not UNIX - Just convert the file to lower case, it will work because
    the FS is case insensitive */
-
-void adaptcase (char *str)
+void adaptcase(char * str)
 {
     unused(str);
 }
 
-void adaptcase_refresh_dir(const char *directory)
+void adaptcase_refresh_dir(const char * directory)
 {
     unused(directory);
 }
-#endif
+
+#endif /* ifdef __UNIX__ */
 
 
 #if defined (TEST)
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
     char cmdbuf[64];
     char fnbuf[128];
 
     do
     {
-        printf ("(L)ookup, (I)nvalidate, (Q)uit? ");
+        printf("(L)ookup, (I)nvalidate, (Q)uit? ");
         fflush(stdout);
         gets(cmdbuf);
-        switch (*cmdbuf)
+
+        switch(*cmdbuf)
         {
-        case 'q':
-        case 'Q':
-            return 0;
-        case 'I':
-        case 'i':
-            gets(fnbuf);
-            adaptcase_refresh_dir(fnbuf);
-            break;
-        case 'L':
-        case 'l':
-            gets(fnbuf);
-            adaptcase(fnbuf);
-            printf ("%s\n", fnbuf);
-            break;
+            case 'q':
+            case 'Q':
+                return 0;
+
+            case 'I':
+            case 'i':
+                gets(fnbuf);
+                adaptcase_refresh_dir(fnbuf);
+                break;
+
+            case 'L':
+            case 'l':
+                gets(fnbuf);
+                adaptcase(fnbuf);
+                printf("%s\n", fnbuf);
+                break;
         }
     }
-    while (1);
-}
-#endif
+    while(1);
+} /* main */
 
-
+#endif /* if defined (TEST) */

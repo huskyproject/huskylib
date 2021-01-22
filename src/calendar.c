@@ -24,8 +24,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
@@ -33,54 +31,18 @@
 
 char weekday[][10] =
 {
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 };
-
 char weekday_ab[][4] =
 {
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat"
+    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
-
 char months[][10] =
 {
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "January", "February", "March", "April", "May", "June", "July", "August", "September",
+    "October", "November", "December"
 };
-
 char months_ab[][4] =
 {
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };

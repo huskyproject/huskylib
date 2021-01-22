@@ -36,32 +36,32 @@
 #ifdef HAS_DOS_H
     #include <dos.h>
 #endif
-#if defined(HAS_UNISTD_H)
+#if defined (HAS_UNISTD_H)
     #include <unistd.h>
 #endif
-#if defined(HAS_DIRENT_H)
+#if defined (HAS_DIRENT_H)
     #include <dirent.h>
 #endif
-#if defined(HAS_DIR_H)
+#if defined (HAS_DIR_H)
     #include <dir.h>
 #endif
 
 
-#if defined(__RSXNT__) || defined(__MINGW32__) || defined(__MSVC__)
-    #define WIN32_LEAN_AND_MEAN
-    #define NOGDI
-    #define NOUSER
-    #define NOMSG
+#if defined (__RSXNT__) || defined (__MINGW32__) || defined (__MSVC__)
+#define WIN32_LEAN_AND_MEAN
+#define NOGDI
+#define NOUSER
+#define NOMSG
 
     #ifdef __RSXNT__
-        /* The RSXNT winsock.h conflicts with EMX
-        io.h. As we do not need sockets anyway, we
-        just prevent their inclusion. */
-        #define _WINSOCK_H
+/* The RSXNT winsock.h conflicts with EMX
+   io.h. As we do not need sockets anyway, we
+   just prevent their inclusion. */
+#define _WINSOCK_H
     #endif
-    #if defined(__MINGW32__)
-        /* For HTick compatibility */
-        #define _WINUSER_H
+    #if defined (__MINGW32__)
+/* For HTick compatibility */
+#define _WINUSER_H
     #endif
     #include <windows.h>
 #endif
@@ -70,70 +70,67 @@
 struct ffind
 {
     /* this is the public area of the struct */
-    char ff_attrib;
+    char           ff_attrib;
     unsigned short ff_ftime;
     unsigned short ff_fdate;
-    long ff_fsize;
-    char ff_name[256];
-
+    long           ff_fsize;
+    char           ff_name[256];
     /* now comes the privat area where search handles or similiar are stored */
 
-#if defined(__TURBOC__) || defined(__DJGPP__)
+#if defined (__TURBOC__) || defined (__DJGPP__)
     struct ffblk ffbuf;
 
-#elif defined(__WATCOMC__) || defined(__MSC__)
+#elif defined (__WATCOMC__) || defined (__MSC__)
     struct find_t ffbuf;
     unsigned long hdir;   /* directory handle from DosFindFirst */
 
-#elif defined(__OS2__) || defined(__EMX__)
-#if defined(__386__) || defined(__FLAT__)
+#elif defined (__OS2__) || defined (__EMX__)
+#if defined (__386__) || defined (__FLAT__)
     unsigned long hdir;   /* directory handle from DosFindFirst */
 #else
     unsigned short hdir;  /* directory handle from DosFindFirst */
 #endif
 
-#elif defined(SASC)
+#elif defined (SASC)
     struct FileInfoBlock info;
-    char newfile[FILENAME_MAX];
-    char prefix[FILENAME_MAX];
+    char                 newfile[FILENAME_MAX];
+    char                 prefix[FILENAME_MAX];
 
-#elif defined(__UNIX__)
-    DIR *dir;
-    char firstbit[FILENAME_MAX];
-    char lastbit[FILENAME_MAX];
+#elif defined (__UNIX__)
+    DIR * dir;
+    char  firstbit[FILENAME_MAX];
+    char  lastbit[FILENAME_MAX];
 
-#elif defined(__RSXNT__) || defined(__MINGW32__) || defined(__MSVC__)
+#elif defined (__RSXNT__) || defined (__MINGW32__) || defined (__MSVC__)
 #ifndef _A_HIDDEN
-#   define _A_HIDDEN       0x02
+    #   define _A_HIDDEN 0x02
 #endif
     WIN32_FIND_DATA InfoBuf;
-    HANDLE hDirA;
-    char attrib_srch;
+    HANDLE          hDirA;
+    char            attrib_srch;
 
-#else
+#else // if defined (__TURBOC__) || defined (__DJGPP__)
 #error Unable to determine compiler and target operating system!
-#endif
+#endif // if defined (__TURBOC__) || defined (__DJGPP__)
 };
 
 typedef struct ffind FFIND;
-
 /*
  * I prefixed the functions below with an additional F in order to
  * prevent name clashes with the Win32 API
  */
-
-HUSKYEXT FFIND *_fast FFindOpen(const char *filespec, unsigned short attribute);
-HUSKYEXT FFIND *_fast FFindInfo(const char *filespec);
+HUSKYEXT FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute);
+HUSKYEXT FFIND * _fast FFindInfo(const char * filespec);
 HUSKYEXT int _fast FFindNext(FFIND * ff);
 HUSKYEXT void _fast FFindClose(FFIND * ff);
 
-#define MSDOS_READONLY  0x01
-#define MSDOS_HIDDEN    0x02
-#define MSDOS_SYSTEM    0x04
-#define MSDOS_VOLUME    0x08
-#define MSDOS_SUBDIR    0x10
-#define MSDOS_ARCHIVE   0x20
-#define MSDOS_RSVD1     0x40
-#define MSDOS_RSVD2     0x80
+#define MSDOS_READONLY 0x01
+#define MSDOS_HIDDEN 0x02
+#define MSDOS_SYSTEM 0x04
+#define MSDOS_VOLUME 0x08
+#define MSDOS_SUBDIR 0x10
+#define MSDOS_ARCHIVE 0x20
+#define MSDOS_RSVD1 0x40
+#define MSDOS_RSVD2 0x80
 
-#endif
+#endif // ifndef HUSKY_FFIND_H__

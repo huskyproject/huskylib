@@ -34,19 +34,22 @@
 
 int main()
 {
-    s_log *hpt_log = NULL;
+    s_log * hpt_log = NULL;
 
-    initLog("./", 1, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+    initLog("./",
+            1,
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
     hpt_log = openLog("tlog.log", "tlog v0.0.7");
-    if (NULL == hpt_log)
+
+    if(NULL == hpt_log)
     {
-        printf( "asdf\n" );
+        printf("asdf\n");
         return 1;
     }
 
     w_log(LL_START, "this goes into the log (level 1)");
     w_log(' ', "and this not");
-
     closeLog();
     return 0;
 }

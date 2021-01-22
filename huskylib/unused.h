@@ -29,21 +29,18 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /***  Declarations & defines  ***********************************************/
 
 #ifndef unused
-    #if defined(_MSC_VER)
-        #define unused(x) ((void)(x))
-    #elif defined(PACIFIC) || defined(__GNUC__)
-        #define unused(x) while(0){if(x){};}
-    #elif defined(__HIGHC__)
-        #define unused(x) ((x) = (x))
+    #if defined (_MSC_VER)
+#define unused(x) ((void)(x))
+    #elif defined (PACIFIC) || defined (__GNUC__)
+#define unused(x) while(0) {if(x) {};}
+    #elif defined (__HIGHC__)
+#define unused(x) ((x) = (x))
     #else
-        #define unused(x) ((void)(x))
+#define unused(x) ((void)(x))
     #endif
 #endif

@@ -27,32 +27,39 @@
 
 #include <string.h>
 #include "compiler.h"
-
 /* export functions from DLL */
 #define DLLEXPORT
 #include "huskylib.h"
-
-
 /* Check version of huskylib library
  * return zero if test failed; non-zero if passed
  * test cvs need for DLL version only, using #include <fidoconf/cvsdate.h>
  */
-int CheckHuskylibVersion( int need_major, int need_minor,
-                          int need_patch, branch_t need_branch, const char *cvs )
+int CheckHuskylibVersion(int need_major,
+                         int need_minor,
+                         int need_patch,
+                         branch_t need_branch,
+                         const char * cvs)
 {
     /* We don't need check pathlevel: see huskybse/develop-docs/ */
-
     static
 #include "../cvsdate.h"   /* char cvs_date[]=datestring; */
 
-    if( need_major==HUSKYLIB_VER_MAJOR && need_minor==HUSKYLIB_VER_MINOR )
+    if(need_major == HUSKYLIB_VER_MAJOR && need_minor == HUSKYLIB_VER_MINOR)
     {
-        if(need_branch==BRANCH_CURRENT)
+        if(need_branch == BRANCH_CURRENT)
         {
-            if(need_patch) fprintf(stderr, "Huskylib: strange, current patch level can't be non-zero\n");
-            return (HUSKYLIB_VER_BRANCH==BRANCH_CURRENT) && !(cvs && strcmp(cvs,cvs_date));
+            if(need_patch)
+            {
+                fprintf(stderr, "Huskylib: strange, current patch level can't be non-zero\n");
+            }
+
+            return (HUSKYLIB_VER_BRANCH == BRANCH_CURRENT) && !(cvs && strcmp(cvs, cvs_date));
         }
-        else return HUSKYLIB_VER_BRANCH!=BRANCH_CURRENT;
+        else
+        {
+            return HUSKYLIB_VER_BRANCH != BRANCH_CURRENT;
+        }
     }
+
     return 0;
 }

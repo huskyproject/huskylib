@@ -23,7 +23,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* Borland C/C++ for OS/2 */
 
 #ifndef HUSKY_BCO_H
@@ -53,10 +52,10 @@
 #  define farwrite write
 
 #ifndef _XPENTRY
-    #define _XPENTRY __syscall
+#define _XPENTRY __syscall
 #endif
 #  define mysleep(x) sleep(x);
-#  define HAS_sleep     1
+#  define HAS_sleep 1
 
 #  include <io.h>
 #  include <dos.h>
@@ -64,4 +63,4 @@
 #  define strcasecmp stricmp
 #  define strncasecmp strncmpi
 
-#endif
+#endif // ifndef HUSKY_BCO_H

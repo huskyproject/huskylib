@@ -23,7 +23,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* SAS C for AmigaDOS defines ************************************/
 #ifndef HUSKY_SASC_H
 #define HUSKY_SASC_H
@@ -54,7 +53,7 @@
 
 #include <fcntlh.>
 #ifndef O_BINARY
-    #define O_BINARY 0 /* O_BINARY flag has no effect under UNIX */
+#define O_BINARY 0     /* O_BINARY flag has no effect under UNIX */
 #endif
 
 #define _XPENTRY
@@ -65,50 +64,39 @@
    do it anyway, you may uncomment this line. Record locking is used
    to obtain a lock on the very first byte of a SQD file which
    indicates that no other program should use the message area now.
-*/
+ */
 /*#define unlock(a,b,c) unused(a)*/
 /*#define lock(a,b,c) 0*/
 
 #define SH_DENYNONE 0
 
 typedef unsigned bit;
-
 /*typedef unsigned char byte;*/
-typedef signed char sbyte;
-
+typedef signed char    sbyte;
 typedef unsigned short word;
-typedef signed short sword;
-
-typedef unsigned long dword;
-typedef signed long sdword;
-
-typedef signed short sshort;
+typedef signed short   sword;
+typedef unsigned long  dword;
+typedef signed long    sdword;
+typedef signed short   sshort;
 /*typedef unsigned short ushort;*/
-
-typedef signed long slong;
-typedef unsigned long ulong;
-
-
-typedef   signed char        hCHAR;              /*  1 byte */
-typedef   signed char       hSCHAR;              /*  1 byte */
-typedef unsigned char       hUCHAR;              /*  1 byte */
-
-typedef   signed char        hINT8;              /*  1 byte */
-typedef   signed char       hSINT8;              /*  1 byte */
-typedef unsigned char       hUINT8;              /*  1 byte */
-
-typedef   signed short      hINT16;              /*  2 bytes */
-typedef   signed short     hSINT16;              /*  2 bytes */
-typedef unsigned short     hUINT16;              /*  2 bytes */
-
-typedef   signed int        hINT32;              /*  4 bytes */
-typedef   signed int       hSINT32;              /*  4 bytes */
-typedef unsigned int       hUINT32;              /*  4 bytes */
-
+typedef signed long    slong;
+typedef unsigned long  ulong;
+typedef   signed char  hCHAR;                    /*  1 byte */
+typedef   signed char  hSCHAR;                   /*  1 byte */
+typedef unsigned char  hUCHAR;                   /*  1 byte */
+typedef   signed char  hINT8;                    /*  1 byte */
+typedef   signed char  hSINT8;                   /*  1 byte */
+typedef unsigned char  hUINT8;                   /*  1 byte */
+typedef   signed short hINT16;                   /*  2 bytes */
+typedef   signed short hSINT16;                  /*  2 bytes */
+typedef unsigned short hUINT16;                  /*  2 bytes */
+typedef   signed int   hINT32;                   /*  4 bytes */
+typedef   signed int   hSINT32;                  /*  4 bytes */
+typedef unsigned int   hUINT32;                  /*  4 bytes */
 /* Not all compilers support this, test please (Stas Degteff) */
-typedef   signed long long  hINT64;              /*  8 bytes */
+typedef   signed long long hINT64;               /*  8 bytes */
 typedef   signed long long hSINT64;              /*  8 bytes */
 typedef unsigned long long hUINT64;              /*  8 bytes */
 #define HAS_INT64
 
-#endif
+#endif // ifndef HUSKY_SASC_H

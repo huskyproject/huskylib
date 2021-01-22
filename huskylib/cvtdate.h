@@ -30,32 +30,27 @@
 #include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this (cvtdate.h) file */
 
-#if defined(__WATCOMC__) || defined(__DJGPP__) || defined(__MSVC__)
-    /*typedef unsigned short bits;*/
+#if defined (__WATCOMC__) || defined (__DJGPP__) || defined (__MSVC__)
+/*typedef unsigned short bits;*/
 #else
-    /*typedef unsigned bits;*/  /* AIX does not allow any modifier after unsigned */
+/*typedef unsigned bits;*/  /* AIX does not allow any modifier after unsigned */
 #endif
 typedef bit bits;
-
 /* DOS-style datestamp */
-
 struct _stamp
 {
     struct
     {
-        bits da:5;
-        bits mo:4;
-        bits yr:7;
-    }
-    date;
-
+        bits da : 5;
+        bits mo : 4;
+        bits yr : 7;
+    } date;
     struct
     {
-        bits ss:5;
-        bits mm:6;
-        bits hh:5;
-    }
-    time;
+        bits ss : 5;
+        bits mm : 6;
+        bits hh : 5;
+    } time;
 };
 
 struct _dos_st
@@ -65,29 +60,25 @@ struct _dos_st
 };
 
 /* Union so we can access stamp as "int" or by individual components */
-
 union stamp_combo
 {
-    dword ldate;
-    struct _stamp msg_st;
+    dword          ldate;
+    struct _stamp  msg_st;
     struct _dos_st dos_st;
 };
 
 typedef union stamp_combo SCOMBO;
+HUSKYEXT int _fast gettz(void);
+HUSKYEXT void _fast ASCII_Date_To_Binary(char * msgdate, union stamp_combo * d_written);
 
-HUSKYEXT int _fast
-gettz(void);
-HUSKYEXT void _fast
-ASCII_Date_To_Binary(char *msgdate, union stamp_combo *d_written);
-HUSKYEXT union stamp_combo *_fast
-    Get_Dos_Date(union stamp_combo *st);
-HUSKYEXT struct tm *_fast
-DosDate_to_TmDate(union stamp_combo *dosdate, struct tm *tmdate);
-HUSKYEXT union stamp_combo *_fast
-    TmDate_to_DosDate(struct tm *tmdate, union stamp_combo *dosdate);
-HUSKYEXT char *_fast
-sc_time(union stamp_combo *sc, char *string);
-HUSKYEXT char *_fast
-fts_time(char *string, struct tm *tmdate);
+HUSKYEXT union stamp_combo * _fast Get_Dos_Date(union stamp_combo * st);
 
-#endif
+HUSKYEXT struct tm * _fast DosDate_to_TmDate(union stamp_combo * dosdate, struct tm * tmdate);
+
+HUSKYEXT union stamp_combo * _fast TmDate_to_DosDate(struct tm * tmdate,
+                                                     union stamp_combo * dosdate);
+
+HUSKYEXT char * _fast sc_time(union stamp_combo * sc, char * string);
+HUSKYEXT char * _fast fts_time(char * string, struct tm * tmdate);
+
+#endif // ifndef HUSKY_CVTDATE_H__

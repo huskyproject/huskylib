@@ -25,10 +25,8 @@
 
 #ifndef HUSKY_PARSEFTN_H__
 #define HUSKY_PARSEFTN_H__
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /* huskylib headers */
 #include "huskyext.h"
 
@@ -42,28 +40,27 @@ typedef struct _netaddr
     sword net;
     sword node;
     sword point;
-    char domain[9];
+    char  domain[9];
 } hs_addr, *ps_addr;
 
-#define FTNADDR_ZONE	0x01
-#define FTNADDR_NET		0x02
-#define FTNADDR_NODE	0x04
-#define FTNADDR_POINT	0x08
-#define FTNADDR_DOMAIN	0x10
-#define FTNADDR_ERROR	0x80
+#define FTNADDR_ZONE 0x01
+#define FTNADDR_NET 0x02
+#define FTNADDR_NODE 0x04
+#define FTNADDR_POINT 0x08
+#define FTNADDR_DOMAIN 0x10
+#define FTNADDR_ERROR 0x80
 
-#define FTNADDR_GOOD	(FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
-#define FTNADDR_2D	(FTNADDR_NODE | FTNADDR_NET)
-#define FTNADDR_4D	(FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
-#define FTNADDR_5D	(FTNADDR_DOMAIN | FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
-
+#define FTNADDR_GOOD (FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
+#define FTNADDR_2D (FTNADDR_NODE | FTNADDR_NET)
+#define FTNADDR_4D (FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
+#define FTNADDR_5D (FTNADDR_DOMAIN | FTNADDR_NODE | FTNADDR_NET | FTNADDR_ZONE)
 /** function converts fidonet address from part of string to HS_NETADDR */
-HUSKYEXT int parseFtnAddr(const char *str, hs_addr *netAddr, int len, int mask, const char **end);
+HUSKYEXT int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask,
+                          const char ** end);
 
 #define parseFtnAddrS(str, netAddr, len) parseFtnAddr((str), (netAddr), (len), FTNADDR_GOOD, NULL)
-
 /** function converts fidonet address from zero-terminated string to HS_NETADDR */
-HUSKYEXT int parseFtnAddrZ(const char *str, hs_addr *netAddr, int mask, const char **end);
+HUSKYEXT int parseFtnAddrZ(const char * str, hs_addr * netAddr, int mask, const char ** end);
 
 #define parseFtnAddrZS(str, netAddr) parseFtnAddrZ((str), (netAddr), FTNADDR_GOOD, NULL)
 
@@ -71,4 +68,4 @@ HUSKYEXT int parseFtnAddrZ(const char *str, hs_addr *netAddr, int mask, const ch
 }
 #endif
 
-#endif
+#endif // ifndef HUSKY_PARSEFTN_H__

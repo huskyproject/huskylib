@@ -42,34 +42,28 @@
 
 #ifndef HUSKY_RECODE_H
 #define HUSKY_RECODE_H
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /* huskylib headers */
 #include "huskyext.h"
-
 /***  Declarations & defines  ***********************************************/
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /* Allocate and initialise charset tables
  */
 HUSKYEXT VOID initCharsets(VOID);
-
 /* Release memory, allocated by initCharsets()
  */
 HUSKYEXT VOID doneCharsets(VOID);
-
 /* Translate using "intab" table
  */
-HUSKYEXT VOID recodeToInternalCharset(char *string);
+HUSKYEXT VOID recodeToInternalCharset(char * string);
 
 /* Translate using "outtab" table
  */
-HUSKYEXT VOID recodeToTransportCharset(char *string);
+HUSKYEXT VOID recodeToTransportCharset(char * string);
 
 /* Read translate tables from file
  * 1st parameter: input table file name (convert to internal charset)
@@ -77,10 +71,10 @@ HUSKYEXT VOID recodeToTransportCharset(char *string);
  * Specify NULL instead file name if don't want set table
  * Return 0 if success.
  */
-HUSKYEXT int getctabs(char *intabFileName, char *outtabFileName );
+HUSKYEXT int getctabs(char * intabFileName, char * outtabFileName);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // ifndef HUSKY_RECODE_H

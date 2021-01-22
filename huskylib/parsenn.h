@@ -25,27 +25,34 @@
 
 #ifndef HUSKY_PARSENN_H__
 #define HUSKY_PARSENN_H__
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /* huskylib headers */
 #include "huskyext.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /***  Declarations & defines  ***********************************************/
 
-#define ZONE_ALL  56685u
-#define NET_ALL   56685u
-#define NODE_ALL  56685u
+#define ZONE_ALL 56685u
+#define NET_ALL 56685u
+#define NODE_ALL 56685u
 #define POINT_ALL 56685u
-
-/*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word * point);*/
-#define Parse_NetNode(netnode, zone, net, node, point) ParseNN(netnode, zone, net, node, point, FALSE)
-HUSKYEXT void _fast ParseNN(char *netnode, word * zone, word * net, word * node, word * point, word all);
+/*HUSKYEXT void _fast Parse_NetNode(char *netnode, word * zone, word * net, word * node, word *
+   point);*/
+#define Parse_NetNode(netnode, zone, net, node, point) ParseNN(netnode, \
+                                                               zone, \
+                                                               net, \
+                                                               node, \
+                                                               point, \
+                                                               FALSE)
+HUSKYEXT void _fast ParseNN(char * netnode,
+                            word * zone,
+                            word * net,
+                            word * node,
+                            word * point,
+                            word all);
 
 #ifdef __cplusplus
 }

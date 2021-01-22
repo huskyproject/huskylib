@@ -39,147 +39,209 @@
  * SUCH DAMAGE.
  *
  */
-
 /* standard headers */
 #include <string.h>
 #include <ctype.h>
-
 /* huskylib: compiler.h */
 #include <compiler.h>
-
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-
 /* huskylib headers */
 #include <huskylib.h>
-
-
 /***  Declarations & defines  ***********************************************/
 
 #define CTLESC '\\'
-
 /***  Implementation  *******************************************************/
-
 /* Returns true if the pattern matches the string.
  */
-int xpatmat(const char *string, const char *pattern, const int ncase)
+int xpatmat(const char * string, const char * pattern, const int ncase)
 {
-    register const char *p, *q;
+    register const char * p, * q;
     register char c;
 
     p = pattern;
     q = string;
-    for (;;)
+
+    for( ; ; )
     {
         c = *p++;
-        switch (c)
-        {
-        case '\0':
-            goto breakloop;
-        case CTLESC:
-            if (*q++ != *p++)
-                return 0;
-            break;
-        case '?':
-            if (*q++ == '\0')
-                return 0;
-            break;
-        case '#':
-            if (*q == '\0')
-                return 0;
-            else if (!isdigit(*q++))
-                return 0;
-            break;
-        case '*':
-            c = *p;
-            if (c != CTLESC && c != '?' && c != '*' && c != '[' && c != '#')
-            {
-                while (*q != c)
-                {
-                    if (ncase && toupper(*q) == toupper(c))
-                        break;
-                    if (*q == '\0')
-                        return 0;
-                    q++;
-                }
-            }
-            do
-            {
-                if (xpatmat(q, p, ncase))
-                    return 1;
-            }
-            while (*q++ != '\0');
-            return 0;
-        case '[':
-        {
-            const char *endp;
-            int invert, found;
-            char chr;
 
-            endp = p;
-            if (*endp == '!')
-                endp++;
-            for (;;)
-            {
-                if (*endp == '\0')
-                    goto dft;	/* no matching ] */
-                if (*endp == CTLESC)
-                    endp++;
-                if (*++endp == ']')
-                    break;
-            }
-            invert = 0;
-            if (*p == '!')
-            {
-                invert++;
-                p++;
-            }
-            found = 0;
-            chr = *q++;
-            c = *p++;
-            do
-            {
-                if (c == CTLESC)
-                    c = *p++;
-                if (*p == '-' && p[1] != ']')
+        switch(c)
+        {
+            case '\0':
+                goto breakloop;
+
+            case CTLESC:
+
+                if(*q++ != *p++)
                 {
-                    p++;
-                    if (*p == CTLESC)
-                        p++;
-                    if (chr >= c && chr <= *p)
-                        found = 1;
-                    p++;
-                }
-                else
-                {
-                    if (chr == c)
-                        found = 1;
-                }
-            }
-            while ((c = *p++) != ']');
-            if (found == invert)
-                return 0;
-            break;
-        }
-dft:
-        default:
-            if (ncase)
-            {
-                if (toupper(*q++) != toupper(c))
                     return 0;
-            }
-            else if (*q++ != c)
+                }
+
+                break;
+
+            case '?':
+
+                if(*q++ == '\0')
+                {
+                    return 0;
+                }
+
+                break;
+
+            case '#':
+
+                if(*q == '\0')
+                {
+                    return 0;
+                }
+                else if(!isdigit(*q++))
+                {
+                    return 0;
+                }
+
+                break;
+
+            case '*':
+                c = *p;
+
+                if(c != CTLESC && c != '?' && c != '*' && c != '[' && c != '#')
+                {
+                    while(*q != c)
+                    {
+                        if(ncase && toupper(*q) == toupper(c))
+                        {
+                            break;
+                        }
+
+                        if(*q == '\0')
+                        {
+                            return 0;
+                        }
+
+                        q++;
+                    }
+                }
+
+                do
+                {
+                    if(xpatmat(q, p, ncase))
+                    {
+                        return 1;
+                    }
+                }
+                while(*q++ != '\0');
                 return 0;
-            break;
-        }
+
+            case '[':
+            {
+                const char * endp;
+                int invert, found;
+                char chr;
+                endp = p;
+
+                if(*endp == '!')
+                {
+                    endp++;
+                }
+
+                for( ; ; )
+                {
+                    if(*endp == '\0')
+                    {
+                        goto dft; /* no matching ] */
+                    }
+
+                    if(*endp == CTLESC)
+                    {
+                        endp++;
+                    }
+
+                    if(*++endp == ']')
+                    {
+                        break;
+                    }
+                }
+                invert = 0;
+
+                if(*p == '!')
+                {
+                    invert++;
+                    p++;
+                }
+
+                found = 0;
+                chr   = *q++;
+                c     = *p++;
+
+                do
+                {
+                    if(c == CTLESC)
+                    {
+                        c = *p++;
+                    }
+
+                    if(*p == '-' && p[1] != ']')
+                    {
+                        p++;
+
+                        if(*p == CTLESC)
+                        {
+                            p++;
+                        }
+
+                        if(chr >= c && chr <= *p)
+                        {
+                            found = 1;
+                        }
+
+                        p++;
+                    }
+                    else
+                    {
+                        if(chr == c)
+                        {
+                            found = 1;
+                        }
+                    }
+                }
+                while((c = *p++) != ']');
+
+                if(found == invert)
+                {
+                    return 0;
+                }
+
+                break;
+            }
+
+            dft:    default:
+
+                if(ncase)
+                {
+                    if(toupper(*q++) != toupper(c))
+                    {
+                        return 0;
+                    }
+                }
+                else if(*q++ != c)
+                {
+                    return 0;
+                }
+
+                break;
+        } /* switch */
     }
 breakloop:
-    if (*q != '\0')
+
+    if(*q != '\0')
+    {
         return 0;
+    }
+
     return 1;
-}
+} /* xpatmat */
 
 #ifdef TEST
 

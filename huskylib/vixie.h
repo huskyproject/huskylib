@@ -55,26 +55,29 @@ ENTER/EXIT/EXITV macros.  If not defined, causes ENTER to do nothing,
 #define MAXPROC 256
 
 #ifdef DVIXIE
-#define ENTER(proc) { \
+#define ENTER(proc) \
+                    { \
                         APC_PROCS[I_PROC] = proc; \
                         printf("ENTER(%d:%s.%s)\n", \
                                 I_PROC, DVIXIE, APC_PROCS[I_PROC]); \
                         I_PROC++; \
-                }
-#define EXIT(value) { \
+                    }
+#define EXIT(value) \
+                    { \
                         I_PROC--; \
                         printf("EXIT(%d:%s.%s)\n", \
                                 I_PROC, DVIXIE, \
                                 APC_PROCS[I_PROC]); \
                         return value; \
-                }
-#define EXITV { \
+                    }
+#define EXITV \
+                    { \
                         I_PROC--; \
                         printf("EXITV(%d:%s.%s)\n", \
                                 I_PROC, DVIXIE, \
                                 APC_PROCS[I_PROC]); \
                         return; \
-                }
+                    }
 #else
 #define ENTER(proc)
 #define EXIT(value)     {return value;}

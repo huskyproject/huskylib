@@ -31,26 +31,19 @@
 
 #ifndef HUSKY_TEMP_H__
 #define HUSKY_TEMP_H__
-
 /* standard headers */
 #include <stdio.h>
-
 /* huskylib: compiler.h */
 #include "compiler.h"
-
 /* huskylib headers */
 #include "huskyext.h"
-
 /***  Declarations & defines  ***********************************************/
-
 /* Default temporary files suffix (==extension in DOS-like OS)
  * (re)define it in your program source if want other.
  */
 #ifndef TEMPFILESUFFIX
-    #define TEMPFILESUFFIX "tmp"
+#define TEMPFILESUFFIX "tmp"
 #endif
-
-
 /* Create new file with random name & specified suffix in specified directory.
  * path = temporary directory
  * ext = file name suffix
@@ -59,8 +52,7 @@
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-HUSKYEXT FILE *createTempFileIn(const char *path, const char *ext, char mode, char **name);
-
+HUSKYEXT FILE * createTempFileIn(const char * path, const char * ext, char mode, char ** name);
 
 /* Create new file with random name & default suffix (tmp) in text mode.
  * pconfig = fidoconfig structure pointer
@@ -68,8 +60,7 @@ HUSKYEXT FILE *createTempFileIn(const char *path, const char *ext, char mode, ch
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-HUSKYEXT FILE *createTempTextFile(char *tempDir, char **name);
-
+HUSKYEXT FILE * createTempTextFile(char * tempDir, char ** name);
 
 /* Create new file with random name & default suffix (tmp) in binary mode.
  * pconfig = fidoconfig structure pointer
@@ -77,14 +68,14 @@ HUSKYEXT FILE *createTempTextFile(char *tempDir, char **name);
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
+HUSKYEXT FILE * createTempBinFile(char * tempDir, char ** name);
 
-HUSKYEXT FILE *createTempBinFile(char *tempDir, char **name);
 /* Create new file with random name & default suffix (binary mode).
  * pconfig = fidoconfig structure pointer
  * Place to 'name' variable name of created file (from malloc() memory pool),
  * if name is not NULL its free().
  * Return file descriptor or NULL
  */
-#define createTempFile(pconfig,name) (createTempBinFile(pconfig,name))
+#define createTempFile(pconfig, name) (createTempBinFile(pconfig, name))
 
 #endif

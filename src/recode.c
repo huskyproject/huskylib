@@ -39,42 +39,35 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* standard headers */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-
 /* huskylib: compiler.h */
 #include <compiler.h>
-
-
 /* compiler-dependent headers */
-
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-
 /* huskylib headers */
 #include <huskylib.h>
-
-
 /***  Declarations & defines  ***********************************************/
-
-static char *intab  = NULL;
-static char *outtab = NULL;
-
-static int getctab(char *dest, char *charMapFileName );
+static char * intab  = NULL;
+static char * outtab = NULL;
+static int getctab(char * dest, char * charMapFileName);
 
 /***  Implementation  *******************************************************/
-
 void initCharsets(void)
 {
     int i;
-    intab	= (char *) smalloc(sizeof(char) * 256);
-    outtab	= (char *) smalloc(sizeof(char) * 256);
-    for (i = 0; i < 256; i++) intab[i] = outtab[i] = (char) i;
+
+    intab  = (char *)smalloc(sizeof(char) * 256);
+    outtab = (char *)smalloc(sizeof(char) * 256);
+
+    for(i = 0; i < 256; i++)
+    {
+        intab[i] = outtab[i] = (char)i;
+    }
 }
 
 void doneCharsets(void)
@@ -83,38 +76,42 @@ void doneCharsets(void)
     nfree(outtab);
 }
 
-void recodeToInternalCharset(char *string)
+void recodeToInternalCharset(char * string)
 {
     int c;
 
-    if( !intab || !outtab ) initCharsets();
-
-    if (string != NULL)
+    if(!intab || !outtab)
     {
-        for( ; *string != '\000'; string++ )
+        initCharsets();
+    }
+
+    if(string != NULL)
+    {
+        for( ; *string != '\000'; string++)
         {
-            c=((int)*string)&0xFF;
+            c       = ((int)*string) & 0xFF;
             *string = intab[c];
         }
     }
-
 }
 
-void recodeToTransportCharset(char *string)
+void recodeToTransportCharset(char * string)
 {
     int c;
 
-    if( !intab || !outtab ) initCharsets();
-
-    if (string != NULL)
+    if(!intab || !outtab)
     {
-        for( ; *string != '\000'; string++ )
+        initCharsets();
+    }
+
+    if(string != NULL)
+    {
+        for( ; *string != '\000'; string++)
         {
-            c=((int)*string)&0xFF;
+            c       = ((int)*string) & 0xFF;
             *string = outtab[c];
         }
     }
-
 }
 
 /* Read translate tables from file
@@ -123,56 +120,77 @@ void recodeToTransportCharset(char *string)
  * Specify NULL instead file name if don't want set table
  * Return 0 if success.
  */
-int getctabs(char *intabFileName, char *outtabFileName )
+int getctabs(char * intabFileName, char * outtabFileName)
 {
-    int rc=0;
-    if(intabFileName) rc += getctab(intab,intabFileName);
-    if(outtabFileName) rc += getctab(outtab,outtabFileName);
+    int rc = 0;
+
+    if(intabFileName)
+    {
+        rc += getctab(intab, intabFileName);
+    }
+
+    if(outtabFileName)
+    {
+        rc += getctab(outtab, outtabFileName);
+    }
+
     return rc;
 }
 
 /* Read specified translate table from file
  */
-static int getctab(char *dest, char *charMapFileName )
+static int getctab(char * dest, char * charMapFileName)
 {
-    FILE *fp;
-    char buf[512],*p,*q;
-    int in,on,count;
-    int line, rc=0;
+    FILE * fp;
+    char buf[512], * p, * q;
+    int in, on, count;
+    int line, rc = 0;
 
-    if( !intab || !outtab ) initCharsets();
-
-    fp=fopen((char *)charMapFileName,"r");
-    if (fp == NULL)
+    if(!intab || !outtab)
     {
-        fprintf(stderr,"getctab: cannot open mapchan file \"%s\"\n", charMapFileName);
+        initCharsets();
+    }
+
+    fp = fopen((char *)charMapFileName, "r");
+
+    if(fp == NULL)
+    {
+        fprintf(stderr, "getctab: cannot open mapchan file \"%s\"\n", charMapFileName);
         return 1;
     }
 
-    count=0;
-    line = 0;
-    while (fgets((char*)buf,sizeof(buf),fp))
+    count = 0;
+    line  = 0;
+
+    while(fgets((char *)buf, sizeof(buf), fp))
     {
         line++;
-        p=(char *)strtok((char*)buf," \t\n#");
-        q=(char *)strtok(NULL," \t\n#");
+        p = (char *)strtok((char *)buf, " \t\n#");
+        q = (char *)strtok(NULL, " \t\n#");
 
-        if (p && q)
+        if(p && q)
         {
             in = ctoi((char *)p);
-            if (in > 255)
+
+            if(in > 255)
             {
                 fprintf(stderr, "getctab: %s: line %d: char val too big\n", charMapFileName, line);
                 rc = 1;
                 break;
             }
-            on=ctoi((char *)q);
-            if (in && on)
+
+            on = ctoi((char *)q);
+
+            if(in && on)
             {
-                if( count++ < 256 ) dest[in]=(char)on;
+                if(count++ < 256)
+                {
+                    dest[in] = (char)on;
+                }
                 else
                 {
-                    fprintf(stderr,"getctab: char map table \"%s\" is too big\n",charMapFileName);
+                    fprintf(stderr, "getctab: char map table \"%s\" is too big\n",
+                            charMapFileName);
                     rc = 1;
                     break;
                 }
@@ -180,7 +198,6 @@ static int getctab(char *dest, char *charMapFileName )
         }
     }
     fclose(fp);
-
-    w_log('2',"read recoding table from %s", charMapFileName);
+    w_log('2', "read recoding table from %s", charMapFileName);
     return rc;
-}
+} /* getctab */

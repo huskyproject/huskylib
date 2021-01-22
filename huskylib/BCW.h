@@ -23,7 +23,6 @@
  *
  * See also http://www.gnu.org, license may be found here.
  */
-
 /* Borland C/C++ for Win32 */
 
 #ifndef HUSKY_BCW_H
@@ -56,4 +55,4 @@
 #  define strcasecmp stricmp
 #  define strncasecmp strncmpi
 
-#endif
+#endif // ifndef HUSKY_BCW_H
