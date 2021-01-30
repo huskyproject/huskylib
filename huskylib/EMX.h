@@ -53,11 +53,11 @@
 #  define cdecl
 #  define pascal
 #if defined (__32BIT__)
-#define near
+    #define near
     #undef  far
-#define far
-#define farread(a, b, c) read(a, b, c)
-#define farwrite(a, b, c) write(a, b, c)
+    #define far
+    #define farread(a, b, c) read(a, b, c)
+    #define farwrite(a, b, c) write(a, b, c)
 #endif
 
 #  define mymkdir(a) mkdir((a), 0)
