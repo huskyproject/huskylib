@@ -66,7 +66,7 @@ int ctoi(const char * s)
 
 char * _fast Strip_Trailing(char * str, char strip)
 {
-    int x;
+    size_t x;
 
     if(str && *str && str[x = strlen(str) - 1] == strip)
     {
@@ -80,7 +80,7 @@ char * _fast Add_Trailing(char * str, char add)
 {
     int x;
 
-    if(str && *str && str[x = strlen(str) - 1] != add)
+    if(str && *str && str[x = (int)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';
@@ -105,8 +105,9 @@ char * _fast strocpy(char * dst, const char * src)
 
 char * _fast firstchar(const char * strng, const char * delim, int findword)
 {
-    int isw = 0, sl_s, wordno = 0;
-    register int sl_d, x;
+    int isw = 0, wordno = 0;
+    size_t sl_s;
+    register size_t sl_d, x;
     register const char * string = strng;
     const char * oldstring = strng;
 
@@ -136,7 +137,7 @@ char * _fast firstchar(const char * strng, const char * delim, int findword)
     }
     sl_s = strlen(string);
 
-    for(wordno = 0; string - oldstring < sl_s; string++)
+    for(wordno = 0; string - oldstring < (int)sl_s; string++)
     {
         for(x = 0, isw = 0; x <= sl_d; x++)
         {
@@ -246,7 +247,7 @@ char * stripLeadingChars(char * str, const char * chr)
 {
     if(str && chr && *chr)
     {
-        int i = strspn(str, chr);
+        size_t i = strspn(str, chr);
         memmove(str, str + i, strlen(str) - i + 1);
     }
 
@@ -263,7 +264,7 @@ char * stripLeadingChars(char * str, const char * chr)
 char * stripTrailingChars(char * str, const char * chr)
 {
     char * i;
-    register int l;
+    register size_t l;
 
     if(str && chr && (l = strlen(str)) > 0)
     {
@@ -506,7 +507,7 @@ char * strseparate(char ** stringp, const char * delim)
 
 char * extract_CVS_keyword(char * str)
 {
-    int l;
+    size_t l;
     char * tmp, * r;
 
     if(!str)
@@ -568,11 +569,11 @@ int copyStringUntilSep(char * str, char * seps, char ** dest)
     {
         *dest = malloc(sepPos - str + 1);
         strnzcpy(*dest, str, sepPos - str);
-        return sepPos - str;
+        return (int)(sepPos - str);
     }
 
     *dest = (char *)sstrdup(str);
-    return strlen(str);
+    return (int)strlen(str);
 }
 
 /* Parse strings like "token1, token2,token3 token4" into s_str_array */
@@ -592,7 +593,7 @@ s_str_array * makeStrArray(char * token)
 
     while(tokens[ii])
     {
-        len += strlen(tokens[ii]) + 1;
+        len += (int)strlen(tokens[ii]) + 1;
 
         if(ii >= size)
         {
@@ -611,17 +612,17 @@ s_str_array * makeStrArray(char * token)
     }
 
     /* alloc structure, exact size */
-    offset    = offsetof(s_str_array, data.offsets[ii]);
+    offset    = (int)offsetof(s_str_array, data.offsets[ii]);
     ss        = smalloc(offset + len);
     ss->count = ii;
-    offset   -= offsetof(s_str_array, data);
+    offset   -= (int)offsetof(s_str_array, data);
 
     /* fill structuare with offsets and strings' content */
     for(ii = 0; ii < ss->count; ++ii)
     {
         ss->data.offsets[ii] = offset;
-        token_len            = strlen(tokens[ii]);
-        memcpy(STR_N(ss, ii), tokens[ii], token_len + 1);
+        token_len            = (int)strlen(tokens[ii]);
+        memcpy(STR_N(ss, ii), tokens[ii], (size_t)token_len + 1);
         offset += token_len + 1;
     }
     nfree(tokens);
@@ -650,7 +651,7 @@ int findInStrArray(s_str_array const * ss, char const * find)
 
 s_str_array * copyStrArray(s_str_array * ss)
 {
-    int size;
+    size_t size;
     s_str_array * nss;
 
     assert(ss != NULL);
@@ -663,7 +664,7 @@ s_str_array * copyStrArray(s_str_array * ss)
 char * StrArray2String(s_str_array * ss)
 {
     int ii;
-    int size;
+    size_t size;
     char * string;
 
     assert(ss != NULL);

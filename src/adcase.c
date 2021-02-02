@@ -171,7 +171,7 @@ void adaptcase_refresh_dir(const char * directory)
 void adaptcase(char * pathname)
 {
     int l, found = 1, addresult = 0;
-    size_t i, j, k, n, * m, raw_high, rawmax, nmax;
+    int i, j, k, n, * m, raw_high, rawmax, nmax;
     char buf[FILENAME_MAX + 1];
     DIR * dirp = NULL;
     struct dirent * dp;

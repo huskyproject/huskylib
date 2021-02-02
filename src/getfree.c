@@ -96,7 +96,7 @@ unsigned long husky_GetDiskFreeSpace(const char * path)
     if(pGetDiskFreeSpaceEx)
     {
         ULARGE_INTEGER i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
-        rc = pGetDiskFreeSpaceEx(path,
+        rc = (BOOL)pGetDiskFreeSpaceEx(path,
                                  (PULARGE_INTEGER)&i64FreeBytesToCaller,
                                  (PULARGE_INTEGER)&i64TotalBytes,
                                  (PULARGE_INTEGER)&i64FreeBytes);

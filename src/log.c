@@ -85,6 +85,9 @@ void initLogSyslog(char * ext_program,
                 syslogFacility);
     }
 
+#else
+    unused(ext_syslogFacility);
+    unused(ext_program);
 #endif
 
     if(ext_logFileDir)
@@ -192,7 +195,7 @@ s_log * openLog(char * fileName, char * appN)
     if(logDateFormat)
     {
         char logDate[64];
-        int i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
+        int i, logDateLen = (int)strftime(logDate, 63, logDateFormat, locTime);
 
         for(i = 0; i < logDateLen; i++)
         {
@@ -290,7 +293,7 @@ void w_log(char key, char * logString, ...)
     if(log || screen)
     {
         char logDate[64];
-        int logDateLen;
+        size_t logDateLen;
         currentTime = time(NULL);
 #if 1
         locTime    = localtime(&currentTime);
@@ -452,7 +455,7 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo)
           ErrorMsg,
           ExceptionInfo->ExceptionRecord->ExceptionAddress);
     exit(1);
-    return 0; /* compiler paranoia */
+ /*   return 0;  compiler paranoia */
 } /* UExceptionFilter */
 
 #endif /* ifdef __NT__ */

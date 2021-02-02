@@ -209,6 +209,7 @@ void _fast ASCII_Date_To_Binary(char * msgdate, union stamp_combo * d_written)
     time_t timeval;
     struct tm * tim;
 
+    mo = 1; /* initialization; don't know if it has any sense */
     timeval = time(NULL);
     tim     = localtime(&timeval);
 

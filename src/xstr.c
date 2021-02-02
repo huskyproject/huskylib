@@ -57,7 +57,7 @@
 /***  Implementation  *******************************************************/
 char * xstralloc(char ** s, size_t add)
 {
-    int n;
+    size_t n;
 
     if(*s == NULL)
     {
@@ -99,7 +99,7 @@ char * xstrscat(char ** s, ...)
 {
     va_list ap;
     char * q, * p;
-    int ncat;
+    size_t ncat;
 
     for(va_start(ap, s), ncat = 0; (p = va_arg(ap, char *)) != NULLP; )
     {

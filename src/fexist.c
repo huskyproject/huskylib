@@ -124,6 +124,10 @@ int _fast direxist(const char * directory)
     }
 
     l = strlen(tempstr);
+    if (l == 0)
+    {
+        return FALSE;
+    }
 
     if(tempstr[l - 1] == '\\' || tempstr[l - 1] == '/')
     {
@@ -233,9 +237,14 @@ int _fast direxist(const char * directory)
 {
     FFIND * ff;
     char * tempstr;
-    int ret;
+    int l, ret;
 
-    tempstr = (char *)malloc(strlen(directory) + 5);
+    l = strlen(directory);
+    if (l == 0)
+    {
+        return FALSE;
+    }
+    tempstr = (char *)malloc(l + 5);
 
     if(tempstr == NULL)
     {
@@ -389,9 +398,9 @@ int _createDirectoryTree(const char * pathName)
 {
     char * start, * slash;
     char limiter = PATH_DELIM;
-    int i;
+    size_t i;
 
-    if(!pathName)
+    if(!pathName || *pathName == 0)
     {
         return 1;
     }

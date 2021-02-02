@@ -82,7 +82,7 @@ int fputUINT16(FILE * out, word data)
 #endif
 
 
-signed int fgetsUntil0(unsigned char * str, size_t n, FILE * f, char * filter)
+size_t fgetsUntil0(unsigned char * str, size_t n, FILE * f, char * filter)
 {
     size_t i;
 
@@ -196,7 +196,7 @@ char * shell_expand(char * str)
  * rename file first (which will have effect immediately), remove afterwards. */
 void fix_pending_delete(const char * to)
 {
-    int size;
+    size_t size;
     char * oldfile;
 
     size    = strlen(to);
@@ -598,7 +598,7 @@ int cmdcall(const char * cmd)
         cmdexit = spawnvp(P_WAIT, list[0], (const char * const *)list);
 #else
 #pragma message("spawnvp")
-        cmdexit = spawnvp(P_WAIT, list[0], list);
+        cmdexit = (int)spawnvp(P_WAIT, list[0], list);
 #endif
         nfree(list[0]);
         nfree(list);
@@ -783,7 +783,7 @@ char * GetDirnameFromPathname(const char * pathname)
     if(sp)
     {
         sp++;
-        lll = sp - pathname;
+        lll = (int)(sp - pathname);
         rp  = scalloc(lll + 1, sizeof(char));
         sstrncpy(rp, pathname, lll);
     }

@@ -250,7 +250,7 @@ int main(int argc, char * argv[])
 
         s = argv[i];
 
-        for(j = strlen(argv[i]); j > 0; j--, s++)
+        for(j = (int)strlen(argv[i]); j > 0; j--, s++)
         {
             if(!isdigit((int)(*s)))
             {
