@@ -536,7 +536,7 @@ char * extract_CVS_keyword(char * str)
         return NULL;
     }
 
-    strncpy(r, tmp, l - 2);
+    strncpy(r, tmp, strlen(r) - 1); /* strlen(r) - 1 == l - 2 */
     r[l - 2] = 0;
     return r;
 } /* extract_CVS_keyword */
