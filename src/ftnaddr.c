@@ -136,19 +136,20 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
 
 int parseFtnAddrZ(const char * str, hs_addr * netAddr, int mask, const char ** end)
 {
-    /*                  0    1    2    3    4     5    6     7     8     9  */
     const char s[] =
     {
-        '\0', ':', '/', '.', '@', '\0', ' ', '\t', '\r', '\n'
+        /*    0    1    2    3    4     5    6     7     8     9  */
+            '\0', ':', '/', '.', '@', '\0', ' ', '\t', '\r', '\n'
     };
     const char * ptr, * tmp;
     int result         = 0;
     size_t sym         = 0;
     long i             = 0;
-    hs_addr netAddrOld = *netAddr;
+    hs_addr netAddrOld;
 
     assert(str);
     assert(netAddr);
+    netAddrOld = *netAddr;
     tmp = str;
 
     /* skip leading spaces and tabs
