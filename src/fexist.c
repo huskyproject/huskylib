@@ -126,6 +126,7 @@ int _fast direxist(const char * directory)
     l = strlen(tempstr);
     if (l == 0)
     {
+        free(tempstr);
         return FALSE;
     }
 
