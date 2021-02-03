@@ -167,7 +167,7 @@ char * _fast sc_time(union stamp_combo * sc, char * string)
 #else
             print02d(&string, sc->msg_st.date.da);
             *string++ = ' ';
-            strcpy(string, months_ab[(unsigned)sc->msg_st.date.mo - 1]);
+            strcpy(string, months_ab[(size_t)sc->msg_st.date.mo - 1]);
             string   += strlen(string);
             *string++ = ' ';
             print02d(&string, (sc->msg_st.date.yr + 80) % 100);
