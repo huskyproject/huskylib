@@ -139,7 +139,7 @@ unsigned long husky_GetDiskFreeSpace(const char * path)
         else if(path[0] == '\\' && path[1] == '\\')
         {
             /*  UNC path */
-            int i;
+            size_t i;
             RPN[0] = '\\';
             RPN[1] = '\\';
             i      = 2;
