@@ -74,7 +74,7 @@ struct ffind
     unsigned short ff_ftime;
     unsigned short ff_fdate;
     long           ff_fsize;
-    char           ff_name[256];
+    char           ff_name[MAX_PATH];
     /* now comes the privat area where search handles or similiar are stored */
 
 #if defined (__TURBOC__) || defined (__DJGPP__)
