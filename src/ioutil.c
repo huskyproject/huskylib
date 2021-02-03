@@ -778,14 +778,18 @@ char * GetDirnameFromPathname(const char * pathname)
     char * sp = NULL, * rp = NULL;
     register int lll;
 
+    if (pathname == NULL)
+    {
+        return rp;
+    }
     sp = strrchr(pathname, PATH_DELIM);
 
     if(sp)
     {
         sp++;
         lll = (int)(sp - pathname);
-        rp  = scalloc(lll + 1, sizeof(char));
-        sstrncpy(rp, pathname, lll);
+        rp  = (char *)scalloc((size_t)lll + (size_t)sizeof(char), (size_t)sizeof(char));
+        sstrncpy(rp, pathname, (size_t)lll);
     }
     else
 
