@@ -109,7 +109,7 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
 
     assert(str);
     assert(netAddr);
-    allocated = (char *)malloc(len + 1);
+    allocated = (char *)malloc((size_t)len + 1);
 
     if(!allocated)
     {
@@ -121,8 +121,8 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
         return FTNADDR_ERROR;
     }
 
-    memcpy(allocated, str, len);
-    allocated[len] = '\0';
+    memcpy(allocated, str, (size_t)len);
+    allocated[(size_t)len] = '\0';
     result         = parseFtnAddrZ(allocated, netAddr, mask, &end_loc);
 
     if(end != NULL)
@@ -199,7 +199,6 @@ int parseFtnAddrZ(const char * str, hs_addr * netAddr, int mask, const char ** e
     {
         /* skip key symbol */
         ptr = ++tmp;
-        i   = 0;
         i   = read_ftn_long(tmp, &tmp);
 
         if(i == LONG_MAX || ptr == tmp)
