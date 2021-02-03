@@ -225,10 +225,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
         }
         while(FFindNext(ff) == 0);
 
-        if(ff)
-        {
-            FFindClose(ff);
-        }
+        FFindClose(ff);
 
     emptydir:
 
