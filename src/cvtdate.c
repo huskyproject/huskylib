@@ -251,16 +251,16 @@ void _fast ASCII_Date_To_Binary(char * msgdate, union stamp_combo * d_written)
         return;
     }
 
-    if(sscanf(msgdate, "%d %s %d %d:%d:%d", &dd, temp, &yy, &hh, &mm, &ss) == 6)
+    if(sscanf(msgdate, "%d %3s %d %d:%d:%d", &dd, temp, &yy, &hh, &mm, &ss) == 6)
     {
         x = 1;
     }
-    else if(sscanf(msgdate, "%d %s %d %d:%d", &dd, temp, &yy, &hh, &mm) == 5)
+    else if(sscanf(msgdate, "%d %3s %d %d:%d", &dd, temp, &yy, &hh, &mm) == 5)
     {
         ss = 0;
         x  = 1;
     }
-    else if(sscanf(msgdate, "%*s %d %s %d %d:%d", &dd, temp, &yy, &hh, &mm) == 5)
+    else if(sscanf(msgdate, "%*s %d %3s %d %d:%d", &dd, temp, &yy, &hh, &mm) == 5)
     {
         x = 2;
     }
