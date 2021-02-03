@@ -137,7 +137,7 @@ char * _fast firstchar(const char * strng, const char * delim, int findword)
     }
     sl_s = strlen(string);
 
-    for(wordno = 0; string - oldstring < (int)sl_s; string++)
+    for(wordno = 0; string - oldstring < sl_s; string++)
     {
         for(x = 0, isw = 0; x <= sl_d; x++)
         {
