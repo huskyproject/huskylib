@@ -354,7 +354,7 @@ int copy_file(const char * from, const char * to, const int force_rewrite)
 
 #endif
 
-    buffer = malloc(MOVE_FILE_BUFFER_SIZE);
+    buffer = (char *)malloc(MOVE_FILE_BUFFER_SIZE);
 
     if(buffer == NULL)
     {

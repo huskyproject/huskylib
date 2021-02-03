@@ -383,11 +383,11 @@ add_to_cache:
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
 
-        if((adaptcase_cache[l].query = malloc(k + 1)) == NULL ||
-           (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
-           (adaptcase_cache[l].raw_cache = malloc(rawmax = rawcache_stepsize)) == NULL ||
+        if((adaptcase_cache[l].query = (char *)malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].result = (char *)malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].raw_cache = (char *)malloc(rawmax = rawcache_stepsize)) == NULL ||
            (adaptcase_cache[l].cache_index =
-                malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) ==
+                (size_t)malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) ==
            NULL)
         {
             goto cache_error;

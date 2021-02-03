@@ -529,7 +529,7 @@ char * extract_CVS_keyword(char * str)
         return NULL;
     }
 
-    r = malloc(l - 1);
+    r = (char *)malloc(l - 1);
 
     if(!r)
     {
@@ -567,7 +567,7 @@ int copyStringUntilSep(char * str, char * seps, char ** dest)
 
     if(sepPos)
     {
-        *dest = malloc(sepPos - str + 1);
+        *dest = (char *)malloc(sepPos - str + 1);
         strnzcpy(*dest, str, sepPos - str);
         return (int)(sepPos - str);
     }
