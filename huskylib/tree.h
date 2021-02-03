@@ -41,8 +41,8 @@
 typedef struct  tree_s
 {
     struct  tree_s * tree_l, * tree_r;
-    short            tree_b;
     char *           tree_p;
+    short            tree_b;
     char             need_b;
 } tree;
 HUSKYEXT void tree_init(tree ** ppr_tree, char need_balance);
