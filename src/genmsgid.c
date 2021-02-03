@@ -94,7 +94,13 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
         }
     }
 
-    seqpath = malloc(strlen(seqdir) + 13);
+    seqpath = (char *)malloc(strlen(seqdir) + 13);
+    if(seqpath == NULL)
+    {
+        GenMsgIdErr("No memory");
+        return (*altGenMsgId)();
+    }
+
     strcpy(seqpath, seqdir);
     pname = seqpath + strlen(seqpath);
 
@@ -233,7 +239,12 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
 
         if(new_fname == NULL)
         {
-            new_fname = malloc(strlen(seqpath) + 13);
+            new_fname = (char *)malloc(strlen(seqpath) + 13);
+            if(new_fname == NULL)
+            {
+                GenMsgIdErr("No memory");
+                return (*altGenMsgId)();
+            }
         }
 
         *pname = '\0';
