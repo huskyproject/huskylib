@@ -32,7 +32,7 @@
 #include "huskylib.h"
 /* Check version of huskylib library
  * return zero if test failed; non-zero if passed
- * test cvs need for DLL version only, using #include <fidoconf/cvsdate.h>
+ * test cvs is needed for DLL version only, using #include <fidoconf/cvsdate.h>
  */
 int CheckHuskylibVersion(int need_major,
                          int need_minor,
@@ -40,7 +40,7 @@ int CheckHuskylibVersion(int need_major,
                          branch_t need_branch,
                          const char * cvs)
 {
-    /* We don't need check pathlevel: see huskybse/develop-docs/ */
+    /* We don't need to check pathlevel: see huskybse/develop-docs/ */
     static
 #include "../cvsdate.h"   /* char cvs_date[]=datestring; */
 
