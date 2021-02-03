@@ -139,7 +139,7 @@ void _fast ParseNN(char * netnode, word * zone, word * net, word * node, word * 
             *node = NODE_ALL;
 
             /* 1:249/All implies 1:249/All.All too... */
-            if(point && all)
+            if(point)
             {
                 *point = POINT_ALL;
             }
@@ -165,12 +165,14 @@ void _fast ParseNN(char * netnode, word * zone, word * net, word * node, word * 
 
         if(point)
         {
+            /* !p is always false
             if(!p && *netnode == '.')
             {
                 p = netnode + 1;
             }
+            */
 
-            if(p && *p)
+            if(*p)
             {
                 *point = (word)atoi(p);
 
