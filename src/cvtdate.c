@@ -239,7 +239,7 @@ void _fast ASCII_Date_To_Binary(char * msgdate, union stamp_combo * d_written)
             }
 
             sprintf(msgdate,
-                    "%02d %s %02d  %02d:%02d:%02d",
+                    "%02u %s %02u  %02u:%02u:%02u",
                     d_written->msg_st.date.da,
                     months_ab[d_written->msg_st.date.mo - 1],
                     (d_written->msg_st.date.yr + 80) % 100,
