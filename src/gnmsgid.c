@@ -157,7 +157,7 @@ void printversion(void)
 
 int main(int argc, char * argv[])
 {
-    int i, j, perr, usage, parsed, version;
+    int i, j, perr, usage, version;
     char * s;
     char * seqdir;
     unsigned long seqoutrun;
@@ -171,7 +171,6 @@ int main(int argc, char * argv[])
     version   = 0;
     perr      = 0;
     num       = 1;
-    parsed    = 0;
 
     for(i = 1; i < argc; i++)
     {
@@ -236,13 +235,6 @@ int main(int argc, char * argv[])
                 break;
             }
 
-            fprintf(stderr, "Illegal parameter: '%s'!\n", argv[i]);
-            perr = 1;
-            break;
-        }
-
-        if(parsed != 0)
-        {
             fprintf(stderr, "Illegal parameter: '%s'!\n", argv[i]);
             perr = 1;
             break;
