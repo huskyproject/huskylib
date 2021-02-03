@@ -242,13 +242,10 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
 
         while(ff->hDirA != INVALID_HANDLE_VALUE)
         {
-            if(strlen(ff->InfoBuf.cFileName) < sizeof(ff->ff_name))
+            if((!(ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) ||
+                (ff->attrib_srch & MSDOS_SUBDIR))
             {
-                if((!(ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) ||
-                   (ff->attrib_srch & MSDOS_SUBDIR))
-                {
-                    break;
-                }
+                break;
             }
 
             /* skip file for some reason */
@@ -397,13 +394,10 @@ int _fast FFindNext(FFIND * ff)
             }
             else
             {
-                if(strlen(ff->InfoBuf.cFileName) < sizeof(ff->ff_name))
+                if((!(ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) ||
+                    (ff->attrib_srch & MSDOS_SUBDIR))
                 {
-                    if((!(ff->InfoBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) ||
-                       (ff->attrib_srch & MSDOS_SUBDIR))
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
