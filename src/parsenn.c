@@ -122,8 +122,11 @@ void _fast ParseNN(char * netnode, word * zone, word * net, word * node, word * 
             }
 
             *net  = NET_ALL;
-            *node = NODE_ALL;
-            p    += 3;
+            if(node)
+            {
+                *node = NODE_ALL;
+            }
+            p += 3;
         }
     }
 
