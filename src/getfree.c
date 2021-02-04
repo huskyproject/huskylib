@@ -101,7 +101,7 @@ unsigned long husky_GetDiskFreeSpace(const char * path)
                                  (PULARGE_INTEGER)&i64TotalBytes,
                                  (PULARGE_INTEGER)&i64FreeBytes);
 
-        if(rc != TRUE)
+        if(rc == FALSE)
         {
             w_log(LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
@@ -167,7 +167,7 @@ unsigned long husky_GetDiskFreeSpace(const char * path)
 
         rc = GetDiskFreeSpace(pRPN, &SPC, &BPS, &FC, &TNC);
 
-        if(rc != TRUE)
+        if(rc == FALSE)
         {
             w_log(LL_ERR, "GetDiskFreeSpace error: return code = %lu", GetLastError());
             /* return freeSpace;		    Assume enough disk space */
