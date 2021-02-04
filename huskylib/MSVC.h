@@ -52,10 +52,15 @@
 /* system functions substitutions for DLL build */
 #    define fileno _fileno
 #    define read _read
+#if _WIN64
+#    define lseek _lseeki64
+#    define tell _telli64
+#else
 #    define lseek _lseek
+#    define tell _tell
+#endif
 #    define sopen _sopen
 #    define write _write
-#    define tell _tell
 #    define close _close
 #    define unlink _unlink
 #    define tzset _tzset

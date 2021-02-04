@@ -263,7 +263,12 @@ int waitlock(int handle, long ofs, long length)
 #ifdef DEBUG
     int error = 0;
 #endif
+
+#if _WIN64
+    __int64 offset = tell(handle);
+#else
     long offset = tell(handle);
+#endif
 
     if(offset == -1)
     {
@@ -309,8 +314,12 @@ int waitlock2(int handle, long ofs, long length, long t)
 
 int lock(int handle, long ofs, long length)
 {
-    long offset = tell(handle);
     int r;
+#if _WIN64
+    __int64 offset = tell(handle);
+#else
+    long offset = tell(handle);
+#endif
 
     if(offset == -1)
     {
@@ -331,7 +340,11 @@ int lock(int handle, long ofs, long length)
 
 int unlock(int handle, long ofs, long length)
 {
+#if _WIN64
+    __int64 offset = tell(handle);
+#else
     long offset = tell(handle);
+#endif
 
     if(offset == -1)
     {
