@@ -449,11 +449,26 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo)
         default:
             ErrorMsg = "Unknown error";
     } /* switch */
-    w_log(LL_CRIT,
-          "Exception 0x%08x (%s) at address 0x%08x",
-          ExceptionInfo->ExceptionRecord->ExceptionCode,
-          ErrorMsg,
-          ExceptionInfo->ExceptionRecord->ExceptionAddress);
+    {
+        char sCode[11];
+        sprintf((char* const)sCode, "0x%08x",
+                ExceptionInfo->ExceptionRecord->ExceptionCode);
+#if defined(UINTPTR_MAX) && UINTPTR_MAX > UINT32_MAX
+        /* 64-bit addresses*/
+        w_log(LL_CRIT,
+              "Exception %s (%s) at address 0x%016llx",
+              (char *)sCode,
+              ErrorMsg,
+              (uint64_t)(ExceptionInfo->ExceptionRecord->ExceptionAddress));
+#else
+        /* 32-bit addresses */
+        w_log(LL_CRIT,
+              "Exception %s (%s) at address 0x%08x",
+              (char *)sCode,
+              ErrorMsg,
+              (uint32_t)(ExceptionInfo->ExceptionRecord->ExceptionAddress));
+#endif
+    }
     exit(1);
  /*   return 0;  compiler paranoia */
 } /* UExceptionFilter */
