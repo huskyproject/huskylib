@@ -190,7 +190,6 @@ s_log * openLog(char * fileName, char * appN)
     /* make first line of log */
     currentTime = time(NULL);
     locTime     = localtime(&currentTime);
-#if 1
 
     if(logDateFormat)
     {
@@ -215,14 +214,18 @@ s_log * openLog(char * fileName, char * appN)
         }
     }
     else
-#endif
-    error = (fputs("----------  ", husky_log->logFile) == EOF);
+    {
+        error = (fputs("----------  ", husky_log->logFile) == EOF);
+    }
 
     if(!error)
     {
         error =
-            (fprintf(husky_log->logFile, "%3s %02u %3s %02u, %s\n", weekday_ab[(size_t)(locTime->tm_wday)],
-                     locTime->tm_mday, months_ab[(size_t)(locTime->tm_mon)], locTime->tm_year % 100,
+            (fprintf(husky_log->logFile, "%3s %02u %3s %04u, %s\n",
+                     weekday_ab[(size_t)(locTime->tm_wday)],
+                     (unsigned)(locTime->tm_mday),
+                     months_ab[(size_t)(locTime->tm_mon)],
+                     (unsigned)(locTime->tm_year + 1900),
                      husky_log->appName) == EOF);
     }
 
@@ -453,21 +456,11 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo)
         char sCode[11];
         sprintf((char* const)sCode, "0x%08x",
                 ExceptionInfo->ExceptionRecord->ExceptionCode);
-#if defined(UINTPTR_MAX) && UINTPTR_MAX > UINT32_MAX
-        /* 64-bit addresses*/
         w_log(LL_CRIT,
-              "Exception %s (%s) at address 0x%016llx",
+              "Exception %s (%s) at address %p",
               (char *)sCode,
               ErrorMsg,
-              (uint64_t)(ExceptionInfo->ExceptionRecord->ExceptionAddress));
-#else
-        /* 32-bit addresses */
-        w_log(LL_CRIT,
-              "Exception %s (%s) at address 0x%08x",
-              (char *)sCode,
-              ErrorMsg,
-              (uint32_t)(ExceptionInfo->ExceptionRecord->ExceptionAddress));
-#endif
+              ExceptionInfo->ExceptionRecord->ExceptionAddress);
     }
     exit(1);
  /*   return 0;  compiler paranoia */
