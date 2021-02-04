@@ -135,7 +135,7 @@ s_log * openLog(char * fileName, char * appN)
         /* filename without path, construct full pathname  */
         if(logFileDir && logFileDir[0])
         {
-            xstrscat(&pathname, logFileDir, fileName, NULLP);
+            xstrscat(&pathname, logFileDir, fileName, (char *)NULLP);
         }
         else
         {
@@ -221,8 +221,8 @@ s_log * openLog(char * fileName, char * appN)
     if(!error)
     {
         error =
-            (fprintf(husky_log->logFile, "%3s %02u %3s %02u, %s\n", weekday_ab[locTime->tm_wday],
-                     locTime->tm_mday, months_ab[locTime->tm_mon], locTime->tm_year % 100,
+            (fprintf(husky_log->logFile, "%3s %02u %3s %02u, %s\n", weekday_ab[(size_t)(locTime->tm_wday)],
+                     locTime->tm_mday, months_ab[(size_t)(locTime->tm_mon)], locTime->tm_year % 100,
                      husky_log->appName) == EOF);
     }
 
