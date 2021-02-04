@@ -144,15 +144,8 @@ void printversion(void)
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
     printf("huskylib CVS date:   %s\n", cvs_date);
 
-    if(rev)
-    {
-        free(rev);
-    }
-
-    if(date)
-    {
-        free(date);
-    }
+    free(rev);
+    free(date);
 }
 
 int main(int argc, char * argv[])
@@ -184,11 +177,7 @@ int main(int argc, char * argv[])
 
                 if(i < argc)
                 {
-                    if(seqdir)
-                    {
-                        free(seqdir);
-                    }
-
+                    free(seqdir);
                     seqdir = strdup(argv[i]);
                 }
                 else
