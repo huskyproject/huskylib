@@ -171,11 +171,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
             } /* if directory not created at 1st time then use old alghorithm */
 
             free(seqpath);
-
-            if(new_fname)
-            {
-                free(new_fname);
-            }
+            free(new_fname);
 
             GenMsgIdErr("can't open/create SEQDIR directory");
             return (*altGenMsgId)();
