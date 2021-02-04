@@ -78,9 +78,9 @@ char * _fast Strip_Trailing(char * str, char strip)
 
 char * _fast Add_Trailing(char * str, char add)
 {
-    int x;
+    size_t x;
 
-    if(str && *str && str[x = (int)strlen(str) - 1] != add)
+    if(str && *str && str[x = (size_t)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';
@@ -137,7 +137,7 @@ char * _fast firstchar(const char * strng, const char * delim, int findword)
     }
     sl_s = strlen(string);
 
-    for(wordno = 0; string - oldstring < sl_s; string++)
+    for(wordno = 0; (size_t)(string - oldstring) < sl_s; string++)
     {
         for(x = 0, isw = 0; x <= sl_d; x++)
         {
@@ -581,9 +581,9 @@ s_str_array * makeStrArray(char * token)
 {
     s_str_array * ss;
     char ** tokens;
-    int size = 15, ii = 0;
-    int len = 0;
-    int offset, token_len;
+    size_t size = 15, ii = 0;
+    size_t len = 0;
+    size_t offset, token_len;
 
     assert(token != NULL);
     tokens = (char **)smalloc(size * sizeof(char *));
@@ -593,12 +593,12 @@ s_str_array * makeStrArray(char * token)
 
     while(tokens[ii])
     {
-        len += (int)strlen(tokens[ii]) + 1;
+        len += strlen(tokens[ii]) + 1;
 
         if(ii >= size)
         {
             size   = (size + 1) * 2;
-            tokens = srealloc(tokens, size * sizeof(char *));
+            tokens = (char **)srealloc(tokens, size * sizeof(char *));
         }
 
         ++ii;
@@ -612,17 +612,17 @@ s_str_array * makeStrArray(char * token)
     }
 
     /* alloc structure, exact size */
-    offset    = (int)offsetof(s_str_array, data.offsets[ii]);
-    ss        = smalloc(offset + len);
+    offset    = offsetof(s_str_array, data.offsets[ii]);
+    ss        = (s_str_array *)smalloc(offset + len);
     ss->count = ii;
-    offset   -= (int)offsetof(s_str_array, data);
+    offset   -= offsetof(s_str_array, data);
 
-    /* fill structuare with offsets and strings' content */
+    /* fill structure with offsets and strings' content */
     for(ii = 0; ii < ss->count; ++ii)
     {
-        ss->data.offsets[ii] = offset;
-        token_len            = (int)strlen(tokens[ii]);
-        memcpy(STR_N(ss, ii), tokens[ii], (size_t)token_len + 1);
+        ss->data.offsets[ii] = (int)offset;
+        token_len            = strlen(tokens[ii]);
+        memcpy(STR_N(ss, ii), tokens[ii], token_len + 1);
         offset += token_len + 1;
     }
     nfree(tokens);
@@ -636,12 +636,12 @@ int findInStrArray(s_str_array const * ss, char const * find)
 
     assert(ss != NULL && find != NULL);
 
-    while(ii < ss->count && stricmp(find, STR_N(ss, ii)))
+    while((size_t)ii < ss->count && stricmp(find, STR_N(ss, ii)))
     {
         ++ii;
     }
 
-    if(ii < ss->count)
+    if((size_t)ii < ss->count)
     {
         return ii;
     }
@@ -663,7 +663,7 @@ s_str_array * copyStrArray(s_str_array * ss)
 
 char * StrArray2String(s_str_array * ss)
 {
-    int ii;
+    size_t ii;
     size_t size;
     char * string;
 
@@ -681,7 +681,7 @@ char * StrArray2String(s_str_array * ss)
     /* \0 -> ' ' */
     for(ii = 1; ii < ss->count; ++ii)
     {
-        string[ss->data.offsets[ii] - 1 - ss->data.offsets[0]] = ' ';
+        string[(size_t)(ss->data.offsets[ii] - 1 - ss->data.offsets[0])] = ' ';
     }
     return string;
 }
