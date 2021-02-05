@@ -225,9 +225,9 @@
  *
  */
 /**************************************************************************
- * For informaion: list of predefined macroses for known compilers.       *
+ * For informaion: list of predefined macros for known compilers.       *
  **************************************************************************
-   Common macroses for GNU C
+   Common macros for GNU C
    -------------------------------------------------------------------
     __GNUC__          Major version number (2.95.* : 2)
     __GNUC_MINOR__    Minor version number (2.95.* : 95)
