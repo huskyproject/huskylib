@@ -135,7 +135,9 @@
 #  define strncasecmp strnicmp
 
 #  define sleep(x) Sleep(1000L * (x))
-#  define mysleep(x) Sleep(1000L * (x))
+#  ifndef mysleep
+#    define mysleep(x) Sleep(1000L * (x))
+#  endif
 #  define farread read
 #  define farwrite write
 
@@ -164,12 +166,14 @@
 #define W_OK 02
 #endif
 
-#  define mymkdir _mkdir
+#  ifndef mymkdir
+#    define mymkdir _mkdir
+#  endif
 #  define snprintf _snprintf
 #  define vsnprintf _vsnprintf
-#  define HAS_snprintf       /* snprintf() presents */
-#  define HAS_vsnprintf      /* vsnprintf() presents */
-#  define HAS_spawnvp        /* spawnwp() presents */
+#  define HAS_snprintf       /* snprintf() is present */
+#  define HAS_vsnprintf      /* vsnprintf() is present */
+#  define HAS_spawnvp        /* spawnwp() is present */
 #  define HAS_strftime
 #  define HAS_mktime
 #  define HAS_sopen
