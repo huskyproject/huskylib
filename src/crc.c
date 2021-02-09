@@ -217,7 +217,7 @@ dword filecrc32(const char * filename)
 
     do
     {
-        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
+        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd); //-V124
 
         if(got)
         {
@@ -300,7 +300,7 @@ word filecrc16(const char * filename)
 
     do
     {
-        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
+        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd); //-V124
 
         if(got)
         {
@@ -380,7 +380,7 @@ word filesum16(const char * filename)
 
     do
     {
-        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
+        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd); //-V124
 
         if(got)
         {
@@ -451,7 +451,7 @@ dword filesum32(const char * filename, unsigned long * plen)
 
     while(!feof(fd) && !ferror(fd))
     {
-        got = (int)fread(buffer, 1, CRC_BUFFER_SIZE, fd);
+        got = (int)fread(buffer, 1, CRC_BUFFER_SIZE, fd); //-V124
 
         if(got > 0)
         {

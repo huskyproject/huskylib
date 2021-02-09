@@ -240,7 +240,7 @@ char * GenVersionStr(const char * programname,
     if(branch == BRANCH_RELEASE)
     {
         /* Release date are known always */
-        xscatprintf(&_version_str,
+        xscatprintf(&_version_str, //-V111
                     "%s%s %u.%u.%u%s",
                     programname,
                     platform,
@@ -251,7 +251,7 @@ char * GenVersionStr(const char * programname,
     }
     else
     {
-        xscatprintf(&_version_str,
+        xscatprintf(&_version_str, //-V111
                     "%s%s %u.%u.%u%s %s",
                     programname,
                     platform,

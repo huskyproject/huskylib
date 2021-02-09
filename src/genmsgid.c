@@ -122,10 +122,10 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
             switch(tolower(p[strlen(p) - 1]))
             {
                 case 'y':
-                    max_outrun *= 365;
+                    max_outrun *= 365; //-V796
 
                 case 'd':
-                    max_outrun *= 24;
+                    max_outrun *= 24; //-V796
 
                 case 'h':
                     max_outrun *= 60 * 60;
@@ -171,7 +171,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
             } /* if directory not created at 1st time then use old alghorithm */
 
             free(seqpath);
-            free(new_fname);
+            free(new_fname); //-V575
 
             GenMsgIdErr("can't open/create SEQDIR directory");
             return (*altGenMsgId)();

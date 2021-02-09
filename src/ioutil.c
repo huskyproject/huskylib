@@ -319,7 +319,7 @@ int move_file(const char * from, const char * to, const int force_rewrite)
        file system boundaries. We have to copy the file. */
     if(copy_file(from, to, force_rewrite))
     {
-        w_log(LL_WARN,
+        w_log(LL_WARN, //-V111
               "Moving file from '%s' to '%s' failed, copy over failed too. This may result in loss of information and inconsistent state of the system.",
               from,
               to);
@@ -593,7 +593,7 @@ int cmdcall(const char * cmd)
 
     if((list = mk_lst(cmd)) != NULL)
     {
-        w_log(LL_DEBUGV, "spawnvp(P_WAIT, %s, ...)", list[0]);
+        w_log(LL_DEBUGV, "spawnvp(P_WAIT, %s, ...)", list[0]); //-V111
 #if defined (__WATCOMC__) || defined (__MINGW32__)
         cmdexit = spawnvp(P_WAIT, list[0], (const char * const *)list);
 #else
@@ -606,7 +606,7 @@ int cmdcall(const char * cmd)
 
     if((signal = (cmdexit & 0xff)) != 0) /* system error! */
     {
-        w_log(LL_ERROR,
+        w_log(LL_ERROR, //-V111
               "Command execute error (spawnwp()): signal %i (Run command '%s')",
               signal,
               cmd);
