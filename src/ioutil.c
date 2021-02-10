@@ -53,6 +53,9 @@
 /***  Declarations & defines  ***********************************************/
 /***  Implementation  *******************************************************/
 
+#ifdef __WATCOMC__
+#include <io.h>
+#endif
 
 #ifdef __TURBOC__
     #pragma warn -sig

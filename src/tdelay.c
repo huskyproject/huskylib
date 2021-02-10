@@ -41,6 +41,11 @@
 #if !defined (_MSC_VER)
     #include <sys/time.h>
 #endif
+
+#if defined(__WATCOMC__) && defined(__OS2__)
+#include <sys/time.h>
+#endif
+
 /* huskylib: compiler.h */
 #include <compiler.h>
 /* compiler-dependent headers */
@@ -90,7 +95,7 @@ dword husky_GetTimer(hs_time * timer_ctx)
 }
 
 #elif defined (__UNIX__) || defined (__BEOS__) || defined (__DJGPP__) || defined (__CYGWIN__) || \
-    defined (__EMX__)
+    defined (__EMX__) || defined(__WATCOMC__)
 void husky_SetTimer(hs_time * timer_ctx)
 {
     struct timeval now;

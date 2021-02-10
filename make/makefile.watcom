@@ -1,0 +1,44 @@
+#
+#  Makefile for Open Watcom 2.0, cross-compiling from Linux.
+#
+#  Use GNU Make or BSD Make, not Watcom Make (wmake).
+#
+
+CC=wcl386
+WLIB=wlib
+
+CFLAGS=-zq -bt=nt -l=nt
+HUSKYLIB=huskynt.lib
+
+.ifdef OS2
+CFLAGS=-zq -bt=os2v2 -l=os2v2
+HUSKYLIB=huskyos2.lib
+.endif
+
+H_DIR=../huskylib
+O=../src
+
+GNMSGID=gnmsgid.exe
+
+OBJS=\
+  $(O)/adcase.o $(O)/calendar.o $(O)/cmpfname.o $(O)/crc.o $(O)/cvtdate.o \
+  $(O)/dirlayer.o $(O)/fexist.o $(O)/ffind.o $(O)/genmsgid.o $(O)/genverst.o \
+  $(O)/getfree.o $(O)/gnmsgid.o $(O)/ioutil.o $(O)/log.o $(O)/locking.o \
+  $(O)/mapfile.o $(O)/memory.o $(O)/qksort.o $(O)/patmat.o $(O)/recode.o \
+  $(O)/ftnaddr.o $(O)/setfsize.o $(O)/strext.o $(O)/strftime.o $(O)/temp.o \
+  $(O)/tdelay.o $(O)/tree.o $(O)/version.o $(O)/xstr.o
+
+.c.o:
+	$(CC) $(CFLAGS) -I$(H_DIR) -fo=$@ -c $<
+	$(WLIB) -q $(HUSKYLIB) +-$@
+
+all: $(HUSKYLIB) $(GNMSGID)
+
+$(HUSKYLIB): $(OBJS)
+
+$(GNMSGID): $(O)/gnmsgid.o
+	$(CC) $(CFLAGS) -I$(H_DIR) -Fe=gnmsgid $(O)/gnmsgid.o $(HUSKYLIB)
+
+clean:
+	rm -f $(OBJS)
+	rm -f $(HUSKYLIB)
