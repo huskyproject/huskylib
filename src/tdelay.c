@@ -38,7 +38,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#if !defined (_MSC_VER)
+#if !defined (_MSC_VER) && !defined(__WATCOMC__)
     #include <sys/time.h>
 #endif
 
