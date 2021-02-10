@@ -1,7 +1,7 @@
 #
 #  Makefile for Open Watcom 2.0, cross-compiling from Linux.
 #
-#  Use GNU Make or BSD Make, not Watcom Make (wmake).
+#  Use GNU Make, not Watcom Make (wmake).
 #
 
 CC=wcl386
@@ -10,10 +10,10 @@ WLIB=wlib
 CFLAGS=-zq -bt=nt -l=nt
 HUSKYLIB=huskynt.lib
 
-.ifdef OS2
+ifdef OS2
 CFLAGS=-zq -bt=os2v2 -l=os2v2
 HUSKYLIB=huskyos2.lib
-.endif
+endif
 
 H_DIR=../huskylib
 O=../src
