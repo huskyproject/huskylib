@@ -1,5 +1,6 @@
 build-stamp
 configure-stamp
+build/
 *.lib
 *.dll
 *.exp
