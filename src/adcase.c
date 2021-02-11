@@ -422,7 +422,7 @@ add_to_cache:
 
             if(adaptcase_cache[l].n == nmax - 1)
             {
-                char * tmp;
+                size_t * tmp;
                 tmp = realloc(adaptcase_cache[l].cache_index,
                               (nmax += cacheindex_stepsize) * sizeof(size_t));
                 if(tmp == NULL)
