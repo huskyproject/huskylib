@@ -1,0 +1,213 @@
+{
+    "version": 1,
+    "warnings": [
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "adcase.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "calendar.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "cmpfname.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "crc.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "cvtdate.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "fexist.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ffind.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "flush.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ftnaddr.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "genmsgid.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "genverst.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "getfree.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "gnmsgid.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ioutil.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "mapfile.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "memory.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "parsenn.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "qksort.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "setfsize.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "strext.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "strftime.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "tdelay.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "temp.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "tree.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "version.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "xstr.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        }
+    ]
+}
