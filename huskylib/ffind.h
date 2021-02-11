@@ -66,6 +66,9 @@
     #include <windows.h>
 #endif
 
+#ifndef MAX_PATH
+#define MAX_PATH 260
+#endif
 
 struct ffind
 {
