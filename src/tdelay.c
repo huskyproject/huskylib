@@ -42,7 +42,7 @@
     #include <sys/time.h>
 #endif
 
-#if defined(__WATCOMC__) && defined(__OS2__)
+#if defined(__WATCOMC__) && defined(__OS2V2__)
 #include <sys/time.h>
 #endif
 
