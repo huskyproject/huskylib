@@ -387,8 +387,7 @@ add_to_cache:
            (adaptcase_cache[l].result = (char *)malloc(k + 1)) == NULL ||
            (adaptcase_cache[l].raw_cache = (char *)malloc(rawmax = rawcache_stepsize)) == NULL ||
            (adaptcase_cache[l].cache_index =
-                (size_t)malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) ==
-           NULL)
+                (size_t *)malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) == NULL)
         {
             goto cache_error;
         }
