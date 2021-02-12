@@ -135,7 +135,7 @@ s_log * openLog(char * fileName, char * appN)
         /* filename without path, construct full pathname  */
         if(logFileDir && logFileDir[0])
         {
-            xstrscat(&pathname, logFileDir, fileName, (char *)NULLP); //-V111
+            xstrscat(&pathname, logFileDir, fileName, (char *)NULLP);
         }
         else
         {
@@ -456,7 +456,7 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo)
         char sCode[11];
         sprintf((char* const)sCode, "0x%08x",
                 ExceptionInfo->ExceptionRecord->ExceptionCode);
-        w_log(LL_CRIT, //-V111
+        w_log(LL_CRIT,
               "Exception %s (%s) at address %p",
               (char *)sCode,
               ErrorMsg,

@@ -198,6 +198,6 @@ static int getctab(char * dest, char * charMapFileName)
         }
     }
     fclose(fp);
-    w_log('2', "read recoding table from %s", charMapFileName); //-V111
+    w_log('2', "read recoding table from %s", charMapFileName);
     return rc;
 } /* getctab */

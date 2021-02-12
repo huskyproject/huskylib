@@ -93,10 +93,10 @@ int outrunparse(char * line, unsigned long * seqoutrun)
     switch(tolower(*p))
     {
         case 'y':
-            *seqoutrun *= 365; //-V796
+            *seqoutrun *= 365;
 
         case 'd':
-            *seqoutrun *= 24; //-V796
+            *seqoutrun *= 24;
 
         case 'h':
             *seqoutrun *= 60 * 60;
@@ -177,7 +177,7 @@ int main(int argc, char * argv[])
 
                 if(i < argc)
                 {
-                    free(seqdir); //-V575
+                    free(seqdir);
                     seqdir = strdup(argv[i]);
                 }
                 else

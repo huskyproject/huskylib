@@ -636,7 +636,7 @@ int findInStrArray(s_str_array const * ss, char const * find)
 
     assert(ss != NULL && find != NULL);
 
-    while((size_t)ii < ss->count && stricmp(find, STR_N(ss, ii))) //-V526
+    while((size_t)ii < ss->count && stricmp(find, STR_N(ss, ii)))
     {
         ++ii;
     }

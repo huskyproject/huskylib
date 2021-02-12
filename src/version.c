@@ -53,11 +53,11 @@ int CheckHuskylibVersion(int need_major,
                 fprintf(stderr, "Huskylib: strange, current patch level can't be non-zero\n");
             }
 
-            return (HUSKYLIB_VER_BRANCH == BRANCH_CURRENT) && !(cvs && strcmp(cvs, cvs_date)); //-V501 //-V526
+            return (HUSKYLIB_VER_BRANCH == BRANCH_CURRENT) && !(cvs && strcmp(cvs, cvs_date));
         }
         else
         {
-            return HUSKYLIB_VER_BRANCH != BRANCH_CURRENT; //-V501
+            return HUSKYLIB_VER_BRANCH != BRANCH_CURRENT;
         }
     }
 

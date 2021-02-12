@@ -146,13 +146,13 @@ FILE * createTempFileIn(const char * path, const char * ext, char mode, char ** 
         *ii = 0;                   /* strip trailing slash */
     }
 
-    xscatprintf(&tempfilename, "%cXXXXXX.%s", PATH_DELIM, ext); //-V111
-    w_log(LL_FILENAME, "Temp. file mask: %s", tempfilename); //-V111
+    xscatprintf(&tempfilename, "%cXXXXXX.%s", PATH_DELIM, ext);
+    w_log(LL_FILENAME, "Temp. file mask: %s", tempfilename);
     tempfh = MKSTEMPS(tempfilename);
 
     if(tempfh == -1)
     {
-        w_log(LL_ERR, "Cannot create temp. file (Mask %s): %s", tempfilename, strerror(errno)); //-V111
+        w_log(LL_ERR, "Cannot create temp. file (Mask %s): %s", tempfilename, strerror(errno));
         w_log(LL_FUNC, "createTempFileIn() rc=NULL");
         return NULL;
     }
@@ -172,11 +172,11 @@ FILE * createTempFileIn(const char * path, const char * ext, char mode, char ** 
 
     if(!tempfd)
     {
-        w_log(LL_CRIT, "Cannot reopen file '%s': %s", tempfilename, strerror(errno)); //-V111
+        w_log(LL_CRIT, "Cannot reopen file '%s': %s", tempfilename, strerror(errno));
         return NULL;
     }
 
-    w_log(LL_FILE, "Created temp file %s", tempfilename); //-V111
+    w_log(LL_FILE, "Created temp file %s", tempfilename);
 
     if(name != NULL)
     {
@@ -184,7 +184,7 @@ FILE * createTempFileIn(const char * path, const char * ext, char mode, char ** 
         *name = sstrdup(tempfilename);
     }
 
-    w_log(LL_FUNC, "createTempFileIn() OK fd=%p", tempfd); //-V111
+    w_log(LL_FUNC, "createTempFileIn() OK fd=%p", tempfd);
     return tempfd;
 } /* createTempFileIn */
 

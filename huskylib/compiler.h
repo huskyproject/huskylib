@@ -659,7 +659,8 @@
     #endif
 #endif
 
-#if defined (__linux__) || defined (__Linux__) || defined (linux) || defined (__linux) || defined (LINUX) //-V1040
+#if defined (__linux__) || defined (__Linux__) || defined (linux) || \
+                           defined (__linux) || defined (LINUX)
     #if !defined (__LINUX__)
 #define __LINUX__
     #endif
