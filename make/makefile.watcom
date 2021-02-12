@@ -37,6 +37,7 @@ OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
   temp.obj tdelay.obj tree.obj version.obj xstr.obj
 
 {$(SRC_DIR)}.c.obj:
+	@%erase $(TARGET)
 	$(CC) $(CFLAGS) $INC -fo=$@ -c $<
 
 $(GNMSGID): $(TARGET)
