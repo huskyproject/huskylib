@@ -49,3 +49,4 @@ $(TARGET): $(OBJS)
 clean:
 	rm $(OBJS)
 	rm $(TARGET)
+	rm $(GNMSGID)
