@@ -5,6 +5,8 @@
 
 **huskylib** is a support library of Husky project, containing essential project functionality
 
+## OPEN WATCOM 2.0 FORK
+
 This fork allows cross-compilation from Linux to Windows NT & OS/2 using Open Watcom 2.0:
 ```console
 $ git clone https://github.com/zoomosis/huskylib
