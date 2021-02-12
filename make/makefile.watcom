@@ -38,7 +38,6 @@ OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
 
 {$(SRC_DIR)}.c.obj:
 	$(CC) $(CFLAGS) $INC -fo=$@ -c $<
-#	$(WLIB) -q $(TARGET) +-$@
 
 $(GNMSGID): $(TARGET)
 	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)$(SEP)gnmsgid.c $(TARGET)
