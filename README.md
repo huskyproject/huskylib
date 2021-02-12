@@ -12,10 +12,10 @@ $ cd huskylib/make
 ```
 Windows NT build:
 ```console
-$ gmake -f makefile.watcom NT=1
+$ wmake -f makefile.watcom NT=1
 ```
 OS/2 build:
 ```console
-$ gmake -f makefile.watcom OS2=1
+$ wmake -f makefile.watcom OS2=1
 ```
-Where 'gmake' is GNU Make.
+Where 'wmake' is Open Watcom 2.0's WMAKE.
