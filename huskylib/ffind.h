@@ -47,7 +47,7 @@
 #endif
 
 
-#if defined (__RSXNT__) || defined (__MINGW32__) || defined (__MSVC__)
+#if defined (__RSXNT__) || defined (__MINGW32__) || defined (__MSVC__) || defined(__WATCOMC__)
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOUSER
