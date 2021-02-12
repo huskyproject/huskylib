@@ -1,44 +1,52 @@
 #
-#  Makefile for Open Watcom 2.0, cross-compiling from Linux.
+#  Huskylib makefile for Open Watcom 2.0.
 #
-#  Use GNU Make, not Watcom Make (wmake).
+#  Use Watcom Make:
 #
+#  wmake -f makefile.watcom NT=1
+#
+#    or
+#
+#  wmake -f makefile.watcom OS2=1
+#
+
+!ifdef __LINUX__
+SEP=/
+!else
+SEP=\
+!endif
 
 CC=wcl386
-WLIB=wlib
+WLIB=wlib -b
 
 CFLAGS=-zq -bt=nt -l=nt
-HUSKYLIB=huskynt.lib
-
-ifdef OS2
-CFLAGS=-zq -bt=os2v2 -l=os2v2
-HUSKYLIB=huskyos2.lib
-endif
-
-H_DIR=../huskylib
-O=../src
-
+SRC_DIR=..$(SEP)src
+TARGET=huskywcw.lib
+INC=-I..$(SEP)huskylib
 GNMSGID=gnmsgid.exe
 
-OBJS=\
-  $(O)/adcase.o $(O)/calendar.o $(O)/cmpfname.o $(O)/crc.o $(O)/cvtdate.o \
-  $(O)/dirlayer.o $(O)/fexist.o $(O)/ffind.o $(O)/genmsgid.o $(O)/genverst.o \
-  $(O)/getfree.o $(O)/gnmsgid.o $(O)/ioutil.o $(O)/log.o $(O)/locking.o \
-  $(O)/mapfile.o $(O)/memory.o $(O)/qksort.o $(O)/patmat.o $(O)/recode.o \
-  $(O)/ftnaddr.o $(O)/setfsize.o $(O)/strext.o $(O)/strftime.o $(O)/temp.o \
-  $(O)/tdelay.o $(O)/tree.o $(O)/version.o $(O)/xstr.o
+!ifdef OS2
+CFLAGS=-zq -bt=os2v2 -l=os2v2
+TARGET=huskywco.lib
+!endif
 
-.c.o:
-	$(CC) $(CFLAGS) -I$(H_DIR) -fo=$@ -c $<
-	$(WLIB) -q $(HUSKYLIB) +-$@
+OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
+  fexist.obj ffind.obj genmsgid.obj genverst.obj getfree.obj &
+  ioutil.obj log.obj locking.obj mapfile.obj memory.obj qksort.obj &
+  patmat.obj recode.obj ftnaddr.obj setfsize.obj strext.obj strftime.obj &
+  temp.obj tdelay.obj tree.obj version.obj xstr.obj
 
-all: $(HUSKYLIB) $(GNMSGID)
+{$(SRC_DIR)}.c.obj:
+	$(CC) $(CFLAGS) $INC -fo=$@ -c $<
+#	$(WLIB) -q $(TARGET) +-$@
 
-$(HUSKYLIB): $(OBJS)
+$(GNMSGID): $(TARGET)
+	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)$(SEP)gnmsgid.c $(TARGET)
 
-$(GNMSGID): $(O)/gnmsgid.o
-	$(CC) $(CFLAGS) -I$(H_DIR) -Fe=gnmsgid $(O)/gnmsgid.o $(HUSKYLIB)
+$(TARGET): $(OBJS)
+	for %i in ($(OBJS)) do $(WLIB) -q $(TARGET) +-%i
 
+.IGNORE
 clean:
-	rm -f $(OBJS)
-	rm -f $(HUSKYLIB)
+	rm $(OBJS)
+	rm $(TARGET)
