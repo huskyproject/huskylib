@@ -9,3 +9,4 @@ build/
 *.dsw
 *.bak
 *.vcxproj.user
+strace_out
