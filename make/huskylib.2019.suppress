@@ -1,0 +1,114 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="SuppressVersion">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CurrentVersion" type="xs:int" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="huskylib">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="FileName" type="xs:string" default="" />
+                <xs:element name="ErrorCode" type="xs:string" default="" />
+                <xs:element name="Message" type="xs:string" default="" />
+                <xs:element name="CodePrev" type="xs:unsignedInt" default="0" />
+                <xs:element name="CodeCurrent" type="xs:unsignedInt" default="0" />
+                <xs:element name="CodeNext" type="xs:unsignedInt" default="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//huskylib" />
+        <xs:field xpath="FileName" />
+        <xs:field xpath="ErrorCode" />
+        <xs:field xpath="Message" />
+        <xs:field xpath="CodePrev" />
+        <xs:field xpath="CodeCurrent" />
+        <xs:field xpath="CodeNext" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <SuppressVersion>
+    <CurrentVersion>2</CurrentVersion>
+  </SuppressVersion>
+  <huskylib>
+    <FileName>crc.c</FileName>
+    <ErrorCode>V124</ErrorCode>
+    <Message>Function 'fread' reads '_' bytes. The alignment rules and type sizes have been changed. Consider reviewing this value.</Message>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>206717968</CodeCurrent>
+    <CodeNext>0</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>crc.c</FileName>
+    <ErrorCode>V124</ErrorCode>
+    <Message>Function 'fread' reads '_' bytes. The alignment rules and type sizes have been changed. Consider reviewing this value.</Message>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>206570000</CodeCurrent>
+    <CodeNext>0</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>genmsgid.c</FileName>
+    <ErrorCode>V796</ErrorCode>
+    <Message>It is possible that 'break' statement is missing in switch statement.</Message>
+    <CodePrev>8536</CodePrev>
+    <CodeCurrent>2498689</CodeCurrent>
+    <CodeNext>0</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>genmsgid.c</FileName>
+    <ErrorCode>V796</ErrorCode>
+    <Message>It is possible that 'break' statement is missing in switch statement.</Message>
+    <CodePrev>8492</CodePrev>
+    <CodeCurrent>1249363</CodeCurrent>
+    <CodeNext>0</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>log.c</FileName>
+    <ErrorCode>V111</ErrorCode>
+    <Message>Call of function 'w_log' with variable number of arguments. Fifth argument has memsize type.</Message>
+    <CodePrev>1985610065</CodePrev>
+    <CodeCurrent>594912</CodeCurrent>
+    <CodeNext>1727386001</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>temp.c</FileName>
+    <ErrorCode>V111</ErrorCode>
+    <Message>Call of function 'w_log' with variable number of arguments. Third argument has memsize type.</Message>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>2128593074</CodeCurrent>
+    <CodeNext>352923</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>version.c</FileName>
+    <ErrorCode>V501</ErrorCode>
+    <Message>There are identical sub-expressions to the left and to the right of the '==' operator: BRANCH_CURRENT == BRANCH_CURRENT</Message>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>4149395158</CodeCurrent>
+    <CodeNext>125</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>version.c</FileName>
+    <ErrorCode>V501</ErrorCode>
+    <Message>There are identical sub-expressions to the left and to the right of the '!=' operator: BRANCH_CURRENT != BRANCH_CURRENT</Message>
+    <CodePrev>123</CodePrev>
+    <CodeCurrent>3399382539</CodeCurrent>
+    <CodeNext>125</CodeNext>
+  </huskylib>
+  <huskylib>
+    <FileName>compiler.h</FileName>
+    <ErrorCode>V1040</ErrorCode>
+    <Message>Possible typo in the spelling of a pre-defined macro name. The '__Linux__' macro is similar to '__linux__'.</Message>
+    <CodePrev>0</CodePrev>
+    <CodeCurrent>417106776</CodeCurrent>
+    <CodeNext>621071246</CodeNext>
+  </huskylib>
+</NewDataSet>
