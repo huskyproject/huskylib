@@ -248,6 +248,94 @@
             "ErrorCode": "V1042",
             "FileName": "xstr.c",
             "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 417106776,
+            "CodeNext": 621071246,
+            "CodePrev": 0,
+            "ErrorCode": "V1040",
+            "FileName": "compiler.h",
+            "Message": "Possible typo in the spelling of a pre-defined macro name. The '__Linux__' macro is similar to '__linux__'."
+        },
+        {
+            "CodeCurrent": 624865,
+            "CodeNext": 0,
+            "CodePrev": 8536,
+            "ErrorCode": "V796",
+            "FileName": "genmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 624865,
+            "CodeNext": 0,
+            "CodePrev": 8492,
+            "ErrorCode": "V796",
+            "FileName": "genmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 2427461,
+            "CodeNext": 0,
+            "CodePrev": 613305,
+            "ErrorCode": "V575",
+            "FileName": "genmsgid.c",
+            "Message": "The null pointer is passed into 'free' function. Inspect the first argument."
+        },
+        {
+            "CodeCurrent": 6369,
+            "CodeNext": 0,
+            "CodePrev": 8536,
+            "ErrorCode": "V796",
+            "FileName": "gnmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 6369,
+            "CodeNext": 0,
+            "CodePrev": 8492,
+            "ErrorCode": "V796",
+            "FileName": "gnmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 306249,
+            "CodeNext": 352579813,
+            "CodePrev": 123,
+            "ErrorCode": "V575",
+            "FileName": "gnmsgid.c",
+            "Message": "The null pointer is passed into 'free' function. Inspect the first argument."
+        },
+        {
+            "CodeCurrent": 3024399619,
+            "CodeNext": 123,
+            "CodePrev": 0,
+            "ErrorCode": "V526",
+            "FileName": "strext.c",
+            "Message": "The 'strcasecmp' function returns _ if corresponding strings are equal. Consider examining the condition for mistakes."
+        },
+        {
+            "CodeCurrent": 4149395158,
+            "CodeNext": 125,
+            "CodePrev": 0,
+            "ErrorCode": "V501",
+            "FileName": "version.c",
+            "Message": "There are identical sub-expressions to the left and to the right of the '==' operator: BRANCH_CURRENT == BRANCH_CURRENT"
+        },
+        {
+            "CodeCurrent": 4149395158,
+            "CodeNext": 125,
+            "CodePrev": 0,
+            "ErrorCode": "V526",
+            "FileName": "version.c",
+            "Message": "The 'strcmp' function returns _ if corresponding strings are equal. Consider examining the condition for mistakes."
+        },
+        {
+            "CodeCurrent": 3399382539,
+            "CodeNext": 125,
+            "CodePrev": 123,
+            "ErrorCode": "V501",
+            "FileName": "version.c",
+            "Message": "There are identical sub-expressions to the left and to the right of the '!=' operator: BRANCH_CURRENT != BRANCH_CURRENT"
         }
     ]
 }
