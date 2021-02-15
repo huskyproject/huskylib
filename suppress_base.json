@@ -2,6 +2,46 @@
     "version": 1,
     "warnings": [
         {
+            "CodeCurrent": 55168701,
+            "CodeNext": 981500451,
+            "CodePrev": 0,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'malloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 981500451,
+            "CodeNext": 3261137,
+            "CodePrev": 55168701,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'calloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 3261137,
+            "CodeNext": 2908916453,
+            "CodePrev": 981500451,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'free' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 2908916453,
+            "CodeNext": 0,
+            "CodePrev": 3261137,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'realloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 2260174374,
+            "CodeNext": 3300151563,
+            "CodePrev": 0,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'strftime' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
             "CodeCurrent": 1028699183,
             "CodeNext": 42,
             "CodePrev": 1725059867,
