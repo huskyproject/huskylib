@@ -272,11 +272,6 @@ typedef unsigned long ULONG;                    /*  4 byte */
 typedef          void VOID;
 #endif
 
-#if __WATCOMC__ > 1000
-typedef unsigned __int64 ULONGLONG;             /*  8 bytes */
-typedef   signed __int64 LONGLONG;              /*  8 bytes */
-#endif
-
 #endif /*  #if defined(__WATCOMC__) */
 /*  MacOS X with gcc */
 #if defined (__APPLE__) && defined (__MACH__)

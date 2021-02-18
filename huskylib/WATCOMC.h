@@ -33,8 +33,9 @@
     #error This file may be used only with Watcom C !
 #endif
 
-
+#if __WATCOMC__ < 1300
 #  define mode_t int
+#endif
 
 #if ( __WATCOMC__ > 1000 )
     /* Watcom C 10.0 */

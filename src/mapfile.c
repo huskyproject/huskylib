@@ -45,6 +45,9 @@
 #define STRICT 1
     #endif
 #endif
+
+#define WIN32_LEAN_AND_MEAN
+
 #include <windows.h>
 
 void * MapFile(char * fname)

@@ -30,6 +30,8 @@
 
 #include "compiler.h"
 #include "huskyext.h"  /* compiler see directory of this .h file */
+
+#ifndef __WATCOMC__
 /* file locking implementation
  */
 HUSKYEXT int lock(int handle, long ofs, long length);
@@ -37,6 +39,8 @@ HUSKYEXT int lock(int handle, long ofs, long length);
 /* file unlocking implementation
  */
 HUSKYEXT int unlock(int handle, long ofs, long length);
+
+#endif
 
 /* waitlock2() wait some (OS or runtime library default) time for a lock
  */

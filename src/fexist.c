@@ -156,6 +156,8 @@ int _fast direxist(const char * directory)
 } /* direxist */
 
 #else /* USE_STAT_MACROS not defined */
+#include <time.h>
+#include "ffind.h"
 /* Here comes the ugly platform specific and sometimes even slow code. */
 int _fast fexist(const char * filename)
 {

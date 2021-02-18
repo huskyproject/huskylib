@@ -82,6 +82,7 @@
 
 #ifdef __WIN32__
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 /* Return value is free space in kiB */
 /* Note: if function can't get actual value of free space is assumes maximum possible value */

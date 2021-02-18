@@ -212,6 +212,8 @@ HUSKYEXT void w_log(char key, char * logString, ...);
 /*    vs2005 */
 # if (_MSC_VER >= 1400)
 #  define w_dbglog(...) ((void)0)
+# elif (__WATCOMC__ > 1200)
+#  define w_dbglog(...) ((void)0)
 # elif (__GNUC__ >= 2)
 #  define w_dbglog(args ...) ((void)0)
 # else

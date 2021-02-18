@@ -1,0 +1,53 @@
+#
+#  Huskylib makefile for Open Watcom 2.0.
+#
+#  Use Watcom Make:
+#
+#  wmake -f makefile.watcom NT=1
+#
+#    or
+#
+#  wmake -f makefile.watcom OS2=1
+#
+
+!ifdef __LINUX__
+SEP=/
+!else
+SEP=\
+!endif
+
+CC=wcl386
+WLIB=wlib -q -b
+
+CFLAGS=-zq -bt=nt -l=nt
+SRC_DIR=..$(SEP)src
+TARGET=huskywcw.lib
+INC=-I..$(SEP)huskylib
+GNMSGID=gnmsgid.exe
+
+!ifdef OS2
+CFLAGS=-zq -bt=os2v2 -l=os2v2
+TARGET=huskywco.lib
+!endif
+
+OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
+  fexist.obj ffind.obj genmsgid.obj genverst.obj getfree.obj &
+  ioutil.obj log.obj locking.obj mapfile.obj memory.obj qksort.obj &
+  patmat.obj recode.obj ftnaddr.obj setfsize.obj strext.obj strftime.obj &
+  temp.obj tdelay.obj tree.obj version.obj xstr.obj
+
+{$(SRC_DIR)}.c.obj:
+	@%erase $(TARGET)
+	$(CC) $(CFLAGS) $INC -fo=$@ -c $<
+
+$(GNMSGID): $(TARGET)
+	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)$(SEP)gnmsgid.c $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(WLIB) $(TARGET) $(OBJS)
+
+.IGNORE
+clean: .SYMBOLIC
+	rm $(OBJS)
+	rm $(TARGET)
+	rm $(GNMSGID)

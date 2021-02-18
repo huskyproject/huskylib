@@ -78,10 +78,13 @@
 /***  Declarations & defines  ***********************************************/
 /* Test for locking functions avaiable in OS
  */
+
+#ifndef __WATCOMC__
 int lock(int handle, long ofs, long length);
 int unlock(int handle, long ofs, long length);
 int waitlock(int handle, long ofs, long length);
 int waitlock2(int handle, long ofs, long length, long t);
+#endif
 
 #ifndef HAS_sopen
 int sopen(const char * name, int oflag, int ishared, int mode);
@@ -120,7 +123,7 @@ sword pascal far shareloaded(void)
 
 #endif /* ifdef __DJGPP__ */
 /*#if defined (__WATCOMC__OS2__) || defined(__EMX__) || defined(__IBMC__OS2__)*/
-#if defined (__OS2__)
+#if defined (__OS2__) && !defined(__WATCOMC__)
 
 #include <os2.h>
 
