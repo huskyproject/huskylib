@@ -173,8 +173,12 @@ HUSKYEXT int copyStringUntilSep(char * str, char * seps, char ** dest);
 /* Structures for compact storage of array of NUL-terminated strings of
  * various length.
  * s_str_array is just one memory allocation and contains no pointers,
- * so it can be freed by single free() and copied with memcpy()
+ * so it can be freed by single free() and copied with memcpy().
  * Use for nonmutable collections of (short) strings.
+ * The memory allocation contains array of int offsets to NUL-terminated
+ * strings of variable length placed after the array; n-th offset is for
+ * the n-th string.
+ * offset[0] offset[1] ... string[0] string[1] ...
  */
 typedef union str_mess
 {
@@ -183,20 +187,20 @@ typedef union str_mess
 } u_str_mess;
 typedef struct str_array
 {
-    int        count; /* Number of entries in data.offset array */
+    size_t     count; /* Number of entries in data.offsets array */
     u_str_mess data;
 } s_str_array;
 /* Get an address of n-th string in s_str_array *a */
 #define STR_N(a, n) & ((a)->data.strings[(a)->data.offsets[n]])
 /* Offset of a byte just after last allocated byte (after last '\0') */
-#define STR_A_OFFSET_END(a) (a->data.offsets[a->count - 1] + \
+#define STR_A_OFFSET_END(a) ((size_t)(a->data.offsets[a->count - 1]) + \
                              strlen(STR_N(a, a->count - 1)) + 1)
 /* Calculate used memory size for s_str_array *a */
 #define STR_A_SIZE(a) (offsetof(s_str_array, data) + \
                        STR_A_OFFSET_END(a))
 /* Calculate memory size used for strings in s_str_array->data.strings[] */
 #define STR_A_SSIZE(a) (STR_A_OFFSET_END(a) - \
-                        a->data.offsets[0])
+                        (size_t)(a->data.offsets[0]))
 /* Get an index of 'find' in ss
  * Case insensitive full match is used
  * -1 if no match */

@@ -85,6 +85,9 @@ void initLogSyslog(char * ext_program,
                 syslogFacility);
     }
 
+#else
+    unused(ext_syslogFacility);
+    unused(ext_program);
 #endif
 
     if(ext_logFileDir)
@@ -132,7 +135,7 @@ s_log * openLog(char * fileName, char * appN)
         /* filename without path, construct full pathname  */
         if(logFileDir && logFileDir[0])
         {
-            xstrscat(&pathname, logFileDir, fileName, NULLP);
+            xstrscat(&pathname, logFileDir, fileName, (char *)NULLP);
         }
         else
         {
@@ -187,12 +190,11 @@ s_log * openLog(char * fileName, char * appN)
     /* make first line of log */
     currentTime = time(NULL);
     locTime     = localtime(&currentTime);
-#if 1
 
     if(logDateFormat)
     {
         char logDate[64];
-        int i, logDateLen = strftime(logDate, 63, logDateFormat, locTime);
+        int i, logDateLen = (int)strftime(logDate, 63, logDateFormat, locTime);
 
         for(i = 0; i < logDateLen; i++)
         {
@@ -212,14 +214,18 @@ s_log * openLog(char * fileName, char * appN)
         }
     }
     else
-#endif
-    error = (fputs("----------  ", husky_log->logFile) == EOF);
+    {
+        error = (fputs("----------  ", husky_log->logFile) == EOF);
+    }
 
     if(!error)
     {
         error =
-            (fprintf(husky_log->logFile, "%3s %02u %3s %02u, %s\n", weekday_ab[locTime->tm_wday],
-                     locTime->tm_mday, months_ab[locTime->tm_mon], locTime->tm_year % 100,
+            (fprintf(husky_log->logFile, "%3s %02u %3s %04u, %s\n",
+                     weekday_ab[(size_t)(locTime->tm_wday)],
+                     (unsigned)(locTime->tm_mday),
+                     months_ab[(size_t)(locTime->tm_mon)],
+                     (unsigned)(locTime->tm_year + 1900),
                      husky_log->appName) == EOF);
     }
 
@@ -290,7 +296,7 @@ void w_log(char key, char * logString, ...)
     if(log || screen)
     {
         char logDate[64];
-        int logDateLen;
+        size_t logDateLen;
         currentTime = time(NULL);
 #if 1
         locTime    = localtime(&currentTime);
@@ -446,13 +452,18 @@ LONG WINAPI UExceptionFilter(struct _EXCEPTION_POINTERS * ExceptionInfo)
         default:
             ErrorMsg = "Unknown error";
     } /* switch */
-    w_log(LL_CRIT,
-          "Exception 0x%08x (%s) at address 0x%08x",
-          ExceptionInfo->ExceptionRecord->ExceptionCode,
-          ErrorMsg,
-          ExceptionInfo->ExceptionRecord->ExceptionAddress);
+    {
+        char sCode[11];
+        sprintf((char* const)sCode, "0x%08x",
+                ExceptionInfo->ExceptionRecord->ExceptionCode);
+        w_log(LL_CRIT,
+              "Exception %s (%s) at address %p",
+              (char *)sCode,
+              ErrorMsg,
+              ExceptionInfo->ExceptionRecord->ExceptionAddress);
+    }
     exit(1);
-    return 0; /* compiler paranoia */
+ /*   return 0;  compiler paranoia */
 } /* UExceptionFilter */
 
 #endif /* ifdef __NT__ */

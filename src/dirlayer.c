@@ -128,7 +128,7 @@ char * husky_readdir(husky_DIR * dir)
     {
         de = readdir(dir->internal_DIR);
 
-        if(!de || !de->d_name)
+        if(!de)
         {
             return NULL;
         }

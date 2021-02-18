@@ -221,7 +221,7 @@ dword filecrc32(const char * filename)
 
         if(got)
         {
-            crc = memcrc32((char *)buffer, got, crc);
+            crc = memcrc32((char *)buffer, (int)got, crc);
         }
     }
     while(got == CRC_BUFFER_SIZE);
@@ -304,7 +304,7 @@ word filecrc16(const char * filename)
 
         if(got)
         {
-            crc = memcrc16((char *)buffer, got, crc);
+            crc = memcrc16((char *)buffer, (int)got, crc);
         }
     }
     while(got == CRC_BUFFER_SIZE);
@@ -384,7 +384,7 @@ word filesum16(const char * filename)
 
         if(got)
         {
-            crc = memsum16((char *)buffer, got);
+            crc = memsum16((char *)buffer, (unsigned int)got);
         }
     }
     while(got == CRC_BUFFER_SIZE);
@@ -438,9 +438,9 @@ dword filesum32(const char * filename, unsigned long * plen)
 {
     FILE * fd;
     char buffer[CRC_BUFFER_SIZE], * str;
-    size_t got;
+    int got;
     register dword crc         = 0;
-    register unsigned long len = 0;
+    register int len = 0;
 
     fd = fopen(filename, "rb");
 
@@ -451,7 +451,7 @@ dword filesum32(const char * filename, unsigned long * plen)
 
     while(!feof(fd) && !ferror(fd))
     {
-        got = fread(buffer, 1, CRC_BUFFER_SIZE, fd);
+        got = (int)fread(buffer, 1, CRC_BUFFER_SIZE, fd);
 
         if(got > 0)
         {
@@ -467,7 +467,7 @@ dword filesum32(const char * filename, unsigned long * plen)
 
     if(plen)
     {
-        *plen = len;
+        *plen = (unsigned long)len;
     }
 
     crc = (crc & 0xffff) + (crc >> 16);

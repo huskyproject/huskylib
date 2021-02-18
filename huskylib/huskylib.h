@@ -140,7 +140,7 @@ HUSKYEXT int fputUINT16(FILE * out, word word);
    Output: fputUIN16 returns the return of the second fputc call.
    FZ:     fputUINT16 writes word into the stream using the order lowByte, highByte.
  */
-HUSKYEXT signed int fgetsUntil0(UCHAR * str, size_t n, FILE * f, char * filter);
+HUSKYEXT size_t fgetsUntil0(UCHAR * str, size_t n, FILE * f, char * filter);
 
 /*DOC
    Input:  n-1 chars are read at most.

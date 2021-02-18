@@ -66,7 +66,7 @@ int ctoi(const char * s)
 
 char * _fast Strip_Trailing(char * str, char strip)
 {
-    int x;
+    size_t x;
 
     if(str && *str && str[x = strlen(str) - 1] == strip)
     {
@@ -78,9 +78,9 @@ char * _fast Strip_Trailing(char * str, char strip)
 
 char * _fast Add_Trailing(char * str, char add)
 {
-    int x;
+    size_t x;
 
-    if(str && *str && str[x = strlen(str) - 1] != add)
+    if(str && *str && str[x = (size_t)strlen(str) - 1] != add)
     {
         str[x + 1] = add;
         str[x + 2] = '\0';
@@ -105,8 +105,9 @@ char * _fast strocpy(char * dst, const char * src)
 
 char * _fast firstchar(const char * strng, const char * delim, int findword)
 {
-    int isw = 0, sl_s, wordno = 0;
-    register int sl_d, x;
+    int isw = 0, wordno = 0;
+    size_t sl_s;
+    register size_t sl_d, x;
     register const char * string = strng;
     const char * oldstring = strng;
 
@@ -136,7 +137,7 @@ char * _fast firstchar(const char * strng, const char * delim, int findword)
     }
     sl_s = strlen(string);
 
-    for(wordno = 0; string - oldstring < sl_s; string++)
+    for(wordno = 0; (size_t)(string - oldstring) < sl_s; string++)
     {
         for(x = 0, isw = 0; x <= sl_d; x++)
         {
@@ -246,7 +247,7 @@ char * stripLeadingChars(char * str, const char * chr)
 {
     if(str && chr && *chr)
     {
-        int i = strspn(str, chr);
+        size_t i = strspn(str, chr);
         memmove(str, str + i, strlen(str) - i + 1);
     }
 
@@ -263,7 +264,7 @@ char * stripLeadingChars(char * str, const char * chr)
 char * stripTrailingChars(char * str, const char * chr)
 {
     char * i;
-    register int l;
+    register size_t l;
 
     if(str && chr && (l = strlen(str)) > 0)
     {
@@ -506,7 +507,7 @@ char * strseparate(char ** stringp, const char * delim)
 
 char * extract_CVS_keyword(char * str)
 {
-    int l;
+    size_t l;
     char * tmp, * r;
 
     if(!str)
@@ -528,14 +529,14 @@ char * extract_CVS_keyword(char * str)
         return NULL;
     }
 
-    r = malloc(l - 1);
+    r = (char *)malloc(l - 1);
 
     if(!r)
     {
         return NULL;
     }
 
-    strncpy(r, tmp, l - 2);
+    strncpy(r, tmp, strlen(r) - 1); /* strlen(r) - 1 == l - 2 */
     r[l - 2] = 0;
     return r;
 } /* extract_CVS_keyword */
@@ -566,13 +567,13 @@ int copyStringUntilSep(char * str, char * seps, char ** dest)
 
     if(sepPos)
     {
-        *dest = malloc(sepPos - str + 1);
+        *dest = (char *)malloc(sepPos - str + 1);
         strnzcpy(*dest, str, sepPos - str);
-        return sepPos - str;
+        return (int)(sepPos - str);
     }
 
     *dest = (char *)sstrdup(str);
-    return strlen(str);
+    return (int)strlen(str);
 }
 
 /* Parse strings like "token1, token2,token3 token4" into s_str_array */
@@ -580,9 +581,9 @@ s_str_array * makeStrArray(char * token)
 {
     s_str_array * ss;
     char ** tokens;
-    int size = 15, ii = 0;
-    int len = 0;
-    int offset, token_len;
+    size_t size = 15, ii = 0;
+    size_t len = 0;
+    size_t offset, token_len;
 
     assert(token != NULL);
     tokens = (char **)smalloc(size * sizeof(char *));
@@ -597,7 +598,7 @@ s_str_array * makeStrArray(char * token)
         if(ii >= size)
         {
             size   = (size + 1) * 2;
-            tokens = srealloc(tokens, size * sizeof(char *));
+            tokens = (char **)srealloc(tokens, size * sizeof(char *));
         }
 
         ++ii;
@@ -612,14 +613,14 @@ s_str_array * makeStrArray(char * token)
 
     /* alloc structure, exact size */
     offset    = offsetof(s_str_array, data.offsets[ii]);
-    ss        = smalloc(offset + len);
+    ss        = (s_str_array *)smalloc(offset + len);
     ss->count = ii;
     offset   -= offsetof(s_str_array, data);
 
-    /* fill structuare with offsets and strings' content */
+    /* fill structure with offsets and strings' content */
     for(ii = 0; ii < ss->count; ++ii)
     {
-        ss->data.offsets[ii] = offset;
+        ss->data.offsets[ii] = (int)offset;
         token_len            = strlen(tokens[ii]);
         memcpy(STR_N(ss, ii), tokens[ii], token_len + 1);
         offset += token_len + 1;
@@ -635,12 +636,12 @@ int findInStrArray(s_str_array const * ss, char const * find)
 
     assert(ss != NULL && find != NULL);
 
-    while(ii < ss->count && stricmp(find, STR_N(ss, ii)))
+    while((size_t)ii < ss->count && stricmp(find, STR_N(ss, ii)))
     {
         ++ii;
     }
 
-    if(ii < ss->count)
+    if((size_t)ii < ss->count)
     {
         return ii;
     }
@@ -650,7 +651,7 @@ int findInStrArray(s_str_array const * ss, char const * find)
 
 s_str_array * copyStrArray(s_str_array * ss)
 {
-    int size;
+    size_t size;
     s_str_array * nss;
 
     assert(ss != NULL);
@@ -662,8 +663,8 @@ s_str_array * copyStrArray(s_str_array * ss)
 
 char * StrArray2String(s_str_array * ss)
 {
-    int ii;
-    int size;
+    size_t ii;
+    size_t size;
     char * string;
 
     assert(ss != NULL);
@@ -680,7 +681,7 @@ char * StrArray2String(s_str_array * ss)
     /* \0 -> ' ' */
     for(ii = 1; ii < ss->count; ++ii)
     {
-        string[ss->data.offsets[ii] - 1 - ss->data.offsets[0]] = ' ';
+        string[(size_t)(ss->data.offsets[ii] - 1 - ss->data.offsets[0])] = ' ';
     }
     return string;
 }

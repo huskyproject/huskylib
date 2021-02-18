@@ -1,0 +1,341 @@
+{
+    "version": 1,
+    "warnings": [
+        {
+            "CodeCurrent": 55168701,
+            "CodeNext": 981500451,
+            "CodePrev": 0,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'malloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 981500451,
+            "CodeNext": 3261137,
+            "CodePrev": 55168701,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'calloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 3261137,
+            "CodeNext": 2908916453,
+            "CodePrev": 981500451,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'free' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 2908916453,
+            "CodeNext": 0,
+            "CodePrev": 3261137,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'realloc' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 2260174374,
+            "CodeNext": 3300151563,
+            "CodePrev": 0,
+            "ErrorCode": "V1059",
+            "FileName": "compiler.h",
+            "Message": "The 'strftime' macro name overrides a reserved name from C standard. This may lead to undefined behavior."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "adcase.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "calendar.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "cmpfname.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "crc.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "cvtdate.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "fexist.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ffind.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "flush.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ftnaddr.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "genmsgid.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "genverst.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "getfree.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "gnmsgid.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "ioutil.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "mapfile.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "memory.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "parsenn.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "qksort.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "setfsize.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "strext.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "strftime.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "tdelay.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "temp.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "tree.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "version.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 1028699183,
+            "CodeNext": 42,
+            "CodePrev": 1725059867,
+            "ErrorCode": "V1042",
+            "FileName": "xstr.c",
+            "Message": "This file is marked with copyleft license, which requires you to open the derived source code."
+        },
+        {
+            "CodeCurrent": 417106776,
+            "CodeNext": 621071246,
+            "CodePrev": 0,
+            "ErrorCode": "V1040",
+            "FileName": "compiler.h",
+            "Message": "Possible typo in the spelling of a pre-defined macro name. The '__Linux__' macro is similar to '__linux__'."
+        },
+        {
+            "CodeCurrent": 624865,
+            "CodeNext": 0,
+            "CodePrev": 8536,
+            "ErrorCode": "V796",
+            "FileName": "genmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 624865,
+            "CodeNext": 0,
+            "CodePrev": 8492,
+            "ErrorCode": "V796",
+            "FileName": "genmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 2427461,
+            "CodeNext": 0,
+            "CodePrev": 613305,
+            "ErrorCode": "V575",
+            "FileName": "genmsgid.c",
+            "Message": "The null pointer is passed into 'free' function. Inspect the first argument."
+        },
+        {
+            "CodeCurrent": 6369,
+            "CodeNext": 0,
+            "CodePrev": 8536,
+            "ErrorCode": "V796",
+            "FileName": "gnmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 6369,
+            "CodeNext": 0,
+            "CodePrev": 8492,
+            "ErrorCode": "V796",
+            "FileName": "gnmsgid.c",
+            "Message": "It is possible that 'break' statement is missing in switch statement."
+        },
+        {
+            "CodeCurrent": 306249,
+            "CodeNext": 352579813,
+            "CodePrev": 123,
+            "ErrorCode": "V575",
+            "FileName": "gnmsgid.c",
+            "Message": "The null pointer is passed into 'free' function. Inspect the first argument."
+        },
+        {
+            "CodeCurrent": 3024399619,
+            "CodeNext": 123,
+            "CodePrev": 0,
+            "ErrorCode": "V526",
+            "FileName": "strext.c",
+            "Message": "The 'strcasecmp' function returns _ if corresponding strings are equal. Consider examining the condition for mistakes."
+        },
+        {
+            "CodeCurrent": 4149395158,
+            "CodeNext": 125,
+            "CodePrev": 0,
+            "ErrorCode": "V501",
+            "FileName": "version.c",
+            "Message": "There are identical sub-expressions to the left and to the right of the '==' operator: BRANCH_CURRENT == BRANCH_CURRENT"
+        },
+        {
+            "CodeCurrent": 4149395158,
+            "CodeNext": 125,
+            "CodePrev": 0,
+            "ErrorCode": "V526",
+            "FileName": "version.c",
+            "Message": "The 'strcmp' function returns _ if corresponding strings are equal. Consider examining the condition for mistakes."
+        },
+        {
+            "CodeCurrent": 3399382539,
+            "CodeNext": 125,
+            "CodePrev": 123,
+            "ErrorCode": "V501",
+            "FileName": "version.c",
+            "Message": "There are identical sub-expressions to the left and to the right of the '!=' operator: BRANCH_CURRENT != BRANCH_CURRENT"
+        }
+    ]
+}

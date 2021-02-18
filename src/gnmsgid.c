@@ -144,20 +144,13 @@ void printversion(void)
     printf("gnmsgid.c date:      %s\n", str_or_unknown(date));
     printf("huskylib CVS date:   %s\n", cvs_date);
 
-    if(rev)
-    {
-        free(rev);
-    }
-
-    if(date)
-    {
-        free(date);
-    }
+    free(rev);
+    free(date);
 }
 
 int main(int argc, char * argv[])
 {
-    int i, j, perr, usage, parsed, version;
+    int i, j, perr, usage, version;
     char * s;
     char * seqdir;
     unsigned long seqoutrun;
@@ -171,7 +164,6 @@ int main(int argc, char * argv[])
     version   = 0;
     perr      = 0;
     num       = 1;
-    parsed    = 0;
 
     for(i = 1; i < argc; i++)
     {
@@ -185,11 +177,7 @@ int main(int argc, char * argv[])
 
                 if(i < argc)
                 {
-                    if(seqdir)
-                    {
-                        free(seqdir);
-                    }
-
+                    free(seqdir);
                     seqdir = strdup(argv[i]);
                 }
                 else
@@ -241,16 +229,9 @@ int main(int argc, char * argv[])
             break;
         }
 
-        if(parsed != 0)
-        {
-            fprintf(stderr, "Illegal parameter: '%s'!\n", argv[i]);
-            perr = 1;
-            break;
-        }
-
         s = argv[i];
 
-        for(j = strlen(argv[i]); j > 0; j--, s++)
+        for(j = (int)strlen(argv[i]); j > 0; j--, s++)
         {
             if(!isdigit((int)(*s)))
             {

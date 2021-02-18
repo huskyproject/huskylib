@@ -57,7 +57,7 @@
 /***  Implementation  *******************************************************/
 char * xstralloc(char ** s, size_t add)
 {
-    int n;
+    size_t n;
 
     if(*s == NULL)
     {
@@ -99,7 +99,7 @@ char * xstrscat(char ** s, ...)
 {
     va_list ap;
     char * q, * p;
-    int ncat;
+    size_t ncat;
 
     for(va_start(ap, s), ncat = 0; (p = va_arg(ap, char *)) != NULLP; )
     {
@@ -124,7 +124,7 @@ int xscatprintf(char ** s, const char * format, ...)
     char * addline;
 #elif defined (HAS_vsnprintf)
     char * addline;
-    int nmax;
+    size_t nmax;
 #else
     char addline[N_PRINTFBUF];
 #endif
@@ -141,7 +141,7 @@ int xscatprintf(char ** s, const char * format, ...)
         nprint = vsnprintf(addline, nmax, format, ap);
 
         /* If that worked, return the string. */
-        if(nprint > -1 && nprint < nmax)
+        if(nprint > -1 && (size_t)nprint < nmax)
         {
             break;
         }
@@ -149,7 +149,7 @@ int xscatprintf(char ** s, const char * format, ...)
         /* Else try again with more space. */
         if(nprint > -1)
         {
-            nmax = nprint + 1; /* precisely what is needed */
+            nmax = (size_t)nprint + 1; /* precisely what is needed */
         }
         else
         {

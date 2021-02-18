@@ -179,9 +179,11 @@ void _fast flush_handle(FILE * fp)
 {
     fflush(fp);
 
-#if defined (__OS2__) || defined (__DOS__) || defined (__NT__) || defined (__TURBOC__) || \
+#if defined (__OS2__) || defined (__DOS__) || defined (__TURBOC__) || \
     defined (SASC) || defined (__DJGPP__)
     flush_handle2(fileno(fp));
+#elif defined (__WIN32__)
+    flush_handle2(fp);
 #else
     {
         int nfd;

@@ -171,7 +171,7 @@ void adaptcase_refresh_dir(const char * directory)
 void adaptcase(char * pathname)
 {
     int l, found = 1, addresult = 0;
-    size_t i, j, k, n, * m, raw_high, rawmax, nmax;
+    int i, j, k, n, * m, raw_high, rawmax, nmax;
     char buf[FILENAME_MAX + 1];
     DIR * dirp = NULL;
     struct dirent * dp;
@@ -301,7 +301,8 @@ start_over:
                 goto add_to_cache;
             }
 
-        cache_failure: i++;
+        cache_failure: 
+            i++;
             buf[i] = '\0';
             dirp   = opendir(buf);
 #ifdef TRACECACHE
@@ -383,12 +384,11 @@ add_to_cache:
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
 
-        if((adaptcase_cache[l].query = malloc(k + 1)) == NULL ||
-           (adaptcase_cache[l].result = malloc(k + 1)) == NULL ||
-           (adaptcase_cache[l].raw_cache = malloc(rawmax = rawcache_stepsize)) == NULL ||
+        if((adaptcase_cache[l].query = (char *)malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].result = (char *)malloc(k + 1)) == NULL ||
+           (adaptcase_cache[l].raw_cache = (char *)malloc(rawmax = rawcache_stepsize)) == NULL ||
            (adaptcase_cache[l].cache_index =
-                malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) ==
-           NULL)
+                (size_t *)malloc((nmax = cacheindex_stepsize) * sizeof(size_t))) == NULL)
         {
             goto cache_error;
         }
@@ -410,22 +410,26 @@ add_to_cache:
         {
             if(raw_high + DIRENTLEN(dp) + 1 > rawmax)
             {
-                if((adaptcase_cache[l].raw_cache =
-                        realloc(adaptcase_cache[l].raw_cache,
-                                rawmax += rawcache_stepsize)) == NULL)
+                char * tmp;
+                tmp = realloc(adaptcase_cache[l].raw_cache,
+                              rawmax += rawcache_stepsize);
+                if(tmp == NULL)
                 {
                     goto cache_error;
                 }
+                adaptcase_cache[l].raw_cache = tmp;
             }
 
             if(adaptcase_cache[l].n == nmax - 1)
             {
-                if((adaptcase_cache[l].cache_index =
-                        realloc(adaptcase_cache[l].cache_index,
-                                (nmax += cacheindex_stepsize) * sizeof(size_t))) == NULL)
+                size_t * tmp;
+                tmp = realloc(adaptcase_cache[l].cache_index,
+                              (nmax += cacheindex_stepsize) * sizeof(size_t));
+                if(tmp == NULL)
                 {
                     goto cache_error;
                 }
+                adaptcase_cache[l].cache_index = tmp;
             }
 
             memcpy(adaptcase_cache[l].raw_cache + raw_high, dp->d_name, DIRENTLEN(dp) + 1);
@@ -446,7 +450,9 @@ add_to_cache:
         fprintf(ftrc, "Successfully added cache entry.\n");
 #endif
         goto start_over;
-    cache_error: nfree(adaptcase_cache[l].query);
+
+    cache_error: 
+        nfree(adaptcase_cache[l].query);
         nfree(adaptcase_cache[l].result);
         nfree(adaptcase_cache[l].raw_cache);
         nfree(adaptcase_cache[l].cache_index);

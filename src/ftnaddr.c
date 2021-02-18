@@ -110,7 +110,7 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
 
     assert(str);
     assert(netAddr);
-    allocated = (char *)malloc(len + 1);
+    allocated = (char *)malloc((size_t)len + 1);
 
     if(!allocated)
     {
@@ -122,8 +122,8 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
         return FTNADDR_ERROR;
     }
 
-    memcpy(allocated, str, len);
-    allocated[len] = '\0';
+    memcpy(allocated, str, (size_t)len);
+    allocated[(size_t)len] = '\0';
     result         = parseFtnAddrZ(allocated, netAddr, mask, &end_loc);
 
     if(end != NULL)
@@ -137,19 +137,20 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
 
 int parseFtnAddrZ(const char * str, hs_addr * netAddr, int mask, const char ** end)
 {
-    /*                  0    1    2    3    4     5    6     7     8     9  */
     const char s[] =
     {
-        '\0', ':', '/', '.', '@', '\0', ' ', '\t', '\r', '\n'
+        /*    0    1    2    3    4     5    6     7     8     9  */
+            '\0', ':', '/', '.', '@', '\0', ' ', '\t', '\r', '\n'
     };
     const char * ptr, * tmp;
     int result         = 0;
     size_t sym         = 0;
     long i             = 0;
-    hs_addr netAddrOld = *netAddr;
+    hs_addr netAddrOld;
 
     assert(str);
     assert(netAddr);
+    netAddrOld = *netAddr;
     tmp = str;
 
     /* skip leading spaces and tabs
@@ -199,7 +200,6 @@ int parseFtnAddrZ(const char * str, hs_addr * netAddr, int mask, const char ** e
     {
         /* skip key symbol */
         ptr = ++tmp;
-        i   = 0;
         i   = read_ftn_long(tmp, &tmp);
 
         if(i == LONG_MAX || ptr == tmp)

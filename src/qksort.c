@@ -38,7 +38,7 @@ static void _fast iqksort(int * p_lo, int * p_hi)
 {
     int * p_mid, * p_i, * p_lastlo, tmp;
 
-    p_mid = p_lo + (((int)(p_hi - p_lo)) / 2);
+    p_mid = p_lo + (((ptrdiff_t)(p_hi - p_lo)) / 2);
     SWAP(*p_lo, *p_mid, tmp);
     p_lastlo = p_lo;
 

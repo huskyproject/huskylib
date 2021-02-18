@@ -94,7 +94,13 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
         }
     }
 
-    seqpath = malloc(strlen(seqdir) + 13);
+    seqpath = (char *)malloc(strlen(seqdir) + 13);
+    if(seqpath == NULL)
+    {
+        GenMsgIdErr("No memory");
+        return (*altGenMsgId)();
+    }
+
     strcpy(seqpath, seqdir);
     pname = seqpath + strlen(seqpath);
 
@@ -165,11 +171,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
             } /* if directory not created at 1st time then use old alghorithm */
 
             free(seqpath);
-
-            if(new_fname)
-            {
-                free(new_fname);
-            }
+            free(new_fname);
 
             GenMsgIdErr("can't open/create SEQDIR directory");
             return (*altGenMsgId)();
@@ -208,7 +210,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
                     unlink(seqpath);
                 }
 
-                strcpy(max_fname, ff->ff_name);
+                strncpy(max_fname, ff->ff_name, sizeof(max_fname) - 1);
                 seq = n;
             }
             else
@@ -219,10 +221,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
         }
         while(FFindNext(ff) == 0);
 
-        if(ff)
-        {
-            FFindClose(ff);
-        }
+        FFindClose(ff);
 
     emptydir:
 
@@ -233,11 +232,16 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
 
         if(new_fname == NULL)
         {
-            new_fname = malloc(strlen(seqpath) + 13);
+            new_fname = (char *)malloc(strlen(seqpath) + 13);
+            if(new_fname == NULL)
+            {
+                GenMsgIdErr("No memory");
+                return (*altGenMsgId)();
+            }
         }
 
         *pname = '\0';
-        sprintf(new_fname, "%s%08lx.seq", seqpath, (unsigned long)(seq + 1));
+        sprintf(new_fname, "%s%08lx.seq", seqpath, (unsigned long)seq + 1);
 
         if(max_fname[0] == '\0')
         {
