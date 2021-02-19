@@ -83,6 +83,22 @@ dos:
    ```sh
       $ cmake --build build --target install
    ```
+## OPEN WATCOM 2.0 FORK
+
+This fork allows cross-compilation from Linux to Windows NT & OS/2 using Open Watcom 2.0:
+```console
+$ cd huskylib/make
+```
+Windows NT build:
+```console
+$ wmake -f makefile.watcom NT=1
+```
+OS/2 build:
+```console
+$ wmake -f makefile.watcom OS2=1
+```
+Where 'wmake' is Open Watcom 2.0's WMAKE.
+
 ## Afterbuild actions
 
 - (For UNIXes only) Ensure /usr/local/lib/ is in /etc/ld.so.conf
