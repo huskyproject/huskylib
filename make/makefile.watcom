@@ -10,19 +10,18 @@
 #  wmake -f makefile.watcom OS2=1
 #
 
-!ifdef __LINUX__
-SEP=/
-!else
-SEP=\
-!endif
-
 CC=wcl386
 WLIB=wlib -q -b
 
+#  wcl386 in Windows & OS/2 will not accept forward slashes as path
+#  separators with the -I parameter unless you put the path in
+#  double quotes:
+
+INC=-I"../huskylib"
+
 CFLAGS=-zq -bt=nt -l=nt
-SRC_DIR=..$(SEP)src
+SRC_DIR=../src
 TARGET=huskywcw.lib
-INC=-I..$(SEP)huskylib
 GNMSGID=gnmsgid.exe
 
 !ifdef OS2
@@ -38,10 +37,10 @@ OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
 
 {$(SRC_DIR)}.c.obj:
 	@%erase $(TARGET)
-	$(CC) $(CFLAGS) $INC -fo=$@ -c $<
+	$(CC) $(CFLAGS) $(INC) -fo=$@ -c $<
 
 $(GNMSGID): $(TARGET)
-	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)$(SEP)gnmsgid.c $(TARGET)
+	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)/gnmsgid.c $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(WLIB) $(TARGET) $(OBJS)
