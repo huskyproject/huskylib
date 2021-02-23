@@ -210,7 +210,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
                     unlink(seqpath);
                 }
 
-                strncpy(max_fname, ff->ff_name, sizeof(max_fname) - 1);
+                strncpy(max_fname, ff->ff_name, sizeof(max_fname));
                 seq = n;
             }
             else
