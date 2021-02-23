@@ -53,18 +53,11 @@ struct _stamp
     } time;
 };
 
-struct _dos_st
-{
-    word date;
-    word time;
-};
-
 /* Union so we can access stamp as "int" or by individual components */
 union stamp_combo
 {
     dword          ldate;
     struct _stamp  msg_st;
-    struct _dos_st dos_st;
 };
 
 typedef union stamp_combo SCOMBO;

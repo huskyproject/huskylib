@@ -469,61 +469,10 @@ void _fast FFindClose(FFIND * ff)
     }
 } /* FFindClose */
 
-/*
- *  FFindInfo: This function was added because it is SIGNIFICANTLY faster
- *  under OS/2 to call DosQPathInfo() rather than DosFindFirst() if all
- *  you are interested in is getting a specific file's date/time/size.
- *
- *  PLF Thu  10-17-1991  18:12:37
- */
 FFIND * _fast FFindInfo(const char * filespec)
 {
-#if !defined (__OS2__)
     return FFindOpen(filespec, 0);
-
-#else
-    FFIND * ff;
-    FILESTATUS fs;
-    const char * f;
-    ff = (FFIND *)malloc(sizeof *ff);
-
-    if(ff == NULL)
-    {
-        return NULL;
-    }
-
-    memset(ff, 0, sizeof *ff);
-
-    if(!DosQPathInfo((PBYTE)filespec, FIL_STANDARD, (PBYTE)&fs, sizeof fs, 0L))
-    {
-        ff->ff_attrib = (char)fs.attrFile;
-        ff->ff_ftime  = *((USHORT *)&fs.ftimeLastWrite);
-        ff->ff_fdate  = *((USHORT *)&fs.fdateLastWrite);
-        ff->ff_fsize  = fs.cbFile;
-        /* isolate file name */
-        f = strrchr(filespec, '\\');
-
-        if(f == NULL)
-        {
-            f = filespec;
-        }
-        else
-        {
-            f++;
-        }
-
-        strncpy(ff->ff_name, f, sizeof(ff->ff_name));
-    }
-    else
-    {
-        free(ff);
-        return NULL;
-    }
-
-    return ff;
-
-#endif /* if !defined (__OS2__) */
-} /* FFindInfo */
+}
 
 #ifdef TEST /* Text functions section ======================================*/
 
