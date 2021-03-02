@@ -51,13 +51,17 @@
 #    include <process.h>
 /* system functions substitutions for DLL build */
 #    define fileno _fileno
-#    define read _read
+#    define read   _read
 #if _WIN64
 #    define lseek _lseeki64
-#    define tell _telli64
+#    define fseek _fseeki64
+#    define tell  _telli64
+#    define ftell _ftelli64
 #else
 #    define lseek _lseek
-#    define tell _tell
+#    define fseek _fseek
+#    define tell  _tell
+#    define ftell _ftell
 #endif
 #    define sopen _sopen
 #    define write _write
