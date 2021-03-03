@@ -94,9 +94,10 @@
       </PrecompiledHeader>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <SupportJustMyCode>true</SupportJustMyCode>
     </ClCompile>
     <Link>
       <AdditionalDependencies>msvcrtd.lib;huskylib.lib;fidoconf.lib;Kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -121,6 +122,10 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild />
+      <ExceptionHandling>false</ExceptionHandling>
+      <SupportJustMyCode>true</SupportJustMyCode>
     </ClCompile>
     <Link>
       <AdditionalDependencies>msvcrtd.lib;huskylib.lib;fidoconf.lib;Kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
