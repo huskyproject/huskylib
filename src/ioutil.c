@@ -385,7 +385,7 @@ int copy_file(const char * from, const char * to, const int force_rewrite)
     w_dbglog(LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fh = open(to,
               (force_rewrite ? 0 : O_EXCL) | O_CREAT | O_TRUNC | O_WRONLY | O_BINARY,
-              S_IREAD | S_IWRITE);
+              S_IRUSR | S_IWUSR);
 
     if(fh < 0)
     {
@@ -638,7 +638,7 @@ int lockFile(const char * lockfile, int advisoryLock)
     {
         while(advisoryLock > 0)
         {
-            fh = open(lockfile, O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
+            fh = open(lockfile, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 
             if(fh < 0)
             {
@@ -678,7 +678,7 @@ int lockFile(const char * lockfile, int advisoryLock)
     }
     else     /*  normal locking */
     {
-        fh = open(lockfile, O_CREAT | O_RDWR | O_EXCL, S_IREAD | S_IWRITE);
+        fh = open(lockfile, O_CREAT | O_RDWR | O_EXCL, S_IRUSR | S_IWUSR);
     }
 
     if(fh < 0)
