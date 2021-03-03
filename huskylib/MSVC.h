@@ -153,6 +153,15 @@
 #ifndef S_ISREG
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
 #endif
+
+#ifndef S_IRUSR
+#define S_IRUSR S_IREAD
+#endif
+
+#ifndef S_IWUSR
+#define S_IWUSR S_IWRITE
+#endif
+
 /* define constants for 2nd parameter of access() function */
 #ifndef F_OK                  /* does file exist */
 #define F_OK 0
