@@ -59,9 +59,7 @@
 #    define ftell _ftelli64
 #else
 #    define lseek _lseek
-#    define fseek _fseek
 #    define tell  _tell
-#    define ftell _ftell
 #endif
 #    define sopen _sopen
 #    define write _write
