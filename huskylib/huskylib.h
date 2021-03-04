@@ -108,7 +108,7 @@ HUSKYEXT dword husky_GetTimer(hs_time * timer_ctx);
 
 /*-- genmsgid.c --*/
 HUSKYEXT dword _XPENTRY GenMsgId(char * seqdir, unsigned long max_outrun);
-HUSKYEXT dword _XPENTRY GenMsgIdEx(char * seqdir, unsigned long max_outrun, dword (* altGenMsgId)(
+dword _XPENTRY GenMsgIdEx(char * seqdir, unsigned long max_outrun, dword (* altGenMsgId)(
                                        void), char ** errstr);
 
 /*-- setfsize.c --*/
