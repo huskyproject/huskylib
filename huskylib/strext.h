@@ -152,7 +152,7 @@ HUSKYEXT char * strseparate(register char ** stringp, register const char * deli
 /* Extract contents from CVS/RCS keyvords (like $Revision$)
  * Return malloc'ed string
  */
-char * extract_CVS_keyword(char * str);
+HUSKYEXT char * extract_CVS_keyword(char * str);
 
 /* Convert char to integer with range checking
  */
