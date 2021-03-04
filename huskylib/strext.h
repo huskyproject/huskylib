@@ -168,7 +168,7 @@ HUSKYEXT int copyString(char * str, char ** pmem);
  * *dest will be freed if non-NULL
  * returns number of chars copied
  */
-HUSKYEXT int copyStringUntilSep(char * str, char * seps, char ** dest);
+HUSKYEXT size_t copyStringUntilSep(char * str, char * seps, char ** dest);
 
 /* Structures for compact storage of array of NUL-terminated strings of
  * various length.

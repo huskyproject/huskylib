@@ -553,7 +553,7 @@ int copyString(char * str, char ** pmem)
     return 0;
 }
 
-int copyStringUntilSep(char * str, char * seps, char ** dest)
+size_t copyStringUntilSep(char * str, char * seps, char ** dest)
 {
     char * sepPos;
 
@@ -569,11 +569,11 @@ int copyStringUntilSep(char * str, char * seps, char ** dest)
     {
         *dest = (char *)malloc(sepPos - str + 1);
         strnzcpy(*dest, str, sepPos - str);
-        return (int)(sepPos - str);
+        return (size_t)(sepPos - str);
     }
 
     *dest = (char *)sstrdup(str);
-    return (int)strlen(str);
+    return strlen(str);
 }
 
 /* Parse strings like "token1, token2,token3 token4" into s_str_array */
