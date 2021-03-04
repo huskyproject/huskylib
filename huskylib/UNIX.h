@@ -100,7 +100,7 @@
 #endif
 
 #if defined (__LINUX__)
-    #if defined (__GLIBC__)
+    #if defined (__GLIBC__) || defined(__ANDROID__)
 #define HAS_SYS_STATVFS_H
     #else
 #define HAS_SYS_VFS_H

@@ -89,7 +89,7 @@ int MKSTEMPS(char * tempfilename)
             }
 
             *pp = '.';
-            fd  = open(ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
+            fd  = open(ttt, O_EXCL | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
         }
         while(fd == -1 && errno == EEXIST && (strcpy(ttt, tempfilename), 1));
     }
@@ -102,7 +102,7 @@ int MKSTEMPS(char * tempfilename)
                 break;
             }
 
-            fd = open(ttt, O_EXCL | O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
+            fd = open(ttt, O_EXCL | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
         }
         while(fd == -1 && errno == EEXIST && (strcpy(ttt, tempfilename), 1));
     }
