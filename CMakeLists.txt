@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8...3.19)
 PROJECT(husky C)
 set(husky_VERSION 1.9.0)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -46,7 +46,7 @@ message("Build shared      : ${BUILD_SHARED_LIBS}")
 message("Build type        : ${CMAKE_CONFIGURATION_TYPES}")
 message("-------------------------")
 
-SET(husky_SOURCES 
+SET(husky_SOURCES
   src/adcase.c
   src/calendar.c
   src/cmpfname.c
@@ -79,7 +79,7 @@ SET(husky_SOURCES
   src/version.c
   src/xstr.c
 )
-SET(husky_HEADERS 
+SET(husky_HEADERS
   huskylib/BCD.h
   huskylib/BCO.h
   huskylib/BCW.h
