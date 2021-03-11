@@ -63,7 +63,11 @@ static int logEchoToScreen;
 static char * logLevels       = NULL;
 static char * screenLogLevels = NULL;
 static char * logDateFormat   = NULL;
+
+#ifdef HAVE_SYSLOG
 static int syslogFacility     = 0;
+#endif
+
 /***  Implementation  *******************************************************/
 void initLogSyslog(char * ext_program,
                    char * ext_logFileDir,
