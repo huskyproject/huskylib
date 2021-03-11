@@ -154,7 +154,7 @@ int husky_closedir(husky_DIR * dir)
 
     if(!rc)
     {
-        free(dir);
+        nfree(dir);
     }
 
     return rc;
@@ -256,7 +256,7 @@ int husky_closedir(husky_DIR * dir)
     }
 
     FFindClose(dir->ff);
-    free(dir);
+    nfree(dir);
     return 0;
 }
 

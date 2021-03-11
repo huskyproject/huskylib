@@ -36,8 +36,8 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
-
 #include <ftnaddr.h>
+#include <memory.h>
 
 long read_ftn_long(const char * str, const char ** end)
 {
@@ -131,7 +131,7 @@ int parseFtnAddr(const char * str, hs_addr * netAddr, int len, int mask, const c
         *end = str + (end_loc - allocated);
     }
 
-    free(allocated);
+    nfree(allocated);
     return result;
 } /* parseFtnAddr */
 

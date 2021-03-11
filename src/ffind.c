@@ -74,7 +74,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
 
         if(findfirst(filespec, &(ff->ffbuf), attribute) != 0)
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
         else
@@ -91,7 +91,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
 
         if(_dos_findfirst(filespec, attribute, &(ff->ffbuf)) != 0)
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
         else
@@ -133,7 +133,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
         }
         else
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
 
@@ -173,7 +173,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
                 if(de == NULL)
                 {
                     closedir(ff->dir);
-                    free(ff);
+                    nfree(ff);
                     ff  = NULL;
                     fin = 1;
                 }
@@ -192,7 +192,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
         }
         else
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
 
@@ -231,7 +231,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
         }
         else
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
 
@@ -278,7 +278,7 @@ FFIND * _fast FFindOpen(const char * filespec, unsigned short attribute)
         }
         else
         {
-            free(ff);
+            nfree(ff);
             ff = NULL;
         }
 
@@ -465,7 +465,7 @@ void _fast FFindClose(FFIND * ff)
         }
 
 #endif
-        free(ff);
+        nfree(ff);
     }
 } /* FFindClose */
 

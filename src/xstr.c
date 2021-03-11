@@ -173,7 +173,7 @@ int xscatprintf(char ** s, const char * format, ...)
     va_end(ap);
     xstrcat(s, addline);
 #if defined (HAS_vasprintf) || defined (HAS_vsnprintf)
-    free(addline);
+    nfree(addline);
 #endif
     return nprint;
 } /* xscatprintf */

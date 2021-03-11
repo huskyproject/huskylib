@@ -36,7 +36,10 @@
 /* huskylib headers */
 #define DLLEXPORT
 #include <huskyext.h>
+
 /***  Implementation  *******************************************************/
+
+#define nfree(a) {if(a != NULL) {free(a); a = NULL;}}
 
 #if defined (__NT__) /* WIN32 version */
 
@@ -132,7 +135,7 @@ void * MapFile(char * fname)
 
     if(read(fd, data, len) != len)
     {
-        free(data);
+        nfree(data);
         close(fd);
         return NULL;
     }

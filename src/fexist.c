@@ -58,6 +58,7 @@
 #define DLLEXPORT
 #include <huskyext.h>
 #include <fexist.h>
+#include <memory.h>
 
 #ifdef USE_STAT_MACROS
 /* This is the nice code that works on UNIX and every other decent platform.
@@ -119,14 +120,14 @@ int _fast direxist(const char * directory)
     if((isalpha((int)tempstr[0]) && tempstr[1] == ':' &&
         (tempstr[2] == '\\' || tempstr[2] == '/') && !tempstr[3]) || (strcmp(tempstr, "\\") == 0))
     {
-        free(tempstr);
+        nfree(tempstr);
         return TRUE;
     }
 
     l = strlen(tempstr);
     if (l == 0)
     {
-        free(tempstr);
+        nfree(tempstr);
         return FALSE;
     }
 
@@ -144,7 +145,7 @@ int _fast direxist(const char * directory)
         }
     }
     rc = stat(tempstr, &s);
-    free(tempstr);
+    nfree(tempstr);
 #endif /* if !defined (__WATCOMC__) && !defined (__MSVC__) && !defined (__MINGW32__) */
 
     if(rc)
@@ -277,7 +278,7 @@ int _fast direxist(const char * directory)
         }
     }
 
-    free(tempstr);
+    nfree(tempstr);
     return ret;
 } /* direxist */
 
@@ -317,7 +318,7 @@ int _fast direxist(const char * directory)
     if((isalpha((int)tempstr[0]) && tempstr[1] == ':' &&
         (tempstr[2] == '\\' || tempstr[2] == '/') && !tempstr[3]) || (strcmp(tempstr, "\\") == 0))
     {
-        free(tempstr);
+        nfree(tempstr);
         return TRUE;
     }
 
@@ -341,7 +342,7 @@ int _fast direxist(const char * directory)
 
     if(DosQueryPathInfo((PSZ)tempstr, FIL_STANDARD, (PVOID)&s, sizeof(s)) == 0)
     {
-        free(tempstr);
+        nfree(tempstr);
 
         if(s.attrFile & FILE_DIRECTORY)
         {
@@ -353,12 +354,12 @@ int _fast direxist(const char * directory)
         }
     }
 
-    free(tempstr);
+    nfree(tempstr);
     return FALSE;
 
 #else
     attr = GetFileAttributes(tempstr);
-    free(tempstr);
+    nfree(tempstr);
 
     if((attr != 0xFFFFFFFF) && (attr & FILE_ATTRIBUTE_DIRECTORY))
     {
@@ -449,20 +450,20 @@ int _createDirectoryTree(const char * pathName)
                 /*  this part of the path does not exist, create it */
                 if(mymkdir(start) != 0)
                 {
-                    free(start);
+                    nfree(start);
                     return 1;
                 }
             }
             else
             {
-                free(start);
+                nfree(start);
                 return 1;
             }
         }
 
         *slash++ = limiter;
     }
-    free(start);
+    nfree(start);
     return 0;
 } /* _createDirectoryTree */
 

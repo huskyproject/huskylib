@@ -170,7 +170,7 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
                 }
             } /* if directory not created at 1st time then use old alghorithm */
 
-            free(seqpath);
+            nfree(seqpath);
             free(new_fname);
 
             GenMsgIdErr("can't open/create SEQDIR directory");
@@ -261,8 +261,8 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
                 continue;
             }
 
-            free(seqpath);
-            free(new_fname);
+            nfree(seqpath);
+            nfree(new_fname);
             GenMsgIdErr("error creating file in SEQDIR directory");
             return (*altGenMsgId)();
         }
@@ -272,8 +272,8 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
 
         if(rename(seqpath, new_fname) == 0)
         {
-            free(seqpath);
-            free(new_fname);
+            nfree(seqpath);
+            nfree(new_fname);
             return seq;
         }
 
@@ -283,8 +283,8 @@ dword _XPENTRY GenMsgIdEx(char * seqdir,
             continue;
         }
 
-        free(seqpath);
-        free(new_fname);
+        nfree(seqpath);
+        nfree(new_fname);
         GenMsgIdErr("can't rename .seq file");
         return (*altGenMsgId)();
     }
