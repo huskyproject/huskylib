@@ -235,8 +235,6 @@ int move_file(const char * from, const char * to, const int force_rewrite)
 
 #endif
 
-    w_dbglog(LL_DEBUGZ, __FILE__ ":%u:move_file(%s,%s,%d)", __LINE__, from, to, force_rewrite);
-
     if(force_rewrite)
     {
         if(fexist(to))
@@ -254,7 +252,6 @@ int move_file(const char * from, const char * to, const int force_rewrite)
         return -1;
     }
 
-    w_dbglog(LL_DEBUGZ, __FILE__ ":%u:move_file()", __LINE__);
     rc = rename(from, to);
 
     if(!rc)                  /* rename succeeded. fine! */
@@ -346,7 +343,6 @@ int copy_file(const char * from, const char * to, const int force_rewrite)
     struct utimbuf ut;
 # endif
     int fh = -1;
-    w_dbglog(LL_DEBUGZ, __FILE__ ":%u:copy_file(%s,%s,%d)", __LINE__, from, to, force_rewrite);
 
 #ifdef HAVE_CMPFNAMES  /* check cmpfnames for all OS and remove this condition */
 
@@ -372,7 +368,6 @@ int copy_file(const char * from, const char * to, const int force_rewrite)
         return -1; /* file does not exist */
     }
 
-    w_dbglog(LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fin = fopen(from, "rb");        /* todo: use open( ..., O_CREAT| ..., ...)
                                      * to prevent file overwrite */
 
@@ -382,7 +377,6 @@ int copy_file(const char * from, const char * to, const int force_rewrite)
         return -1;
     }
 
-    w_dbglog(LL_DEBUGZ, __FILE__ ":%u:copy_file()", __LINE__);
     fh = open(to,
               (force_rewrite ? 0 : O_EXCL) | O_CREAT | O_TRUNC | O_WRONLY | O_BINARY,
               S_IRUSR | S_IWUSR);
