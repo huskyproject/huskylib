@@ -82,6 +82,7 @@ void * srealloc(void * ptr, size_t size)
 
     if(newptr == NULL)
     {
+        free(ptr);
         w_log(LL_CRIT, "out of memory");
         abort();
     }
