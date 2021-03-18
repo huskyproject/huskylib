@@ -70,12 +70,6 @@ char * xstralloc(char ** s, size_t add)
         *s = srealloc(*s, (n = strlen(*s)) + add + 1);
     }
 
-    if(*s == NULL)
-    {
-        fprintf(stderr, "out of memory");
-        abort();
-    }
-
     return *s + n;
 }
 
