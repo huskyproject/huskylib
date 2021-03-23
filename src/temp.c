@@ -234,7 +234,7 @@ FILE * createTempBinFile(char * tempDir, char ** name)
 #include <errno.h>
 #include <stdio.h>
 /*  Test */
-void main()
+int main(void)
 {
     FILE * fd;
     s_fidoconfig * config;
@@ -255,6 +255,7 @@ void main()
     }
 
     disposeConfig(config);
+    return 0;
 }
 
 #endif /* ifdef TEST_TEMP_C */

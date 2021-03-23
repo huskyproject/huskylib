@@ -189,7 +189,7 @@ HUSKYEXT s_log * openLog(char * fileName, char * appN);
    Output: openLog returns a pointer to an s_log struct.
    FZ:     openLog fills the s_log struct, opens the logfile and returns the struct
  */
-HUSKYEXT void closeLog();
+HUSKYEXT void closeLog(void);
 
 /*DOC
    Input:  log is a pointer to a s_log
