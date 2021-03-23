@@ -246,7 +246,7 @@ s_log * openLog(char * fileName, char * appN)
     return husky_log;
 } /* openLog */
 
-void closeLog()
+void closeLog(void)
 {
     if(husky_log != NULL)
     {

@@ -32,7 +32,7 @@
  */
 #include <huskylib/log.h>
 
-int main()
+int main(void)
 {
     s_log * hpt_log = NULL;
 
