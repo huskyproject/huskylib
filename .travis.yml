@@ -33,7 +33,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; sudo apt-get install -y pvs-studio; fi
 script:
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o $TRAVIS_BUILD_DIR/PVS-Studio.lic; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer credentials -o $TRAVIS_BUILD_DIR/PVS-Studio.lic $PVS_USERNAME $PVS_KEY; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake . -Bbuild "${CF}" -DCMAKE_EXPORT_COMPILE_COMMANDS=On; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer trace -- cmake --build build; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pvs-studio-analyzer analyze -l $TRAVIS_BUILD_DIR/PVS-Studio.lic -s ./suppress_base.json -o build/pvs.log; fi
