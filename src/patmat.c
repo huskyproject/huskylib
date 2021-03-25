@@ -60,6 +60,17 @@ int xpatmat(const char * string, const char * pattern, const int ncase)
     register const char * p, * q;
     register char c;
 
+    if(string == NULL)
+    {
+        w_log(LL_ERR, "xpatmat(): The string is NULL");
+        return 0;
+    }
+    if (pattern == NULL)
+    {
+        w_log(LL_ERR, "xpatmat(): The pattern is NULL");
+        return 0;
+    }
+
     p = pattern;
     q = string;
 
