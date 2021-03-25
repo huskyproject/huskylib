@@ -42,15 +42,15 @@
     #include <sys/time.h>
 #endif
 
-#if defined(__WATCOMC__) && defined(__OS2V2__)
-#include <sys/time.h>
-#endif
-
 /* huskylib: compiler.h */
 #include <compiler.h>
 /* compiler-dependent headers */
 #ifdef HAS_UNISTD_H
     #include <unistd.h>
+#endif
+
+#if defined(__WATCOMC__) && defined(__OS2V2__)
+#include <sys/time.h>
 #endif
 
 #if defined (__DOS__) || defined (__DPMI__)
