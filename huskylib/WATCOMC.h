@@ -61,6 +61,7 @@
 #  define HAS_SYS_UTIME_H  /* #include <sys/utime.h> in alternate to <utime.h> */
 #  define HAS_DOS_H
 #  define HAS_SIGNAL_H  1  /* <signal.h> */
+#  define HAS_UNISTD_H  1  /* <unistd.h> */
 #  define HAS_PROCESS_H   /* may use "#include <process.h> */
 
 #  define mymkdir(x)    mkdir(x) /*<direct.h>*/
