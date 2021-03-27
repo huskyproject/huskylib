@@ -53,6 +53,7 @@
 #  define HAS_strftime    /* strftime() in time.h  */
 #  define HAS_mktime      /* mktime() in time.h */
 #  define HAS_mktemp    1
+#  define NEED_strnlen  1
 
 #  define HAS_MALLOC_H     /* may be used "#include <malloc.h>"  (see alc.h) */
 #  define HAS_IO_H         /* may use "#include <io.h> */

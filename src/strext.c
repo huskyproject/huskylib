@@ -685,3 +685,25 @@ char * StrArray2String(s_str_array * ss)
     }
     return string;
 }
+
+#ifdef NEED_strnlen
+
+size_t strnlen(const char * s, size_t maxlen)
+{
+    size_t len = 0;
+
+    while (len < maxlen)
+    {
+        if (*s == '\0')
+        {
+            break;
+        }
+
+        len++;
+        s++;
+    }
+
+    return len;
+}
+
+#endif
