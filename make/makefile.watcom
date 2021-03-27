@@ -51,6 +51,8 @@ $(GNMSGID): $(TARGET)
 $(TARGET): $(OBJS)
 	$(WLIB) $(TARGET) $(OBJS)
 
+all: $(TARGET)
+
 .IGNORE
 clean: .SYMBOLIC
 	rm $(OBJS)
