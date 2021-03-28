@@ -135,8 +135,10 @@ int xscatprintf(char ** s, const char * format, ...)
 
     /* Find out the number of characters to print */
     nprint = vsnprintf(NULL, 0, format, ap);
+    va_end(ap);
     nmax = (size_t)nprint + 1;
     addline = (char *)smalloc(nmax);
+    va_start(ap, format);
     nprint = vsnprintf(addline, nmax, format, ap);
 
 #else
