@@ -123,40 +123,31 @@ int xscatprintf(char ** s, const char * format, ...)
     char addline[N_PRINTFBUF];
 #endif
     int nprint;
-    va_start(ap, format);
+ 
+    if(format == NULL)
+    {
+        return -1;
+    }
+   va_start(ap, format);
 #if defined (HAS_vasprintf)
     vasprintf(&addline, format, ap);
 #elif defined (HAS_vsnprintf)
-    addline = NULL;
 
-    for(nmax = N_PRINTFBUF; ; )
-    {
-        xstralloc(&addline, nmax);
-        nprint = vsnprintf(addline, nmax, format, ap);
+    /* Find out the number of characters to print */
+    nprint = vsnprintf(NULL, 0, format, ap);
+    nmax = (size_t)nprint + 1;
+    addline = (char *)smalloc(nmax);
+    nprint = vsnprintf(addline, nmax, format, ap);
 
-        /* If that worked, return the string. */
-        if(nprint > -1 && (size_t)nprint < nmax)
-        {
-            break;
-        }
-
-        /* Else try again with more space. */
-        if(nprint > -1)
-        {
-            nmax = (size_t)nprint + 1; /* precisely what is needed */
-        }
-        else
-        {
-            nmax += N_PRINTFBUF;        /* twice the old size */
-        }
-    }
-#else  /* if defined (HAS_vasprintf) */
+#else
     nprint = vsprintf(addline, format, ap);
 
     if(nprint > N_PRINTFBUF)
     {
         fprintf(stderr,
-                "sprintf buffer overflow at xscatprintf.\n" "used %d bytes instead of %d\n" "format leading to this was : %s\n" "please tell the developers\n",
+                "sprintf buffer overflow at xscatprintf.\n"
+                "used %d bytes instead of %d\n" "format leading to this was : %s\n"
+                "please tell the developers\n",
                 nprint,
                 N_PRINTFBUF,
                 format);
