@@ -416,13 +416,14 @@ int sstrnicmp(const char * str1, const char * str2, size_t length)
     return strnicmp(str1, str2, length); /* compare strings */
 }
 
-/* From binkd sources (tools.c), modified by Stas Degteff
- * Copyes not more than len chars from src into dst, but, unlike strncpy(),
- * it appends '\0' even if src is longer than len.
- * Return dst
- * Prevent memory faults:
- *  - if dst is NULL doing nothing and return NULL
- *  - if src is NULL and dst not NULL store '\0' into dst[0] and return it.
+/* From binkd sources (tools.c), modified by Stas Degteff.
+ * Copies not more than len-1 chars from src into dst, but unlike strncpy(),
+ * it appends '\0' even if src is longer than len. So len is the number
+ * of copied characters plus '\0'.
+ * Returns dst.
+ * Prevents memory faults:
+ *  - if dst is NULL, does nothing and returns NULL;
+ *  - if src is NULL and dst is not NULL, stores '\0' into dst[0] and returns it.
  */
 char * strnzcpy(char * dst, const char * src, size_t len)
 {
