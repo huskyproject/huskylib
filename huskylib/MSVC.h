@@ -177,6 +177,10 @@
 #define W_OK 02
 #endif
 
+#if _MSC_VER < 1500
+#  define NEED_strnlen  1     /* our own strnlen() is needed */
+#endif
+
 #  ifndef mymkdir
 #    define mymkdir _mkdir
 #  endif
