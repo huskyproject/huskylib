@@ -97,14 +97,14 @@ HUSKYEXT void _fast tdelay(int);
 
 typedef struct
 {
-    unsigned long sec;   /* seconds */
-    unsigned long msec;  /* milliseconds */
+    time_t sec;   /* seconds */
+    time_t msec;  /* milliseconds */
 } hs_time;
 /* Get snapshot of current time with precision up to milliseconds */
 HUSKYEXT void husky_SetTimer(hs_time * timer_ctx);
 
 /* Return difference between now and previous time snapshot */
-HUSKYEXT dword husky_GetTimer(hs_time * timer_ctx);
+HUSKYEXT time_t husky_GetTimer(hs_time * timer_ctx);
 
 /*-- genmsgid.c --*/
 HUSKYEXT dword _XPENTRY GenMsgId(char * seqdir, unsigned long max_outrun);

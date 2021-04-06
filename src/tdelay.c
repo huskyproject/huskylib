@@ -77,19 +77,19 @@ void _fast tdelay(int msecs)
 #if defined (__WIN32__) || defined (__MINGW32__)
 void husky_SetTimer(hs_time * timer_ctx)
 {
-    dword now;
+    time_t now;
 
-    now             = GetTickCount();
+    now             = (time_t)GetTickCount();
     timer_ctx->sec  = now / 1000;
     timer_ctx->msec = now % 1000;
 }
 
-dword husky_GetTimer(hs_time * timer_ctx)
+time_t husky_GetTimer(hs_time * timer_ctx)
 {
-    dword now;
-    dword diff;
+    time_t now;
+    time_t diff;
 
-    now  = GetTickCount();
+    now  = (time_t)GetTickCount();
     diff = (((now / 1000) - timer_ctx->sec) * 1000) + ((now % 1000) - timer_ctx->msec);
     return diff;
 }
@@ -105,10 +105,10 @@ void husky_SetTimer(hs_time * timer_ctx)
     timer_ctx->msec = now.tv_usec / 1000;
 }
 
-dword husky_GetTimer(hs_time * timer_ctx)
+time_t husky_GetTimer(hs_time * timer_ctx)
 {
     struct timeval now;
-    dword diff;
+    time_t diff;
 
     gettimeofday(&now, NULL);
     diff = ((now.tv_sec - timer_ctx->sec) * 1000) + ((now.tv_usec / 1000) - timer_ctx->msec);
