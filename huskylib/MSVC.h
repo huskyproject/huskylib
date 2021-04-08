@@ -181,6 +181,15 @@
 #  define NEED_strnlen  1     /* our own strnlen() is needed */
 #endif
 
+#if _MSC_VER < 1300
+#  define bool  unsigned char
+#  define false 0
+#  define true  1
+#  define __bool_true_false_are_defined 1
+#else
+#  include <stdbool.h>
+#endif
+
 #  ifndef mymkdir
 #    define mymkdir _mkdir
 #  endif

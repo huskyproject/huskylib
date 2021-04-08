@@ -81,6 +81,11 @@ void far * farcalloc(int n, int m);
 
 #  define USE_STAT_MACROS
 
+#  define bool  unsigned char
+#  define false 0
+#  define true  1
+#  define __bool_true_false_are_defined 1
+
 
 typedef unsigned       bit;
 typedef unsigned char  byte;
