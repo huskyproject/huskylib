@@ -42,10 +42,6 @@
     #define mktemp _mktemp
 #endif
 
-#  define strcasecmp  stricmp
-#  define strncasecmp strnicmp
-#  define snprintf    _snprintf
-#  define vsnprintf   _vsnprintf
 #  define HAS_snprintf
 #  define HAS_vsnprintf
 #  define HAS_spawnvp
