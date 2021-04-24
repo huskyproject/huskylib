@@ -187,7 +187,8 @@ typedef signed char    sbyte;
 typedef unsigned short word;
 typedef signed short   sword;
 
-#if defined (__ALPHA__) || defined (__X86_64__)    /* add other 64 bit systems here */
+/* add other 64 bit systems here */
+#if defined (__ALPHA__) || defined (__X86_64__) || defined(__aarch64__)
 typedef unsigned int dword;
 typedef signed int   sdword;
 #else /* 32 and 16 bit machines */
