@@ -326,7 +326,7 @@ void w_log(char key, char * logString, ...)
             if(!error)
             {
                 va_start(ap, logString);
-                error = (0 >= vfprintf(husky_log->logFile, logString, ap));
+                error = (0 > vfprintf(husky_log->logFile, logString, ap));
                 va_end(ap);
 
                 if(!error)
