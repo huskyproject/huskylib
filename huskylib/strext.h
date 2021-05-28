@@ -210,6 +210,10 @@ HUSKYEXT s_str_array * copyStrArray(s_str_array * ss);
 /* Parse strings like "token1, token2,token3 token4" into s_str_array */
 HUSKYEXT s_str_array * makeStrArray(char * token);
 HUSKYEXT char * StrArray2String(s_str_array * ss);
+#ifdef NEED_strnlen
+HUSKYEXT size_t strnlen(const char * s, size_t maxlen);
+#endif
+
 
 #ifdef __cplusplus
 }

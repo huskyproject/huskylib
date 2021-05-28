@@ -1377,10 +1377,6 @@ char * strupr(char * str);
 
 #endif
 
-#ifdef NEED_strnlen
-size_t strnlen(const char * s, size_t maxlen);
-#endif
-
 /* Some implementations not include the min() macro or function. Usually C++ */
 #ifndef min
 #define min(a, b) (((a) < (b)) ? (a) : (b))
