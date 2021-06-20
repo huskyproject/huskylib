@@ -83,16 +83,6 @@
     #endif
 #endif
 
-#ifndef __bool_true_false_are_defined
-#  define bool  unsigned char
-#  define false 0
-#  define true  1
-#  define __bool_true_false_are_defined 1
-#endif
-#ifndef HAS_BOOL
-#  define HAS_BOOL 1
-#endif
-
 #  include <unistd.h>
 #  include <io.h>
 #  define mysleep(x) sleep(x)

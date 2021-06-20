@@ -181,21 +181,6 @@
 #  define NEED_strnlen  1     /* our own strnlen() is needed */
 #endif
 
-#if _MSC_VER < 1800
-#  ifndef __bool_true_false_are_defined
-#    define bool  unsigned char
-#    define false 0
-#    define true  1
-#    define __bool_true_false_are_defined 1
-#  endif
-#else
-/* stdbool.h is present since Visual Studio 2013 (_MSC_VER == 1800) */
-#  include <stdbool.h>
-#endif
-#ifndef HAS_BOOL
-#  define HAS_BOOL 1
-#endif
-
 #  ifndef mymkdir
 #    define mymkdir _mkdir
 #  endif
