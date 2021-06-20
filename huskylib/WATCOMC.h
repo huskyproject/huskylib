@@ -100,13 +100,6 @@ typedef unsigned short ushort;
 typedef signed long slong;
 typedef unsigned long ulong;
 
-#ifndef __bool_true_false_are_defined
-#  define bool  unsigned char
-#  define false 0
-#  define true  1
-#  define __bool_true_false_are_defined 1
-#endif
-
 typedef   signed char        hCHAR;              /*  1 byte */
 typedef   signed char       hSCHAR;              /*  1 byte */
 typedef unsigned char       hUCHAR;              /*  1 byte */

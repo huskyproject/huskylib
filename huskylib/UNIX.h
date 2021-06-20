@@ -75,8 +75,6 @@
 #define strnicmp strncasecmp
 #endif
 
-#include <stdbool.h>
-
 #if !defined (USG)
 #define HAS_SYS_PARAM_H
 #endif
