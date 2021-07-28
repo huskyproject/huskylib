@@ -235,7 +235,4 @@ typedef unsigned long long hUINT64;     /*  8 bytes */
     #endif
 #endif
 
-#ifndef __bool_true_false_are_defined
-#include <stdbool.h>
-#endif
 #endif // ifndef HUSKY_UNIX_H

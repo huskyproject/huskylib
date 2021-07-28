@@ -513,9 +513,13 @@
     #endif
 #endif
 
-#if defined (__STDC__) && __STDC__ && __STDC_VERSION__ >= 199901L
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
     #ifndef HAS_STDINT_H
 #define HAS_STDINT_H 1
+    #endif
+
+    #ifndef HAS_STDBOOL_H
+#define HAS_STDBOOL_H 1
     #endif
 #endif
 /**** Compiler defines ****/
@@ -1399,6 +1403,15 @@ int trivial_farread(int handle, void far * buffer, unsigned len);
 #ifdef NEED_trivial_farwrite
 int trivial_farwrite(int handle, void far * buffer, unsigned len);
 
+#endif
+
+#ifdef HAS_STDBOOL_H
+#include <stdbool.h>
+#else
+#  define bool  unsigned char
+#  define false 0
+#  define true  1
+#  define __bool_true_false_are_defined 1
 #endif
 
 #ifndef TRUE
