@@ -522,6 +522,11 @@
 #define HAS_STDBOOL_H 1
     #endif
 #endif
+
+#if defined (__cplusplus)
+#define HAS_STDBOOL_H 1
+#endif
+
 /**** Compiler defines ****/
 
 #if defined (__DJGPP__) /* DJGPP for MS-DOS (DPMI)*/
