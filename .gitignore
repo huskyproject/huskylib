@@ -1,6 +1,7 @@
 build-stamp
 configure-stamp
 build/
+Build/
 *.lib
 *.dll
 *.exp
@@ -10,3 +11,4 @@ build/
 *.bak
 *.vcxproj.user
 strace_out
+cvsdate.h
