@@ -19,6 +19,9 @@ before_install:
   - sudo wget -O /etc/apt/sources.list.d/viva64.list https://files.viva64.com/etc/viva64.list
   - sudo apt-get update; sudo apt-get install -y pvs-studio
 
+before_build:
+  - huskylib_mdate=$(git log -1 --date=short --format=format:"%cd" huskylib/*.h src/*.c); echo "char cvs_date[]=\"$huskylib_mdate\";" > cvsdate.h; ls -l; cat ./cvsdate.h
+
 script:
   - echo TRAVIS_BRANCH=$TRAVIS_BRANCH
   - echo TRAVIS_TAG=$TRAVIS_TAG
