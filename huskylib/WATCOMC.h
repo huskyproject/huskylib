@@ -42,6 +42,11 @@
     #define mktemp _mktemp
 #endif
 
+#if ( __WATCOMC__ >= 1300 )
+    /* Open Watcom 2.0 */
+    #include <strings.h>  /* for strcasecmp */
+#endif
+
 #  define HAS_snprintf
 #  define HAS_vsnprintf
 #  define HAS_spawnvp
