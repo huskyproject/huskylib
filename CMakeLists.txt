@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8...3.19)
 
+find_package(Git REQUIRED)
+
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
@@ -149,9 +151,26 @@ if (NOT MSVC)
 endif (NOT MSVC)
 set (CPACK_PACKAGE_VERSION_MAJOR "1")
 set (CPACK_PACKAGE_VERSION_MINOR "9")
+
+execute_process(COMMAND "git" "log" "-1" "--date=short" "--format=format:%cd" "src/*.c" "huskylib/*.h"
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+  OUTPUT_VARIABLE git_date
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+execute_process(COMMAND "git" "rev-parse" "--short" "HEAD"
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+  OUTPUT_VARIABLE git_hash
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+message(STATUS "${git_date} ${git_hash}")
+
+file(WRITE cvsdate.h "char cvs_date[]=\"${git_date}\";\n")
+file(WRITE git_hash.h "char git_hash[]=\"${git_hash}\";\n")
+
 file(READ cvsdate.h CPACK_PACKAGE_VERSION_PATCH LIMIT 10 OFFSET 17)
 string(SUBSTRING ${CPACK_PACKAGE_VERSION_PATCH} 0 10 CPACK_PACKAGE_VERSION_PATCH)
 string(REGEX REPLACE "-" "" CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
+
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS       ON)
 set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
 set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS_POLICY ">=")
