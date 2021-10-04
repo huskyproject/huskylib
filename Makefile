@@ -254,6 +254,7 @@ endif
 	pwd > /dev/null
 
 # Depend
+ifeq ($(MAKECMDGOALS),depend)
 huskylib_depend: $(huskylib_DEPS) ;
 
 # Build dependency makefiles for every source file
@@ -265,6 +266,7 @@ $(huskylib_DEPS): $(huskylib_DEPDIR)%$(_DEP): $(huskylib_SRCDIR)%.c | $(huskylib
 
 $(huskylib_DEPDIR): | $(huskylib_BUILDDIR) do_not_run_depend_as_root
 	[ -d $@ ] || $(MKDIR) $(MKDIROPT) $@
+endif
 
 $(huskylib_BUILDDIR):
 	[ -d $@ ] || $(MKDIR) $(MKDIROPT) $@
