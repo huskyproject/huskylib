@@ -251,7 +251,7 @@ ifdef MAN1DIR
 	-$(RM) $(RMOPT) $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES).gz
 endif
 # The next line is placed here in case the previous lines are missing
-	pwd > /dev/null
+	@pwd > /dev/null
 
 # Depend
 ifeq ($(MAKECMDGOALS),depend)
