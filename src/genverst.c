@@ -122,6 +122,12 @@ char * GenVersionStr(const char * programname,
 #    else
     platform = "/w32-mvc";
 #    endif
+#elif (defined (__MINGW32__) && defined (_WIN64)) || defined (__MINGW64__)
+#    if defined (_MAKE_DLL)
+    platform = "/w64-mgwdll";
+#    else
+    platform = "/w64-mgw";
+#    endif
 #elif defined (__MINGW32__)
 #    if defined (_MAKE_DLL)
     platform = "/w32-mgwdll";
