@@ -6,14 +6,14 @@
 #
 
 # Version
-huskylib_g1:=$(GREP) -Po 'define\s+HUSKYLIB_VER_MAJOR\s+\K\d+'
-huskylib_g2:=$(GREP) -Po 'define\s+HUSKYLIB_VER_MINOR\s+\K\d+'
-huskylib_g3:=$(GREP) -Po 'define\s+HUSKYLIB_VER_PATCH\s+\K\d+'
+huskylib_g1:=$(GREP) -Po 'define\s+huskylib_VER_MAJOR\s+\K\d+'
+huskylib_g2:=$(GREP) -Po 'define\s+huskylib_VER_MINOR\s+\K\d+'
+huskylib_g3:=$(GREP) -Po 'define\s+huskylib_VER_PATCH\s+\K\d+'
 huskylib_g4:=$(GREP) -Po 'char\s+cvs_date\[\]\s*=\s*"\K\d+-\d+-\d+'
 
-huskylib_VERMAJOR := $(shell $(huskylib_g1) $(huskylib_ROOTDIR)$(huskylib_H_DIR)huskylib.h)
-huskylib_VERMINOR := $(shell $(huskylib_g2) $(huskylib_ROOTDIR)$(huskylib_H_DIR)huskylib.h)
-huskylib_VERPATCH := $(shell $(huskylib_g3) $(huskylib_ROOTDIR)$(huskylib_H_DIR)huskylib.h)
+huskylib_VERMAJOR := $(shell $(huskylib_g1) $(huskylib_ROOTDIR)$(huskylib_H_DIR)version.h)
+huskylib_VERMINOR := $(shell $(huskylib_g2) $(huskylib_ROOTDIR)$(huskylib_H_DIR)version.h)
+huskylib_VERPATCH := $(shell $(huskylib_g3) $(huskylib_ROOTDIR)$(huskylib_H_DIR)version.h)
 huskylib_VERH     := $(huskylib_VERMAJOR).$(huskylib_VERMINOR)
 huskylib_cvsdate  := $(shell $(huskylib_g4) $(huskylib_ROOTDIR)cvsdate.h)
 huskylib_reldate  := $(subst -,,$(huskylib_cvsdate))

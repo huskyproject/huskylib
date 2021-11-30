@@ -44,7 +44,7 @@ int CheckHuskylibVersion(int need_major,
     static
 #include "../cvsdate.h"   /* char cvs_date[]=datestring; */
 
-    if(need_major == HUSKYLIB_VER_MAJOR && need_minor == HUSKYLIB_VER_MINOR)
+    if(need_major == huskylib_VER_MAJOR && need_minor == huskylib_VER_MINOR)
     {
         if(need_branch == BRANCH_CURRENT)
         {
@@ -53,11 +53,11 @@ int CheckHuskylibVersion(int need_major,
                 fprintf(stderr, "Huskylib: strange, current patch level can't be non-zero\n");
             }
 
-            return (HUSKYLIB_VER_BRANCH == BRANCH_CURRENT) && !(cvs && strcmp(cvs, cvs_date));
+            return (huskylib_VER_BRANCH == BRANCH_CURRENT) && !(cvs && strcmp(cvs, cvs_date));
         }
         else
         {
-            return HUSKYLIB_VER_BRANCH != BRANCH_CURRENT;
+            return huskylib_VER_BRANCH != BRANCH_CURRENT;
         }
     }
 

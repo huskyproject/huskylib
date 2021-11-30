@@ -53,19 +53,8 @@
 #include "tree.h"
 #include "unused.h"
 #include "xstr.h"
+#include "version.h"
 
-#ifndef HUSKYLIB_VER_MAJOR
-#define HUSKYLIB_VER_MAJOR 1
-#endif
-#ifndef HUSKYLIB_VER_MINOR
-#define HUSKYLIB_VER_MINOR 9
-#endif
-#ifndef HUSKYLIB_VER_PATCH
-#define HUSKYLIB_VER_PATCH 0
-#endif
-#ifndef HUSKYLIB_VER_BRANCH
-#define HUSKYLIB_VER_BRANCH BRANCH_CURRENT
-#endif
 /* values for 5th parameter of GenVersionStr() */
 typedef enum
 {
