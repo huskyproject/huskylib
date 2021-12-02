@@ -243,9 +243,8 @@ char * GenVersionStr(const char * programname,
             break;
     } /* switch */
 
-    if(branch == BRANCH_RELEASE)
+    if(branch == BRANCH_RELEASE || branch == BRANCH_STABLE)
     {
-        /* Release date are known always */
         xscatprintf(&_version_str,
                     "%s%s %u.%u.%u%s",
                     programname,
@@ -258,13 +257,11 @@ char * GenVersionStr(const char * programname,
     else
     {
         xscatprintf(&_version_str,
-                    "%s%s %u.%u.%u%s %s",
+                    "%s%s %u.%u %s",
                     programname,
                     platform,
                     major,
                     minor,
-                    patchlevel,
-                    cbranch,
                     cvsdate);
     }
 
