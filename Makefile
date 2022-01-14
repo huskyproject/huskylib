@@ -61,22 +61,22 @@ huskylib_LIBS =
 
 huskylib_CDEFS := $(CDEFS) -I$(huskylib_ROOTDIR)$(huskylib_H_DIR)
 
-.PHONY: huskylib_all huskylib_install huskylib_install-dynlib \
+.PHONY: huskylib_build huskylib_install huskylib_install-dynlib \
     huskylib_install-programs huskylib_install-man huskylib_uninstall \
     huskylib_clean huskylib_distclean huskylib_depend huskylib_rm_OBJS \
     huskylib_rm_BLD huskylib_rm_DEP huskylib_rm_DEPS
 
 ifeq ($(GNMSGID), 1)
     ifdef MAN1DIR
-        huskylib_all: $(huskylib_TARGET_BLD) \
+        huskylib_build: $(huskylib_TARGET_BLD) \
         $(huskylib_BUILDDIR)$(huskylib_PROGS) \
         $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz
     else
-        huskylib_all: $(huskylib_BUILDDIR)$(huskylib_TARGET) \
+        huskylib_build: $(huskylib_BUILDDIR)$(huskylib_TARGET) \
         $(huskylib_BUILDDIR)$(huskylib_PROGS)
     endif
 else
-    huskylib_all: $(huskylib_BUILDDIR)$(huskylib_TARGET)
+    huskylib_build: $(huskylib_BUILDDIR)$(huskylib_TARGET)
 endif
 
 ifneq ($(MAKECMDGOALS), depend)
