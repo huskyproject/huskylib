@@ -210,7 +210,8 @@ huskylib_distclean: huskylib_clean huskylib_rm_BLD
 	-[ -d "$(huskylib_BUILDDIR)" ] && $(RMDIR) $(huskylib_BUILDDIR) || true
 
 huskylib_rm_BLD: huskylib_rm_DEP
-	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_TARGET)
+	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_TARGETLIB)
+	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_TARGETDLL)*
 ifeq ($(GNMSGID), 1)
 	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_PROGS)
 endif
