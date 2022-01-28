@@ -1191,7 +1191,7 @@
 /* Default separator for path specification */
 
 #ifndef PATH_DELIM   /* moved from smapi/prog.h */
-    #if defined (__UNIX__) || defined (__AMIGA__)
+    #if defined (__UNIX__) || defined (__AMIGA__) || defined (__MINGW32__)
 #define PATH_DELIM '/'
     #else
 #define PATH_DELIM '\\'
