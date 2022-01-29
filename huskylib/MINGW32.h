@@ -120,9 +120,14 @@ typedef unsigned char  byte;
 typedef signed char    sbyte;
 typedef unsigned short word;
 typedef signed short   sword;
+typedef signed short   sshort;
+#if defined (__X86_64__) || defined(__aarch64__)
+typedef unsigned int   dword;
+typedef signed int     sdword;
+#else /* 32 and 16 bit machines */
 typedef unsigned long  dword;
 typedef signed long    sdword;
-typedef signed short   sshort;
+#endif
 /*typedef unsigned short ushort;*/
 typedef signed long    slong;
 typedef unsigned long  ulong;
