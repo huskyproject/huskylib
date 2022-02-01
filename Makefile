@@ -48,7 +48,11 @@ huskylib_TARGETLIB := $(L)$(LIBPREFIX)$(huskylib_LIBNAME)$(LIBSUFFIX)$(_LIB)
 huskylib_TARGETDLL := $(B)$(DLLPREFIX)$(huskylib_LIBNAME)$(DLLSUFFIX)$(_DLL)
 
 ifeq ($(DYNLIBS), 1)
-    huskylib_TARGET = $(huskylib_TARGETDLL).$(huskylib_VER)
+    ifeq ($(findstring Windows,$(OS)),)
+        huskylib_TARGET = $(huskylib_TARGETDLL).$(huskylib_VER)
+    else
+        huskylib_TARGET = $(huskylib_TARGETDLL)
+    endif
 else
     huskylib_TARGET = $(huskylib_TARGETLIB)
 endif
@@ -99,12 +103,13 @@ ifdef RANLIB
 endif
 
 # Build the dynamic library
-$(huskylib_OBJDIR)$(huskylib_TARGETDLL).$(huskylib_VER): $(huskylib_OBJS) | do_not_run_make_as_root
-ifeq (~$(MKSHARED)~,~ld~)
-	$(LD) $(LFLAGS) -o $(huskylib_OBJDIR)$(huskylib_TARGETDLL).$(huskylib_VER) $(huskylib_OBJS)
-else
-	$(CC) $(LFLAGS) -shared -Wl,-soname,$(huskylib_TARGETDLL).$(huskylib_VER) \
-	-o $(huskylib_OBJDIR)$(huskylib_TARGETDLL).$(huskylib_VER) $(huskylib_OBJS)
+ifeq ($(DYNLIBS),1)
+$(huskylib_OBJDIR)$(huskylib_TARGET): $(huskylib_OBJS) | do_not_run_make_as_root
+    ifeq ($(findstring gcc,$(MKSHARED)),)
+		$(LD) $(LFLAGS) -o $@ $^
+    else
+		$(CC) $(LFLAGS) -shared -Wl,-soname,$(huskylib_TARGET) -o $@ $^
+    endif
 endif
 
 # Compile .c files
