@@ -248,7 +248,7 @@ huskylib_depend: $(huskylib_DEPS) ;
 $(huskylib_DEPS): $(huskylib_DEPDIR)%$(_DEP): $(huskylib_SRCDIR)%.c | $(huskylib_DEPDIR)
 	@set -e; rm -f $@; \
 	$(CC) -MM $(CFLAGS) $(huskylib_CDEFS) $< > $@.$$$$; \
-	sed 's,\($*\)$(_OBJ)[ :]*,$(huskylib_OBJDIR)\1$(_OBJ) $@ : ,g' < $@.$$$$ > $@; \
+	sed 's,\($*\)$(__OBJ)[ :]*,$(huskylib_OBJDIR)\1$(_OBJ) $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
 $(huskylib_DEPDIR): | $(huskylib_BUILDDIR) do_not_run_depend_as_root
