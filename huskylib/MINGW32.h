@@ -60,6 +60,7 @@
 #  define far
 #  define _XPENTRY
 
+#if !defined(USE_PERLIO)
 #  define farread _read
 #  define farwrite _write
 #  define fdopen _fdopen
@@ -69,8 +70,12 @@
 #  define tell _tell
 #  define write _write
 #  define read _read
-
 #  define sleep(sec) Sleep((sec) * 1000l)
+#else
+#  define farread PerlLIO_read
+#  define farwrite PerlLIO_write
+#endif
+
 #  define mysleep(sec) Sleep((sec) * 1000l)
 #  define HAS_sleep 1
 
