@@ -105,7 +105,7 @@ endif
 # Build the dynamic library
 ifeq ($(DYNLIBS),1)
 $(huskylib_OBJDIR)$(huskylib_TARGET): $(huskylib_OBJS) | do_not_run_make_as_root
-    ifeq ($(findstring gcc,$(MKSHARED)),)
+    ifeq ($(filter gcc clang,$(MKSHARED)),)
 		$(LD) $(LFLAGS) -o $@ $^
     else
 		$(CC) $(LFLAGS) -shared -Wl,-soname,$(huskylib_TARGET) -o $@ $^
