@@ -11,32 +11,10 @@ ifdef MAN1DIR
 endif
 endif
 
-# Object files of the library
-# Please sort the list to make checking it by human easy
-huskylib_OBJFILES = $(O)adcase$(_OBJ) $(O)calendar$(_OBJ) $(O)cmpfname$(_OBJ) \
-	$(O)crc$(_OBJ) $(O)cvtdate$(_OBJ) $(O)dirlayer$(_OBJ) $(O)fexist$(_OBJ) \
-	$(O)ffind$(_OBJ) $(O)ftnaddr$(_OBJ) $(O)genmsgid$(_OBJ) \
-	$(O)genverst$(_OBJ) $(O)getfree$(_OBJ) $(O)ioutil$(_OBJ) $(O)log$(_OBJ) \
-	$(O)locking$(_OBJ) $(O)mapfile$(_OBJ) $(O)memory$(_OBJ) $(O)patmat$(_OBJ) \
-	$(O)qksort$(_OBJ) $(O)recode$(_OBJ) $(O)setfsize$(_OBJ) $(O)strext$(_OBJ) \
-	$(O)strftime$(_OBJ) $(O)temp$(_OBJ) $(O)tdelay$(_OBJ) $(O)tree$(_OBJ) \
-	$(O)version$(_OBJ) $(O)xstr$(_OBJ)
-
 huskylib_PROG_OBJ = $(O)gnmsgid$(_OBJ)
 huskylib_PROG_SRC := $(huskylib_PROG_OBJ:$(_OBJ)=.c)
 
-huskylib_OBJS := $(addprefix $(huskylib_OBJDIR),$(huskylib_OBJFILES))
-
-huskylib_DEPS := $(huskylib_OBJFILES) $(huskylib_PROG_OBJ)
-ifdef O
-    huskylib_DEPS := $(huskylib_DEPS:$(O)=)
-endif
-ifdef _OBJ
-    huskylib_DEPS := $(huskylib_DEPS:$(_OBJ)=$(_DEP))
-else
-    huskylib_DEPS := $(addsuffix $(_DEP),$(huskylib_DEPS))
-endif
-huskylib_DEPS := $(addprefix $(huskylib_DEPDIR),$(huskylib_DEPS))
+huskylib_OBJS := $(filter-out $(huskylib_OBJDIR)$(huskylib_PROG_OBJ),$(huskylib_ALL_OBJS))
 
 # Executable file(s) to build from sources
 ifeq ($(GNMSGID), 1)
@@ -244,21 +222,3 @@ ifdef MAN1DIR
 endif
 # The next line is placed here in case the previous lines are missing
 	@pwd > /dev/null
-
-# Depend
-ifeq ($(MAKECMDGOALS),depend)
-huskylib_depend: $(huskylib_DEPS) ;
-
-# Build dependency makefiles for every source file
-$(huskylib_DEPS): $(huskylib_DEPDIR)%$(_DEP): $(huskylib_SRCDIR)%.c | $(huskylib_DEPDIR)
-	@set -e; rm -f $@; \
-	$(CC) -MM $(CFLAGS) $(huskylib_CDEFS) $< > $@.$$$$; \
-	sed 's,\($*\)$(__OBJ)[ :]*,$(huskylib_OBJDIR)\1$(_OBJ) $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
-
-$(huskylib_DEPDIR): | $(huskylib_BUILDDIR) do_not_run_depend_as_root
-	[ -d $@ ] || $(MKDIR) $(MKDIROPT) $@
-endif
-
-$(huskylib_BUILDDIR):
-	[ -d $@ ] || $(MKDIR) $(MKDIROPT) $@
