@@ -2,7 +2,7 @@
 #
 # This file is part of huskylib, part of the Husky fidonet software project
 # Use with GNU make v.3.82 or later
-# Requires: husky enviroment
+# Requires: husky environment
 #
 
 ifeq ($(GNMSGID), 1)
@@ -164,9 +164,6 @@ else
 		$(TOUCH) $@
 endif
 
-$(DESTDIR)$(BINDIR):
-	-[ -d "$(DESTDIR)$(BINDIR)" ] || $(MKDIR) $(MKDIROPT) $(DESTDIR)$(BINDIR)
-
 ifdef MAN1DIR
     huskylib_install-man: $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES).gz ;
 
@@ -174,9 +171,6 @@ ifdef MAN1DIR
         $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz | $(DESTDIR)$(MAN1DIR)
 	$(INSTALL) $(IMOPT) $? $(DESTDIR)$(MAN1DIR); \
 	$(TOUCH) $@
-
-$(DESTDIR)$(MAN1DIR): | $(DESTDIR)$(MANDIR)
-	-[ -d "$@" ] || $(MKDIR) $(MKDIROPT) $@
 endif
 
 
