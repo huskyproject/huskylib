@@ -61,7 +61,6 @@ SET(husky_SOURCES
   src/dirlayer.c
   src/fexist.c
   src/ffind.c
-  src/flush.c
   src/ftnaddr.c
   src/genmsgid.c
   src/genverst.c
@@ -71,7 +70,6 @@ SET(husky_SOURCES
   src/log.c
   src/mapfile.c
   src/memory.c
-  src/parsenn.c
   src/patmat.c
   src/qksort.c
   src/recode.c
@@ -80,7 +78,6 @@ SET(husky_SOURCES
   src/strftime.c
   src/tdelay.c
   src/temp.c
-#  src/tlog.c
   src/tree.c
   src/version.c
   src/xstr.c
