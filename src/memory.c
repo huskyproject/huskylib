@@ -62,6 +62,16 @@ void put_word(byte * ptr, word value)
 }
 
 #endif
+
+void nfree(void * a)
+{
+    if(a != NULL)
+    {
+        free(a);
+        a = NULL;
+    }
+}
+
 /* safe malloc, realloc, calloc */
 void * smalloc(size_t size)
 {
