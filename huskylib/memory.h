@@ -35,7 +35,7 @@
 #include "huskyext.h"
 /***  Declarations & defines  ***********************************************/
 /* Safety free malloc'ed memory chunk */
-HUSKYEXT void nfree(void * a);
+#define nfree(a) {if(a != NULL) {free(a); a = NULL;}}
 
 HUSKYEXT void * memdup(void * p, size_t size);
 
