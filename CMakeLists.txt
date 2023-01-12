@@ -61,7 +61,7 @@ SET(husky_SOURCES
   src/dirlayer.c
   src/fexist.c
   src/ffind.c
-  src/flush.c
+#  src/flush.c
   src/ftnaddr.c
   src/genmsgid.c
   src/genverst.c
@@ -71,7 +71,7 @@ SET(husky_SOURCES
   src/log.c
   src/mapfile.c
   src/memory.c
-  src/parsenn.c
+#  src/parsenn.c
   src/patmat.c
   src/qksort.c
   src/recode.c
@@ -149,7 +149,10 @@ if (NOT MSVC)
 endif (NOT MSVC)
 set (CPACK_PACKAGE_VERSION_MAJOR "1")
 set (CPACK_PACKAGE_VERSION_MINOR "9")
-file(READ cvsdate.h CPACK_PACKAGE_VERSION_PATCH LIMIT 10 OFFSET 17)
+execute_process(COMMAND git log -1 --date=short --format=format:"%cd" ${CMAKE_CURRENT_SOURCE_DIR}/huskylib/*.h ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
+    OUTPUT_VARIABLE CPACK_PACKAGE_VERSION_PATCH)
+file(WRITE cvsdate.h "char cvs_date[]=${CPACK_PACKAGE_VERSION_PATCH};")
+#file(READ cvsdate.h CPACK_PACKAGE_VERSION_PATCH LIMIT 10 OFFSET 17)
 string(SUBSTRING ${CPACK_PACKAGE_VERSION_PATCH} 0 10 CPACK_PACKAGE_VERSION_PATCH)
 string(REGEX REPLACE "-" "" CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS       ON)
