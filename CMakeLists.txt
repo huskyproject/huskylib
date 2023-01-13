@@ -122,6 +122,7 @@ SET(husky_HEADERS
   huskylib/typesize.h
   huskylib/UNIX.h
   huskylib/unused.h
+  huskylib/version.h
   huskylib/vixie.h
   huskylib/WATCOMC.h
   huskylib/WCD.h
