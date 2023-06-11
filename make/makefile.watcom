@@ -35,6 +35,13 @@ TARGET=huskywco.lib
 CFLAGS+= -d2
 !endif
 
+../cvsdate.h:
+	#  Note: "git log etc > ../cvsdate.h" probably won't work when running WMake under Windows or OS/2.
+	#  Instead use WMake's internal %ren command.
+
+	git log -1 --date=short --format=format:'char cvs_date[]="%cd";%n' ../src/*.c ../huskylib/*.h > cvsdate.h.tmp
+	@%ren cvsdate.h.tmp ../cvsdate.h
+
 OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
   fexist.obj ffind.obj genmsgid.obj genverst.obj getfree.obj &
   ioutil.obj log.obj locking.obj mapfile.obj memory.obj qksort.obj &
@@ -48,7 +55,7 @@ OBJS=adcase.obj calendar.obj cmpfname.obj crc.obj cvtdate.obj dirlayer.obj &
 $(GNMSGID): $(TARGET)
 	$(CC) $(CFLAGS) $(INC) -Fe=gnmsgid.exe $(SRC_DIR)/gnmsgid.c $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): ../cvsdate.h $(OBJS)
 	$(WLIB) $(TARGET) $(OBJS)
 
 all: $(TARGET)
@@ -58,3 +65,4 @@ clean: .SYMBOLIC
 	rm $(OBJS)
 	rm $(TARGET)
 	rm $(GNMSGID)
+	rm ../cvsdate.h
