@@ -52,7 +52,7 @@ ifeq ($(GNMSGID), 1)
     ifdef MAN1DIR
         huskylib_build: $(huskylib_TARGET_BLD) \
         $(huskylib_BUILDDIR)$(huskylib_PROGS) \
-        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz
+        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES)$(_COMPR)
     else
         huskylib_build: $(huskylib_BUILDDIR)$(huskylib_TARGET) \
         $(huskylib_BUILDDIR)$(huskylib_PROGS)
@@ -111,9 +111,13 @@ ifeq ($(GNMSGID), 1)
 
     ifdef MAN1DIR
         # Build man pages
-        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz: \
+        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES)$(_COMPR): \
             $(huskylib_ROOTDIR)man/$(huskylib_MAN1PAGES) | do_not_run_make_as_root
-		gzip -c $<  > $@
+        ifdef COMPRESS
+			$(COMPRESS) -c $< > $@
+        else
+			$(CP) $(CPOPT) $< $@
+        endif
     endif
 endif
 
@@ -165,10 +169,10 @@ else
 endif
 
 ifdef MAN1DIR
-    huskylib_install-man: $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES).gz ;
+    huskylib_install-man: $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES)$(_COMPR) ;
 
-    $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES).gz: \
-        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz | $(DESTDIR)$(MAN1DIR)
+    $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES)$(_COMPR): \
+        $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES)$(_COMPR) | $(DESTDIR)$(MAN1DIR)
 	$(INSTALL) $(IMOPT) $? $(DESTDIR)$(MAN1DIR); \
 	$(TOUCH) $@
 endif
@@ -193,7 +197,7 @@ ifeq ($(GNMSGID), 1)
 	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_PROGS)
 endif
 ifdef MAN1DIR
-	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES).gz
+	-$(RM) $(RMOPT) $(huskylib_BUILDDIR)$(huskylib_MAN1PAGES)$(_COMPR)
 endif
 
 huskylib_rm_DEP: huskylib_rm_DEPS
@@ -212,7 +216,7 @@ ifeq ($(GNMSGID), 1)
 	-$(RM) $(RMOPT) $(BINDIR_DST)$(huskylib_PROGS)
 endif
 ifdef MAN1DIR
-	-$(RM) $(RMOPT) $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES).gz
+	-$(RM) $(RMOPT) $(DESTDIR)$(MAN1DIR)$(DIRSEP)$(huskylib_MAN1PAGES)$(_COMPR)
 endif
 # The next line is placed here in case the previous lines are missing
 	@pwd > /dev/null
